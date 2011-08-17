@@ -1,52 +1,47 @@
 <?php
 
 namespace Knp\Menu;
+
 use Knp\Menu\Renderer\RendererInterface;
 use Knp\Menu\Renderer\ListRenderer;
 
 /**
- * This is your base menu item. It roughly represents a single <li> tag
- * and is what you should interact with most of the time by default.
- * Decoupled from Symfony2, can be used in any PHP 5.3 project.
- * Originally taken from ioMenuPlugin (http://github.com/weaverryan/ioMenuPlugin)
+ * Default implementation of the ItemInterface
  */
-class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
+class MenuItem implements ItemInterface
 {
     /**
      * Properties on this menu item
      */
-    protected
-        $name             = null,    // the name of this menu item (used for id by parent menu)
-        $label            = null,    // the label to output, name is used by default
-        $linkAttributes   = array(), // an array of attributes for the item link
-        $labelAttributes  = array(), // an array of attributes for the item text
-        $uri              = null,    // the uri to use in the anchor tag
-        $attributes       = array(); // an array of attributes for the li
+    protected $name = null; // the name of this menu item (used for id by parent menu)
+    protected $label = null; // the label to output, name is used by default
+    protected $linkAttributes = array(); // an array of attributes for the item link
+    protected $labelAttributes = array(); // an array of attributes for the item text
+    protected $uri = null; // the uri to use in the anchor tag
+    protected $attributes = array(); // an array of attributes for the li
 
     /**
      * Options related to rendering
      */
-    protected
-        $show             = true,    // boolean to render this menu
-        $showChildren     = true;    // boolean to render the children of this menu
+    protected $show = true; // boolean to render this menu
+    protected $showChildren = true; // boolean to render the children of this menu
 
     /**
      * Metadata on this menu item
      */
-    protected
-        $children         = array(), // an array of MenuItem children
-        $num              = null,    // the order number this menu is in its parent
-        $parent           = null,    // parent MenuItem
-        $isCurrent        = null,    // whether or not this menu item is current
-        $currentUri       = null,    // the current uri to use for selecting current menu
-        $currentAsLink    = true;    // boolean to render the current uri as a link or not
+    protected $children = array(); // an array of MenuItem children
+    protected $num = null; // the order number this menu is in its parent
+    protected $parent = null; // parent MenuItem
+    protected $isCurrent = null; // whether or not this menu item is current
+    protected $currentUri = null; // the current uri to use for selecting current menu
+    protected $currentAsLink = true; // boolean to render the current uri as a link or not
 
     /**
      * The renderer used to render this menu
 
      * @var RendererInterface
      */
-    protected $renderer   = null;
+    protected $renderer = null;
 
     /**
      * Class constructor
@@ -74,7 +69,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * @param  string $name
-     * @return MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
     public function setName($name)
     {
@@ -127,12 +122,11 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
         return $this->uri;
     }
 
-
     /**
      * Set the uri for a menu item
      *
      * @param  string $uri The uri to set on this menu item
-     * @return MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
     public function setUri($uri)
     {
@@ -215,7 +209,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * @param  array $linkAttributes
-     * @return MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
     public function setLinkAttributes(array $linkAttributes)
     {
@@ -243,7 +237,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      * @param string $name
      * @param string $value
      *
-     * @return MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
     public function setLinkAttribute($name, $value)
     {
@@ -262,7 +256,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * @param  array $labelAttributes
-     * @return MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
     public function setLabelAttributes(array $labelAttributes)
     {
@@ -294,7 +288,9 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @return bool Whether or not this menu item should show its children.
+     * Whether or not this menu item should show its children.
+     *
+     * @return bool
      */
     public function getShowChildren()
     {
@@ -305,7 +301,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      * Set whether or not this menu item should show its children
      *
      * @param bool $bool
-     * @return MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
     public function setShowChildren($bool)
     {
@@ -315,7 +311,9 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @return bool Whether or not to show this menu item
+     * Whether or not to show this menu item
+     *
+     * @return bool
      */
     public function getShow()
     {
@@ -326,7 +324,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      * Set whether or not this menu to show this menu item
      *
      * @param bool $bool
-     * @return MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
     public function setShow($bool)
     {
@@ -361,17 +359,16 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @param mixed   $child    An MenuItem object or the name of a new menu to create
      * @param string  $uri    If creating a new menu, the uri for that menu
-     * @param string  $attributes  If creating a new menu, the attributes for that menu
+     * @param array  $attributes  If creating a new menu, the attributes for that menu
      * @param string  $class    The class for menu item, if it needs to be created
      *
-     * @return MenuItem The child menu item
+     * @return \Knp\Menu\ItemInterface The child menu item
      */
-    public function addChild($child, $uri = null, $attributes = array(), $class = null)
+    public function addChild($child, $uri = null, array $attributes = array(), $class = null)
     {
-        if (!$child instanceof MenuItem) {
+        if (!$child instanceof ItemInterface) {
             $child = $this->createChild($child, $uri, $attributes, $class);
-        }
-        elseif ($child->getParent()) {
+        } elseif ($child->getParent()) {
             throw new \InvalidArgumentException('Cannot add menu item as child, it already belongs to another menu (e.g. has a parent).');
         }
 
@@ -389,7 +386,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      * Returns the child menu identified by the given name
      *
      * @param  string $name  Then name of the child menu to return
-     * @return MenuItem|null
+     * @return \Knp\Menu\ItemInterface|null
      */
     public function getChild($name)
     {
@@ -399,21 +396,24 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Moves child to specified position. Rearange other children accordingly.
      *
-     * @param numeric $position Position to move child to.
-     *
+     * @param integer $position Position to move child to.
+     * @return \Knp\Menu\ItemInterface
      */
     public function moveToPosition($position)
     {
         $this->getParent()->moveChildToPosition($this, $position);
+
+        return $this;
     }
 
     /**
      * Moves child to specified position. Rearange other children accordingly.
      *
-     * @param MenuItem $child Child to move.
-     * @param numeric $position Position to move child to.
+     * @param \Knp\Menu\ItemInterface $child Child to move.
+     * @param integer $position Position to move child to.
+     * @return \Knp\Menu\ItemInterface
      */
-    public function moveChildToPosition(MenuItem $child, $position)
+    public function moveChildToPosition(ItemInterface $child, $position)
     {
         $name = $child->getName();
         $order = array_keys($this->children);
@@ -425,28 +425,35 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
 
         array_splice($order, $position, 0, $name);
         $this->reorderChildren($order);
+
+        return $this;
     }
 
     /**
      * Moves child to first position. Rearange other children accordingly.
+     *
+     * @return \Knp\Menu\ItemInterface
      */
     public function moveToFirstPosition()
     {
-        $this->moveToPosition(0);
+        return $this->moveToPosition(0);
     }
 
     /**
      * Moves child to last position. Rearange other children accordingly.
+     *
+     * @return \Knp\Menu\ItemInterface
      */
     public function moveToLastPosition()
     {
-        $this->moveToPosition($this->getParent()->count());
+        return $this->moveToPosition($this->getParent()->count());
     }
 
     /**
      * Reorder children.
      *
      * @param array $order New order of children.
+     * @return \Knp\Menu\ItemInterface
      */
     public function reorderChildren($order)
     {
@@ -456,9 +463,9 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
 
         $newChildren = array();
 
-        foreach($order as $name) {
+        foreach ($order as $name) {
             if (!isset($this->children[$name])) {
-                throw new \InvalidArgumentException('Cannot find children named '.$name);
+                throw new \InvalidArgumentException('Cannot find children named ' . $name);
             }
 
             $child = $this->children[$name];
@@ -467,19 +474,21 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
 
         $this->children = $newChildren;
         $this->resetChildrenNum();
+
+        return $this;
     }
 
     /**
      * Makes a deep copy of menu tree. Every item is copied as another object.
      *
-     * @return MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
     public function copy()
     {
         $newMenu = clone $this;
         $newMenu->children = array();
         $newMenu->setParent(null);
-        foreach($this->getChildren() as $child) {
+        foreach ($this->getChildren() as $child) {
             $newMenu->addChild($child->copy());
         }
 
@@ -514,9 +523,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
         if (is_numeric($offset)) {
             $offset = ($offset >= 0) ? $offset : $count + $offset;
             $from = (isset($names[$offset])) ? $names[$offset] : "";
-        }
-        else {
-            $child = ($offset instanceof MenuItem) ? $offset : $this->getChild($offset);
+        } else {
+            $child = ($offset instanceof ItemInterface) ? $offset : $this->getChild($offset);
             $offset = ($child) ? $child->getNum() : 0;
             $from = ($child) ? $child->getName() : "";
         }
@@ -524,14 +532,12 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
         if (is_numeric($length)) {
             if ($length == 0) {
                 $offset2 = $count - 1;
-            }
-            else {
+            } else {
                 $offset2 = ($length > 0) ? $offset + $length - 1 : $count - 1 + $length;
             }
             $to = (isset($names[$offset2])) ? $names[$offset2] : "";
-        }
-        else {
-            $to = ($length instanceof MenuItem) ? $length->getName() : $length;
+        } else {
+            $to = ($length instanceof ItemInterface) ? $length->getName() : $length;
         }
 
         return $this->sliceFromTo($from, $to);
@@ -544,7 +550,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @param string $offset Name of child.
      * @param string $length Name of child.
-     * @return MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
     private function sliceFromTo($from, $to)
     {
@@ -552,7 +558,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
         $newChildren = array();
 
         $copy = false;
-        foreach($newMenu->getChildren() as $child) {
+        foreach ($newMenu->getChildren() as $child) {
             if ($child->getName() == $from) {
                 $copy = true;
             }
@@ -582,7 +588,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     {
         $count = $this->count();
 
-        if (!is_numeric ($length)) {
+        if (!is_numeric($length)) {
             if (!($length instanceof MenuItem)) {
                 $length = $this->getChild($length);
             }
@@ -612,15 +618,14 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Returns the root MenuItem of this menu tree
      *
-     * @return MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
     public function getRoot()
     {
         $obj = $this;
         do {
             $found = $obj;
-        }
-        while ($obj = $obj->getParent());
+        } while ($obj = $obj->getParent());
 
         return $found;
     }
@@ -636,7 +641,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @return MenuItem|null
+     * @return \Knp\Menu\ItemInterface|null
      */
     public function getParent()
     {
@@ -646,16 +651,18 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Used internally when adding and removing children
      *
-     * @param MenuItem $parent
-     * @return MenuItem
+     * @param \Knp\Menu\ItemInterface $parent
+     * @return \Knp\Menu\ItemInterface
      */
-    public function setParent(MenuItem $parent = null)
+    public function setParent(ItemInterface $parent = null)
     {
-        return $this->parent = $parent;
+        $this->parent = $parent;
+
+        return $this;
     }
 
     /**
-     * @return array of MenuItem objects
+     * @return array of ItemInterface objects
      */
     public function getChildren()
     {
@@ -663,8 +670,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * @param  array $children An array of MenuItem objects
-     * @return MenuItem
+     * @param  array $children An array of ItemInterface objects
+     * @return \Knp\Menu\ItemInterface
      */
     public function setChildren(array $children)
     {
@@ -690,7 +697,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Primarily used internally to calculate first and last
      *
-     * @return void
+     * @param integer $num
      */
     public function setNum($num)
     {
@@ -718,8 +725,9 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      * @param string  $name
      * @param string  $uri
      * @param array   $attributes
+     * @param string  $class
      *
-     * @return MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
     protected function createChild($name, $uri = null, $attributes = array(), $class = null)
     {
@@ -734,6 +742,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      * Removes a child from this menu item
      *
      * @param mixed $name The name of MenuItem instance to remove
+     * @return \Knp\Menu\ItemInterface
      */
     public function removeChild($name)
     {
@@ -747,6 +756,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
 
             $this->resetChildrenNum();
         }
+
+        return $this;
     }
 
     /**
@@ -818,8 +829,8 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function getRenderer()
     {
-        if(null === $this->renderer) {
-            if($this->isRoot()) {
+        if (null === $this->renderer) {
+            if ($this->isRoot()) {
                 $this->setRenderer(new ListRenderer());
             }
             else {
@@ -882,8 +893,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
 
         do {
             $children[] = $obj->renderLabel();
-        }
-        while ($obj = $obj->getParent());
+        } while ($obj = $obj->getParent());
 
         return implode($separator, array_reverse($children));
     }
@@ -929,8 +939,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
         do {
             $label = $obj->renderLabel();
             $breadcrumbs[$label] = $obj->getUri();
-        }
-        while ($obj = $obj->getParent());
+        } while ($obj = $obj->getParent());
 
         return array_reverse($breadcrumbs);
     }
@@ -938,7 +947,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Returns the current menu item if it is a child of this menu item
      *
-     * @return bool|MenuItem
+     * @return bool|\Knp\Menu\ItemInterface
      */
     public function getCurrent()
     {
@@ -959,7 +968,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      * Set whether or not this menu item is "current"
      *
      * @param boolean $bool Specify that this menu item is current
-     * @return boolean
+     * @return \Knp\Menu\ItemInterface
      */
     public function setIsCurrent($bool)
     {
@@ -1133,7 +1142,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      * This will set the current uri on the root menu item, which all other
      * menu items will use
      *
-     * @return void
+     * @return \Knp\Menu\ItemInterface
      */
     public function setCurrentUri($uri)
     {
@@ -1142,16 +1151,21 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
         foreach ($this->getChildren() as $child) {
             $child->setCurrentUri($uri);
         }
+
+        return $this;
     }
 
     /**
      * Sets if the current item should render a link or not
      *
      * @param bool $currentAsLink
+     * @return \Knp\Menu\ItemInterface
      */
     public function setCurrentAsLink($currentAsLink = true)
     {
-        $this->currentAsLink = (bool)$currentAsLink;
+        $this->currentAsLink = (bool) $currentAsLink;
+
+        return $this;
     }
 
     /**
@@ -1167,14 +1181,13 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
         return $this->currentAsLink;
     }
 
-
     /**
      * Calls a method recursively on all of the children of this item
      *
      * @example
      * $menu->callRecursively('setShowChildren', false);
      *
-     * @return MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
     public function callRecursively()
     {
@@ -1200,10 +1213,10 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
     public function toArray($withChildren = true)
     {
         $fields = array(
-            'name'           => 'name',
-            'label'          => 'label',
-            'uri'            => 'uri',
-            'attributes'     => 'attributes'
+            'name' => 'name',
+            'label' => 'label',
+            'uri' => 'uri',
+            'attributes' => 'attributes'
         );
 
         $array = array();
@@ -1230,9 +1243,9 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      * Imports a menu item array into this menu item
      *
      * @param  array $array The menu item array
-     * @return MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
-    public function fromArray($array)
+    public function fromArray(array $array)
     {
         if (isset($array['name'])) {
             $this->setName($array['name']);
@@ -1274,7 +1287,7 @@ class MenuItem implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function getIterator()
     {
-        return new \ArrayObject($this->children);
+        return new \ArrayIterator($this->children);
     }
 
     /**

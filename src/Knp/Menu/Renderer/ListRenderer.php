@@ -1,7 +1,8 @@
 <?php
 
 namespace Knp\Menu\Renderer;
-use Knp\Menu\MenuItem;
+
+use \Knp\Menu\ItemInterface;
 
 /**
  * Renders MenuItem tree as unordered list
@@ -11,7 +12,7 @@ class ListRenderer extends Renderer implements RendererInterface
     /**
      * @see RendererInterface::render
      */
-    public function render(MenuItem $item, $depth = null)
+    public function render(ItemInterface $item, $depth = null)
     {
         return $this->doRender($item, $depth);
     }
@@ -19,13 +20,13 @@ class ListRenderer extends Renderer implements RendererInterface
     /**
      * Renders menu tree. Internal method.
      *
-     * @param MenuItem  $item        Menu item
+     * @param \Knp\Menu\ItemInterface  $item        Menu item
      * @param integer $depth         The depth of children to render
      * @param boolean $renderAsChild Render with attributes on the li (true) or the ul around the children (false)
      *
      * @return string
      */
-    protected function doRender(MenuItem $item, $depth = null, $renderAsChild = false)
+    protected function doRender(ItemInterface $item, $depth = null, $renderAsChild = false)
     {
         /**
          * Return an empty string if any of the following are true:
@@ -39,8 +40,7 @@ class ListRenderer extends Renderer implements RendererInterface
 
         if ($renderAsChild) {
             $attributes = array('class' => 'menu_level_'.$item->getLevel());
-        }
-        else {
+        } else {
             $attributes = $item->getAttributes();
         }
 
@@ -61,15 +61,17 @@ class ListRenderer extends Renderer implements RendererInterface
      * menu item to render themselves as an <li> tag (with nested ul if it
      * has children).
      *
+     * @param \Knp\Menu\ItemInterface $item
      * @param integer $depth The depth each child should render
      * @return string
      */
-    public function renderChildren($item, $depth = null)
+    public function renderChildren(ItemInterface $item, $depth = null)
     {
         $html = '';
         foreach ($item->getChildren() as $child) {
             $html .= $this->renderItem($child, $depth);
         }
+
         return $html;
     }
 
@@ -79,10 +81,11 @@ class ListRenderer extends Renderer implements RendererInterface
      * This renders the li tag to fit into the parent ul as well as its
      * own nested ul tag if this menu item has children
      *
+     * @param \Knp\Menu\ItemInterface $item
      * @param integer $depth The depth each child should render
      * @return string
      */
-    public function renderItem($item, $depth = null)
+    public function renderItem(ItemInterface $item, $depth = null)
     {
         // if we don't have access or this item is marked to not be shown
         if (!$item->shouldBeRendered()) {
@@ -94,8 +97,7 @@ class ListRenderer extends Renderer implements RendererInterface
 
         if ($item->getIsCurrent()) {
             $class[] = 'current';
-        }
-        elseif ($item->getIsCurrentAncestor($depth)) {
+        } elseif ($item->getIsCurrentAncestor($depth)) {
             $class[] = 'current_ancestor';
         }
 
@@ -136,21 +138,18 @@ class ListRenderer extends Renderer implements RendererInterface
      * the current item and if the text has to be rendered
      * as a link or not.
      *
-     * @param MenuItem $item The item to render the link or label for
+     * @param \Knp\Menu\ItemInterface $item The item to render the link or label for
      * @return string
      */
-    public function renderLink($item)
+    public function renderLink(ItemInterface $item)
     {
-        $text = '';
         if (!$item->getUri()) {
             $text = sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $item->renderLabel());
-        }
-        else {
+        } else {
             if (($item->getIsCurrent() && $item->getParent()->getCurrentAsLink())
                 || !$item->getIsCurrent()) {
                 $text = sprintf('<a href="%s"%s>%s</a>', $item->getUri(), $this->renderHtmlAttributes($item->getLinkAttributes()), $item->renderLabel());
-            }
-            else {
+            } else {
                 $text = sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $item->renderLabel());
             }
         }
@@ -165,6 +164,7 @@ class ListRenderer extends Renderer implements RendererInterface
      *
      * @param  string $html The html to render in an (un)formatted way
      * @param  string $type The type [ul,link,li] of thing being rendered
+     * @param integer $level
      * @return string
      */
     protected function format($html, $type, $level)

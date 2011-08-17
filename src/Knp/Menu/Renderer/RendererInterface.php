@@ -1,7 +1,8 @@
 <?php
 
 namespace Knp\Menu\Renderer;
-use Knp\Menu\MenuItem;
+
+use \Knp\Menu\ItemInterface;
 
 interface RendererInterface
 {
@@ -13,10 +14,10 @@ interface RendererInterface
    *   * 1 - directly children only
    *   * 2 - children and grandchildren
    *
-   * @param MenuItem    $item         Menu item
+   * @param \Knp\Menu\ItemInterface    $item         Menu item
    * @param integer     $depth        The depth of children to render
    *
    * @return string
    */
-  public function render(MenuItem $item, $depth = null);
+  public function render(ItemInterface $item, $depth = null);
 }

@@ -40,10 +40,9 @@ class Menu extends MenuItem
     /**
      * Overridden to specify what the child class should be
      */
-    protected function createChild($name, $route = null, $attributes = array(), $class = null)
+    protected function createChild($name, $route = null, array $attributes = array(), $class = null)
     {
-        if (null === $class)
-        {
+        if (null === $class) {
             $class = $this->childClass;
         }
 

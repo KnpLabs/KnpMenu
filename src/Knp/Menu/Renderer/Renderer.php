@@ -14,11 +14,11 @@ abstract class Renderer
 
     public function __construct($charset = null, $renderCompressed = null)
     {
-        if(null !== $charset) {
+        if (null !== $charset) {
             $this->charset = (string) $charset;
         }
 
-        if(null !== $renderCompressed) {
+        if (null !== $renderCompressed) {
             $this->renderCompressed = (boolean) $renderCompressed;
         }
     }

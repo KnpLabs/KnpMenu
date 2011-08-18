@@ -1,134 +1,190 @@
 <?php
 
 namespace Knp\Menu\Tests;
+
 use Knp\Menu\MenuItem;
 
 class TestMenuItem extends MenuItem {}
 
 class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var \Knp\Menu\MenuItem
+     */
+    private $menu;
+
+    /**
+     * @var \Knp\Menu\MenuItem
+     */
+    private $pt1;
+
+    /**
+     * @var \Knp\Menu\MenuItem
+     */
+    private $ch1;
+
+    /**
+     * @var \Knp\Menu\MenuItem
+     */
+    private $ch2;
+
+    /**
+     * @var \Knp\Menu\MenuItem
+     */
+    private $ch3;
+
+    /**
+     * @var \Knp\Menu\MenuItem
+     */
+    private $pt2;
+
+    /**
+     * @var \Knp\Menu\MenuItem
+     */
+    private $ch4;
+
+    /**
+     * @var \Knp\Menu\MenuItem
+     */
+    private $gc1;
+
+    public function setUp()
+    {
+        $this->menu = new MenuItem('Root li', null, array('class' => 'root'));
+        $this->pt1 = $this->menu->addChild('Parent 1');
+        $this->ch1 = $this->pt1->addChild('Child 1');
+        $this->ch2 = $this->pt1->addChild('Child 2');
+
+        // add the 3rd child via addChild with an object
+        $this->ch3 = new MenuItem('Child 3');
+        $this->pt1->addChild($this->ch3);
+
+        $this->pt2 = $this->menu->addChild('Parent 2');
+        $this->ch4 = $this->pt2->addChild('Child 4');
+        $this->gc1 = $this->ch4->addChild('Grandchild 1');
+    }
+
+    public function tearDown()
+    {
+        $this->menu = null;
+        $this->pt1 = null;
+        $this->ch1 = null;
+        $this->ch2 = null;
+        $this->ch3 = null;
+        $this->pt2 = null;
+        $this->ch4 = null;
+        $this->gc1 = null;
+    }
 
     public function testSampleTreeIntegrity()
     {
-        extract($this->getSampleTree());
-
-        $this->assertEquals(2, count($menu));
-        $this->assertEquals(3, count($menu['Parent 1']));
-        $this->assertEquals(1, count($menu['Parent 2']));
-        $this->assertEquals(1, count($menu['Parent 2']['Child 4']));
-        $this->assertEquals('Grandchild 1', $menu['Parent 2']['Child 4']['Grandchild 1']->getName());
+        $this->assertEquals(2, count($this->menu));
+        $this->assertEquals(3, count($this->menu['Parent 1']));
+        $this->assertEquals(1, count($this->menu['Parent 2']));
+        $this->assertEquals(1, count($this->menu['Parent 2']['Child 4']));
+        $this->assertEquals('Grandchild 1', $this->menu['Parent 2']['Child 4']['Grandchild 1']->getName());
     }
 
     public function testChildrenHaveParentClass()
     {
-        $class = 'Knp\Menu\Tests\TestMenuItem';
-        extract($this->getSampleTree($class));
+        $menu = new TestMenuItem('Root li', null, array('class' => 'root'));
+        $pt1 = $menu->addChild('Parent 1');
+        $ch1 = $pt1->addChild('Child 1');
+        $ch2 = $pt1->addChild('Child 2');
 
-        $this->assertTrue($pt1 instanceof $class);
-        $this->assertTrue($ch1 instanceof $class);
+        $this->assertInstanceOf('Knp\Menu\Tests\TestMenuItem', $pt1);
+        $this->assertInstanceOf('Knp\Menu\Tests\TestMenuItem', $ch1);
     }
 
     public function testGetLevel()
     {
-        extract($this->getSampleTree());
-        $this->assertEquals(0, $menu->getLevel());
-        $this->assertEquals(1, $pt1->getLevel());
-        $this->assertEquals(1, $pt2->getLevel());
-        $this->assertEquals(2, $ch4->getLevel());
-        $this->assertEquals(3, $gc1->getLevel());
+        $this->assertEquals(0, $this->menu->getLevel());
+        $this->assertEquals(1, $this->pt1->getLevel());
+        $this->assertEquals(1, $this->pt2->getLevel());
+        $this->assertEquals(2, $this->ch4->getLevel());
+        $this->assertEquals(3, $this->gc1->getLevel());
     }
 
     public function testGetRoot()
     {
-        extract($this->getSampleTree());
-        $this->assertEquals($menu, $menu->getRoot());
-        $this->assertEquals($menu, $pt1->getRoot());
-        $this->assertEquals($menu, $gc1->getRoot());
+        $this->assertSame($this->menu, $this->menu->getRoot());
+        $this->assertSame($this->menu, $this->pt1->getRoot());
+        $this->assertSame($this->menu, $this->gc1->getRoot());
     }
 
     public function testIsRoot()
     {
-        extract($this->getSampleTree());
-        $this->assertTrue($menu->isRoot());
-        $this->assertFalse($pt1->isRoot());
-        $this->assertFalse($ch3->isRoot());
+        $this->assertTrue($this->menu->isRoot());
+        $this->assertFalse($this->pt1->isRoot());
+        $this->assertFalse($this->ch3->isRoot());
     }
 
     public function testGetParent()
     {
-        extract($this->getSampleTree());
-        $this->assertEquals(null, $menu->getParent());
-        $this->assertEquals($menu, $pt1->getParent());
-        $this->assertEquals($ch4, $gc1->getParent());
+        $this->assertNull($this->menu->getParent());
+        $this->assertSame($this->menu, $this->pt1->getParent());
+        $this->assertSame($this->ch4, $this->gc1->getParent());
     }
 
     public function testMoveSampleMenuToNewRoot()
     {
-        extract($this->getSampleTree());
         $newRoot = new TestMenuItem("newRoot");
-        $newRoot->addChild($menu);
+        $newRoot->addChild($this->menu);
 
-        $this->assertEquals(1, $menu->getLevel());
-        $this->assertEquals(2, $pt1->getLevel());
+        $this->assertEquals(1, $this->menu->getLevel());
+        $this->assertEquals(2, $this->pt1->getLevel());
 
-        $this->assertEquals($newRoot, $menu->getRoot());
-        $this->assertEquals($newRoot, $pt1->getRoot());
-        $this->assertFalse($menu->isRoot());
+        $this->assertSame($newRoot, $this->menu->getRoot());
+        $this->assertSame($newRoot, $this->pt1->getRoot());
+        $this->assertFalse($this->menu->isRoot());
         $this->assertTrue($newRoot->isRoot());
-        $this->assertEquals($newRoot, $menu->getParent());
+        $this->assertSame($newRoot, $this->menu->getParent());
     }
 
     public function testIsFirst()
     {
-        extract($this->getSampleTree());
-        $this->assertTrue($pt1->isFirst());
-        $this->assertFalse($pt2->isFirst());
-        $this->assertTrue($ch4->isFirst());
+        $this->assertTrue($this->pt1->isFirst());
+        $this->assertFalse($this->pt2->isFirst());
+        $this->assertTrue($this->ch4->isFirst());
     }
 
     public function testIsLast()
     {
-        extract($this->getSampleTree());
-        $this->assertFalse($pt1->isLast());
-        $this->assertTrue($pt2->isLast());
-        $this->assertTrue($ch4->isLast());
+        $this->assertFalse($this->pt1->isLast());
+        $this->assertTrue($this->pt2->isLast());
+        $this->assertTrue($this->ch4->isLast());
     }
 
     public function testArrayAccess()
     {
-        extract($this->getSampleTree());
+        $this->menu->addChild('Child Menu');
+        $this->assertEquals('Child Menu', $this->menu['Child Menu']->getName());
+        $this->assertNull($this->menu['Fake']);
 
-        $menu->addChild('Child Menu');
-        $this->assertEquals('Child Menu', $menu['Child Menu']->getName());
-        $this->assertEquals(null, $menu['Fake']);
+        $this->menu['New Child'] = 'New Label';
+        $this->assertEquals('Knp\Menu\MenuItem', get_class($this->menu['New Child']));
+        $this->assertEquals('New Child', $this->menu['New Child']->getName());
+        $this->assertEquals('New Label', $this->menu['New Child']->getLabel());
 
-        $menu['New Child'] = 'New Label';
-        $this->assertEquals('Knp\Menu\MenuItem', get_class($menu['New Child']));
-        $this->assertEquals('New Child', $menu['New Child']->getName());
-        $this->assertEquals('New Label', $menu['New Child']->getLabel());
-
-        unset($menu['New Child']);
-        $this->assertEquals(null, $menu['New Child']);
+        unset($this->menu['New Child']);
+        $this->assertNull($this->menu['New Child']);
     }
 
     public function testCountable()
     {
-        extract($this->getSampleTree());
-        $this->assertEquals(2, count($menu));
+        $this->assertEquals(2, count($this->menu));
 
-        $menu->addChild('New Child');
-        $this->assertEquals(3, count($menu));
+        $this->menu->addChild('New Child');
+        $this->assertEquals(3, count($this->menu));
 
-        unset($menu['New Child']);
-        $this->assertEquals(2, count($menu));
+        unset($this->menu['New Child']);
+        $this->assertEquals(2, count($this->menu));
     }
 
     public function testIterator()
     {
-        extract($this->getSampleTree());
         $count = 0;
-        foreach ($pt1 as $key => $value)
-        {
+        foreach ($this->pt1 as $key => $value) {
             $count++;
             $this->assertEquals('Child '.$count, $key);
             $this->assertEquals('Child '.$count, $value->getLabel());
@@ -137,33 +193,39 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
 
     public function testGetChildren()
     {
-        extract($this->getSampleTree());
-        $children = $ch4->getChildren();
+        $children = $this->ch4->getChildren();
         $this->assertEquals(1, count($children));
-        $this->assertEquals($gc1->getName(), $children['Grandchild 1']->getName());
+        $this->assertEquals($this->gc1->getName(), $children['Grandchild 1']->getName());
     }
 
     public function testGetFirstChild()
     {
-        extract($this->getSampleTree());
-        $this->assertEquals($pt1, $menu->getFirstChild());
+        $this->assertSame($this->pt1, $this->menu->getFirstChild());
         // test for bug in getFirstChild implementation (when internal array pointer is changed getFirstChild returns wrong child)
-        foreach ($menu->getChildren() as $c);
-        $this->assertEquals($pt1, $menu->getFirstChild());
+        foreach ($this->menu->getChildren() as $c);
+        $this->assertSame($this->pt1, $this->menu->getFirstChild());
     }
 
     public function testGetLastChild()
     {
-        extract($this->getSampleTree());
-        $this->assertEquals($pt2, $menu->getLastChild());
+        $this->assertSame($this->pt2, $this->menu->getLastChild());
         // test for bug in getFirstChild implementation (when internal array pointer is changed getLastChild returns wrong child)
-        foreach ($menu->getChildren() as $c);
-        $this->assertEquals($pt2, $menu->getLastChild());
+        foreach ($this->menu->getChildren() as $c);
+        $this->assertSame($this->pt2, $this->menu->getLastChild());
     }
 
     public function testAddChild()
     {
-        extract($this->getSampleTree('Knp\Menu\Tests\TestMenuItem'));
+        // Setup the tree with a different class
+        $menu = new TestMenuItem('Root li', null, array('class' => 'root'));
+        $pt1 = $menu->addChild('Parent 1');
+        $ch1 = $pt1->addChild('Child 1');
+        $ch2 = $pt1->addChild('Child 2');
+        $ch3 = new TestMenuItem('Child 3');
+        $pt1->addChild($ch3);
+        $pt2 = $menu->addChild('Parent 2');
+        $ch4 = $pt2->addChild('Child 4');
+        $gc1 = $ch4->addChild('Grandchild 1');
 
         // a) Add a child (gc2) to ch4 via ->addChild().
         $gc2 = $ch4->addChild('gc2');
@@ -181,62 +243,54 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(3, count($ch4->getChildren()));
 
         // d) Try to add gc3 again, should throw an exception.
-        try
-        {
+        try {
             $pt1->addChild($gc3);
-            $this->assertTrue(false);
-        }
-        catch (\LogicException $e)
-        {
+            $this->fail();
+        } catch (\LogicException $e) {
             $this->assertTrue(true);
         }
     }
 
     public function testGetChild()
     {
-        extract($this->getSampleTree());
-        $this->assertEquals($gc1, $ch4->getChild('Grandchild 1'));
-        $this->assertEquals(null, $ch4->getChild('nonexistentchild'));
+        $this->assertSame($this->gc1, $this->ch4->getChild('Grandchild 1'));
+        $this->assertNull($this->ch4->getChild('nonexistentchild'));
     }
 
     public function testRemoveChild()
     {
-        extract($this->getSampleTree());
-        $gc2 = $ch4->addChild('gc2');
-        $gc3 = $ch4->addChild('gc3');
-        $gc4 = $ch4->addChild('gc4');
-        $this->assertEquals(4, count($ch4));
-        $ch4->removeChild('gc4');
-        $this->assertEquals(3, count($ch4));
-        $this->assertTrue($ch4->getChild('Grandchild 1')->isFirst());
-        $this->assertTrue($ch4->getChild('gc3')->isLast());
+        $gc2 = $this->ch4->addChild('gc2');
+        $gc3 = $this->ch4->addChild('gc3');
+        $gc4 = $this->ch4->addChild('gc4');
+        $this->assertEquals(4, count($this->ch4));
+        $this->ch4->removeChild('gc4');
+        $this->assertEquals(3, count($this->ch4));
+        $this->assertTrue($this->ch4->getChild('Grandchild 1')->isFirst());
+        $this->assertTrue($this->ch4->getChild('gc3')->isLast());
     }
 
     public function testRemoveFakeChild()
     {
-        extract($this->getSampleTree());
-        $menu->removeChild('fake');
-        $this->assertEquals(2, count($menu));
+        $this->menu->removeChild('fake');
+        $this->assertEquals(2, count($this->menu));
     }
 
     public function testReAddRemovedChild()
     {
-        extract($this->getSampleTree());
-        $gc2 = $ch4->addChild('gc2');
-        $ch4->removeChild('gc2');
-        $menu->addChild($gc2);
-        $this->assertEquals(3, count($menu));
+        $gc2 = $this->ch4->addChild('gc2');
+        $this->ch4->removeChild('gc2');
+        $this->menu->addChild($gc2);
+        $this->assertEquals(3, count($this->menu));
         $this->assertTrue($gc2->isLast());
-        $this->assertFalse($pt2->isLast());
+        $this->assertFalse($this->pt2->isLast());
     }
 
     public function testUpdateChildAfterRename()
     {
-        extract($this->getSampleTree());
-        $pt1->setName('Temp name');
-        $this->assertEquals($pt1, $menu->getChild('Temp name'));
-        $this->assertEquals(array('Temp name', 'Parent 2'), array_keys($menu->getChildren()));
-        $this->assertNull($menu->getChild('Parent 1'));
+        $this->pt1->setName('Temp name');
+        $this->assertSame($this->pt1, $this->menu->getChild('Temp name'));
+        $this->assertEquals(array('Temp name', 'Parent 2'), array_keys($this->menu->getChildren()));
+        $this->assertNull($this->menu->getChild('Parent 1'));
     }
 
     /**
@@ -244,106 +298,70 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
      */
     public function testRenameToExistingSiblingNameThrowAnException()
     {
-        extract($this->getSampleTree());
-        $pt1->setName('Parent 2');
+        $this->pt1->setName('Parent 2');
     }
 
     public function testGetSetCurrentUri()
     {
-        extract($this->getSampleTreeWithExternalUrl());
-        $this->assertEquals(null, $menu->getCurrentUri());
-        $menu->setCurrentUri('http://symfony-reloaded.org/');
-        $this->assertEquals('http://symfony-reloaded.org/', $menu->getCurrentUri());
-        $this->assertEquals('http://symfony-reloaded.org/', $menu['child']->getCurrentUri());
+        $this->addChildWithExternalUrl();
+        $this->assertNull($this->menu->getCurrentUri());
+        $this->menu->setCurrentUri('http://symfony-reloaded.org/');
+        $this->assertEquals('http://symfony-reloaded.org/', $this->menu->getCurrentUri());
+        $this->assertEquals('http://symfony-reloaded.org/', $this->menu['child']->getCurrentUri());
     }
 
     public function testChildrenCurrentUri()
     {
-        extract($this->getSampleTreeWithExternalUrl());
-        $menu->setCurrentUri('http://symfony-reloaded.org/');
-        $menu->addChild('test_child', 'http://php.net/');
-        $this->assertEquals('http://symfony-reloaded.org/', $menu['test_child']->getCurrentUri());
+        $this->addChildWithExternalUrl();
+        $this->menu->setCurrentUri('http://symfony-reloaded.org/');
+        $this->menu->addChild('test_child', 'http://php.net/');
+        $this->assertEquals('http://symfony-reloaded.org/', $this->menu['test_child']->getCurrentUri());
     }
 
     public function testGetIsCurrentWhenCurrentUriIsNotSet()
     {
-        extract($this->getSampleTreeWithExternalUrl());
-        $this->assertFalse($menu['child']->getIsCurrent());
+        $this->addChildWithExternalUrl();
+        $this->assertFalse($this->menu['child']->getIsCurrent());
     }
 
     public function testGetIsCurrentWhenCurrentUriIsSet()
     {
-        extract($this->getSampleTreeWithExternalUrl());
-        $menu->setCurrentUri('http://www.symfony-reloaded.org');
-        $this->assertTrue($menu['child']->getIsCurrent());
-        $this->assertFalse($pt1->getIsCurrent());
+        $this->addChildWithExternalUrl();
+        $this->menu->setCurrentUri('http://www.symfony-reloaded.org');
+        $this->assertTrue($this->menu['child']->getIsCurrent());
+        $this->assertFalse($this->pt1->getIsCurrent());
     }
 
     public function testGetIsCurrentAncestor()
     {
-        extract($this->getSampleTreeWithExternalUrl());
-        $menu->setCurrentUri('http://php.net');
-        $pt1->setUri('http://php.net');
-        $this->assertFalse($pt1->getIsCurrentAncestor());
-        $this->assertTrue($menu->getIsCurrentAncestor());
+        $this->addChildWithExternalUrl();
+        $this->menu->setCurrentUri('http://php.net');
+        $this->pt1->setUri('http://php.net');
+        $this->assertFalse($this->pt1->getIsCurrentAncestor());
+        $this->assertTrue($this->menu->getIsCurrentAncestor());
     }
 
     public function testDeepGetIsCurrentAncestor()
     {
-        extract($this->getSampleTreeWithExternalUrl());
-        $menu->setCurrentUri('http://php.net');
-        $gc1->setUri('http://php.net');
-        $this->assertFalse($pt1->getIsCurrentAncestor());
-        $this->assertTrue($menu->getIsCurrentAncestor());
-        $this->assertTrue($pt2->getIsCurrentAncestor());
-        $this->assertTrue($ch4->getIsCurrentAncestor());
+        $this->addChildWithExternalUrl();
+        $this->menu->setCurrentUri('http://php.net');
+        $this->gc1->setUri('http://php.net');
+        $this->assertFalse($this->pt1->getIsCurrentAncestor());
+        $this->assertTrue($this->menu->getIsCurrentAncestor());
+        $this->assertTrue($this->pt2->getIsCurrentAncestor());
+        $this->assertTrue($this->ch4->getIsCurrentAncestor());
     }
 
     public function testGetUri()
     {
-        extract($this->getSampleTreeWithExternalUrl());
-        $this->assertEquals(null, $pt1->getUri());
-        $this->assertEquals('http://www.symfony-reloaded.org', $menu['child']->getUri());
+        $this->addChildWithExternalUrl();
+        $this->assertNull($this->pt1->getUri());
+        $this->assertEquals('http://www.symfony-reloaded.org', $this->menu['child']->getUri());
     }
 
-    public function getSampleTreeWithExternalUrl($class = 'Knp\Menu\MenuItem')
+    protected function addChildWithExternalUrl()
     {
-        $items = $this->getSampleTree($class);
-        $items['menu']->addChild('child', 'http://www.symfony-reloaded.org');
-
-        return $items;
-    }
-
-    /**
-     * @return array the tree items
-     */
-    protected function getSampleTree($class = 'Knp\Menu\MenuItem')
-    {
-        $menu = new $class('Root li', null, array('class' => 'root'));
-        $pt1 = $menu->addChild('Parent 1');
-        $ch1 = $pt1->addChild('Child 1');
-        $ch2 = $pt1->addChild('Child 2');
-
-        // add the 3rd child via addChild with an object
-        $ch3 = new $class('Child 3');
-        $pt1->addChild($ch3);
-
-        $pt2 = $menu->addChild('Parent 2');
-        $ch4 = $pt2->addChild('Child 4');
-        $gc1 = $ch4->addChild('Grandchild 1');
-
-        $items = array(
-            'menu'  => $menu,
-            'pt1'   => $pt1,
-            'pt2'   => $pt2,
-            'ch1'   => $ch1,
-            'ch2'   => $ch2,
-            'ch3'   => $ch3,
-            'ch4'   => $ch4,
-            'gc1'   => $gc1,
-        );
-
-        return $items;
+        $this->menu->addChild('child', 'http://www.symfony-reloaded.org');
     }
 
     // prints a visual representation of our basic testing tree

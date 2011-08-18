@@ -12,8 +12,10 @@ class ListRenderer extends Renderer implements RendererInterface
     /**
      * @see RendererInterface::render
      */
-    public function render(ItemInterface $item, $depth = null)
+    public function render(ItemInterface $item, array $options = array())
     {
+        $depth = isset($options['depth']) ? $options['depth'] : null;
+
         return $this->doRender($item, $depth);
     }
 

@@ -216,25 +216,25 @@ class ListRendererTest extends \PHPUnit_Framework_TestCase
     public function testDepth0()
     {
         $rendered = '';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, 0));
+        $this->assertEquals($rendered, $this->renderer->render($this->menu, array('depth' => 0)));
     }
 
     public function testDepth1()
     {
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, 1));
+        $this->assertEquals($rendered, $this->renderer->render($this->menu, array('depth' => 1)));
     }
 
     public function testDepth2()
     {
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span><ul class="menu_level_1"><li class="first"><span>Child 1</span></li><li><span>Child 2</span></li><li class="last"><span>Child 3</span></li></ul></li><li class="last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span></li></ul></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, 2));
+        $this->assertEquals($rendered, $this->renderer->render($this->menu, array('depth' => 2)));
     }
 
     public function testDepth2WithNotShowChildChildren()
     {
         $this->menu['Parent 1']->setShowChildren(false);
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span></li></ul></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, 2));
+        $this->assertEquals($rendered, $this->renderer->render($this->menu, array('depth' => 2)));
     }
 }

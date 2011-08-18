@@ -809,7 +809,7 @@ class MenuItem implements ItemInterface
      */
     public function render($depth = null)
     {
-        return $this->getRenderer()->render($this, $depth);
+        return $this->getRenderer()->render($this, array('depth' => $depth));
     }
 
     /**

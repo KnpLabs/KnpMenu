@@ -746,7 +746,7 @@ class MenuItem implements ItemInterface
      */
     public function removeChild($name)
     {
-        $name = ($name instanceof MenuItem) ? $name->getName() : $name;
+        $name = ($name instanceof ItemInterface) ? $name->getName() : $name;
 
         if (isset($this->children[$name])) {
             // unset the child and reset it so it looks independent

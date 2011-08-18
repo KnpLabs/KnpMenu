@@ -503,79 +503,44 @@ class MenuItem implements ItemInterface
      *   If offset is non-negative, slice will start at the offset.
      *   If offset is negative, slice will start that far from the end.
      *
-     *   If length is zero, slice will have all elements.
+     *   If length is null, slice will have all elements.
      *   If length is positive, slice will have that many elements.
      *   If length is negative, slice will stop that far from the end.
      *
      * It's possible to mix names/object/numeric, for example:
      *   slice("child1", 2);
      *   slice(3, $child5);
+     * Note: when using a child as limit, it will not be included in the returned menu.
+     * the slice is done before this menu.
      *
      * @param mixed $offset Name of child, child object, or numeric offset.
      * @param mixed $length Name of child, child object, or numeric length.
-     * @return MenuItem Slice of menu.
-     */
-    public function slice($offset, $length = 0)
-    {
-        $count = $this->count();
-
-        $names = array_keys($this->getChildren());
-        if (is_numeric($offset)) {
-            $offset = ($offset >= 0) ? $offset : $count + $offset;
-            $from = (isset($names[$offset])) ? $names[$offset] : "";
-        } else {
-            $child = ($offset instanceof ItemInterface) ? $offset : $this->getChild($offset);
-            $offset = ($child) ? $child->getNum() : 0;
-            $from = ($child) ? $child->getName() : "";
-        }
-
-        if (is_numeric($length)) {
-            if ($length == 0) {
-                $offset2 = $count - 1;
-            } else {
-                $offset2 = ($length > 0) ? $offset + $length - 1 : $count - 1 + $length;
-            }
-            $to = (isset($names[$offset2])) ? $names[$offset2] : "";
-        } else {
-            $to = ($length instanceof ItemInterface) ? $length->getName() : $length;
-        }
-
-        return $this->sliceFromTo($from, $to);
-    }
-
-    /**
-     * Get slice of menu as another menu.
-     *
-     * Internal method.
-     *
-     * @param string $offset Name of child.
-     * @param string $length Name of child.
      * @return \Knp\Menu\ItemInterface
      */
-    private function sliceFromTo($from, $to)
+    public function slice($offset, $length = null)
     {
-        $newMenu = $this->copy();
-        $newChildren = array();
-
-        $copy = false;
-        foreach ($newMenu->getChildren() as $child) {
-            if ($child->getName() == $from) {
-                $copy = true;
-            }
-
-            if ($copy == true) {
-                $newChildren[$child->getName()] = $child;
-            }
-
-            if ($child->getName() == $to) {
-                break;
-            }
+        $names = array_keys($this->getChildren());
+        if ($offset instanceof ItemInterface) {
+            $offset = $offset->getName();
+        }
+        if (!is_numeric($offset)) {
+            $offset = array_search($offset, $names);
         }
 
-        $newMenu->setChildren($newChildren);
-        $newMenu->resetChildrenNum();
+        if (null !== $length) {
+            if ($length instanceof ItemInterface) {
+                $length = $length->getName();
+            }
+            if (!is_numeric($length)) {
+                $index = array_search($length, $names);
+                $length = ($index < $offset) ? 0 : $index - $offset;
+            }
+        }
+        $item = $this->copy();
+        $children =  array_slice($item->getChildren(), $offset, $length);
+        $item->setChildren($children);
 
-        return $newMenu;
+        return $item;
     }
 
     /**
@@ -586,16 +551,6 @@ class MenuItem implements ItemInterface
      */
     public function split($length)
     {
-        $count = $this->count();
-
-        if (!is_numeric($length)) {
-            if (!($length instanceof MenuItem)) {
-                $length = $this->getChild($length);
-            }
-
-            $length = ($length != null) ? $length->getNum() + 1 : $count;
-        }
-
         $ret = array();
         $ret['primary'] = $this->slice(0, $length);
         $ret['secondary'] = $this->slice($length);

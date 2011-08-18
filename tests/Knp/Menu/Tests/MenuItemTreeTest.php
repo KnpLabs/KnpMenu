@@ -374,10 +374,11 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
         $this->setUp();
         return array(
             'numeric offset and numeric length' => array(0, 2, 2, array($this->ch1->getName(), $this->ch2->getName())),
+            'numeric offset and no length' => array(0, null, 3, array($this->ch1->getName(), $this->ch2->getName(), $this->ch3->getName())),
             'named offset and no length' => array('Child 2', null, 2, array($this->ch2->getName(), $this->ch3->getName())),
             'child offset and no length' => array($this->ch3, null, 1, array($this->ch3->getName())),
-            'numeric offset and named length' => array(0, 'Child 2', 2, array($this->ch1->getName(), $this->ch2->getName())),
-            'numeric offset and child length' => array(0, $this->ch2, 2, array($this->ch1->getName(), $this->ch2->getName())),
+            'numeric offset and named length' => array(0, 'Child 3', 2, array($this->ch1->getName(), $this->ch2->getName())),
+            'numeric offset and child length' => array(0, $this->ch3, 2, array($this->ch1->getName(), $this->ch2->getName())),
         );
     }
 

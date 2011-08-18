@@ -282,6 +282,8 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * It's possible to mix names/object/numeric, for example:
      *   slice("child1", 2);
      *   slice(3, $child5);
+     * Note: when using a child as limit, it will not be included in the returned menu.
+     * the slice is done before this menu.
      *
      * @param mixed $offset Name of child, child object, or numeric offset.
      * @param mixed $length Name of child, child object, or numeric length.

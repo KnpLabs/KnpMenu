@@ -359,6 +359,28 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('http://www.symfony-reloaded.org', $this->menu['child']->getUri());
     }
 
+    /**
+     * @dataProvider getSliceData
+     */
+    public function testSlice($offset, $length, $count, $keys)
+    {
+        $sliced = $this->pt1->slice($offset, $length);
+        $this->assertEquals($count, count($sliced));
+        $this->assertEquals($keys, array_keys($sliced->getChildren()));
+    }
+
+    public function getSliceData()
+    {
+        $this->setUp();
+        return array(
+            'numeric offset and numeric length' => array(0, 2, 2, array($this->ch1->getName(), $this->ch2->getName())),
+            'named offset and no length' => array('Child 2', null, 2, array($this->ch2->getName(), $this->ch3->getName())),
+            'child offset and no length' => array($this->ch3, null, 1, array($this->ch3->getName())),
+            'numeric offset and named length' => array(0, 'Child 2', 2, array($this->ch1->getName(), $this->ch2->getName())),
+            'numeric offset and child length' => array(0, $this->ch2, 2, array($this->ch1->getName(), $this->ch2->getName())),
+        );
+    }
+
     protected function addChildWithExternalUrl()
     {
         $this->menu->addChild('child', 'http://www.symfony-reloaded.org');

@@ -30,7 +30,6 @@ class MenuItem implements ItemInterface
      * Metadata on this menu item
      */
     protected $children = array(); // an array of MenuItem children
-    protected $num = null; // the order number this menu is in its parent
     protected $parent = null; // parent MenuItem
     protected $isCurrent = null; // whether or not this menu item is current
     protected $currentUri = null; // the current uri to use for selecting current menu
@@ -375,7 +374,6 @@ class MenuItem implements ItemInterface
         $child->setParent($this);
         $child->setShowChildren($this->getShowChildren());
         $child->setCurrentUri($this->getCurrentUri());
-        $child->setNum($this->count());
 
         $this->children[$child->getName()] = $child;
 
@@ -473,7 +471,6 @@ class MenuItem implements ItemInterface
         }
 
         $this->children = $newChildren;
-        $this->resetChildrenNum();
 
         return $this;
     }
@@ -636,45 +633,6 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * Returns the index that this child is within its parent.
-     *
-     * Primarily used internally to calculate first and last
-     *
-     * @return integer
-     */
-    public function getNum()
-    {
-        return $this->num;
-    }
-
-    /**
-     * Sets the index that this child is within its parent.
-     *
-     * Primarily used internally to calculate first and last
-     *
-     * @param integer $num
-     */
-    public function setNum($num)
-    {
-        $this->num = $num;
-    }
-
-    /**
-     * Reset children nums.
-     *
-     * Primarily called after changes to children (removing, reordering, etc)
-     *
-     * @return void
-     */
-    protected function resetChildrenNum()
-    {
-        $i = 0;
-        foreach ($this->children as $child) {
-            $child->setNum($i++);
-        }
-    }
-
-    /**
      * Creates a new MenuItem to be the child of this menu
      *
      * @param string  $name
@@ -706,10 +664,7 @@ class MenuItem implements ItemInterface
         if (isset($this->children[$name])) {
             // unset the child and reset it so it looks independent
             $this->children[$name]->setParent(null);
-            $this->children[$name]->setNum(null);
             unset($this->children[$name]);
-
-            $this->resetChildrenNum();
         }
 
         return $this;
@@ -973,7 +928,7 @@ class MenuItem implements ItemInterface
             return false;
         }
 
-        return $this->getNum() == $this->getParent()->count() - 1 ? true : false;
+        return $this->getParent()->getLastChild() === $this;
     }
 
     /**
@@ -986,7 +941,7 @@ class MenuItem implements ItemInterface
             return false;
         }
 
-        return ($this->getNum() == 0);
+        return $this->getParent()->getFirstChild() === $this;
     }
 
     /**

@@ -146,13 +146,13 @@ class ListRenderer extends Renderer implements RendererInterface
     public function renderLink(ItemInterface $item)
     {
         if (!$item->getUri()) {
-            $text = sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $item->renderLabel());
+            $text = sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $item->getLabel());
         } else {
             if (($item->getIsCurrent() && $item->getParent()->getCurrentAsLink())
                 || !$item->getIsCurrent()) {
-                $text = sprintf('<a href="%s"%s>%s</a>', $item->getUri(), $this->renderHtmlAttributes($item->getLinkAttributes()), $item->renderLabel());
+                $text = sprintf('<a href="%s"%s>%s</a>', $item->getUri(), $this->renderHtmlAttributes($item->getLinkAttributes()), $item->getLabel());
             } else {
-                $text = sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $item->renderLabel());
+                $text = sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $item->getLabel());
             }
         }
 

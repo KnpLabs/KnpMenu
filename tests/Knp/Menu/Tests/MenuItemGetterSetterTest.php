@@ -46,6 +46,14 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('menu label', $menu->getLabel());
     }
 
+    public function testNameIsUsedAsDefaultLabel()
+    {
+        $menu = $this->createMenu('My Label');
+        $this->assertEquals('My Label', $menu->getLabel());
+        $menu->setLabel('Other Label');
+        $this->assertEquals('Other Label', $menu->getLabel());
+    }
+
     public function testUri()
     {
         $menu = $this->createMenu();
@@ -115,14 +123,6 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
         $child = $this->createMenu('child_menu');
         $menu->setChildren(array($child));
         $this->assertEquals(array($child), $menu->getChildren());
-    }
-
-    public function testRenderLabel()
-    {
-        $menu = $this->createMenu('My Label');
-        $this->assertEquals('My Label', $menu->renderLabel());
-        $menu->setLabel('Other Label');
-        $this->assertEquals('Other Label', $menu->renderLabel());
     }
 
     /**

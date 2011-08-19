@@ -9,7 +9,6 @@ class MenuItemReorderTest extends \PHPUnit_Framework_TestCase
     public function testReordering()
     {
         $menu = new MenuItem('root');
-        $menu->getRenderer()->setRenderCompressed(true);
         $menu->addChild('c1');
         $menu->addChild('c2');
         $menu->addChild('c3');

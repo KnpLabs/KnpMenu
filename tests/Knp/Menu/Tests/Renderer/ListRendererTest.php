@@ -57,7 +57,6 @@ class ListRendererTest extends \PHPUnit_Framework_TestCase
         $this->renderer = new ListRenderer();
         $this->renderer->setRenderCompressed(true);
         $this->menu = new MenuItem('Root li', null, array('class' => 'root'));
-        $this->menu->setRenderer($this->renderer);
         $this->pt1 = $this->menu->addChild('Parent 1');
         $this->ch1 = $this->pt1->addChild('Child 1');
         $this->ch2 = $this->pt1->addChild('Child 2');
@@ -142,12 +141,6 @@ class ListRendererTest extends \PHPUnit_Framework_TestCase
     {
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span><ul class="menu_level_1"><li class="first"><span>Child 1</span></li><li><span>Child 2</span></li><li class="last"><span>Child 3</span></li></ul></li><li class="last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul></li></ul>';
         $this->assertEquals($rendered, $this->renderer->render($this->menu));
-    }
-
-    public function testToString()
-    {
-        $rendered = '<ul class="root"><li class="first"><span>Parent 1</span><ul class="menu_level_1"><li class="first"><span>Child 1</span></li><li><span>Child 2</span></li><li class="last"><span>Child 3</span></li></ul></li><li class="last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul></li></ul>';
-        $this->assertEquals($rendered, (string) $this->menu);
     }
 
     public function testRenderWithClassAndTitle()

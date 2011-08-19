@@ -36,13 +36,6 @@ class MenuItem implements ItemInterface
     protected $currentAsLink = true; // boolean to render the current uri as a link or not
 
     /**
-     * The renderer used to render this menu
-
-     * @var RendererInterface
-     */
-    protected $renderer = null;
-
-    /**
      * Class constructor
      *
      * @param string $name      The name of this menu, which is how its parent will
@@ -706,89 +699,6 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * Renders the menu tree by using the statically set renderer.
-     *
-     * Depth values corresppond to:
-     *   * 0 - no children displayed at all (would return a blank string)
-     *   * 1 - directly children only
-     *   * 2 - children and grandchildren
-     *
-     * @param integer     $depth        The depth of children to render
-     *
-     * @return string
-     */
-    public function render($depth = null)
-    {
-        return $this->getRenderer()->render($this, array('depth' => $depth));
-    }
-
-    /**
-     * Sets renderer which will be used to render menu items.
-     *
-     * @param RendererInterface $renderer Renderer.
-     */
-    public function setRenderer(RendererInterface $renderer)
-    {
-        $this->renderer = $renderer;
-    }
-
-    /**
-     * Gets renderer which is used to render menu items.
-     *
-     * @return RendererInterface $renderer Renderer.
-     */
-    public function getRenderer()
-    {
-        if (null === $this->renderer) {
-            if ($this->isRoot()) {
-                $this->setRenderer(new ListRenderer());
-            }
-            else {
-                return $this->getParent()->getRenderer();
-            }
-        }
-
-        return $this->renderer;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->render();
-    }
-
-    /**
-     * Renders the anchor tag for this menu item.
-     *
-     * If no uri is specified, or if the uri fails to generate, the
-     * label will be output.
-     *
-     * @return string
-     */
-    public function renderLink()
-    {
-        $label = $this->renderLabel();
-        $uri = $this->getUri();
-        if (!$uri) {
-            return $label;
-        }
-
-        return sprintf('<a href="%s">%s</a>', $uri, $label);
-    }
-
-    /**
-     * Renders the label of this menu
-     *
-     * @return string
-     */
-    public function renderLabel()
-    {
-        return $this->getLabel();
-    }
-
-    /**
      * A string representation of this menu item
      *
      * e.g. Top Level > Second Level > This menu
@@ -802,7 +712,7 @@ class MenuItem implements ItemInterface
         $obj = $this;
 
         do {
-            $children[] = $obj->renderLabel();
+            $children[] = $obj->getLabel();
         } while ($obj = $obj->getParent());
 
         return implode($separator, array_reverse($children));
@@ -847,7 +757,7 @@ class MenuItem implements ItemInterface
         }
 
         do {
-            $label = $obj->renderLabel();
+            $label = $obj->getLabel();
             $breadcrumbs[$label] = $obj->getUri();
         } while ($obj = $obj->getParent());
 

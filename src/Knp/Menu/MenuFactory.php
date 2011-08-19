@@ -45,8 +45,7 @@ class MenuFactory implements FactoryInterface
      */
     public function createFromNode(NodeInterface $node)
     {
-        $item = new MenuItem($node->getName(), $this->getUriFromNode($node), $node->getAttributes());
-        $item->setLabel($node->getLabel());
+        $item = $this->createItem($node->getName(), $node->getOptions());
 
         foreach ($node->getChildren() as $childNode) {
             $item->addChild($this->createFromNode($childNode));
@@ -72,16 +71,5 @@ class MenuFactory implements FactoryInterface
         $menu->fromArray($data);
 
         return $menu;
-    }
-
-    /**
-     * Get the uri for the given node
-     *
-     * @param NodeInterface $node
-     * @return string
-     */
-    protected function getUriFromNode(NodeInterface $node)
-    {
-        return $node->getUri();
     }
 }

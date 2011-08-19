@@ -36,19 +36,32 @@ class MenuItem implements ItemInterface
     protected $currentAsLink = true; // boolean to render the current uri as a link or not
 
     /**
+     * @var \Knp\Menu\FactoryInterface
+     */
+    protected $factory;
+
+    /**
      * Class constructor
      *
      * @param string $name      The name of this menu, which is how its parent will
      *                          reference it. Also used as label if label not specified
-     * @param string $uri       The uri for this menu to use. If not specified,
-     *                          text will be shown without a link
-     * @param array $attributes Attributes to place on the li tag of this menu item
+     * @param \Knp\Menu\FactoryInterface $factory
      */
-    public function __construct($name, $uri = null, $attributes = array())
+    public function __construct($name, FactoryInterface $factory)
     {
         $this->name = (string) $name;
-        $this->uri = $uri;
-        $this->attributes = $attributes;
+        $this->factory = $factory;
+    }
+
+    /**
+     * @param  \Knp\Menu\FactoryInterface $factory
+     * @return \Knp\Menu\ItemInterface
+     */
+    public function setFactory(FactoryInterface $factory)
+    {
+        $this->factory = $factory;
+
+        return $this;
     }
 
     /**
@@ -349,23 +362,21 @@ class MenuItem implements ItemInterface
     /**
      * Add a child menu item to this menu
      *
-     * @param mixed   $child    An MenuItem object or the name of a new menu to create
-     * @param string  $uri    If creating a new menu, the uri for that menu
-     * @param array  $attributes  If creating a new menu, the attributes for that menu
-     * @param string  $class    The class for menu item, if it needs to be created
+     * Returns the child item
      *
-     * @return \Knp\Menu\ItemInterface The child menu item
+     * @param mixed $child   An ItemInterface instance or the name of a new item to create
+     * @param array $options If creating a new item, the options passed to the factory for the item
+     * @return \Knp\Menu\ItemInterface
      */
-    public function addChild($child, $uri = null, array $attributes = array(), $class = null)
+    public function addChild($child, array $options = array())
     {
         if (!$child instanceof ItemInterface) {
-            $child = $this->createChild($child, $uri, $attributes, $class);
-        } elseif ($child->getParent()) {
+            $child = $this->factory->createItem($child, $options);
+        } elseif (null !== $child->getParent()) {
             throw new \InvalidArgumentException('Cannot add menu item as child, it already belongs to another menu (e.g. has a parent).');
         }
 
         $child->setParent($this);
-        $child->setShowChildren($this->getShowChildren());
         $child->setCurrentUri($this->getCurrentUri());
 
         $this->children[$child->getName()] = $child;
@@ -623,25 +634,6 @@ class MenuItem implements ItemInterface
         $this->children = $children;
 
         return $this;
-    }
-
-    /**
-     * Creates a new MenuItem to be the child of this menu
-     *
-     * @param string  $name
-     * @param string  $uri
-     * @param array   $attributes
-     * @param string  $class
-     *
-     * @return \Knp\Menu\ItemInterface
-     */
-    protected function createChild($name, $uri = null, $attributes = array(), $class = null)
-    {
-        if ($class === null) {
-            $class = get_class($this);
-        }
-
-        return new $class($name, $uri, $attributes);
     }
 
     /**

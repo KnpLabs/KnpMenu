@@ -4,6 +4,7 @@ namespace Knp\Menu\Tests\Renderer;
 
 use Knp\Menu\Renderer\ListRenderer;
 use Knp\Menu\MenuItem;
+use Knp\Menu\MenuFactory;
 
 class ListRendererTest extends \PHPUnit_Framework_TestCase
 {
@@ -56,13 +57,14 @@ class ListRendererTest extends \PHPUnit_Framework_TestCase
     {
         $this->renderer = new ListRenderer();
         $this->renderer->setRenderCompressed(true);
-        $this->menu = new MenuItem('Root li', null, array('class' => 'root'));
+        $this->menu = new MenuItem('Root li', new MenuFactory());
+        $this->menu->setAttributes(array('class' => 'root'));
         $this->pt1 = $this->menu->addChild('Parent 1');
         $this->ch1 = $this->pt1->addChild('Child 1');
         $this->ch2 = $this->pt1->addChild('Child 2');
 
         // add the 3rd child via addChild with an object
-        $this->ch3 = new MenuItem('Child 3');
+        $this->ch3 = new MenuItem('Child 3', new MenuFactory());
         $this->pt1->addChild($this->ch3);
 
         $this->pt2 = $this->menu->addChild('Parent 2');
@@ -85,14 +87,15 @@ class ListRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderEmptyRoot()
     {
-        $menu = new MenuItem('test');
+        $menu = new MenuItem('test', new MenuFactory());
         $rendered = '';
         $this->assertEquals($rendered, $this->renderer->render($menu));
     }
 
     public function testRenderRootWithAttributes()
     {
-        $menu = new MenuItem('test', null, array('class' => 'test_class'));
+        $menu = new MenuItem('test', new MenuFactory());
+        $menu->setAttributes(array('class' => 'test_class'));
         $menu->addChild('c1');
         $rendered = '<ul class="test_class"><li class="first last"><span>c1</span></li></ul>';
         $this->assertEquals($rendered, $this->renderer->render($menu));
@@ -100,7 +103,8 @@ class ListRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderEncodedAttributes()
     {
-        $menu = new MenuItem('test', null, array('title' => 'encode " me >'));
+        $menu = new MenuItem('test', new MenuFactory());
+        $menu->setAttributes(array('title' => 'encode " me >'));
         $menu->addChild('c1');
         $rendered = '<ul title="encode &quot; me &gt;"><li class="first last"><span>c1</span></li></ul>';
         $this->assertEquals($rendered, $this->renderer->render($menu));
@@ -108,7 +112,7 @@ class ListRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderLink()
     {
-        $about = $this->menu->addChild('About', '/about');
+        $about = $this->menu->addChild('About', array('uri' => '/about'));
 
         $rendered = '<a href="/about">About</a>';
         $this->assertEquals($rendered, $this->renderer->renderLink($about));
@@ -119,7 +123,7 @@ class ListRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderLinkWithAttributes()
     {
-        $about = $this->menu->addChild('About', '/about');
+        $about = $this->menu->addChild('About', array('uri' => '/about'));
         $about->setLinkAttribute('title', 'About page');
 
         $rendered = '<li class="last"><a href="/about" title="About page">About</a></li>';
@@ -128,7 +132,7 @@ class ListRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderWeirdLink()
     {
-        $about = $this->menu->addChild('About', 'http://en.wikipedia.org/wiki/%22Weird_Al%22_Yankovic?v1=1&v2=2');
+        $about = $this->menu->addChild('About', array('uri'=> 'http://en.wikipedia.org/wiki/%22Weird_Al%22_Yankovic?v1=1&v2=2'));
 
         $rendered = '<a href="http://en.wikipedia.org/wiki/%22Weird_Al%22_Yankovic?v1=1&v2=2">About</a>';
         $this->assertEquals($rendered, $this->renderer->renderLink($about));
@@ -160,7 +164,7 @@ class ListRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderWithCurrentItemAsLink()
     {
-        $about = $this->menu->addChild('About', '/about');
+        $about = $this->menu->addChild('About', array('uri' => '/about'));
         $about->setIsCurrent(true);
         $this->menu->setCurrentAsLink(true);
 
@@ -170,7 +174,7 @@ class ListRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderWithCurrentItemNotAsLink()
     {
-        $about = $this->menu->addChild('About', '/about');
+        $about = $this->menu->addChild('About', array('uri' => '/about'));
         $about->setIsCurrent(true);
         $this->menu->setCurrentAsLink(false);
 

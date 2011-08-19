@@ -1,7 +1,9 @@
 <?php
 
 namespace Knp\Menu\Tests;
+
 use Knp\Menu\MenuItem;
+use Knp\Menu\MenuFactory;
 
 class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
 {
@@ -146,6 +148,8 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
      */
     protected function createMenu($name = 'test_menu', $uri = 'homepage', array $attributes = array())
     {
-        return new MenuItem($name, $uri, $attributes);
+        $factory = new MenuFactory();
+
+        return $factory->createItem($name, array('attributes' => $attributes, 'uri' => $uri));
     }
 }

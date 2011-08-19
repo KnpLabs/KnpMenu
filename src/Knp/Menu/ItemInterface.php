@@ -25,6 +25,12 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     function setName($name);
 
     /**
+     * @param  \Knp\Menu\FactoryInterface $factory
+     * @return \Knp\Menu\ItemInterface
+     */
+    function setFactory(FactoryInterface $factory);
+
+    /**
      * Get the uri for a menu item
      *
      * @return string
@@ -194,14 +200,13 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Add a child menu item to this menu
      *
-     * Provides a fluent interface
+     * Returns the child item
      *
-     * @param mixed   $child    An MenuItem object or the name of a new menu to create
-     * @param string  $uri    If creating a new menu, the uri for that menu
-     * @param array  $attributes  If creating a new menu, the attributes for that menu
-     * @return \Knp\Menu\ItemInterface The child menu item
+     * @param mixed $child   An ItemInterface instance or the name of a new item to create
+     * @param array $options If creating a new item, the options passed to the factory for the item
+     * @return \Knp\Menu\ItemInterface
      */
-    function addChild($child, $uri = null, array $attributes = array());
+    function addChild($child, array $options = array());
 
     /**
      * Returns the child menu identified by the given name

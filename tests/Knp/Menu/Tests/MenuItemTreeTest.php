@@ -3,6 +3,7 @@
 namespace Knp\Menu\Tests;
 
 use Knp\Menu\MenuItem;
+use Knp\Menu\MenuFactory;
 
 class TestMenuItem extends MenuItem {}
 
@@ -50,13 +51,14 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->menu = new MenuItem('Root li', null, array('class' => 'root'));
+        $factory = new MenuFactory();
+        $this->menu = $factory->createItem('Root li', array('attributes' => array('class' => 'root')));
         $this->pt1 = $this->menu->addChild('Parent 1');
         $this->ch1 = $this->pt1->addChild('Child 1');
         $this->ch2 = $this->pt1->addChild('Child 2');
 
         // add the 3rd child via addChild with an object
-        $this->ch3 = new MenuItem('Child 3');
+        $this->ch3 = new MenuItem('Child 3', $factory);
         $this->pt1->addChild($this->ch3);
 
         $this->pt2 = $this->menu->addChild('Parent 2');
@@ -83,17 +85,6 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($this->menu['Parent 2']));
         $this->assertEquals(1, count($this->menu['Parent 2']['Child 4']));
         $this->assertEquals('Grandchild 1', $this->menu['Parent 2']['Child 4']['Grandchild 1']->getName());
-    }
-
-    public function testChildrenHaveParentClass()
-    {
-        $menu = new TestMenuItem('Root li', null, array('class' => 'root'));
-        $pt1 = $menu->addChild('Parent 1');
-        $ch1 = $pt1->addChild('Child 1');
-        $ch2 = $pt1->addChild('Child 2');
-
-        $this->assertInstanceOf('Knp\Menu\Tests\TestMenuItem', $pt1);
-        $this->assertInstanceOf('Knp\Menu\Tests\TestMenuItem', $ch1);
     }
 
     public function testGetLevel()
@@ -128,7 +119,7 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
 
     public function testMoveSampleMenuToNewRoot()
     {
-        $newRoot = new TestMenuItem("newRoot");
+        $newRoot = new TestMenuItem("newRoot", $this->getMock('Knp\Menu\FactoryInterface'));
         $newRoot->addChild($this->menu);
 
         $this->assertEquals(1, $this->menu->getLevel());
@@ -214,41 +205,27 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->pt2, $this->menu->getLastChild());
     }
 
-    public function testAddChild()
+    public function testAddChildDoesNotUSeTheFactoryIfItem()
     {
-        // Setup the tree with a different class
-        $menu = new TestMenuItem('Root li', null, array('class' => 'root'));
-        $pt1 = $menu->addChild('Parent 1');
-        $ch1 = $pt1->addChild('Child 1');
-        $ch2 = $pt1->addChild('Child 2');
-        $ch3 = new TestMenuItem('Child 3');
-        $pt1->addChild($ch3);
-        $pt2 = $menu->addChild('Parent 2');
-        $ch4 = $pt2->addChild('Child 4');
-        $gc1 = $ch4->addChild('Grandchild 1');
+        $factory = $this->getMock('Knp\Menu\FactoryInterface');
+        $factory->expects($this->never())
+            ->method('createItem');
+        $menu = new MenuItem('Root li', $factory);
+        $menu->addChild(new MenuItem('Child 3', $factory));
+    }
 
-        // a) Add a child (gc2) to ch4 via ->addChild().
-        $gc2 = $ch4->addChild('gc2');
-        $this->assertEquals(2, count($ch4->getChildren()));
-        $this->assertEquals('Knp\Menu\Tests\TestMenuItem', get_class($gc2));
+    /**
+     * @expectedException LogicException
+     */
+    public function testAddChildFailsIfInAnotherMenu()
+    {
+        $factory = $this->getMock('Knp\Menu\FactoryInterface');
+        $menu = new MenuItem('Root li', $factory);
+        $child = new MenuItem('Child 3', $factory);
+        $menu->addChild($child);
 
-        // b) Add another child (temp) to ch4 via ->addChild(), but specify the class.
-        $temp = $ch4->addChild('temp', null, array(), 'Knp\Menu\Tests\TestMenuItem');
-        $this->assertEquals('Knp\Menu\Tests\TestMenuItem', get_class($temp));
-        $ch4->removeChild($temp);
-
-        // c) Add a child (gc3) to ch4 by passing an object to addChild().
-        $gc3 = new TestMenuItem('gc3');
-        $ch4->addChild($gc3);
-        $this->assertEquals(3, count($ch4->getChildren()));
-
-        // d) Try to add gc3 again, should throw an exception.
-        try {
-            $pt1->addChild($gc3);
-            $this->fail();
-        } catch (\LogicException $e) {
-            $this->assertTrue(true);
-        }
+        $menu2 = new MenuItem('Second menu', $factory);
+        $menu2->addChild($child);
     }
 
     public function testGetChild()
@@ -314,7 +291,7 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
     {
         $this->addChildWithExternalUrl();
         $this->menu->setCurrentUri('http://symfony-reloaded.org/');
-        $this->menu->addChild('test_child', 'http://php.net/');
+        $this->menu->addChild('test_child', array('uri' => 'http://php.net/'));
         $this->assertEquals('http://symfony-reloaded.org/', $this->menu['test_child']->getCurrentUri());
     }
 
@@ -384,7 +361,7 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
 
     protected function addChildWithExternalUrl()
     {
-        $this->menu->addChild('child', 'http://www.symfony-reloaded.org');
+        $this->menu->addChild('child', array('uri' => 'http://www.symfony-reloaded.org'));
     }
 
     // prints a visual representation of our basic testing tree

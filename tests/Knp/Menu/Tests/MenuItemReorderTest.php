@@ -3,12 +3,14 @@
 namespace Knp\Menu\Tests;
 
 use Knp\Menu\MenuItem;
+use Knp\Menu\MenuFactory;
 
 class MenuItemReorderTest extends \PHPUnit_Framework_TestCase
 {
     public function testReordering()
     {
-        $menu = new MenuItem('root');
+        $factory = new MenuFactory();
+        $menu = new MenuItem('root', $factory);
         $menu->addChild('c1');
         $menu->addChild('c2');
         $menu->addChild('c3');
@@ -36,7 +38,8 @@ class MenuItemReorderTest extends \PHPUnit_Framework_TestCase
      */
     public function testReorderingWithTooManyItemNames()
     {
-        $menu = new MenuItem('root');
+        $factory = new MenuFactory();
+        $menu = new MenuItem('root', $factory);
         $menu->addChild('c1');
         $menu->reorderChildren(array('c1', 'c3'));
     }

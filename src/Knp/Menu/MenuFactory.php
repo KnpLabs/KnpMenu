@@ -5,8 +5,38 @@ namespace Knp\Menu;
 /**
  * Factory to create a menu from a tree
  */
-class MenuFactory
+class MenuFactory implements FactoryInterface
 {
+    public function createItem($name, array $options = array())
+    {
+        $item = new MenuItem($name, $this);
+
+        $options = array_merge(
+            array(
+                'uri' => null,
+                'label' => null,
+                'attributes' => array(),
+                'linkAttributes' => array(),
+                'labelAttributes' => array(),
+                'show' => true,
+                'showChildren' => true,
+            ),
+            $options
+        );
+
+        $item
+            ->setUri($options['uri'])
+            ->setLabel($options['label'])
+            ->setAttributes($options['attributes'])
+            ->setLinkAttributes($options['linkAttributes'])
+            ->setLabelAttributes($options['labelAttributes'])
+            ->setShow($options['show'])
+            ->setShowChildren($options['showChildren'])
+        ;
+
+        return $item;
+    }
+
     /**
      * Create a menu item from a NodeInterface
      *

@@ -75,7 +75,7 @@ class ListRenderer extends Renderer implements RendererInterface
         $options = array_merge($this->getDefaultOptions(), $options);
 
         // if we don't have access or this item is marked to not be shown
-        if (!$item->shouldBeRendered()) {
+        if (!$item->getShow()) {
             return '';
         }
 

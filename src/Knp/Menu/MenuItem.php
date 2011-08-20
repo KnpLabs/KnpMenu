@@ -33,7 +33,6 @@ class MenuItem implements ItemInterface
     protected $parent = null; // parent MenuItem
     protected $isCurrent = null; // whether or not this menu item is current
     protected $currentUri = null; // the current uri to use for selecting current menu
-    protected $currentAsLink = true; // boolean to render the current uri as a link or not
 
     /**
      * @var \Knp\Menu\FactoryInterface
@@ -336,27 +335,6 @@ class MenuItem implements ItemInterface
         $this->show = (bool) $bool;
 
         return $this;
-    }
-
-    /**
-     * Whether or not this menu item should be rendered or not based on all the available factors
-     *
-     * @return boolean
-     */
-    public function shouldBeRendered()
-    {
-        return $this->getShow();
-    }
-
-    /**
-     * Whether or not this menu item should be rendered as a link based on the available factors
-     *
-     * @return boolean
-     */
-    public function shouldBeRenderedAsLink()
-    {
-        return ($this->getIsCurrent() && $this->getParent()->getCurrentAsLink())
-                || (!$this->getIsCurrent() && $this->getUri());
     }
 
     /**
@@ -682,7 +660,7 @@ class MenuItem implements ItemInterface
     public function hasChildren()
     {
         foreach ($this->children as $child) {
-            if ($child->shouldBeRendered()) {
+            if ($child->getShow()) {
                 return true;
             }
         }
@@ -863,14 +841,14 @@ class MenuItem implements ItemInterface
         }
 
         // if we're first and visible, we're first, period.
-        if ($this->shouldBeRendered() && $this->isFirst()) {
+        if ($this->getShow() && $this->isFirst()) {
             return true;
         }
 
         $children = $this->getParent()->getChildren();
         foreach ($children as $child) {
             // loop until we find a visible menu. If its this menu, we're first
-            if ($child->shouldBeRendered()) {
+            if ($child->getShow()) {
                 return $child->getName() == $this->getName();
             }
         }
@@ -895,14 +873,14 @@ class MenuItem implements ItemInterface
         }
 
         // if we're last and visible, we're last, period.
-        if ($this->shouldBeRendered() && $this->isLast()) {
+        if ($this->getShow() && $this->isLast()) {
             return true;
         }
 
         $children = array_reverse($this->getParent()->getChildren());
         foreach ($children as $child) {
             // loop until we find a visible menu. If its this menu, we're first
-            if ($child->shouldBeRendered()) {
+            if ($child->getShow()) {
                 return $child->getName() == $this->getName();
             }
         }
@@ -965,32 +943,6 @@ class MenuItem implements ItemInterface
         }
 
         return $this;
-    }
-
-    /**
-     * Sets if the current item should render a link or not
-     *
-     * @param bool $currentAsLink
-     * @return \Knp\Menu\ItemInterface
-     */
-    public function setCurrentAsLink($currentAsLink = true)
-    {
-        $this->currentAsLink = (bool) $currentAsLink;
-
-        return $this;
-    }
-
-    /**
-     * Returns the currentAsLink
-     *
-     * Used to determine if the current item must render
-     * its text as a link or not
-     *
-     * @return bool
-     */
-    public function getCurrentAsLink()
-    {
-        return $this->currentAsLink;
     }
 
     /**

@@ -184,20 +184,6 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     function setShow($bool);
 
     /**
-     * Whether or not this menu item should be rendered or not based on all the available factors
-     *
-     * @return boolean
-     */
-    function shouldBeRendered();
-
-    /**
-     * Whether or not this menu item should be rendered as a link based on the available factors
-     *
-     * @return boolean
-     */
-    function shouldBeRenderedAsLink();
-
-    /**
      * Add a child menu item to this menu
      *
      * Returns the child item
@@ -506,26 +492,6 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * @return \Knp\Menu\ItemInterface
      */
     function setCurrentUri($uri);
-
-    /**
-     * Sets if the current item should render a link or not
-     *
-     * Provides a fluent interface
-     *
-     * @param bool $currentAsLink
-     * @return \Knp\Menu\ItemInterface
-     */
-    function setCurrentAsLink($currentAsLink = true);
-
-    /**
-     * Returns the currentAsLink
-     *
-     * Used to determine if the current item must render
-     * its text as a link or not
-     *
-     * @return bool
-     */
-    function getCurrentAsLink();
 
     /**
      * Calls a method recursively on all of the children of this item

@@ -27,13 +27,6 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($title, $menu->getAttribute('title'));
     }
 
-    public function testCurrentAsLink()
-    {
-        $menu = $this->createMenu();
-        $menu->setCurrentAsLink(true);
-        $this->assertEquals(true, $menu->getCurrentAsLink());
-    }
-
     public function testName()
     {
         $menu = $this->createMenu();

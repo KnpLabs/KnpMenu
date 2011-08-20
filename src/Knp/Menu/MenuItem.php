@@ -23,8 +23,8 @@ class MenuItem implements ItemInterface
     /**
      * Options related to rendering
      */
-    protected $show = true; // boolean to render this menu
-    protected $showChildren = true; // boolean to render the children of this menu
+    protected $display = true; // boolean to render this menu
+    protected $displayChildren = true; // boolean to render the children of this menu
 
     /**
      * Metadata on this menu item
@@ -294,45 +294,45 @@ class MenuItem implements ItemInterface
     /**
      * Whether or not this menu item should show its children.
      *
-     * @return bool
+     * @return boolean
      */
-    public function getShowChildren()
+    public function getDisplayChildren()
     {
-        return $this->showChildren;
+        return $this->displayChildren;
     }
 
     /**
      * Set whether or not this menu item should show its children
      *
-     * @param bool $bool
+     * @param boolean $bool
      * @return \Knp\Menu\ItemInterface
      */
-    public function setShowChildren($bool)
+    public function setDisplayChildren($bool)
     {
-        $this->showChildren = (bool) $bool;
+        $this->displayChildren = (bool) $bool;
 
         return $this;
     }
 
     /**
-     * Whether or not to show this menu item
+     * Whether or not to display this menu item
      *
-     * @return bool
+     * @return boolean
      */
-    public function getShow()
+    public function isDisplayed()
     {
-        return $this->show;
+        return $this->display;
     }
 
     /**
      * Set whether or not this menu to show this menu item
      *
-     * @param bool $bool
+     * @param boolean $bool
      * @return \Knp\Menu\ItemInterface
      */
-    public function setShow($bool)
+    public function setDisplay($bool)
     {
-        $this->show = (bool) $bool;
+        $this->display = (bool) $bool;
 
         return $this;
     }
@@ -660,7 +660,7 @@ class MenuItem implements ItemInterface
     public function hasChildren()
     {
         foreach ($this->children as $child) {
-            if ($child->getShow()) {
+            if ($child->isDisplayed()) {
                 return true;
             }
         }
@@ -739,7 +739,7 @@ class MenuItem implements ItemInterface
      *
      * @return bool|\Knp\Menu\ItemInterface
      */
-    public function getCurrent()
+    public function getCurrentItem()
     {
         if ($this->getIsCurrent()) {
             return $this;
@@ -760,7 +760,7 @@ class MenuItem implements ItemInterface
      * @param boolean $bool Specify that this menu item is current
      * @return \Knp\Menu\ItemInterface
      */
-    public function setIsCurrent($bool)
+    public function setCurrent($bool)
     {
         $this->isCurrent = (bool) $bool;
 
@@ -772,7 +772,7 @@ class MenuItem implements ItemInterface
      *
      * @return bool
      */
-    public function getIsCurrent()
+    public function isCurrent()
     {
         if (null === $this->isCurrent) {
             $currentUri = $this->getCurrentUri();
@@ -787,10 +787,10 @@ class MenuItem implements ItemInterface
      *
      * @return boolean
      */
-    public function getIsCurrentAncestor()
+    public function isCurrentAncestor()
     {
         foreach ($this->getChildren() as $child) {
-            if ($child->getIsCurrent() || $child->getIsCurrentAncestor()) {
+            if ($child->isCurrent() || $child->isCurrentAncestor()) {
                 return true;
             }
         }
@@ -841,14 +841,14 @@ class MenuItem implements ItemInterface
         }
 
         // if we're first and visible, we're first, period.
-        if ($this->getShow() && $this->isFirst()) {
+        if ($this->isDisplayed() && $this->isFirst()) {
             return true;
         }
 
         $children = $this->getParent()->getChildren();
         foreach ($children as $child) {
             // loop until we find a visible menu. If its this menu, we're first
-            if ($child->getShow()) {
+            if ($child->isDisplayed()) {
                 return $child->getName() == $this->getName();
             }
         }
@@ -873,14 +873,14 @@ class MenuItem implements ItemInterface
         }
 
         // if we're last and visible, we're last, period.
-        if ($this->getShow() && $this->isLast()) {
+        if ($this->isDisplayed() && $this->isLast()) {
             return true;
         }
 
         $children = array_reverse($this->getParent()->getChildren());
         foreach ($children as $child) {
             // loop until we find a visible menu. If its this menu, we're first
-            if ($child->getShow()) {
+            if ($child->isDisplayed()) {
                 return $child->getName() == $this->getName();
             }
         }
@@ -932,6 +932,9 @@ class MenuItem implements ItemInterface
      * This will set the current uri on the root menu item, which all other
      * menu items will use
      *
+     * Provides a fluent interface
+     *
+     * @param string $uri
      * @return \Knp\Menu\ItemInterface
      */
     public function setCurrentUri($uri)

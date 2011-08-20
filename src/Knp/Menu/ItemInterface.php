@@ -154,34 +154,36 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Whether or not this menu item should show its children.
      *
-     * @return bool
+     * @return boolean
      */
-    function getShowChildren();
+    function getDisplayChildren();
 
     /**
      * Set whether or not this menu item should show its children
      *
      * Provides a fluent interface
      *
-     * @param bool $bool
+     * @param boolean $bool
      * @return \Knp\Menu\ItemInterface
      */
-    function setShowChildren($bool);
+    function setDisplayChildren($bool);
 
     /**
-     * @return bool Whether or not to show this menu item
+     * Whether or not to display this menu item
+     *
+     * @return boolean
      */
-    function getShow();
+    function isDisplayed();
 
     /**
-     * Set whether or not this menu to show this menu item
+     * Set whether or not this menu should be displayed
      *
      * Provides a fluent interface
      *
-     * @param bool $bool
+     * @param boolean $bool
      * @return \Knp\Menu\ItemInterface
      */
-    function setShow($bool);
+    function setDisplay($bool);
 
     /**
      * Add a child menu item to this menu
@@ -309,7 +311,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Returns whether or not this menu item is the root menu item
      *
-     * @return bool
+     * @return boolean
      */
     function isRoot();
 
@@ -407,9 +409,9 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Returns the current menu item if it is a child of this menu item
      *
-     * @return bool|\Knp\Menu\ItemInterface
+     * @return \Knp\Menu\ItemInterface|null
      */
-    function getCurrent();
+    function getCurrentItem();
 
     /**
      * Set whether or not this menu item is "current"
@@ -419,29 +421,33 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * @param boolean $bool Specify that this menu item is current
      * @return \Knp\Menu\ItemInterface
      */
-    function setIsCurrent($bool);
+    function setCurrent($bool);
 
     /**
      * Get whether or not this menu item is "current"
      *
-     * @return bool
+     * @return boolean
      */
-    function getIsCurrent();
+    function isCurrent();
 
     /**
      * Returns whether or not this menu is an ancestor of the current menu item
      *
      * @return boolean
      */
-    function getIsCurrentAncestor();
+    function isCurrentAncestor();
 
     /**
-     * @return bool Whether or not this menu item is last in its parent
+     * Whether or not this menu item is last in its parent
+     *
+     * @return boolean
      */
     function isLast();
 
     /**
-     * @return bool Whether or not this menu item is first in its parent
+     * Whether or not this menu item is first in its parent
+     *
+     * @return boolean
      */
     function isFirst();
 

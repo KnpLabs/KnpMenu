@@ -22,7 +22,7 @@ class ListRenderer extends Renderer implements RendererInterface
          *   b) The depth is 0
          *   c) This menu item has been explicitly set to hide its children
          */
-        if (!$item->hasChildren() || 0 === $options['depth'] || !$item->getShowChildren()) {
+        if (!$item->hasChildren() || 0 === $options['depth'] || !$item->getDisplayChildren()) {
             return '';
         }
 
@@ -75,16 +75,16 @@ class ListRenderer extends Renderer implements RendererInterface
         $options = array_merge($this->getDefaultOptions(), $options);
 
         // if we don't have access or this item is marked to not be shown
-        if (!$item->getShow()) {
+        if (!$item->isDisplayed()) {
             return '';
         }
 
         // explode the class string into an array of classes
         $class = ($item->getAttribute('class')) ? explode(' ', $item->getAttribute('class')) : array();
 
-        if ($item->getIsCurrent()) {
+        if ($item->isCurrent()) {
             $class[] = $options['currentClass'];
-        } elseif ($item->getIsCurrentAncestor()) {
+        } elseif ($item->isCurrentAncestor()) {
             $class[] = $options['ancestorClass'];
         }
 
@@ -109,7 +109,7 @@ class ListRenderer extends Renderer implements RendererInterface
         $html .= $this->renderLink($item, $options);
 
         // renders the embedded ul if there are visible children
-        if ($item->hasChildren() && 0 !== $options['depth'] && $item->getShowChildren()) {
+        if ($item->hasChildren() && 0 !== $options['depth'] && $item->getDisplayChildren()) {
             $html .= $this->format('<ul'.$this->renderHtmlAttributes(array('class' => 'menu_level_'.$item->getLevel())).'>', 'ul', $item->getLevel());
             $html .= $this->renderChildren($item, $options);
             $html .= $this->format('</ul>', 'ul', $item->getLevel());
@@ -137,7 +137,7 @@ class ListRenderer extends Renderer implements RendererInterface
     {
         $options = array_merge($this->getDefaultOptions(), $options);
 
-        if ($item->getUri() && (!$item->getIsCurrent() || $options['currentAsLink'])) {
+        if ($item->getUri() && (!$item->isCurrent() || $options['currentAsLink'])) {
             $text = sprintf('<a href="%s"%s>%s</a>', $item->getUri(), $this->renderHtmlAttributes($item->getLinkAttributes()), $item->getLabel());
         } else {
             $text = sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $item->getLabel());

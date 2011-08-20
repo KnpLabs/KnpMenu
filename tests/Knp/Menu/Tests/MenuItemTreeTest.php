@@ -298,15 +298,15 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
     public function testGetIsCurrentWhenCurrentUriIsNotSet()
     {
         $this->addChildWithExternalUrl();
-        $this->assertFalse($this->menu['child']->getIsCurrent());
+        $this->assertFalse($this->menu['child']->isCurrent());
     }
 
     public function testGetIsCurrentWhenCurrentUriIsSet()
     {
         $this->addChildWithExternalUrl();
         $this->menu->setCurrentUri('http://www.symfony-reloaded.org');
-        $this->assertTrue($this->menu['child']->getIsCurrent());
-        $this->assertFalse($this->pt1->getIsCurrent());
+        $this->assertTrue($this->menu['child']->isCurrent());
+        $this->assertFalse($this->pt1->isCurrent());
     }
 
     public function testGetIsCurrentAncestor()
@@ -314,8 +314,8 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
         $this->addChildWithExternalUrl();
         $this->menu->setCurrentUri('http://php.net');
         $this->pt1->setUri('http://php.net');
-        $this->assertFalse($this->pt1->getIsCurrentAncestor());
-        $this->assertTrue($this->menu->getIsCurrentAncestor());
+        $this->assertFalse($this->pt1->isCurrentAncestor());
+        $this->assertTrue($this->menu->isCurrentAncestor());
     }
 
     public function testDeepGetIsCurrentAncestor()
@@ -323,10 +323,10 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
         $this->addChildWithExternalUrl();
         $this->menu->setCurrentUri('http://php.net');
         $this->gc1->setUri('http://php.net');
-        $this->assertFalse($this->pt1->getIsCurrentAncestor());
-        $this->assertTrue($this->menu->getIsCurrentAncestor());
-        $this->assertTrue($this->pt2->getIsCurrentAncestor());
-        $this->assertTrue($this->ch4->getIsCurrentAncestor());
+        $this->assertFalse($this->pt1->isCurrentAncestor());
+        $this->assertTrue($this->menu->isCurrentAncestor());
+        $this->assertTrue($this->pt2->isCurrentAncestor());
+        $this->assertTrue($this->ch4->isCurrentAncestor());
     }
 
     public function testGetUri()

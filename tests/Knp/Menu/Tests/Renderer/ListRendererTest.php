@@ -157,7 +157,7 @@ class ListRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderWithCurrentItem()
     {
-        $this->ch2->setIsCurrent(true);
+        $this->ch2->setCurrent(true);
         $rendered = '<ul class="root"><li class="current_ancestor first"><span>Parent 1</span><ul class="menu_level_1"><li class="first"><span>Child 1</span></li><li class="current"><span>Child 2</span></li><li class="last"><span>Child 3</span></li></ul></li><li class="last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul></li></ul>';
         $this->assertEquals($rendered, $this->renderer->render($this->menu));
     }
@@ -165,7 +165,7 @@ class ListRendererTest extends \PHPUnit_Framework_TestCase
     public function testRenderWithCurrentItemAsLink()
     {
         $about = $this->menu->addChild('About', array('uri' => '/about'));
-        $about->setIsCurrent(true);
+        $about->setCurrent(true);
 
         $rendered = '<li class="current last"><a href="/about">About</a></li>';
         $this->assertEquals($rendered, $this->renderer->renderItem($about));
@@ -174,7 +174,7 @@ class ListRendererTest extends \PHPUnit_Framework_TestCase
     public function testRenderWithCurrentItemNotAsLink()
     {
         $about = $this->menu->addChild('About', array('uri' => '/about'));
-        $about->setIsCurrent(true);
+        $about->setCurrent(true);
 
         $rendered = '<li class="current last"><span>About</span></li>';
         $this->assertEquals($rendered, $this->renderer->renderItem($about, array('currentAsLink' => false)));
@@ -189,21 +189,21 @@ class ListRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testDoNotShowChildrenRendersNothing()
     {
-        $this->menu->setShowChildren(false);
+        $this->menu->setDisplayChildren(false);
         $rendered = '';
         $this->assertEquals($rendered, $this->renderer->render($this->menu));
     }
 
     public function testDoNotShowChildChildrenRendersPartialMenu()
     {
-        $this->menu['Parent 1']->setShowChildren(false);
+        $this->menu['Parent 1']->setDisplayChildren(false);
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul></li></ul>';
         $this->assertEquals($rendered, $this->renderer->render($this->menu));
     }
 
     public function testDoNotShowChildRendersPartialMenu()
     {
-        $this->menu['Parent 1']->setShow(false);
+        $this->menu['Parent 1']->setDisplay(false);
         $rendered = '<ul class="root"><li class="first last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul></li></ul>';
         $this->assertEquals($rendered, $this->renderer->render($this->menu));
     }
@@ -228,7 +228,7 @@ class ListRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testDepth2WithNotShowChildChildren()
     {
-        $this->menu['Parent 1']->setShowChildren(false);
+        $this->menu['Parent 1']->setDisplayChildren(false);
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span></li></ul></li></ul>';
         $this->assertEquals($rendered, $this->renderer->render($this->menu, array('depth' => 2)));
     }

@@ -87,20 +87,20 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($attributes, $menu->getLabelAttributes());
     }
 
-    public function testShow()
+    public function testDisplay()
     {
         $menu = $this->createMenu();
-        $this->assertEquals(true, $menu->getShow());
-        $menu->setShow(false);
-        $this->assertEquals(false, $menu->getShow());
+        $this->assertEquals(true, $menu->isDisplayed());
+        $menu->setDisplay(false);
+        $this->assertEquals(false, $menu->isDisplayed());
     }
 
     public function testShowChildren()
     {
         $menu = $this->createMenu();
-        $this->assertEquals(true, $menu->getShowChildren());
-        $menu->setShowChildren(false);
-        $this->assertEquals(false, $menu->getShowChildren());
+        $this->assertEquals(true, $menu->getDisplayChildren());
+        $menu->setDisplayChildren(false);
+        $this->assertEquals(false, $menu->getDisplayChildren());
     }
 
     public function testParent()
@@ -137,7 +137,7 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
      * @param string $name
      * @param string $uri
      * @param array $attributes
-     * @return MenuItem
+     * @return \Knp\Menu\MenuItem
      */
     protected function createMenu($name = 'test_menu', $uri = 'homepage', array $attributes = array())
     {

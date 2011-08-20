@@ -18,8 +18,8 @@ class MenuFactory implements FactoryInterface
                 'attributes' => array(),
                 'linkAttributes' => array(),
                 'labelAttributes' => array(),
-                'show' => true,
-                'showChildren' => true,
+                'display' => true,
+                'displayChildren' => true,
             ),
             $options
         );
@@ -30,8 +30,8 @@ class MenuFactory implements FactoryInterface
             ->setAttributes($options['attributes'])
             ->setLinkAttributes($options['linkAttributes'])
             ->setLabelAttributes($options['labelAttributes'])
-            ->setShow($options['show'])
-            ->setShowChildren($options['showChildren'])
+            ->setDisplay($options['display'])
+            ->setDisplayChildren($options['displayChildren'])
         ;
 
         return $item;

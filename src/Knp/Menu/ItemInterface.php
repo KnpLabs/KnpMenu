@@ -527,18 +527,19 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      */
     function getCurrentAsLink();
 
-
     /**
      * Calls a method recursively on all of the children of this item
      *
      * @example
-     * $menu->callRecursively('setShowChildren', false);
+     * $menu->callRecursively('setShowChildren', array(false));
      *
      * Provides a fluent interface
      *
+     * @param string $method
+     * @param array $arguments
      * @return \Knp\Menu\ItemInterface
      */
-    function callRecursively();
+    function callRecursively($method, $arguments = array());
 
     /**
      * Exports this menu item to an array

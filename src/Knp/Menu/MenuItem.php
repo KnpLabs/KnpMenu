@@ -997,20 +997,21 @@ class MenuItem implements ItemInterface
      * Calls a method recursively on all of the children of this item
      *
      * @example
-     * $menu->callRecursively('setShowChildren', false);
+     * $menu->callRecursively('setShowChildren', array(false));
      *
+     * Provides a fluent interface
+     *
+     * @param string $method
+     * @param array $arguments
      * @return \Knp\Menu\ItemInterface
      */
-    public function callRecursively()
+    public function callRecursively($method, $arguments = array())
     {
-        $args = func_get_args();
-        $arguments = $args;
-        unset($arguments[0]);
+        call_user_func_array(array($this, $method), $arguments);
 
-        call_user_func_array(array($this, $args[0]), $arguments);
-
+        /* @var $child \Knp\Menu\ItemInterface */
         foreach ($this->children as $child) {
-            call_user_func_array(array($child, 'callRecursively'), $args);
+            $child->callRecursively($method, $arguments);
         }
 
         return $this;

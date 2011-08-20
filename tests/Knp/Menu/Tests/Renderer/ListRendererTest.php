@@ -166,7 +166,6 @@ class ListRendererTest extends \PHPUnit_Framework_TestCase
     {
         $about = $this->menu->addChild('About', array('uri' => '/about'));
         $about->setIsCurrent(true);
-        $this->menu->setCurrentAsLink(true);
 
         $rendered = '<li class="current last"><a href="/about">About</a></li>';
         $this->assertEquals($rendered, $this->renderer->renderItem($about));
@@ -176,10 +175,9 @@ class ListRendererTest extends \PHPUnit_Framework_TestCase
     {
         $about = $this->menu->addChild('About', array('uri' => '/about'));
         $about->setIsCurrent(true);
-        $this->menu->setCurrentAsLink(false);
 
         $rendered = '<li class="current last"><span>About</span></li>';
-        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+        $this->assertEquals($rendered, $this->renderer->renderItem($about, array('currentAsLink' => false)));
     }
 
     public function testRenderSubMenuPortionWithClassAndTitle()

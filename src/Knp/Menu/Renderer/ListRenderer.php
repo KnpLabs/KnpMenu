@@ -14,43 +14,20 @@ class ListRenderer extends Renderer implements RendererInterface
      */
     public function render(ItemInterface $item, array $options = array())
     {
-        $depth = isset($options['depth']) ? $options['depth'] : null;
+        $options = array_merge($this->getDefaultOptions(), $options);
 
-        return $this->doRender($item, $depth);
-    }
-
-    /**
-     * Renders menu tree. Internal method.
-     *
-     * @param \Knp\Menu\ItemInterface  $item        Menu item
-     * @param integer $depth         The depth of children to render
-     * @param boolean $renderAsChild Render with attributes on the li (true) or the ul around the children (false)
-     *
-     * @return string
-     */
-    protected function doRender(ItemInterface $item, $depth = null, $renderAsChild = false)
-    {
         /**
          * Return an empty string if any of the following are true:
          *   a) The menu has no children eligible to be displayed
          *   b) The depth is 0
          *   c) This menu item has been explicitly set to hide its children
          */
-        if (!$item->hasChildren() || $depth === 0 || !$item->getShowChildren()) {
+        if (!$item->hasChildren() || 0 === $options['depth'] || !$item->getShowChildren()) {
             return '';
         }
 
-        if ($renderAsChild) {
-            $attributes = array('class' => 'menu_level_'.$item->getLevel());
-        } else {
-            $attributes = $item->getAttributes();
-        }
-
-        // render children with a depth - 1
-        $childDepth = ($depth === null) ? null : ($depth - 1);
-
-        $html = $this->format('<ul'.$this->renderHtmlAttributes($attributes).'>', 'ul', $item->getLevel());
-        $html .= $this->renderChildren($item, $childDepth);
+        $html = $this->format('<ul'.$this->renderHtmlAttributes($item->getAttributes()).'>', 'ul', $item->getLevel());
+        $html .= $this->renderChildren($item, $options);
         $html .= $this->format('</ul>', 'ul', $item->getLevel());
 
         return $html;
@@ -62,16 +39,22 @@ class ListRenderer extends Renderer implements RendererInterface
      * This calls ->renderItem() on each menu item, which instructs each
      * menu item to render themselves as an <li> tag (with nested ul if it
      * has children).
+     * This method updates the depth for the children.
      *
      * @param \Knp\Menu\ItemInterface $item
-     * @param integer $depth The depth each child should render
+     * @param array $options The options to render the item.
      * @return string
      */
-    public function renderChildren(ItemInterface $item, $depth = null)
+    public function renderChildren(ItemInterface $item, array $options)
     {
+        // render children with a depth - 1
+        if (null !== $options['depth']) {
+            $options['depth'] = $options['depth'] - 1;
+        }
+
         $html = '';
         foreach ($item->getChildren() as $child) {
-            $html .= $this->renderItem($child, $depth);
+            $html .= $this->renderItem($child, $options);
         }
 
         return $html;
@@ -84,30 +67,32 @@ class ListRenderer extends Renderer implements RendererInterface
      * own nested ul tag if this menu item has children
      *
      * @param \Knp\Menu\ItemInterface $item
-     * @param integer $depth The depth each child should render
+     * @param array $options The options to render the item
      * @return string
      */
-    public function renderItem(ItemInterface $item, $depth = null)
+    public function renderItem(ItemInterface $item, array $options = array())
     {
+        $options = array_merge($this->getDefaultOptions(), $options);
+
         // if we don't have access or this item is marked to not be shown
         if (!$item->shouldBeRendered()) {
-            return;
+            return '';
         }
 
         // explode the class string into an array of classes
         $class = ($item->getAttribute('class')) ? explode(' ', $item->getAttribute('class')) : array();
 
         if ($item->getIsCurrent()) {
-            $class[] = 'current';
-        } elseif ($item->getIsCurrentAncestor($depth)) {
-            $class[] = 'current_ancestor';
+            $class[] = $options['currentClass'];
+        } elseif ($item->getIsCurrentAncestor()) {
+            $class[] = $options['ancestorClass'];
         }
 
         if ($item->actsLikeFirst()) {
-            $class[] = 'first';
+            $class[] = $options['firstClass'];
         }
         if ($item->actsLikeLast()) {
-            $class[] = 'last';
+            $class[] = $options['lastClass'];
         }
 
         // retrieve the attributes and put the final class string back on it
@@ -121,10 +106,14 @@ class ListRenderer extends Renderer implements RendererInterface
 
         // render the text/link inside the li tag
         //$html .= $this->format($item->getUri() ? $item->renderLink() : $item->renderLabel(), 'link', $item->getLevel());
-        $html .= $this->renderLink($item);
+        $html .= $this->renderLink($item, $options);
 
         // renders the embedded ul if there are visible children
-        $html .= $this->doRender($item, $depth, true);
+        if ($item->hasChildren() && 0 !== $options['depth'] && $item->getShowChildren()) {
+            $html .= $this->format('<ul'.$this->renderHtmlAttributes(array('class' => 'menu_level_'.$item->getLevel())).'>', 'ul', $item->getLevel());
+            $html .= $this->renderChildren($item, $options);
+            $html .= $this->format('</ul>', 'ul', $item->getLevel());
+        }
 
         // closing li tag
         $html .= $this->format('</li>', 'li', $item->getLevel());
@@ -141,19 +130,17 @@ class ListRenderer extends Renderer implements RendererInterface
      * as a link or not.
      *
      * @param \Knp\Menu\ItemInterface $item The item to render the link or label for
+     * @param array $options The options to render the item
      * @return string
      */
-    public function renderLink(ItemInterface $item)
+    public function renderLink(ItemInterface $item, array $options = array())
     {
-        if (!$item->getUri()) {
-            $text = sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $item->getLabel());
+        $options = array_merge($this->getDefaultOptions(), $options);
+
+        if ($item->getUri() && (!$item->getIsCurrent() || $options['currentAsLink'])) {
+            $text = sprintf('<a href="%s"%s>%s</a>', $item->getUri(), $this->renderHtmlAttributes($item->getLinkAttributes()), $item->getLabel());
         } else {
-            if (($item->getIsCurrent() && $item->getParent()->getCurrentAsLink())
-                || !$item->getIsCurrent()) {
-                $text = sprintf('<a href="%s"%s>%s</a>', $item->getUri(), $this->renderHtmlAttributes($item->getLinkAttributes()), $item->getLabel());
-            } else {
-                $text = sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $item->getLabel());
-            }
+            $text = sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $item->getLabel());
         }
 
         return $this->format($text, 'link', $item->getLevel());
@@ -187,5 +174,17 @@ class ListRenderer extends Renderer implements RendererInterface
         }
 
         return str_repeat(' ', $spacing).$html."\n";
+    }
+
+    protected function getDefaultOptions()
+    {
+        return array(
+            'depth' => null,
+            'currentAsLink' => true,
+            'currentClass' => 'current',
+            'ancestorClass' => 'current_ancestor',
+            'firstClass' => 'first',
+            'lastClass' => 'last',
+        );
     }
 }

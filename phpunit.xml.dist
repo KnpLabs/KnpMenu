@@ -23,4 +23,11 @@
             <directory>./src</directory>
         </whitelist>
     </filter>
+
+    <php>
+        <!-- path to the Twig lib dir -->
+        <const name="TWIG_LIB_DIR" value="NOT_SET" />
+        <!-- path to the Pimple lib dir -->
+        <const name="PIMPLE_LIB_DIR" value="NOT_SET" />
+    </php>
 </phpunit>

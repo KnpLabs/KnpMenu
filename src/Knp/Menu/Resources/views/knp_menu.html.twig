@@ -1,0 +1,71 @@
+{% macro attributes(attributes) %}
+{% for name, value in attributes %}
+    {%- if value is not none and value is not sameas(false) %}
+        {{- ' %s="%s"'|format(name, value is sameas(true) ? name|e : value|e)|raw }}
+    {%- endif %}
+{% endfor %}
+{% endmacro %}
+
+{% block compressed_root %}
+{% spaceless %}
+{{ block('root') }}
+{% endspaceless %}
+{% endblock %}
+
+{% block compressed_item %}
+{% spaceless %}
+{{ block('item') }}
+{% endspaceless %}
+{% endblock %}
+
+{% block root %}
+{% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
+    <ul{{ _self.attributes(item.attributes) }}>
+        {{ block('children') }}
+    </ul>
+{% endif %}
+{% endblock %}
+
+{% block children %}
+{% if options.depth is not none %}
+{% set options = options|merge({'depth': options.depth - 1}) %}
+{% endif %}
+{% for child in item.children %}
+    {{ knp_menu_twig_item(child, options) }}
+{% endfor %}
+{% endblock %}
+
+{% block item %}
+{% if item.displayed %}
+{# building the class of the item #}
+    {%- set classes = item.attribute('class') is not empty ? [item.attribute('class')] : [] %}
+    {%- if item.current %}
+        {%- set classes = classes|merge([options.currentClass]) %}
+    {%- elseif item.currentAncestor %}
+        {%- set classes = classes|merge([options.ancestorClass]) %}
+    {%- endif %}
+    {%- if item.actsLikeFirst %}
+        {%- set classes = classes|merge([options.firstClass]) %}
+    {%- endif %}
+    {%- if item.actsLikeLast %}
+        {%- set classes = classes|merge([options.lastClass]) %}
+    {%- endif %}
+    {%- set attributes = item.attributes %}
+    {%- if classes is not empty %}
+        {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
+    {%- endif %}
+{# displaying the item #}
+    <li{{ _self.attributes(attributes) }}>
+        {%- if item.uri is not empty and (not item.current or options.currentAsLink) %}
+        <a href="{{ item.uri }}"{{ _self.attributes(item.linkAttributes) }}>{{ item.label }}</a>
+        {%- else %}
+        <span{{ _self.attributes(item.labelAttributes) }}>{{ item.label }}</span>
+        {%- endif %}
+        {%- if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
+            <ul{{ _self.attributes({'class': 'menu_level_' ~ item.level }) }}>
+                {{ block('children') }}
+            </ul>
+        {%- endif %}
+    </li>
+{% endif %}
+{% endblock %}

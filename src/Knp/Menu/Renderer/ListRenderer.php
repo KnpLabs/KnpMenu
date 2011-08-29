@@ -138,9 +138,9 @@ class ListRenderer extends Renderer implements RendererInterface
         $options = array_merge($this->getDefaultOptions(), $options);
 
         if ($item->getUri() && (!$item->isCurrent() || $options['currentAsLink'])) {
-            $text = sprintf('<a href="%s"%s>%s</a>', $item->getUri(), $this->renderHtmlAttributes($item->getLinkAttributes()), $item->getLabel());
+            $text = sprintf('<a href="%s"%s>%s</a>', $this->escape($item->getUri()), $this->renderHtmlAttributes($item->getLinkAttributes()), $this->escape($item->getLabel()));
         } else {
-            $text = sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $item->getLabel());
+            $text = sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $this->escape($item->getLabel()));
         }
 
         return $this->format($text, 'link', $item->getLevel());

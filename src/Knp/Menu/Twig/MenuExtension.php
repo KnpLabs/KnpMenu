@@ -8,17 +8,14 @@ use Knp\Menu\Provider\MenuProviderInterface;
 
 class MenuExtension extends \Twig_Extension
 {
-    private $rendererProvider;
-    private $menuProvider;
+    private $helper;
 
     /**
-     * @param \Knp\Menu\Renderer\RendererProviderInterface $rendererProvider
-     * @param \Knp\Menu\Provider\MenuProviderInterface|null $menuProvider
+     * @param \Knp\Menu\Twig\Helper $helper
      */
-    public function __construct(RendererProviderInterface $rendererProvider, MenuProviderInterface $menuProvider = null)
+    public function __construct(Helper $helper)
     {
-        $this->rendererProvider = $rendererProvider;
-        $this->menuProvider = $menuProvider;
+        $this->helper = $helper;
     }
 
     public function getFunctions()
@@ -41,50 +38,27 @@ class MenuExtension extends \Twig_Extension
      *
      * @param string $name
      * @return \Knp\Menu\ItemInterface
-     * @throws \BadMethodCallException when there is no menu provider
      */
     public function get($name)
     {
-        if (null === $this->menuProvider) {
-            throw new \BadMethodCallException('A menu provider must be set to retrieve a menu');
-        }
-
-        return $this->menuProvider->get($name);
+        return $this->helper->get($name);
     }
 
     /**
      * Retrieves an item following a path in the tree.
      *
-     * @throws \InvalidArgumentException
      * @param \Knp\Menu\ItemInterface|string $menu
      * @param array $path
      * @return \Knp\Menu\ItemInterface
      */
     public function getByPath($menu, array $path)
     {
-        if (!$menu instanceof ItemInterface) {
-            $menu = $this->get($menu);
-        }
-
-        foreach ($path as $child) {
-            $menu = $menu->getChild($child);
-            if (null === $menu) {
-                throw new \InvalidArgumentException(sprintf('The menu has no child named "%s"', $child));
-            }
-        }
-
-        return $menu;
+        return $this->helper->getByPath($menu, $path);
     }
 
     /**
      * Renders a menu with the specified renderer.
      *
-     * If the argument is an array, it will follow the path in the tree to
-     * get the needed item. The first element of the array is the whole menu.
-     * If the menu is a string instead of an ItemInterface, the provider
-     * will be used.
-     *
-     * @throws \InvalidArgumentException
      * @param \Knp\Menu\ItemInterface|string|array $menu
      * @param string $renderer
      * @param array $options
@@ -92,17 +66,7 @@ class MenuExtension extends \Twig_Extension
      */
     public function render($menu, $renderer, array $options = array())
     {
-        if (is_string($menu)) {
-            $menu = $this->get($menu);
-        } elseif (is_array($menu)) {
-            if (empty($menu)) {
-                throw new \InvalidArgumentException('The array cannot be empty');
-            }
-            $root = array_shift($menu);
-            $menu = $this->getByPath($root, $menu);
-        }
-
-        return $this->rendererProvider->get($renderer)->render($menu, $options);
+        return $this->helper->render($menu, $renderer, $options);
     }
 
     /**

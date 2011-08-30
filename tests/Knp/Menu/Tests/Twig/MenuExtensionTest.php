@@ -16,179 +16,104 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
     public function testRenderMenu()
     {
         $menu = $this->getMock('Knp\Menu\ItemInterface');
-        $renderer = $this->getMock('Knp\Menu\Renderer\RendererInterface');
-        $renderer->expects($this->once())
+        $helper = $this->getHelperMock(array('render'));
+        $helper->expects($this->once())
             ->method('render')
-            ->with($menu, array())
+            ->with($menu, 'default', array())
             ->will($this->returnValue('<p>foobar</p>'))
         ;
 
-        $rendererProvider = $this->getMock('Knp\Menu\Renderer\RendererProviderInterface');
-        $rendererProvider->expects($this->once())
-            ->method('get')
-            ->with('default')
-            ->will($this->returnValue($renderer))
-        ;
-
-        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ menu|knp_menu_render("default") }}', $rendererProvider)->render(array('menu' => $menu)));
+        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ menu|knp_menu_render("default") }}', $helper)->render(array('menu' => $menu)));
     }
 
     public function testRenderMenuWithOptions()
     {
         $menu = $this->getMock('Knp\Menu\ItemInterface');
-        $renderer = $this->getMock('Knp\Menu\Renderer\RendererInterface');
-        $renderer->expects($this->once())
+        $helper = $this->getHelperMock(array('render'));
+        $helper->expects($this->once())
             ->method('render')
-            ->with($menu, array('firstClass' => 'test'))
+            ->with($menu, 'default', array('firstClass' => 'test'))
             ->will($this->returnValue('<p>foobar</p>'))
         ;
 
-        $rendererProvider = $this->getMock('Knp\Menu\Renderer\RendererProviderInterface');
-        $rendererProvider->expects($this->once())
-            ->method('get')
-            ->with('default')
-            ->will($this->returnValue($renderer))
-        ;
-
-        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ menu|knp_menu_render("default", {"firstClass": "test"}) }}', $rendererProvider)->render(array('menu' => $menu)));
+        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ menu|knp_menu_render("default", {"firstClass": "test"}) }}', $helper)->render(array('menu' => $menu)));
     }
 
     public function testRenderMenuByName()
     {
-        $menu = $this->getMock('Knp\Menu\ItemInterface');
-        $menuProvider = $this->getMock('Knp\Menu\Provider\MenuProviderInterface');
-        $menuProvider->expects($this->once())
-            ->method('get')
-            ->with('default')
-            ->will($this->returnValue($menu))
-        ;
-
-        $renderer = $this->getMock('Knp\Menu\Renderer\RendererInterface');
-        $renderer->expects($this->once())
+        $helper = $this->getHelperMock(array('render'));
+        $helper->expects($this->once())
             ->method('render')
-            ->with($menu, array())
+            ->with('default', 'default', array())
             ->will($this->returnValue('<p>foobar</p>'))
         ;
 
-        $rendererProvider = $this->getMock('Knp\Menu\Renderer\RendererProviderInterface');
-        $rendererProvider->expects($this->once())
-            ->method('get')
-            ->with('default')
-            ->will($this->returnValue($renderer))
-        ;
-
-        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ menu|knp_menu_render("default") }}', $rendererProvider, $menuProvider)->render(array('menu' => 'default')));
+        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ menu|knp_menu_render("default") }}', $helper)->render(array('menu' => 'default')));
     }
 
     public function testGetMenu()
     {
-        $rendererProvider = $this->getMock('Knp\Menu\Renderer\RendererProviderInterface');
-        $menuProvider = $this->getMock('Knp\Menu\Provider\MenuProviderInterface');
         $menu = $this->getMock('Knp\Menu\ItemInterface');
-        $menuProvider->expects($this->once())
+        $helper = $this->getHelperMock(array('get'));
+        $helper->expects($this->once())
             ->method('get')
             ->with('default')
             ->will($this->returnValue($menu))
         ;
-        $extension = new MenuExtension($rendererProvider, $menuProvider);
+        $extension = new MenuExtension($helper);
         $this->assertSame($menu, $extension->get('default'));
-    }
-
-    /**
-     * @expectedException BadMethodCallException
-     */
-    public function testGetMenuWithoutProvider()
-    {
-        $rendererProvider = $this->getMock('Knp\Menu\Renderer\RendererProviderInterface');
-        $extension = new MenuExtension($rendererProvider);
-        $extension->get('default');
     }
 
     public function testGetMenuByPath()
     {
-        $rendererProvider = $this->getMock('Knp\Menu\Renderer\RendererProviderInterface');
-        $menuProvider = $this->getMock('Knp\Menu\Provider\MenuProviderInterface');
-        $child = $this->getMock('Knp\Menu\ItemInterface');
         $menu = $this->getMock('Knp\Menu\ItemInterface');
-        $menu->expects($this->any())
-            ->method('getChild')
-            ->with('child')
-            ->will($this->returnValue($child))
-        ;
-        $menuProvider->expects($this->once())
-            ->method('get')
-            ->with('default')
+        $helper = $this->getHelperMock(array('getByPath'));
+        $helper->expects($this->once())
+            ->method('getByPath')
+            ->with('default', array('child'))
             ->will($this->returnValue($menu))
         ;
-        $extension = new MenuExtension($rendererProvider, $menuProvider);
-        $this->assertSame($child, $extension->getByPath('default', array('child')));
-    }
-
-    /**
-     * @expectedException InvalidArgumentException
-     */
-    public function testGetMenuByInvalidPath()
-    {
-        $rendererProvider = $this->getMock('Knp\Menu\Renderer\RendererProviderInterface');
-        $menuProvider = $this->getMock('Knp\Menu\Provider\MenuProviderInterface');
-        $child = $this->getMock('Knp\Menu\ItemInterface');
-        $child->expects($this->any())
-            ->method('getChild')
-            ->will($this->returnValue(null))
-        ;
-        $menu = $this->getMock('Knp\Menu\ItemInterface');
-        $menu->expects($this->any())
-            ->method('getChild')
-            ->with('child')
-            ->will($this->returnValue($child))
-        ;
-        $menuProvider->expects($this->once())
-            ->method('get')
-            ->with('default')
-            ->will($this->returnValue($menu))
-        ;
-        $extension = new MenuExtension($rendererProvider, $menuProvider);
-        $this->assertSame($child, $extension->getByPath('default', array('child', 'invalid')));
+        $extension = new MenuExtension($helper);
+        $this->assertSame($menu, $extension->getByPath('default', array('child')));
     }
 
     public function testRetrieveMenuByName()
     {
         $menu = $this->getMock('Knp\Menu\ItemInterface');
-        $menuProvider = $this->getMock('Knp\Menu\Provider\MenuProviderInterface');
-        $menuProvider->expects($this->once())
+        $helper = $this->getHelperMock(array('get', 'render'));
+        $helper->expects($this->once())
+            ->method('render')
+            ->with($menu, 'default', array())
+            ->will($this->returnValue('<p>foobar</p>'))
+        ;
+        $helper->expects($this->once())
             ->method('get')
             ->with('default')
             ->will($this->returnValue($menu))
         ;
 
-        $renderer = $this->getMock('Knp\Menu\Renderer\RendererInterface');
-        $renderer->expects($this->once())
-            ->method('render')
-            ->with($menu, array())
-            ->will($this->returnValue('<p>foobar</p>'))
-        ;
+        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_get("default")|knp_menu_render("default") }}', $helper)->render(array()));
+    }
 
-        $rendererProvider = $this->getMock('Knp\Menu\Renderer\RendererProviderInterface');
-        $rendererProvider->expects($this->once())
-            ->method('get')
-            ->with('default')
-            ->will($this->returnValue($renderer))
+    private function getHelperMock(array $methods)
+    {
+        return $this->getMockBuilder('Knp\Menu\Twig\Helper')
+            ->disableOriginalConstructor()
+            ->setMethods($methods)
+            ->getMock()
         ;
-
-        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_get("default")|knp_menu_render("default") }}', $rendererProvider, $menuProvider)->render(array()));
     }
 
     /**
      * @param string $template
-     * @param \Knp\Menu\Renderer\RendererProviderInterface $rendererProvider
-     * @param \Knp\Menu\Provider\MenuProviderInterface|null $menuProvider
+     * @param \Knp\Menu\Twig\Helper $helper
      * @return \Twig_TemplateInterface
      */
-    private function getTemplate($template, $rendererProvider, $menuProvider = null)
+    private function getTemplate($template, $helper)
     {
         $loader = new \Twig_Loader_Array(array('index' => $template));
         $twig = new \Twig_Environment($loader, array('debug' => true, 'cache' => false));
-        $twig->addExtension(new MenuExtension($rendererProvider, $menuProvider));
+        $twig->addExtension(new MenuExtension($helper));
 
         return $twig->loadTemplate('index');
     }

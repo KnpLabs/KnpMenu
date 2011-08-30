@@ -4,9 +4,8 @@ namespace Knp\Menu\Provider;
 
 class PimpleProvider implements MenuProviderInterface
 {
-    protected $pimple;
-
-    protected $menuIds = array();
+    private $pimple;
+    private $menuIds;
 
     public function __construct(\Pimple $pimple, array $menuIds = array())
     {

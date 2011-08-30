@@ -21,7 +21,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($provider->has('third'));
     }
 
-    public function testGetExistentRenderer()
+    public function testGetExistentProvider()
     {
         $pimple = new \Pimple();
         $menu = $this->getMock('Knp\Menu\ItemInterface');
@@ -35,7 +35,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testGetNonExistentRenderer()
+    public function testGetNonExistentProvider()
     {
         $provider = new PimpleProvider(new \Pimple());
         $provider->get('non-existent');

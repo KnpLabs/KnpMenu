@@ -134,16 +134,54 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
 
     public function testIsFirst()
     {
+        $this->assertFalse($this->menu->isFirst(), 'The root item is not considered as first');
         $this->assertTrue($this->pt1->isFirst());
         $this->assertFalse($this->pt2->isFirst());
         $this->assertTrue($this->ch4->isFirst());
     }
 
+    public function testActsLikeFirst()
+    {
+        $this->ch1->setDisplay(false);
+        $this->assertFalse($this->menu->actsLikeFirst(), 'The root item is not considered as first');
+        $this->assertFalse($this->ch1->actsLikeFirst(), 'A hidden item does not acts like first');
+        $this->assertTrue($this->ch2->actsLikeFirst());
+        $this->assertFalse($this->ch3->actsLikeFirst());
+        $this->assertTrue($this->ch4->actsLikeFirst());
+    }
+
+    public function testActsLikeFirstWithNoDisplayedItem()
+    {
+        $this->pt1->setDisplay(false);
+        $this->pt2->setDisplay(false);
+        $this->assertFalse($this->pt1->actsLikeFirst());
+        $this->assertFalse($this->pt2->actsLikeFirst());
+    }
+
     public function testIsLast()
     {
+        $this->assertFalse($this->menu->isLast(), 'The root item is not considered as last');
         $this->assertFalse($this->pt1->isLast());
         $this->assertTrue($this->pt2->isLast());
         $this->assertTrue($this->ch4->isLast());
+    }
+
+    public function testActsLikeLast()
+    {
+        $this->ch3->setDisplay(false);
+        $this->assertFalse($this->menu->actsLikeLast(), 'The root item is not considered as last');
+        $this->assertFalse($this->ch1->actsLikeLast());
+        $this->assertTrue($this->ch2->actsLikeLast());
+        $this->assertFalse($this->ch3->actsLikeLast(), 'A hidden item does not acts like last');
+        $this->assertTrue($this->ch4->actsLikeLast());
+    }
+
+    public function testActsLikeLastWithNoDisplayedItem()
+    {
+        $this->pt1->setDisplay(false);
+        $this->pt2->setDisplay(false);
+        $this->assertFalse($this->pt1->actsLikeLast());
+        $this->assertFalse($this->pt2->actsLikeLast());
     }
 
     public function testArrayAccess()
@@ -329,6 +367,14 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->ch4->isCurrentAncestor());
     }
 
+    public function testGetCurrentItem()
+    {
+        $this->ch4->setCurrent(true);
+        $this->assertSame($this->ch4, $this->ch4->getCurrentItem());
+        $this->assertSame($this->ch4, $this->menu->getCurrentItem());
+        $this->assertNull($this->pt1->getCurrentItem());
+    }
+
     public function testGetUri()
     {
         $this->addChildWithExternalUrl();
@@ -356,6 +402,24 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
             'child offset and no length' => array($this->ch3, null, 1, array($this->ch3->getName())),
             'numeric offset and named length' => array(0, 'Child 3', 2, array($this->ch1->getName(), $this->ch2->getName())),
             'numeric offset and child length' => array(0, $this->ch3, 2, array($this->ch1->getName(), $this->ch2->getName())),
+        );
+    }
+
+    public function testPathAsString()
+    {
+        $this->assertEquals('Root li > Parent 2 > Child 4', $this->ch4->getPathAsString(), 'Path with default separator');
+        $this->assertEquals('Root li / Parent 1 / Child 2', $this->ch2->getPathAsString(' / '), 'Path with custom separator');
+    }
+
+    public function testBreadcrumbsArray()
+    {
+        $this->addChildWithExternalUrl();
+        $this->assertEquals(array('Root li' => null, 'Parent 1' => null), $this->pt1->getBreadcrumbsArray());
+        $this->assertEquals(array('Root li' => null, 'child' => 'http://www.symfony-reloaded.org'), $this->menu['child']->getBreadcrumbsArray());
+        $this->assertEquals(array('Root li' => null, 'child' => 'http://www.symfony-reloaded.org', 'subitem1' => null), $this->menu['child']->getBreadcrumbsArray('subitem1'));
+        $this->assertEquals(
+            array('Root li' => null, 'child' => 'http://www.symfony-reloaded.org', 'subitem1' => null, 'subitem2' => null, 'subitem3' => 'http://php.net'),
+            $this->menu['child']->getBreadcrumbsArray(array('subitem1', 'subitem2' => null, 'subitem3' => 'http://php.net'))
         );
     }
 

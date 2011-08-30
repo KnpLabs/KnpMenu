@@ -79,12 +79,30 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($attributes, $menu->getLinkAttributes());
     }
 
+    public function testDefaultLinkAttribute()
+    {
+        $menu = $this->createMenu();
+        $menu->setLinkAttribute('class', 'test_class');
+        $this->assertEquals('test_class', $menu->getLinkAttribute('class'));
+        $this->assertNull($menu->getLinkAttribute('title'));
+        $this->assertEquals('foobar', $menu->getLinkAttribute('title', 'foobar'));
+    }
+
     public function testLabelAttributes()
     {
         $attributes = array('class' => 'test_class', 'title' => 'Test title');
         $menu = $this->createMenu();
         $menu->setLabelAttributes($attributes);
         $this->assertEquals($attributes, $menu->getLabelAttributes());
+    }
+
+    public function testDefaultLabelAttribute()
+    {
+        $menu = $this->createMenu();
+        $menu->setLabelAttribute('class', 'test_class');
+        $this->assertEquals('test_class', $menu->getLabelAttribute('class'));
+        $this->assertNull($menu->getLabelAttribute('title'));
+        $this->assertEquals('foobar', $menu->getLabelAttribute('title', 'foobar'));
     }
 
     public function testDisplay()
@@ -129,6 +147,34 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
         $menu->addChild('jack');
         $menu->addChild('joe');
         $menu->getChild('joe')->setName('jack');
+    }
+
+    public function testCallRecursively()
+    {
+        $menu = $this->createMenu();
+        $child1 = $this->getMock('Knp\Menu\ItemInterface');
+        $child1->expects($this->any())
+            ->method('getName')
+            ->will($this->returnValue('Child 1'))
+        ;
+        $child1->expects($this->once())
+            ->method('callRecursively')
+            ->with('setDisplay', array(false))
+        ;
+        $menu->addChild($child1);
+        $child2 = $this->getMock('Knp\Menu\ItemInterface');
+        $child2->expects($this->any())
+            ->method('getName')
+            ->will($this->returnValue('Child 2'))
+        ;
+        $child2->expects($this->once())
+            ->method('callRecursively')
+            ->with('setDisplay', array(false))
+        ;
+        $menu->addChild($child2);
+
+        $menu->callRecursively('setDisplay', array(false));
+        $this->assertFalse($menu->isDisplayed());
     }
 
     /**

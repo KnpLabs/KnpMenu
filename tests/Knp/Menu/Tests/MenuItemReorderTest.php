@@ -43,4 +43,16 @@ class MenuItemReorderTest extends \PHPUnit_Framework_TestCase
         $menu->addChild('c1');
         $menu->reorderChildren(array('c1', 'c3'));
     }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testReorderingWithWrongItemNames()
+    {
+        $factory = new MenuFactory();
+        $menu = new MenuItem('root', $factory);
+        $menu->addChild('c1');
+        $menu->addChild('c2');
+        $menu->reorderChildren(array('c1', 'c3'));
+    }
 }

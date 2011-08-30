@@ -723,21 +723,21 @@ class MenuItem implements ItemInterface
     /**
      * Returns the current menu item if it is a child of this menu item
      *
-     * @return bool|\Knp\Menu\ItemInterface
+     * @return \Knp\Menu\ItemInterface|null
      */
     public function getCurrentItem()
     {
-        if ($this->getIsCurrent()) {
+        if ($this->isCurrent()) {
             return $this;
         }
 
         foreach ($this->children as $child) {
-            if ($current = $child->getCurrent()) {
+            if ($current = $child->getCurrentItem()) {
                 return $current;
             }
         }
 
-        return false;
+        return null;
     }
 
     /**

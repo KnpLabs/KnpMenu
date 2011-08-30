@@ -17,6 +17,10 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     function getName();
 
     /**
+     * Renames the item.
+     *
+     * This method must also update the key in the parent.
+     *
      * Provides a fluent interface
      *
      * @param  string $name

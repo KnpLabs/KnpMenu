@@ -29,8 +29,8 @@ class MenuItem implements ItemInterface
     /**
      * Metadata on this menu item
      */
-    protected $children = array(); // an array of MenuItem children
-    protected $parent = null; // parent MenuItem
+    protected $children = array(); // an array of ItemInterface children
+    protected $parent = null; // parent ItemInterface
     protected $isCurrent = null; // whether or not this menu item is current
     protected $currentUri = null; // the current uri to use for selecting current menu
 
@@ -81,39 +81,25 @@ class MenuItem implements ItemInterface
             return $this;
         }
 
-        if ($this->getParent() && $this->getParent()->getChild($name)) {
+        $parent = $this->getParent();
+        if (null !== $parent && isset($parent[$name])) {
             throw new \InvalidArgumentException('Cannot rename item, name is already used by sibling.');
         }
 
         $oldName = $this->name;
         $this->name = $name;
 
-        if ($this->getParent()) {
-            $this->getParent()->updateChildId($this, $oldName);
+        if (null !== $parent) {
+            $names = array_keys($parent->getChildren());
+            $items = array_values($parent->getChildren());
+
+            $offset = array_search($oldName, $names);
+            $names[$offset] = $name;
+
+            $parent->setChildren(array_combine($names, $items));
         }
 
         return $this;
-    }
-
-    /**
-     * Updates id for child based on new name.
-     *
-     * Used internally after renaming item which has parent.
-     *
-     * @param MenuItem $child Item whose name has been changed.
-     * @param string $oldName Old (previous) name of item.
-     *
-     */
-    protected function updateChildId(MenuItem $child, $oldName)
-    {
-        $names = array_keys($this->getChildren());
-        $items = array_values($this->getChildren());
-
-        $offset = array_search($oldName, $names);
-        $names[$offset] = $child->getName();
-
-        $children = array_combine($names, $items);
-        $this->setChildren($children);
     }
 
     /**

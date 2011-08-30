@@ -961,26 +961,21 @@ class MenuItem implements ItemInterface
     /**
      * Exports this menu item to an array
      *
-     * @param boolean $withChildren Whether to
+     * @param boolean $withChildren Whether to include the children
      * @return array
      */
     public function toArray($withChildren = true)
     {
-        $fields = array(
-            'name' => 'name',
-            'label' => 'label',
-            'uri' => 'uri',
-            'attributes' => 'attributes'
+        $array = array(
+            'name' => $this->name,
+            'label' => $this->label,
+            'uri' => $this->uri,
+            'attributes' => $this->attributes,
+            'labelAttributes' => $this->labelAttributes,
+            'linkAttributes' => $this->linkAttributes,
+            'display' => $this->display,
+            'displayChildren' => $this->displayChildren,
         );
-
-        $array = array();
-
-        foreach ($fields as $propName => $field) {
-            $array[$field] = $this->$propName;
-        }
-
-        // record this class name so this item can be recreated with the same class
-        $array['class'] = get_class($this);
 
         // export the children as well, unless explicitly disabled
         if ($withChildren) {
@@ -991,41 +986,6 @@ class MenuItem implements ItemInterface
         }
 
         return $array;
-    }
-
-    /**
-     * Imports a menu item array into this menu item
-     *
-     * @param  array $array The menu item array
-     * @return \Knp\Menu\ItemInterface
-     */
-    public function fromArray(array $array)
-    {
-        if (isset($array['name'])) {
-            $this->setName($array['name']);
-        }
-
-        if (isset($array['label'])) {
-            $this->label = $array['label'];
-        }
-
-        if (isset($array['uri'])) {
-            $this->setUri($array['uri']);
-        }
-
-        if (isset($array['attributes'])) {
-            $this->setAttributes($array['attributes']);
-        }
-
-        if (isset($array['children'])) {
-            foreach ($array['children'] as $name => $child) {
-                $class = isset($child['class']) ? $child['class'] : get_class($this);
-                // create the child with the correct class
-                $this->addChild($name, null, array(), $class)->fromArray($child);
-            }
-        }
-
-        return $this;
     }
 
     /**

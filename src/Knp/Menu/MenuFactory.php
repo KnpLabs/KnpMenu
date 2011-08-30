@@ -64,12 +64,19 @@ class MenuFactory implements FactoryInterface
      */
     public function createFromArray(array $data)
     {
-        $class = isset($data['class']) ? $data['class'] : '\Knp\Menu\MenuItem';
-
         $name = isset($data['name']) ? $data['name'] : null;
-        $menu = new $class($name);
-        $menu->fromArray($data);
+        if (isset($data['children'])) {
+            $children = $data['children'];
+            unset($data['children']);
+        } else {
+            $children = array();
+        }
 
-        return $menu;
+        $item = $this->createItem($name, $data);
+        foreach ($children as $child) {
+            $item->addChild($this->createFromArray($child));
+        }
+
+        return $item;
     }
 }

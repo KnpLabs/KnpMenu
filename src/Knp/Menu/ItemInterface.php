@@ -524,14 +524,4 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * @return array
      */
     function toArray($withChildren = true);
-
-    /**
-     * Imports a menu item array into this menu item
-     *
-     * Provides a fluent interface
-     *
-     * @param  array $array The menu item array
-     * @return \Knp\Menu\ItemInterface
-     */
-    public function fromArray(array $array);
 }

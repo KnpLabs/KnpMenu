@@ -1,7 +1,6 @@
 <?php
 
 namespace Knp\Menu\Renderer;
-use Knp\Menu\MenuItem;
 
 abstract class Renderer
 {
@@ -12,31 +11,39 @@ abstract class Renderer
 
     protected $charset = 'UTF-8';
 
-    public function __construct($charset = null, $renderCompressed = null)
+    /**
+     * @param string $charset
+     * @param boolean $renderCompressed
+     */
+    public function __construct($charset = null, $renderCompressed = false)
     {
         if (null !== $charset) {
             $this->charset = (string) $charset;
         }
-
-        if (null !== $renderCompressed) {
-            $this->renderCompressed = (boolean) $renderCompressed;
-        }
+        $this->renderCompressed = (boolean) $renderCompressed;
     }
 
     /**
-     * Render a HTML attribute
+     * Renders a HTML attribute
+     *
+     * @param string $name
+     * @param string $value
+     * @return string
      */
     public function renderHtmlAttribute($name, $value)
     {
         if (true === $value) {
             return sprintf('%s="%s"', $name, $this->escape($name));
-        } else {
-            return sprintf('%s="%s"', $name, $this->escape($value));
         }
+
+        return sprintf('%s="%s"', $name, $this->escape($value));
     }
 
     /**
-     * Render HTML atributes
+     * Renders HTML attributes
+     *
+     * @param array $attributes
+     * @return string
      */
     public function renderHTMLAttributes(array $attributes)
     {
@@ -57,13 +64,16 @@ abstract class Renderer
     {
         if (false === $value || null === $value) {
             return '';
-        } else {
-            return ' '.$this->renderHtmlAttribute($name, $value);
         }
+
+        return ' '.$this->renderHtmlAttribute($name, $value);
     }
 
     /**
-     * Escape an HTML value
+     * Escapes an HTML value
+     *
+     * @param string $value
+     * @return string
      */
     public function escape($value)
     {
@@ -82,9 +92,9 @@ abstract class Renderer
     }
 
     /**
-     * Get whether to render compressed HTML or not
+     * Gets whether to render compressed HTML or not
      *
-     * @return bool
+     * @return boolean
      */
     public function getRenderCompressed()
     {
@@ -93,10 +103,12 @@ abstract class Renderer
 
     /**
      * Set whether to render compressed HTML or not
+     *
+     * @param boolean $bool
      */
     public function setRenderCompressed($bool)
     {
-        $this->renderCompressed = (bool) $bool;
+        $this->renderCompressed = (boolean) $bool;
     }
 
     /**
@@ -111,9 +123,11 @@ abstract class Renderer
 
     /**
      * Set the HTML charset
+     *
+     * @param string $charset
      */
-    public function setCharset($string)
+    public function setCharset($charset)
     {
-        $this->charset = (string) $string;
+        $this->charset = (string) $charset;
     }
 }

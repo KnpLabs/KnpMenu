@@ -152,7 +152,9 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
     public function testToArrayWithChildren()
     {
         $menu = $this->createMenu();
-        $menu->addChild('jack', array('uri' => 'http://php.net', 'linkAttributes' => array('title' => 'php'), 'display' => false));
+        $menu->addChild('jack', array('uri' => 'http://php.net', 'linkAttributes' => array('title' => 'php'), 'display' => false))
+            ->addChild('john')
+        ;
         $menu->addChild('joe', array('attributes' => array('class' => 'leaf'), 'label' => 'test', 'labelAttributes' => array('class' => 'center'), 'displayChildren' => false));
 
         $this->assertEquals(
@@ -175,7 +177,19 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
                         'linkAttributes' => array('title' => 'php'),
                         'display' => false,
                         'displayChildren' => true,
-                        'children' => array(),
+                        'children' => array(
+                            'john' => array(
+                                'name' => 'john',
+                                'label' => null,
+                                'uri' => null,
+                                'attributes' => array(),
+                                'labelAttributes' => array(),
+                                'linkAttributes' => array(),
+                                'display' => true,
+                                'displayChildren' => true,
+                                'children' => array(),
+                            ),
+                        ),
                     ),
                     'joe' => array(
                         'name' => 'joe',
@@ -191,6 +205,51 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
                 ),
             ),
             $menu->toArray()
+        );
+    }
+
+    public function testToArrayWithLimitedChildren()
+    {
+        $menu = $this->createMenu();
+        $menu->addChild('jack', array('uri' => 'http://php.net', 'linkAttributes' => array('title' => 'php'), 'display' => false))
+            ->addChild('john')
+        ;
+        $menu->addChild('joe', array('attributes' => array('class' => 'leaf'), 'label' => 'test', 'labelAttributes' => array('class' => 'center'), 'displayChildren' => false));
+
+        $this->assertEquals(
+            array(
+                'name' => 'test_menu',
+                'label' => null,
+                'uri' => 'homepage',
+                'attributes' => array(),
+                'labelAttributes' => array(),
+                'linkAttributes' => array(),
+                'display' => true,
+                'displayChildren' => true,
+                'children' => array(
+                    'jack' => array(
+                        'name' => 'jack',
+                        'label' => null,
+                        'uri' => 'http://php.net',
+                        'attributes' => array(),
+                        'labelAttributes' => array(),
+                        'linkAttributes' => array('title' => 'php'),
+                        'display' => false,
+                        'displayChildren' => true,
+                    ),
+                    'joe' => array(
+                        'name' => 'joe',
+                        'label' => 'test',
+                        'uri' => null,
+                        'attributes' => array('class' => 'leaf'),
+                        'labelAttributes' => array('class' => 'center'),
+                        'linkAttributes' => array(),
+                        'display' => true,
+                        'displayChildren' => false,
+                    ),
+                ),
+            ),
+            $menu->toArray(1)
         );
     }
 
@@ -211,7 +270,7 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
                 'display' => true,
                 'displayChildren' => true,
             ),
-            $menu->toArray(false)
+            $menu->toArray(0)
         );
     }
 

@@ -961,10 +961,16 @@ class MenuItem implements ItemInterface
     /**
      * Exports this menu item to an array
      *
-     * @param boolean $withChildren Whether to include the children
+     * The children are exported until the specified depth:
+     *      null: no limit
+     *      0: no children
+     *      1: only direct children
+     *      ...
+     *
+     * @param integer $depth
      * @return array
      */
-    public function toArray($withChildren = true)
+    public function toArray($depth = null)
     {
         $array = array(
             'name' => $this->name,
@@ -978,10 +984,11 @@ class MenuItem implements ItemInterface
         );
 
         // export the children as well, unless explicitly disabled
-        if ($withChildren) {
+        if (0 !== $depth) {
+            $childDepth = (null === $depth) ? null : $depth - 1;
             $array['children'] = array();
             foreach ($this->children as $key => $child) {
-                $array['children'][$key] = $child->toArray();
+                $array['children'][$key] = $child->toArray($childDepth);
             }
         }
 

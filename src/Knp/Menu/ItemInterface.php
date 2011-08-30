@@ -520,8 +520,14 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Exports this menu item to an array
      *
-     * @param boolean $withChildren Whether to include the children
+     * The children are exported until the specified depth:
+     *      null: no limit
+     *      0: no children
+     *      1: only direct children
+     *      ...
+     *
+     * @param integer $depth
      * @return array
      */
-    function toArray($withChildren = true);
+    function toArray($depth = null);
 }

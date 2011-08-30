@@ -2,6 +2,10 @@
 
 namespace Knp\Menu\Renderer;
 
+if (!defined('ENT_SUBSTITUTE')) {
+    define('ENT_SUBSTITUTE', 8);
+}
+
 abstract class Renderer
 {
     /**
@@ -77,7 +81,7 @@ abstract class Renderer
      */
     public function escape($value)
     {
-        return $this->fixDoubleEscape(htmlspecialchars((string) $value, ENT_QUOTES, $this->charset));
+        return $this->fixDoubleEscape(htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, $this->charset));
     }
 
     /**

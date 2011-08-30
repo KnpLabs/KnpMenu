@@ -155,4 +155,43 @@ class HelperTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($child, $helper->getByPath('default', array('child', 'invalid')));
     }
+
+    public function testRenderMenuByPath()
+    {
+        $child = $this->getMock('Knp\Menu\ItemInterface');
+        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $menu->expects($this->any())
+            ->method('getChild')
+            ->with('child')
+            ->will($this->returnValue($child))
+        ;
+
+        $renderer = $this->getMock('Knp\Menu\Renderer\RendererInterface');
+        $renderer->expects($this->once())
+            ->method('render')
+            ->with($child, array())
+            ->will($this->returnValue('<p>foobar</p>'))
+        ;
+
+        $rendererProvider = $this->getMock('Knp\Menu\Renderer\RendererProviderInterface');
+        $rendererProvider->expects($this->once())
+            ->method('get')
+            ->with('default')
+            ->will($this->returnValue($renderer))
+        ;
+
+        $helper = new Helper($rendererProvider);
+
+        $this->assertEquals('<p>foobar</p>', $helper->render(array($menu, 'child'), 'default'));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage The array cannot be empty
+     */
+    public function testRenderByEmptyPath()
+    {
+        $helper = new Helper($this->getMock('Knp\Menu\Renderer\RendererProviderInterface'));
+        $helper->render(array(), 'default');
+    }
 }

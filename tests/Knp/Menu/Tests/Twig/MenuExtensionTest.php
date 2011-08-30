@@ -104,6 +104,53 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
         $extension->get('default');
     }
 
+    public function testGetMenuByPath()
+    {
+        $rendererProvider = $this->getMock('Knp\Menu\Renderer\RendererProviderInterface');
+        $menuProvider = $this->getMock('Knp\Menu\Provider\MenuProviderInterface');
+        $child = $this->getMock('Knp\Menu\ItemInterface');
+        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $menu->expects($this->any())
+            ->method('getChild')
+            ->with('child')
+            ->will($this->returnValue($child))
+        ;
+        $menuProvider->expects($this->once())
+            ->method('get')
+            ->with('default')
+            ->will($this->returnValue($menu))
+        ;
+        $extension = new MenuExtension($rendererProvider, $menuProvider);
+        $this->assertSame($child, $extension->getByPath('default', array('child')));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testGetMenuByInvalidPath()
+    {
+        $rendererProvider = $this->getMock('Knp\Menu\Renderer\RendererProviderInterface');
+        $menuProvider = $this->getMock('Knp\Menu\Provider\MenuProviderInterface');
+        $child = $this->getMock('Knp\Menu\ItemInterface');
+        $child->expects($this->any())
+            ->method('getChild')
+            ->will($this->returnValue(null))
+        ;
+        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $menu->expects($this->any())
+            ->method('getChild')
+            ->with('child')
+            ->will($this->returnValue($child))
+        ;
+        $menuProvider->expects($this->once())
+            ->method('get')
+            ->with('default')
+            ->will($this->returnValue($menu))
+        ;
+        $extension = new MenuExtension($rendererProvider, $menuProvider);
+        $this->assertSame($child, $extension->getByPath('default', array('child', 'invalid')));
+    }
+
     public function testRetrieveMenuByName()
     {
         $menu = $this->getMock('Knp\Menu\ItemInterface');

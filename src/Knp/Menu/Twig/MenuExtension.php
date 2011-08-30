@@ -25,6 +25,7 @@ class MenuExtension extends \Twig_Extension
     {
         return array(
             'knp_menu_get' => new \Twig_Function_Method($this, 'get'),
+            'knp_menu_getByPath' => new \Twig_Function_Method($this, 'getByPath'),
         );
     }
 
@@ -47,21 +48,58 @@ class MenuExtension extends \Twig_Extension
         if (null === $this->menuProvider) {
             throw new \BadMethodCallException('A menu provider must be set to retrieve a menu');
         }
+
         return $this->menuProvider->get($name);
+    }
+
+    /**
+     * Retrieves an item following a path in the tree.
+     *
+     * @throws \InvalidArgumentException
+     * @param \Knp\Menu\ItemInterface|string $menu
+     * @param array $path
+     * @return \Knp\Menu\ItemInterface
+     */
+    public function getByPath($menu, array $path)
+    {
+        if (!$menu instanceof ItemInterface) {
+            $menu = $this->get($menu);
+        }
+
+        foreach ($path as $child) {
+            $menu = $menu->getChild($child);
+            if (null === $menu) {
+                throw new \InvalidArgumentException(sprintf('The menu has no child named "%s"', $child));
+            }
+        }
+
+        return $menu;
     }
 
     /**
      * Renders a menu with the specified renderer.
      *
-     * @param \Knp\Menu\ItemInterface|string $menu
+     * If the argument is an array, it will follow the path in the tree to
+     * get the needed item. The first element of the array is the whole menu.
+     * If the menu is a string instead of an ItemInterface, the provider
+     * will be used.
+     *
+     * @throws \InvalidArgumentException
+     * @param \Knp\Menu\ItemInterface|string|array $menu
      * @param string $renderer
      * @param array $options
      * @return string
      */
     public function render($menu, $renderer, array $options = array())
     {
-        if (!$menu instanceof ItemInterface) {
+        if (is_string($menu)) {
             $menu = $this->get($menu);
+        } elseif (is_array($menu)) {
+            if (empty($menu)) {
+                throw new \InvalidArgumentException('The array cannot be empty');
+            }
+            $root = array_shift($menu);
+            $menu = $this->getByPath($root, $menu);
         }
 
         return $this->rendererProvider->get($renderer)->render($menu, $options);

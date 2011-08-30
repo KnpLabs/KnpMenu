@@ -128,6 +128,55 @@ abstract class AbstractRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($rendered, $this->renderer->renderItem($about));
     }
 
+    public function testRenderLinkWithEmptyAttributes()
+    {
+        $about = $this->menu->addChild('About', array('uri' => '/about'));
+        $about->setLinkAttribute('title', '');
+        $about->setLinkAttribute('rel', null);
+        $about->setLinkAttribute('target', false);
+
+        $rendered = '<li class="last"><a href="/about" title="">About</a></li>';
+        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+    }
+
+    public function testRenderLinkWithSpecialAttributes()
+    {
+        $about = $this->menu->addChild('About', array('uri' => '/about'));
+        $about->setLinkAttribute('title', true);
+
+        $rendered = '<li class="last"><a href="/about" title="title">About</a></li>';
+        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+    }
+
+    public function testRenderLabelWithAttributes()
+    {
+        $about = $this->menu->addChild('About');
+        $about->setLabelAttribute('title', 'About page');
+
+        $rendered = '<li class="last"><span title="About page">About</span></li>';
+        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+    }
+
+    public function testRenderLabelWithEmptyAttributes()
+    {
+        $about = $this->menu->addChild('About');
+        $about->setLabelAttribute('title', '');
+        $about->setLabelAttribute('rel', null);
+        $about->setLabelAttribute('target', false);
+
+        $rendered = '<li class="last"><span title="">About</span></li>';
+        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+    }
+
+    public function testRenderLabelWithSpecialAttributes()
+    {
+        $about = $this->menu->addChild('About');
+        $about->setLabelAttribute('title', true);
+
+        $rendered = '<li class="last"><span title="title">About</span></li>';
+        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+    }
+
     public function testRenderWeirdLink()
     {
         $about = $this->menu->addChild('About', array('uri'=> 'http://en.wikipedia.org/wiki/%22Weird_Al%22_Yankovic?v1=1&v2=2'));

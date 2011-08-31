@@ -29,5 +29,7 @@
         <const name="TWIG_LIB_DIR" value="NOT_SET" />
         <!-- path to the Pimple lib dir -->
         <const name="PIMPLE_LIB_DIR" value="NOT_SET" />
+        <!-- path to the Symfony src dir -->
+        <const name="SYMFONY_SRC_DIR" value="NOT_SET" />
     </php>
 </phpunit>

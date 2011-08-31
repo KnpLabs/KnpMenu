@@ -12,44 +12,56 @@ are simple, the menus can grow arbitrarily large and deep.
 Creating a menu
 ---------------
 
-The menu framework centers around one main class: `Knp\Menu\MenuItem`.
-It's best to think of each `MenuItem` object as an `<li>` tag that can
+The menu framework centers around one main interface: `Knp\Menu\ItemInterface`.
+Items are created by a factory implementing `Knp\Menu\FactoryInterface`.
+It's best to think of each `ItemInterface` object as an `<li>` tag that can
 hold children objects (`<li>` tags that are wrapped in a `<ul>` tag).
 For example:
 
-    use Knp\Menu\MenuItem;
+```php
+<?php
 
-    $menu = new MenuItem('My menu');
-    $menu->addChild('Home', $router->generate('homepage'));
-    $menu->addChild('Comments', $router->generate('comments'));
-    $menu->addChild('Symfony2', 'http://symfony-reloaded.org/');
-    echo $menu->render();
+use Knp\Menu\MenuFactory;
+use Knp\Menu\Renderer\ListRenderer;
+
+$factory = new MenuFactory();
+$menu = $factory->createItem('My menu');
+$menu->addChild('Home', array('uri' => '/'));
+$menu->addChild('Comments', array('uri' => '#comments'));
+$menu->addChild('Symfony2', array('uri' => 'http://symfony-reloaded.org/'));
+
+$renderer = new ListRenderer()
+echo $renderer->render($menu);
+```
 
 The above would render the following html code:
 
-    <ul>
-      <li class="first">
-        <a href="/">Home</a>
-      </li>
-      <li class="current">
-        <a href="/comments">Comments</a>
-      </li>
-      <li class="last">
-        <a href="http://symfony-reloaded.org/">Symfony2</a>
-      </li>
-    </ul>
+```html
+<ul>
+  <li class="first">
+    <a href="/">Home</a>
+  </li>
+  <li class="current">
+    <a href="#comments">Comments</a>
+  </li>
+  <li class="last">
+    <a href="http://symfony-reloaded.org/">Symfony2</a>
+  </li>
+</ul>
+```
 
 >**NOTE**
 >The menu framework automatically adds `first` and `last` classes to each
 >`<li>` tag at each level for easy styling. Notice also that a `current`
->class is added to the "current" menu item by uri. The above example assumes
+>class is added to the "current" menu item by uri and `current_ancestor`
+>to its ancestors (the classes are configurable) The above example assumes
 >the menu is being rendered on the `/comments` page, making the Comments
 >menu the "current" item.
 
 >**NOTE**
 >When the menu is rendered, it's actually spaced correctly so that it appears
 >as shown in the source html. This is to allow for easier debugging and can
->be turned off by calling `$menu->getRenderer()->setRenderCompressed(true)`.
+>be turned off by passing the `compressed` option to the renderer.
 
 Working with your menu tree
 ---------------------------
@@ -57,21 +69,29 @@ Working with your menu tree
 Your menu tree works and acts like a multi-dimensional array. Specifically,
 it implements ArrayAccess, Countable and Iterator:
 
-    $menu = new MenuItem('My menu');
-    $menu->addChild('Home', $router->generate('homepage'));
-    $menu->addChild('Comments');
+```php
+<?php
 
-    // ArrayAccess
-    $menu['Comments']->setUri($router->generate('comments'));
-    $menu['Comments']->addChild('My comments', $router->generate('my_comments'));
+use Knp\Menu\MenuFactory;
+use Knp\Menu\Renderer\ListRenderer;
 
-    // Countable
-    echo count($menu); // returns 2
+$factory = new MenuFactory();
+$menu = $factory->createItem('My menu');
+$menu->addChild('Home', array('uri' => '/'));
+$menu->addChild('Comments');
 
-    // Iterator
-    foreach ($menu as $child) {
-      echo $menu->getLabel();
-    }
+// ArrayAccess
+$menu['Comments']->setUri('#comments');
+$menu['Comments']->addChild('My comments', array('uri' => '/my_comments'));
+
+// Countable
+echo count($menu); // returns 2
+
+// Iterator
+foreach ($menu as $child) {
+  echo $menu->getLabel();
+}
+```
 
 As you can see, the name you give your menu item (e.g. overview, comments)
 when creating it is the name you'll use when accessing it. By default,
@@ -81,101 +101,85 @@ by setting the menu item's label (see below).
 Customizing each menu item
 --------------------------
 
-There are many ways to customize the output of each menu item.
+There are many ways to customize the output of each menu item. Each property
+can be customized in two ways: either by passing an option to the factory
+when creating the item, either by using the setter of the existing item.
 
 ### The label
 
 By default, a menu item uses its name when rendering. You can easily
 change this without changing the name of your menu item by setting its label:
 
-    $menu->addChild('Home', $router->generate('homepage'));
-    $menu['Home']->setLabel('Back to homepage');
+```php
+// Setting the label when creating the item
+$menu->addChild('Home', array('uri' => '/', 'label' => 'Back to homepage'));
+// Changing the label of an existing item
+$menu->addChild('Home', array('uri' => '/'));
+$menu['Home']->setLabel('Back to homepage');
+```
 
 ### The uri
 
-When creating a new menu item (via the constructor or via `addChild()`),
-the second argument is the uri to your menu item. If a menu
-isn't given a url, then text will be output instead of a link:
+If an item isn't given a url, then text will be output instead of a link:
 
-    $menu->addChild('Not a link');
-    $menu->addChild('Home', $router->generate('homepage'));
-    $menu->addChild('Symfony', 'http://www.symfony-reloaded.org');
+```php
+$menu->addChild('Not a link');
+$menu->addChild('Home', '/');
+$menu->addChild('Symfony', 'http://www.symfony-reloaded.org');
+```
 
 You can also specify the uri after creation via the `setUri()` method:
 
-    $menu['Home']->setUri($router->generate('homepage'));
+```php
+$menu['Home']->setUri('/');
+```
 
 >**NOTE**
->To generate Symfony uris, we use Symfony's `Router`. See chapter two for
->more details on how to create menus that use the `Router` to generate uris.
+>If you want to remove the uri of an item, set it to `null`.
 
 ### Menu attributes
 
 In fact, you can add any attribute to the `<li>` tag of a menu item. This
-can be done via the optional 3rd argument when creating a menu item or
-via the `setAttribute()` method:
+can be done when creating a menu item or via the `setAttribute()` and `setAttributes()`
+methods:
 
-    $menu->addChild('Home', null, array('id' => 'back_to_homepage'));
-    $menu['Home']->setAttribute('id', 'back_to_homepage');
+```php
+$menu->addChild('Home', array('attributes' => array('id' => 'back_to_homepage')));
+$menu['Home']->setAttribute('id', 'back_to_homepage');
+```
+
+>**NOTE**
+>For the root element, the attributes are displayed on the `<ul>` element.
+
+>**NOTE**
+>`setAttributes()` will overwrite all existing attributes.
+
+>**NOTE**
+>To remove an existing attribute, set it to `null`. It will not be rendered.
+
+You can also add link attributes (displayed on the `<a>` element) or label
+attributes (displayed on the `<span>` element when it is not a link).
 
 ### Rendering only part of a menu
 
 If you need to render only part of your menu, the menu framework gives
 you unlimited control to do so:
 
-    // render only 2 levels deep (root, parents, children)
-    $menu->render(2);
+```php
+// render only 2 levels deep (root, parents, children)
+$renderer->render($menu, array('depth' => 2));
 
-    // rendering everything except for the children of the Home branch
-    $menu['Home']->setShowChildren(false);
-    $menu->render();
+// rendering everything except for the children of the Home branch
+$menu['Home']->setDisplayChildren(false);
+$renderer->render($menu);
 
-    // render everything except for Home AND its children
-    $menu['Home']->setShow(false);
-    $menu->render();
+// render everything except for Home AND its children
+$menu['Home']->setDisplay(false);
+$renderer->render($menu);
+```
 
-Using the above controls, you can specify exactly which part of you menu
+Using the above controls, you can specify exactly which part of your menu
 you need to render at any given time.
-
-### The "root" is special
-
-Each menu is a tree containing exactly one root menu item. Let's revisit
-the previous example:
-
-    $menu = new MenuItem('My menu');
-    $menu->addChild('Home', $router->generate('homepage'));
-    $menu->addChild('Comments', $router->generate('comments'));
-
-In the above example, the `$menu` variable, corresponding to a menu item
-named "My menu" is the root. The root node is special in that no `<li>`
-tag is rendered and the name is never output:
-
-    <ul>
-      <li class="first">
-        <a href="/">Home</a>
-      </li>
-      <li class="current last">
-        <a href="/comments">Comments</a>
-      </li>
-    </ul>
-
-As you can see, the name "My menu" appears nowhere. The root menu item
-will always render its children, but not itself. However, any attributes
-that you set on your root will be output on the top-level `<ul`> element
-itself.
-
-To facilitate the creation of the root node, a special helper class, `Knp\Menu\Menu`
-was created:
-
-    use Knp\Menu\Menu;
-
-    $menu = new Menu(array('class' => 'root_menu');
-    $menu->addChild('Home', $router->generate('homepage'));
-    $menu->addChild('Comments', $router->generate('comments'));
-
-This will create the same menu as the previous option, but allows you to
-skip the specification of a name or route (the first and only argument
-is the array of attributes for the `<ul>`) for the root node.
 
 Creating a Menu from a Tree structure
 -------------------------------------
@@ -184,7 +188,9 @@ You can create a menu easily from a Tree structure (a nested set for example) by
 making it implement ``Knp\Menu\NodeInterface``. You will then be able
 to create the menu easily (assuming ``$node`` is the root node of your structure):
 
-    <?php
+```php
+<?php
 
-    $factory = new \Knp\Menu\MenuFactory();
-    $menu = $factory->createFromNode($node);
+$factory = new \Knp\Menu\MenuFactory();
+$menu = $factory->createFromNode($node);
+```

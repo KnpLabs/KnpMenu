@@ -22,7 +22,6 @@ class MenuExtension extends \Twig_Extension
     {
         return array(
             'knp_menu_get' => new \Twig_Function_Method($this, 'get'),
-            'knp_menu_getByPath' => new \Twig_Function_Method($this, 'getByPath'),
         );
     }
 
@@ -34,26 +33,15 @@ class MenuExtension extends \Twig_Extension
     }
 
     /**
-     * Retrieves a menu from the menu provider.
-     *
-     * @param string $name
-     * @return \Knp\Menu\ItemInterface
-     */
-    public function get($name)
-    {
-        return $this->helper->get($name);
-    }
-
-    /**
      * Retrieves an item following a path in the tree.
      *
      * @param \Knp\Menu\ItemInterface|string $menu
      * @param array $path
      * @return \Knp\Menu\ItemInterface
      */
-    public function getByPath($menu, array $path)
+    public function get($menu, array $path = array())
     {
-        return $this->helper->getByPath($menu, $path);
+        return $this->helper->get($menu, $path);
     }
 
     /**

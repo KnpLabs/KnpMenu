@@ -26,33 +26,21 @@ class Helper
     }
 
     /**
-     * Retrieves a menu from the menu provider.
+     * Retrieves item in the menu, eventually using the menu provider.
      *
-     * @param string $name
-     * @return \Knp\Menu\ItemInterface
-     * @throws \BadMethodCallException when there is no menu provider
-     */
-    public function get($name)
-    {
-        if (null === $this->menuProvider) {
-            throw new \BadMethodCallException('A menu provider must be set to retrieve a menu');
-        }
-
-        return $this->menuProvider->get($name);
-    }
-
-    /**
-     * Retrieves an item following a path in the tree.
-     *
-     * @throws \InvalidArgumentException
      * @param \Knp\Menu\ItemInterface|string $menu
      * @param array $path
      * @return \Knp\Menu\ItemInterface
+     * @throws \InvalidArgumentException when the path is invalid
+     * @throws \BadMethodCallException when there is no menu provider and the menu is given by name
      */
-    public function getByPath($menu, array $path)
+    public function get($menu, array $path = array())
     {
         if (!$menu instanceof ItemInterface) {
-            $menu = $this->get($menu);
+            if (null === $this->menuProvider) {
+                throw new \BadMethodCallException('A menu provider must be set to retrieve a menu');
+            }
+            $menu = $this->menuProvider->get($menu);
         }
 
         foreach ($path as $child) {
@@ -81,14 +69,17 @@ class Helper
      */
     public function render($menu, $renderer, array $options = array())
     {
-        if (is_string($menu)) {
-            $menu = $this->get($menu);
-        } elseif (is_array($menu)) {
-            if (empty($menu)) {
-                throw new \InvalidArgumentException('The array cannot be empty');
+        if (!$menu instanceof ItemInterface) {
+            $path = array();
+            if (is_array($menu)) {
+                if (empty($menu)) {
+                    throw new \InvalidArgumentException('The array cannot be empty');
+                }
+                $path = $menu;
+                $menu = array_shift($path);
             }
-            $root = array_shift($menu);
-            $menu = $this->getByPath($root, $menu);
+
+            $menu = $this->get($menu, $path);
         }
 
         return $this->rendererProvider->get($renderer)->render($menu, $options);

@@ -124,7 +124,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase
 
         $helper = new Helper($rendererProvider, $menuProvider);
 
-        $this->assertSame($child, $helper->getByPath('default', array('child')));
+        $this->assertSame($child, $helper->get('default', array('child')));
     }
 
     /**
@@ -153,7 +153,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase
 
         $helper = new Helper($rendererProvider, $menuProvider);
 
-        $this->assertSame($child, $helper->getByPath('default', array('child', 'invalid')));
+        $this->assertSame($child, $helper->get('default', array('child', 'invalid')));
     }
 
     public function testRenderMenuByPath()

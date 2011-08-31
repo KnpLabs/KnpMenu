@@ -67,14 +67,14 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
     public function testGetMenuByPath()
     {
         $menu = $this->getMock('Knp\Menu\ItemInterface');
-        $helper = $this->getHelperMock(array('getByPath'));
+        $helper = $this->getHelperMock(array('get'));
         $helper->expects($this->once())
-            ->method('getByPath')
+            ->method('get')
             ->with('default', array('child'))
             ->will($this->returnValue($menu))
         ;
         $extension = new MenuExtension($helper);
-        $this->assertSame($menu, $extension->getByPath('default', array('child')));
+        $this->assertSame($menu, $extension->get('default', array('child')));
     }
 
     public function testRetrieveMenuByName()

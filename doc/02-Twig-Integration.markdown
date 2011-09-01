@@ -33,6 +33,11 @@ You can now use the renderer to render your menu.
 echo $menuRenderer->render($menu);
 ```
 
+>**NOTE**
+>If you haven't loaded a Twig template yet, you will need to initialize the
+>renderer manually as Twig initializes the extensions only on the first template
+>load: ``$menuRenderer->initRuntime($twig);``
+
 ### Using a custom template
 
 You can change the template used by default by changing the argument passed

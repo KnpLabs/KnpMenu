@@ -111,6 +111,7 @@ By default, a menu item uses its name when rendering. You can easily
 change this without changing the name of your menu item by setting its label:
 
 ```php
+<?php
 // Setting the label when creating the item
 $menu->addChild('Home', array('uri' => '/', 'label' => 'Back to homepage'));
 // Changing the label of an existing item
@@ -123,6 +124,7 @@ $menu['Home']->setLabel('Back to homepage');
 If an item isn't given a url, then text will be output instead of a link:
 
 ```php
+<?php
 $menu->addChild('Not a link');
 $menu->addChild('Home', '/');
 $menu->addChild('Symfony', 'http://www.symfony-reloaded.org');
@@ -131,6 +133,7 @@ $menu->addChild('Symfony', 'http://www.symfony-reloaded.org');
 You can also specify the uri after creation via the `setUri()` method:
 
 ```php
+<?php
 $menu['Home']->setUri('/');
 ```
 
@@ -144,6 +147,7 @@ can be done when creating a menu item or via the `setAttribute()` and `setAttrib
 methods:
 
 ```php
+<?php
 $menu->addChild('Home', array('attributes' => array('id' => 'back_to_homepage')));
 $menu['Home']->setAttribute('id', 'back_to_homepage');
 ```
@@ -166,6 +170,7 @@ If you need to render only part of your menu, the menu framework gives
 you unlimited control to do so:
 
 ```php
+<?php
 // render only 2 levels deep (root, parents, children)
 $renderer->render($menu, array('depth' => 2));
 

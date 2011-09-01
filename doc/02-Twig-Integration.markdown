@@ -29,6 +29,7 @@ $twig->addExtension($menuRenderer);
 You can now use the renderer to render your menu.
 
 ```php
+<?php
 echo $menuRenderer->render($menu);
 ```
 
@@ -40,6 +41,7 @@ The TwigRenderer also allows changing the template used to render a menu by
 passing the `template` option:
 
 ```php
+<?php
 echo $menuRenderer->render($menu, array('template' => 'my_menu.html.twig'));
 ```
 

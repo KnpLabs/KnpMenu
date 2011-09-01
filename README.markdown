@@ -53,6 +53,7 @@ Assuming you cloned the library in `vendor/KnpMenu`, it will be configured
 this way:
 
 ```php
+<?php
 $loader->registerNamespaces(array(
     'Knp\Menu' => __DIR__.'/vendor/KnpMenu/src'
     // ...

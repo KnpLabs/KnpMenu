@@ -1,7 +1,9 @@
-MenuBundle
-==========
+KnpMenu
+=======
 
-The KnnMenu library provides object oriented menus for PHP 5.3.
+The KnpMenu library provides object oriented menus for PHP 5.3.  
+It is used by the [KnpMenuBundle](https://github.com/knplabs/KnpMenuBundle) for Symfony2
+but can now be used stand-alone.
 
 ```php
 <?php

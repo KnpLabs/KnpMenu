@@ -57,9 +57,9 @@
 {# displaying the item #}
     <li{{ _self.attributes(attributes) }}>
         {%- if item.uri is not empty and (not item.current or options.currentAsLink) %}
-        <a href="{{ item.uri }}"{{ _self.attributes(item.linkAttributes) }}>{{ item.label }}</a>
+        <a href="{{ item.uri }}"{{ _self.attributes(item.linkAttributes) }}>{{ block('label') }}</a>
         {%- else %}
-        <span{{ _self.attributes(item.labelAttributes) }}>{{ item.label }}</span>
+        <span{{ _self.attributes(item.labelAttributes) }}>{{ block('label') }}</span>
         {%- endif %}
         {%- if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
             <ul{{ _self.attributes({'class': 'menu_level_' ~ item.level }) }}>
@@ -69,3 +69,5 @@
     </li>
 {% endif %}
 {% endblock %}
+
+{% block label %}{{ item.label }}{% endblock %}

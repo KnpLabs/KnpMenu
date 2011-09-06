@@ -136,11 +136,12 @@ class ListRenderer extends Renderer implements RendererInterface
     public function renderLink(ItemInterface $item, array $options = array())
     {
         $options = array_merge($this->getDefaultOptions(), $options);
+        $label = ($options['labelEscape']) ? $this->escape($item->getLabel()) : $item->getLabel();
 
         if ($item->getUri() && (!$item->isCurrent() || $options['currentAsLink'])) {
-            $text = sprintf('<a href="%s"%s>%s</a>', $this->escape($item->getUri()), $this->renderHtmlAttributes($item->getLinkAttributes()), $this->escape($item->getLabel()));
+            $text = sprintf('<a href="%s"%s>%s</a>', $this->escape($item->getUri()), $this->renderHtmlAttributes($item->getLinkAttributes()), $label);
         } else {
-            $text = sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $this->escape($item->getLabel()));
+            $text = sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $label);
         }
 
         return $this->format($text, 'link', $item->getLevel());
@@ -185,6 +186,7 @@ class ListRenderer extends Renderer implements RendererInterface
             'ancestorClass' => 'current_ancestor',
             'firstClass' => 'first',
             'lastClass' => 'last',
+            'labelEscape' => true,
         );
     }
 }

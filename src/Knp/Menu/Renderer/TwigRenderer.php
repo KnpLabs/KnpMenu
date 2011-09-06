@@ -103,6 +103,7 @@ class TwigRenderer extends \Twig_Extension implements RendererInterface
             'lastClass' => 'last',
             'template' => $this->defaultTemplate,
             'compressed' => $this->renderCompressed,
+            'labelEscape' => true,
         );
     }
 }

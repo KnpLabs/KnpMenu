@@ -70,4 +70,4 @@
 {% endif %}
 {% endblock %}
 
-{% block label %}{{ item.label }}{% endblock %}
+{% block label %}{{ options.labelEscape ? item.label|e : item.label|raw }}{% endblock %}

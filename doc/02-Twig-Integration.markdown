@@ -2,91 +2,94 @@ Twig Integration
 ================
 
 KnpMenu provides 2 different (and complementary) integrations with Twig:
-a Twig renderer using Twig to render the menu, and an extension allowing
-you to renderer easily your menu in a Twig template with the renderer you
-want.
 
-Using the TwigRenderer
------------------------
+* [MenuExtension](#menu-extension): a Twig extension allowing you to easily render menus from within a Twig template
 
-### Registering the renderer
+* [TwigRenderer](#twig-renderer): a Twig renderer that (behind the scenes) uses a Twig template to render the menu
 
-You need to register the renderer as a Twig extension and to add the path
-of the template in the loader when bootstrapping Twig.
-
-```php
-<?php
-
-$twigLoader = new \Twig_Loader_Filesystem(array(
-    __DIR__.'/vendor/KnpMenu/src/Knp/Menu/Resources/views',
-    // your own paths
-));
-$twig = new \Twig_Environment($twigLoader);
-$menuRenderer = new \Knp\Menu\Renderer\TwigRenderer('knp_menu.html.twig');
-$twig->addExtension($menuRenderer);
-```
-
-You can now use the renderer to render your menu.
-
-```php
-<?php
-echo $menuRenderer->render($menu);
-```
-
->**NOTE**
->If you haven't loaded a Twig template yet, you will need to initialize the
->renderer manually as Twig initializes the extensions only on the first template
->load: ``$menuRenderer->initRuntime($twig);``
-
-### Using a custom template
-
-You can change the template used by default by changing the argument passed
-to the constructor of the renderer.
-The TwigRenderer also allows changing the template used to render a menu by
-passing the `template` option:
-
-```php
-<?php
-echo $menuRenderer->render($menu, array('template' => 'my_menu.html.twig'));
-```
-
-The template needs to contain 4 blocks: `root` and `compressed_root` which
-are used to display the root of the menu, and `item` and `compressed_item`
-which are used to render an item. The easiest way to customize the rendering
-is to extend the built-in template and to replace the block you want.
+<a name="menu-extension"></a>
 
 Using the MenuExtension
 -----------------------
 
-### Rendering a template
-
-To allow choosing the renderer from the template, the MenuExtension uses
-a `Knp\Menu\Renderer\RendererProviderInterface` instance.
-The default implementation is based on [Pimple](http://pimple-project.org/)
-to allow keeping them lazy-loaded. The second argument is a map giving the
-correspondance between a name (used in the template to identify the renderer)
-and the id in the Pimple container.
+The easiest (but not best) way to render a menu inside a Twig template is
+to pass both the renderer and menu into a template:
 
 ```php
 <?php
 
+// bootstrap Twig
+$twigLoader = new \Twig_Loader_Filesystem(array(
+    // path to your templates
+));
+$twig = new \Twig_Environment($twigLoader);
+
+// setup some renderer
+$renderer = new \Knp\Menu\Renderer\ListRenderer();
+//$menuRenderer = new \Knp\Menu\Renderer\TwigRenderer('knp_menu.html.twig');
+//$menuRenderer->initRuntime($twig);
+
+// render a template
+$template = $twig->loadTemplate('menu.twig');
+echo $template->display(array(
+    'renderer' => $renderer,
+    'menu' => $menu
+));
+```
+
+To render the menu, your template would look like this:
+
+```jinja
+{{ renderer.render(menu) | raw }}
+```
+
+This is ok, but there is a better way. By configuring all of your renderers
+and menus in a central location, you can use a convenient and shorthand syntax
+to render your menus inside a Twig template.
+
+### Loading your renderers from a provider
+
+To make life simpler, a good option is to centralize the setup of all of
+your renderers. To do this, you'll need to create a "renderer provider", which
+is some object - implementing `Knp\Menu\Renderer\RendererProviderInterface` -
+which acts like a container for all of your renderers.
+
+The default implementation of the renderer provider is based on [Pimple](http://pimple-project.org/)
+so that your renderers can be lazy-loaded.
+
+```php
+<?php
+// setup pimple, and assign the renderer to "menu_renderer"
+$pimple = new \Pimple();
+$pimple['list_renderer'] = function() {
+    return new \Knp\Menu\Renderer\ListRenderer();
+};
+
 $rendererProvider = new \Knp\Menu\Renderer\PimpleProvider(
     $pimple,
-    array('list' => 'knp_menu.list_renderer', 'twig' => 'knp_menu.twig_renderer')
+    // common name for the renderer => name of the renderer in pimple
+    array('main' => 'list_renderer')
 );
 $helper = new \Knp\Menu\Twig\Helper($rendererProvider);
 $menuExtension = new \Knp\Menu\Twig\MenuExtension($helper);
 $twig->addExtension($menuExtension);
 ```
 
-You can now render a menu in your template:
+Now, the renderer is aliased to the name `main`. You can render the menu
+simply via:
 
 ```jinja
-{# The menu variable contains a Knp\Menu\ItemInterface object #}
-{{ menu|knp_menu_render('list') }}
+{{ menu | knp_menu_render('main') }}
+```
 
-{# You can also pass some options #}
-{{ menu|knp_menu_render('list', {'currentAsLink': false, 'compressed': true}) }}
+In this example, `menu` variable is the  `MenuItem` object you've passed
+into your template and the `main` string refers back to the name that we
+just gave our renderer.
+
+You can also pass options when rendering the template:
+
+```jinja
+{{ menu|knp_menu_render('main', {'currentAsLink': false, 'compressed': true}) }}
 ```
 
 ### Retrieving an item by its path in the tree
@@ -101,6 +104,9 @@ path (the name of the item is used in the path):
 {# The following could be used but would throw a Fatal Error for some invalid
 paths instead of an exception: #}
 {% set item = menu['Comment']['My comments'] %}
+
+{# actually render the part of the menu #}
+{{ item|knp_menu_render('main') }}
 ```
 
 >**NOTE**
@@ -111,29 +117,41 @@ by using an array:
 
 ```jinja
 {# The menu variable contains a Knp\Menu\ItemInterface object #}
-{{ [menu, 'Comment', 'My comments']|knp_menu_render('list') }}
+{{ [menu, 'Comment', 'My comments']|knp_menu_render('main') }}
 ```
 
 ### Loading the menu from a provider
 
-The MenuExtension also supports retrieving the menu from a provider implementing
-`Knp\Menu\Provider\MenuProviderInterface` which works the same way than the
+The MenuExtension also supports retrieving the menus from a provider implementing
+`Knp\Menu\Provider\MenuProviderInterface` which works the same way as the
 `RendererProviderInterface`. The default implementation is also based on
 Pimple.
 
 ```php
 <?php
+$factory = new MenuFactory();
+
+$pimple = new \Pimple();
+// setup the renderer(s) in Pimple
+
+$pimple['menu_main'] = function() use ($factory) {
+    $menu = $factory->createItem('My menu');
+    // setup the menu
+
+    return $menu;
+};
+$pimple['menu_sidebar'] = ... //
 
 // $rendererProvider = ...
 $menuProvider = new \Knp\Menu\Provider\PimpleProvider(
     $pimple,
-    array('main' => 'main_menu', 'sidebar' => 'menu.sidebar')
+    array('main' => 'main_menu', 'sidebar' => 'menu_sidebar')
 );
 $helper = new \Knp\Menu\Twig\Helper($rendererProvider, $menuProvider);
 $menuExtension = new \Knp\Menu\Twig\MenuExtension($helper);
 ```
 
-You can then retrieve the menu by its name in the template:
+You can now retrieve the menu by its name in the template:
 
 ```jinja
 {% set menu = knp_menu_get('sidebar') %}
@@ -144,9 +162,71 @@ When a menu provider is set, you can also use the menu name instead of the
 menu object in the other functions:
 
 ```jinja
-{{ 'main'|knp_menu_render('twig', {'depth': 1}) }}
+{{ 'main'|knp_menu_render('main', {'depth': 1}) }}
 
-{{ ['main', 'Comments', 'My comments']|knp_menu_render('twig', {'depth': 2}) }}
+{{ ['main', 'Comments', 'My comments']|knp_menu_render('main', {'depth': 2}) }}
 
 {% set item = knp_menu_get('sidebar', ['First section']) %}
 ```
+
+<a name="twig-renderer"></a>
+
+Using the TwigRenderer
+----------------------
+
+### Registering the renderer
+
+To use the TwigRender, you need to register the renderer as a Twig extension
+and to add the path of the template in the loader when bootstrapping Twig.
+
+```php
+<?php
+
+$twigLoader = new \Twig_Loader_Filesystem(array(
+    __DIR__.'/vendor/KnpMenu/src/Knp/Menu/Resources/views',
+    // your own paths
+));
+$twig = new \Twig_Environment($twigLoader);
+$menuRenderer = new \Knp\Menu\Renderer\TwigRenderer('knp_menu.html.twig');
+$twig->addExtension($menuRenderer);
+```
+
+This works just like any other renderer, and will output an un-ordered list
+of menu items (e.g. `ul` and `li` elements):
+
+```php
+<?php
+echo $menuRenderer->render($menu);
+```
+
+Behind the scenes, the renderer is using a Twig template to render the menu.
+This template can be customized by you.
+
+>**NOTE**
+>If you haven't loaded a Twig template yet, you will need to initialize the
+>renderer manually as Twig initializes the extensions only on the first template
+>load: ``$menuRenderer->initRuntime($twig);``
+
+### Rendering a
+
+### Using a custom template
+
+If you need to customize how the template is rendered - beyond all of the
+options given to you by modifying the menu items themselves - you can customize
+the Twig template that renders the menu.
+
+You can change the template used to render the menu in two different ways:
+
+1) Globally: Change the argument passed to the constructor of the renderer.
+
+2) Locally: Pass a `template` option when rendering the menu
+
+```php
+<?php
+echo $menuRenderer->render($menu, array('template' => 'my_menu.html.twig'));
+```
+
+The template needs to contain 4 blocks: `root` and `compressed_root` which
+are used to display the root of the menu, and `item` and `compressed_item`
+which are used to render an item. The easiest way to customize the rendering
+is to extend the built-in template and to replace the block you want.

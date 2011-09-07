@@ -30,7 +30,7 @@ $menu->addChild('Home', array('uri' => '/'));
 $menu->addChild('Comments', array('uri' => '#comments'));
 $menu->addChild('Symfony2', array('uri' => 'http://symfony-reloaded.org/'));
 
-$renderer = new ListRenderer()
+$renderer = new ListRenderer();
 echo $renderer->render($menu);
 ```
 
@@ -58,10 +58,18 @@ The above would render the following html code:
 >the menu is being rendered on the `/comments` page, making the Comments
 >menu the "current" item.
 
->**NOTE**
->When the menu is rendered, it's actually spaced correctly so that it appears
->as shown in the source html. This is to allow for easier debugging and can
->be turned off by passing the `compressed` option to the renderer.
+When the menu is rendered, it's actually spaced correctly so that it appears
+as shown in the source html. This is to allow for easier debugging and can
+be turned off by passing the `true` as the second argument to the renderer.
+
+```php
+<?php
+
+// ...
+
+$renderer = new ListRenderer(null, true);
+echo $renderer->render($menu);
+```
 
 Working with your menu tree
 ---------------------------
@@ -89,7 +97,7 @@ echo count($menu); // returns 2
 
 // Iterator
 foreach ($menu as $child) {
-  echo $menu->getLabel();
+  echo $child->getLabel();
 }
 ```
 
@@ -102,8 +110,8 @@ Customizing each menu item
 --------------------------
 
 There are many ways to customize the output of each menu item. Each property
-can be customized in two ways: either by passing an option to the factory
-when creating the item, either by using the setter of the existing item.
+can be customized in two ways: either by passing it as an option when creating
+the item, or by using the setter of an existing item.
 
 ### The label
 
@@ -114,8 +122,8 @@ change this without changing the name of your menu item by setting its label:
 <?php
 // Setting the label when creating the item
 $menu->addChild('Home', array('uri' => '/', 'label' => 'Back to homepage'));
+
 // Changing the label of an existing item
-$menu->addChild('Home', array('uri' => '/'));
 $menu['Home']->setLabel('Back to homepage');
 ```
 
@@ -162,7 +170,16 @@ $menu['Home']->setAttribute('id', 'back_to_homepage');
 >To remove an existing attribute, set it to `null`. It will not be rendered.
 
 You can also add link attributes (displayed on the `<a>` element) or label
-attributes (displayed on the `<span>` element when it is not a link).
+attributes (displayed on the `<span>` element when it is not a link):
+
+```php
+<?php
+$menu->addChild('KnpLabs.com', array('uri' => 'http://knplabs.com'));
+$menu['KnpLabs.com']->setLinkAttribute('class', 'external-link');
+
+$menu->addChild('Not a link');
+$menu['Not a link']->setLabelAttribute('class', 'no-link-span');
+```
 
 ### Rendering only part of a menu
 
@@ -185,6 +202,45 @@ $renderer->render($menu);
 
 Using the above controls, you can specify exactly which part of your menu
 you need to render at any given time.
+
+### Other rendering options
+
+Most renderers also support several other options, which can be passed as
+the second argument to the `render()` method:
+
+* `depth`
+* `currentAsLink` (default: `true`)
+* `currentClass` (default: `current`)
+* `ancestorClass` (default: `current_ancestor`)
+* `firstClass` (default: `first`)
+* `lastClass` (default:  `last`)
+* `compressed` (default: `false`)
+
+The Current Menu Item
+---------------------
+
+If the URI of a menu item matches the current URL, a `current` class will
+be added to the `li` around that item, as well as a `current_ancestor` around
+any of its parent `li` elements.
+
+But this is not done magically. In order for this to work, you must set the
+current URI on the root menu item:
+
+```php
+<?php
+
+use Knp\Menu\MenuFactory;
+use Knp\Menu\Renderer\ListRenderer;
+
+$factory = new MenuFactory();
+$menu = $factory->createItem('My menu');
+
+// set the current URL
+$menu->setCurrentUri('/my_comments');
+// $menu->setCurrentUri($_REQUEST['PATH_INFO]);
+
+// ...
+```
 
 Creating a Menu from a Tree structure
 -------------------------------------

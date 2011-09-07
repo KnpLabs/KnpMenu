@@ -18,7 +18,7 @@ $menu->addChild('Comments', array('uri' => '#comments'));
 $menu->addChild('Symfony2', array('uri' => 'http://symfony-reloaded.org/'));
 $menu->addChild('Coming soon');
 
-$renderer = new ListRenderer()
+$renderer = new ListRenderer();
 echo $renderer->render($menu);
 ```
 

@@ -44,8 +44,12 @@ class KnpMenuExtension implements ExtensionInterface
                 isset($app['knp_menu.renderers']) ? $app['knp_menu.renderers'] : array()
             );
 
-            return new PimpleRendererProvider($app, $app['knp_menu.renderers']);
+            return new PimpleRendererProvider($app, $app['knp_menu.default_renderer'], $app['knp_menu.renderers']);
         });
+
+        if (!isset($app['knp_menu.default_renderer'])) {
+            $app['knp_menu.default_renderer'] = 'list';
+        }
 
         $app['knp_menu.helper'] = $app->share(function () use ($app){
             return new Helper($app['knp_menu.renderer_provider'], $app['knp_menu.menu_provider']);

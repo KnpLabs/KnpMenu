@@ -15,7 +15,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testHas()
     {
-        $provider = new PimpleProvider(new \Pimple(), array('first' => 'first', 'second' => 'dummy'));
+        $provider = new PimpleProvider(new \Pimple(), 'first', array('first' => 'first', 'second' => 'dummy'));
         $this->assertTrue($provider->has('first'));
         $this->assertTrue($provider->has('second'));
         $this->assertFalse($provider->has('third'));
@@ -28,8 +28,19 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
         $pimple['renderer'] = function() use ($renderer) {
             return $renderer;
         };
-        $provider = new PimpleProvider($pimple, array('default' => 'renderer'));
+        $provider = new PimpleProvider($pimple, 'default',  array('default' => 'renderer'));
         $this->assertSame($renderer, $provider->get('default'));
+    }
+
+    public function testGetDefaultRenderer()
+    {
+        $pimple = new \Pimple();
+        $renderer = $this->getMock('Knp\Menu\Renderer\RendererInterface');
+        $pimple['renderer'] = function() use ($renderer) {
+            return $renderer;
+        };
+        $provider = new PimpleProvider($pimple, 'default',  array('default' => 'renderer'));
+        $this->assertSame($renderer, $provider->get());
     }
 
     /**
@@ -37,7 +48,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetNonExistentRenderer()
     {
-        $provider = new PimpleProvider(new \Pimple());
+        $provider = new PimpleProvider(new \Pimple(), 'default', array());
         $provider->get('non-existent');
     }
 }

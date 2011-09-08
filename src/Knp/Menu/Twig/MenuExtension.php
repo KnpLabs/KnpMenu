@@ -46,7 +46,7 @@ class MenuExtension extends \Twig_Extension
      * @param array $options
      * @return string
      */
-    public function render($menu, $renderer, array $options = array())
+    public function render($menu, $renderer = null, array $options = array())
     {
         return $this->helper->render($menu, $renderer, $options);
     }

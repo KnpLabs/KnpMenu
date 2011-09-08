@@ -67,6 +67,8 @@ $pimple['list_renderer'] = function() {
 
 $rendererProvider = new \Knp\Menu\Renderer\PimpleProvider(
     $pimple,
+    // common name of the renderer used by default
+    'main',
     // common name for the renderer => name of the renderer in pimple
     array('main' => 'list_renderer')
 );
@@ -76,7 +78,13 @@ $twig->addExtension($menuExtension);
 ```
 
 Now, the renderer is aliased to the name `main`. You can render the menu
-simply via:
+with the default renderer simply via:
+
+```jinja
+{{ knp_menu_render(menu) }}
+```
+
+You can also use another renderer than the default one by passing its name:
 
 ```jinja
 {{ knp_menu_render(menu, 'main') }}
@@ -106,7 +114,7 @@ paths instead of an exception: #}
 {% set item = menu['Comment']['My comments'] %}
 
 {# actually render the part of the menu #}
-{{ knp_menu_render(item, 'main') }}
+{{ knp_menu_render(item) }}
 ```
 
 >**NOTE**
@@ -117,7 +125,7 @@ by using an array:
 
 ```jinja
 {# The menu variable contains a Knp\Menu\ItemInterface object #}
-{{ knp_menu_render([menu, 'Comment', 'My comments'], 'main') }}
+{{ knp_menu_render([menu, 'Comment', 'My comments']) }}
 ```
 
 ### Loading the menu from a provider

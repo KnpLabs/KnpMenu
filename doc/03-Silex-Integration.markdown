@@ -43,6 +43,7 @@ $app->register(new \Knp\Menu\Silex\KnpMenuExtension()
   menu provider.
 * **knp_menu.renderers** (optional): an array of ``alias => id`` pair for
   the renderer provider.
+* **knp_menu.default_renderer** (optional): the alias of the default renderer (default to `'list'`)
 * **knp_menu.template** (optional): The template used by default by the TwigRenderer.
 
 #### Services

@@ -67,7 +67,7 @@ class Helper
      * @param array $options
      * @return string
      */
-    public function render($menu, $renderer, array $options = array())
+    public function render($menu, $renderer =  null, array $options = array())
     {
         if (!$menu instanceof ItemInterface) {
             $path = array();

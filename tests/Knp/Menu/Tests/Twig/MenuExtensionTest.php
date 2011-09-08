@@ -23,7 +23,7 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('<p>foobar</p>'))
         ;
 
-        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ menu|knp_menu_render("default") }}', $helper)->render(array('menu' => $menu)));
+        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(menu, "default") }}', $helper)->render(array('menu' => $menu)));
     }
 
     public function testRenderMenuWithOptions()
@@ -36,7 +36,7 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('<p>foobar</p>'))
         ;
 
-        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ menu|knp_menu_render("default", {"firstClass": "test"}) }}', $helper)->render(array('menu' => $menu)));
+        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(menu, "default", {"firstClass": "test"}) }}', $helper)->render(array('menu' => $menu)));
     }
 
     public function testRenderMenuByName()
@@ -48,7 +48,7 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('<p>foobar</p>'))
         ;
 
-        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ menu|knp_menu_render("default") }}', $helper)->render(array('menu' => 'default')));
+        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(menu, "default") }}', $helper)->render(array('menu' => 'default')));
     }
 
     public function testGetMenu()
@@ -92,7 +92,7 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($menu))
         ;
 
-        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_get("default")|knp_menu_render("default") }}', $helper)->render(array()));
+        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(knp_menu_get("default"), "default") }}', $helper)->render(array()));
     }
 
     private function getHelperMock(array $methods)

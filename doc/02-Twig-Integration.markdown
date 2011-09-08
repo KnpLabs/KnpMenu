@@ -79,7 +79,7 @@ Now, the renderer is aliased to the name `main`. You can render the menu
 simply via:
 
 ```jinja
-{{ menu | knp_menu_render('main') }}
+{{ knp_menu_render(menu, 'main') }}
 ```
 
 In this example, `menu` variable is the  `MenuItem` object you've passed
@@ -89,7 +89,7 @@ just gave our renderer.
 You can also pass options when rendering the template:
 
 ```jinja
-{{ menu|knp_menu_render('main', {'currentAsLink': false, 'compressed': true}) }}
+{{ knp_menu_render(menu, 'main', {'currentAsLink': false, 'compressed': true}) }}
 ```
 
 ### Retrieving an item by its path in the tree
@@ -106,18 +106,18 @@ paths instead of an exception: #}
 {% set item = menu['Comment']['My comments'] %}
 
 {# actually render the part of the menu #}
-{{ item|knp_menu_render('main') }}
+{{ knp_menu_render(item, 'main') }}
 ```
 
 >**NOTE**
 >An InvalidArgumentException will be thrown if the path is invalid.
 
-Using the path is also supported when using the `knp_menu_render` filter
+Using the path is also supported when using the `knp_menu_render` function
 by using an array:
 
 ```jinja
 {# The menu variable contains a Knp\Menu\ItemInterface object #}
-{{ [menu, 'Comment', 'My comments']|knp_menu_render('main') }}
+{{ knp_menu_render([menu, 'Comment', 'My comments'], 'main') }}
 ```
 
 ### Loading the menu from a provider
@@ -162,9 +162,9 @@ When a menu provider is set, you can also use the menu name instead of the
 menu object in the other functions:
 
 ```jinja
-{{ 'main'|knp_menu_render('main', {'depth': 1}) }}
+{{ knp_menu_render('main', 'main', {'depth': 1}) }}
 
-{{ ['main', 'Comments', 'My comments']|knp_menu_render('main', {'depth': 2}) }}
+{{ knp_menu_render(['main', 'Comments', 'My comments'], 'main', {'depth': 2}) }}
 
 {% set item = knp_menu_get('sidebar', ['First section']) %}
 ```

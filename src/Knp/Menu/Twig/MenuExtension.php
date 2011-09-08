@@ -22,13 +22,7 @@ class MenuExtension extends \Twig_Extension
     {
         return array(
             'knp_menu_get' => new \Twig_Function_Method($this, 'get'),
-        );
-    }
-
-    public function getFilters()
-    {
-        return array(
-            'knp_menu_render' => new \Twig_Filter_Method($this, 'render', array('is_safe' => array('html'))),
+            'knp_menu_render' => new \Twig_Function_Method($this, 'render', array('is_safe' => array('html'))),
         );
     }
 

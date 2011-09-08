@@ -84,20 +84,19 @@ with the default renderer simply via:
 {{ knp_menu_render(menu) }}
 ```
 
-You can also use another renderer than the default one by passing its name:
-
-```jinja
-{{ knp_menu_render(menu, 'main') }}
-```
-
 In this example, `menu` variable is the  `MenuItem` object you've passed
-into your template and the `main` string refers back to the name that we
-just gave our renderer.
+into your template.
 
 You can also pass options when rendering the template:
 
 ```jinja
-{{ knp_menu_render(menu, 'main', {'currentAsLink': false, 'compressed': true}) }}
+{{ knp_menu_render(menu, {'currentAsLink': false, 'compressed': true}) }}
+```
+
+You can also use another renderer than the default one by passing its name:
+
+```jinja
+{{ knp_menu_render(menu, {}, 'main') }}
 ```
 
 ### Retrieving an item by its path in the tree
@@ -170,9 +169,9 @@ When a menu provider is set, you can also use the menu name instead of the
 menu object in the other functions:
 
 ```jinja
-{{ knp_menu_render('main', 'main', {'depth': 1}) }}
+{{ knp_menu_render('main', {'depth': 1}) }}
 
-{{ knp_menu_render(['main', 'Comments', 'My comments'], 'main', {'depth': 2}) }}
+{{ knp_menu_render(['main', 'Comments', 'My comments'], {'depth': 2}) }}
 
 {% set item = knp_menu_get('sidebar', ['First section']) %}
 ```

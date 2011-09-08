@@ -19,11 +19,11 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
         $helper = $this->getHelperMock(array('render'));
         $helper->expects($this->once())
             ->method('render')
-            ->with($menu, 'default', array())
+            ->with($menu, array(), null)
             ->will($this->returnValue('<p>foobar</p>'))
         ;
 
-        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(menu, "default") }}', $helper)->render(array('menu' => $menu)));
+        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(menu) }}', $helper)->render(array('menu' => $menu)));
     }
 
     public function testRenderMenuWithOptions()
@@ -32,11 +32,24 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
         $helper = $this->getHelperMock(array('render'));
         $helper->expects($this->once())
             ->method('render')
-            ->with($menu, 'default', array('firstClass' => 'test'))
+            ->with($menu, array('firstClass' => 'test'), null)
             ->will($this->returnValue('<p>foobar</p>'))
         ;
 
-        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(menu, "default", {"firstClass": "test"}) }}', $helper)->render(array('menu' => $menu)));
+        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(menu, {"firstClass": "test"}) }}', $helper)->render(array('menu' => $menu)));
+    }
+
+    public function testRenderMenuWithRenderer()
+    {
+        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $helper = $this->getHelperMock(array('render'));
+        $helper->expects($this->once())
+            ->method('render')
+            ->with($menu, array(), 'custom')
+            ->will($this->returnValue('<p>foobar</p>'))
+        ;
+
+        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(menu, {}, "custom") }}', $helper)->render(array('menu' => $menu)));
     }
 
     public function testRenderMenuByName()
@@ -44,11 +57,11 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
         $helper = $this->getHelperMock(array('render'));
         $helper->expects($this->once())
             ->method('render')
-            ->with('default', 'default', array())
+            ->with('default', array(), null)
             ->will($this->returnValue('<p>foobar</p>'))
         ;
 
-        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(menu, "default") }}', $helper)->render(array('menu' => 'default')));
+        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(menu) }}', $helper)->render(array('menu' => 'default')));
     }
 
     public function testGetMenu()
@@ -83,7 +96,7 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
         $helper = $this->getHelperMock(array('get', 'render'));
         $helper->expects($this->once())
             ->method('render')
-            ->with($menu, 'default', array())
+            ->with($menu, array(), null)
             ->will($this->returnValue('<p>foobar</p>'))
         ;
         $helper->expects($this->once())
@@ -92,7 +105,7 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($menu))
         ;
 
-        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(knp_menu_get("default"), "default") }}', $helper)->render(array()));
+        $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(knp_menu_get("default")) }}', $helper)->render(array()));
     }
 
     private function getHelperMock(array $methods)

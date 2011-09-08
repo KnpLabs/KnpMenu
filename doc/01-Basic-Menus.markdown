@@ -71,6 +71,18 @@ $renderer = new ListRenderer(null, true);
 echo $renderer->render($menu);
 ```
 
+You can also compress (or not compress) on a menu-by-menu basis by using the
+`compressed` option:
+
+```php
+<?php
+
+// ...
+
+$renderer = new ListRenderer();
+echo $renderer->render($menu, array('compressed' => true));
+```
+
 Working with your menu tree
 ---------------------------
 
@@ -238,6 +250,18 @@ $menu = $factory->createItem('My menu');
 // set the current URL
 $menu->setCurrentUri('/my_comments');
 // $menu->setCurrentUri($_REQUEST['PATH_INFO]);
+
+// ...
+```
+
+Alternatively, you can manually set which menu item should be marked as current,
+independent of the current URL:
+
+```php
+<?php
+// ...
+
+$menu['Comments']->setCurrent(true);
 
 // ...
 ```

@@ -207,8 +207,6 @@ This template can be customized by you.
 >renderer manually as Twig initializes the extensions only on the first template
 >load: ``$menuRenderer->initRuntime($twig);``
 
-### Rendering a
-
 ### Using a custom template
 
 If you need to customize how the template is rendered - beyond all of the

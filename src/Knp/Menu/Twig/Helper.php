@@ -40,7 +40,13 @@ class Helper
             if (null === $this->menuProvider) {
                 throw new \BadMethodCallException('A menu provider must be set to retrieve a menu');
             }
-            $menu = $this->menuProvider->get($menu);
+
+            $menuName = $menu;
+            $menu = $this->menuProvider->get($menuName);
+
+            if (!$menu instanceof ItemInterface) {
+                throw new \LogicException(sprintf('The menu "%s" exists, but is not a valid menu item object. Check where you created the menu to be sure it returns an ItemInterface object.', $menuName));
+            }
         }
 
         foreach ($path as $child) {

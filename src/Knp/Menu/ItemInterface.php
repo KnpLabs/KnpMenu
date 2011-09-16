@@ -129,6 +129,35 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * @return array
      */
+    function getChildrenAttributes();
+
+    /**
+     * Provides a fluent interface
+     *
+     * @param  array $childrenAttributes
+     * @return \Knp\Menu\ItemInterface
+     */
+    function setChildrenAttributes(array $childrenAttributes);
+
+    /**
+     * @param  string $name     The name of the attribute to return
+     * @param  mixed  $default  The value to return if the attribute doesn't exist
+     * @return mixed
+     */
+    function getChildrenAttribute($name, $default = null);
+
+    /**
+     * Provides a fluent interface
+     *
+     * @param string $name
+     * @param string $value
+     * @return \Knp\Menu\ItemInterface
+     */
+    function setChildrenAttribute($name, $value);
+
+    /**
+     * @return array
+     */
     function getLabelAttributes();
 
     /**

@@ -62,7 +62,10 @@
         <span{{ _self.attributes(item.labelAttributes) }}>{{ block('label') }}</span>
         {%- endif %}
         {%- if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
-            <ul{{ _self.attributes({'class': 'menu_level_' ~ item.level }) }}>
+            {%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
+            {%- set childrenClasses = childrenClasses|merge(['menu_level_' ~ item.level]) %}
+            {%- set childrenAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
+            <ul{{ _self.attributes(childrenAttributes) }}>
                 {{ block('children') }}
             </ul>
         {%- endif %}

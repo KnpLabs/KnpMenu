@@ -88,6 +88,23 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foobar', $menu->getLinkAttribute('title', 'foobar'));
     }
 
+    public function testChildrenAttributes()
+    {
+        $attributes = array('class' => 'test_class', 'title' => 'Test title');
+        $menu = $this->createMenu();
+        $menu->setChildrenAttributes($attributes);
+        $this->assertEquals($attributes, $menu->getChildrenAttributes());
+    }
+
+    public function testDefaultChildrenAttribute()
+    {
+        $menu = $this->createMenu();
+        $menu->setChildrenAttribute('class', 'test_class');
+        $this->assertEquals('test_class', $menu->getChildrenAttribute('class'));
+        $this->assertNull($menu->getChildrenAttribute('title'));
+        $this->assertEquals('foobar', $menu->getChildrenAttribute('title', 'foobar'));
+    }
+
     public function testLabelAttributes()
     {
         $attributes = array('class' => 'test_class', 'title' => 'Test title');

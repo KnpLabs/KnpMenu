@@ -16,6 +16,7 @@ class MenuItem implements ItemInterface
     protected $name = null; // the name of this menu item (used for id by parent menu)
     protected $label = null; // the label to output, name is used by default
     protected $linkAttributes = array(); // an array of attributes for the item link
+    protected $childrenAttributes = array(); // an array of attributes for the children list
     protected $labelAttributes = array(); // an array of attributes for the item text
     protected $uri = null; // the uri to use in the anchor tag
     protected $attributes = array(); // an array of attributes for the li
@@ -232,6 +233,53 @@ class MenuItem implements ItemInterface
     public function setLinkAttribute($name, $value)
     {
         $this->linkAttributes[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getChildrenAttributes()
+    {
+        return $this->childrenAttributes;
+    }
+
+    /**
+     * @param  array $childrenAttributes
+     * @return \Knp\Menu\ItemInterface
+     */
+    public function setChildrenAttributes(array $childrenAttributes)
+    {
+        $this->childrenAttributes = $childrenAttributes;
+
+        return $this;
+    }
+
+    /**
+     * @param  string $name     The name of the attribute to return
+     * @param  mixed  $default  The value to return if the attribute doesn't exist
+     *
+     * @return mixed
+     */
+    public function getChildrenAttribute($name, $default = null)
+    {
+        if (isset($this->childrenAttributes[$name])) {
+            return $this->childrenAttributes[$name];
+        }
+
+        return $default;
+    }
+
+    /**
+     * @param string $name
+     * @param string $value
+     *
+     * @return \Knp\Menu\ItemInterface
+     */
+    public function setChildrenAttribute($name, $value)
+    {
+        $this->childrenAttributes[$name] = $value;
 
         return $this;
     }

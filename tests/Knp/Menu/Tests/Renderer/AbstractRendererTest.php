@@ -148,6 +148,38 @@ abstract class AbstractRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($rendered, $this->renderer->renderItem($about));
     }
 
+    public function testRenderChildrenWithAttributes()
+    {
+        $about = $this->menu->addChild('About');
+        $about->addChild('Us');
+        $about->setChildrenAttribute('title', 'About page');
+
+        $rendered = '<li class="last"><span>About</span><ul title="About page" class="menu_level_1"><li class="first last"><span>Us</span></li></ul></li>';
+        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+    }
+
+    public function testRenderChildrenWithEmptyAttributes()
+    {
+        $about = $this->menu->addChild('About');
+        $about->addChild('Us');
+        $about->setChildrenAttribute('title', '');
+        $about->setChildrenAttribute('rel', null);
+        $about->setChildrenAttribute('target', false);
+
+        $rendered = '<li class="last"><span>About</span><ul title="" class="menu_level_1"><li class="first last"><span>Us</span></li></ul></li>';
+        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+    }
+
+    public function testRenderChildrenWithSpecialAttributes()
+    {
+        $about = $this->menu->addChild('About');
+        $about->addChild('Us');
+        $about->setChildrenAttribute('title', true);
+
+        $rendered = '<li class="last"><span>About</span><ul title="title" class="menu_level_1"><li class="first last"><span>Us</span></li></ul></li>';
+        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+    }
+
     public function testRenderLabelWithAttributes()
     {
         $about = $this->menu->addChild('About');

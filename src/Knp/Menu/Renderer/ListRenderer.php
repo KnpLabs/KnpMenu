@@ -110,7 +110,14 @@ class ListRenderer extends Renderer implements RendererInterface
 
         // renders the embedded ul if there are visible children
         if ($item->hasChildren() && 0 !== $options['depth'] && $item->getDisplayChildren()) {
-            $html .= $this->format('<ul'.$this->renderHtmlAttributes(array('class' => 'menu_level_'.$item->getLevel())).'>', 'ul', $item->getLevel());
+
+            $childrenClass = ($item->getChildrenAttribute('class')) ? explode(' ', $item->getChildrenAttribute('class')) : array();
+            $childrenClass[] = 'menu_level_'.$item->getLevel();
+
+            $childrenAttributes = $item->getChildrenAttributes();
+            $childrenAttributes['class'] = implode(' ', $childrenClass);
+
+            $html .= $this->format('<ul'.$this->renderHtmlAttributes($childrenAttributes).'>', 'ul', $item->getLevel());
             $html .= $this->renderChildren($item, $options);
             $html .= $this->format('</ul>', 'ul', $item->getLevel());
         }

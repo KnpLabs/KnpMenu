@@ -118,6 +118,23 @@ class HelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @expectedException LogicException
+     */
+    public function testGetMenuWithBadReturnValue()
+    {
+        $rendererProvider = $this->getMock('Knp\Menu\Renderer\RendererProviderInterface');
+        $menuProvider = $this->getMock('Knp\Menu\Provider\MenuProviderInterface');
+        $menuProvider->expects($this->once())
+            ->method('get')
+            ->with('default')
+            ->will($this->returnValue(new \stdClass()))
+        ;
+
+        $helper = new Helper($rendererProvider, $menuProvider);
+        $helper->get('default');
+    }
+
+    /**
      * @expectedException BadMethodCallException
      */
     public function testGetMenuWithoutProvider()

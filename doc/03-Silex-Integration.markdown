@@ -30,12 +30,12 @@ Using the KnpMenuExtension
 $app['autoloader']->registerNamespace('Knp\Menu', __DIR__.'/vendor/KnpMenu/src');
 
 // registering the extension
-$app->register(new \Knp\Menu\Silex\KnpMenuExtension()
+$app->register(new \Knp\Menu\Silex\KnpMenuServiceProvider());
 ```
 
 >**WARNING**
->The Twig integration is available only when the KnpMenuExtension is registered
->**after** the TwigExtension in your application.
+>The Twig integration is available only when the KnpMenuServiceProvider is registered
+>**after** the TwigServiceProvider in your application.
 
 #### Parameters
 
@@ -51,6 +51,7 @@ $app->register(new \Knp\Menu\Silex\KnpMenuExtension()
 * **knp_menu.factory**: The menu factory (it is a router-aware one if the
   UrlGeneratorExtension is registered)
 * **knp_menu.renderer.list**: The ListRenderer
+* **knp_menu.renderer.twig**: The TwigRenderer (only when the Twig integration is available)
 
 ### Adding your menu to the menu provider
 

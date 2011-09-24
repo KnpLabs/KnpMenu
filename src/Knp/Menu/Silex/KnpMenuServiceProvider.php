@@ -3,7 +3,7 @@
 namespace Knp\Menu\Silex;
 
 use Silex\Application;
-use Silex\ExtensionInterface;
+use Silex\ServiceProviderInterface;
 use Knp\Menu\MenuFactory;
 use Knp\Menu\Silex\RouterAwareFactory;
 use Knp\Menu\Renderer\ListRenderer;
@@ -13,7 +13,7 @@ use Knp\Menu\Renderer\PimpleProvider as PimpleRendererProvider;
 use Knp\Menu\Twig\Helper;
 use Knp\Menu\Twig\MenuExtension;
 
-class KnpMenuExtension implements ExtensionInterface
+class KnpMenuServiceProvider implements ServiceProviderInterface
 {
     public function register(Application $app)
     {

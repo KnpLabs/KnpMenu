@@ -113,108 +113,112 @@ abstract class AbstractRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderLink()
     {
-        $about = $this->menu->addChild('About', array('uri' => '/about'));
+        $menu = new MenuItem('test', new MenuFactory());
+        $menu->addChild('About', array('uri' => '/about'));
 
-        $rendered = '<li class="last"><a href="/about">About</a></li>';
-        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+        $rendered = '<ul><li class="first last"><a href="/about">About</a></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($menu));
     }
 
     public function testRenderLinkWithAttributes()
     {
-        $about = $this->menu->addChild('About', array('uri' => '/about'));
-        $about->setLinkAttribute('title', 'About page');
+        $menu = new MenuItem('test', new MenuFactory());
+        $menu->addChild('About', array('uri' => '/about', 'linkAttributes' => array('title' => 'About page')));
 
-        $rendered = '<li class="last"><a href="/about" title="About page">About</a></li>';
-        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+        $rendered = '<ul><li class="first last"><a href="/about" title="About page">About</a></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($menu));
     }
 
     public function testRenderLinkWithEmptyAttributes()
     {
-        $about = $this->menu->addChild('About', array('uri' => '/about'));
-        $about->setLinkAttribute('title', '');
-        $about->setLinkAttribute('rel', null);
-        $about->setLinkAttribute('target', false);
+        $menu = new MenuItem('test', new MenuFactory());
+        $menu->addChild('About', array(
+            'uri' => '/about',
+            'linkAttributes' => array('title' => '', 'rel' => null, 'target' => false)
+        ));
 
-        $rendered = '<li class="last"><a href="/about" title="">About</a></li>';
-        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+        $rendered = '<ul><li class="first last"><a href="/about" title="">About</a></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($menu));
     }
 
     public function testRenderLinkWithSpecialAttributes()
     {
-        $about = $this->menu->addChild('About', array('uri' => '/about'));
-        $about->setLinkAttribute('title', true);
+        $menu = new MenuItem('test', new MenuFactory());
+        $menu->addChild('About', array('uri' => '/about', 'linkAttributes' => array('title' => true)));
 
-        $rendered = '<li class="last"><a href="/about" title="title">About</a></li>';
-        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+        $rendered = '<ul><li class="first last"><a href="/about" title="title">About</a></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($menu));
     }
 
     public function testRenderChildrenWithAttributes()
     {
-        $about = $this->menu->addChild('About');
+        $menu = new MenuItem('test', new MenuFactory());
+        $about = $menu->addChild('About');
         $about->addChild('Us');
         $about->setChildrenAttribute('title', 'About page');
 
-        $rendered = '<li class="last"><span>About</span><ul title="About page" class="menu_level_1"><li class="first last"><span>Us</span></li></ul></li>';
-        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+        $rendered = '<ul><li class="first last"><span>About</span><ul title="About page" class="menu_level_1"><li class="first last"><span>Us</span></li></ul></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($menu));
     }
 
     public function testRenderChildrenWithEmptyAttributes()
     {
-        $about = $this->menu->addChild('About');
+        $menu = new MenuItem('test', new MenuFactory());
+        $about = $menu->addChild('About');
         $about->addChild('Us');
         $about->setChildrenAttribute('title', '');
         $about->setChildrenAttribute('rel', null);
         $about->setChildrenAttribute('target', false);
 
-        $rendered = '<li class="last"><span>About</span><ul title="" class="menu_level_1"><li class="first last"><span>Us</span></li></ul></li>';
-        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+        $rendered = '<ul><li class="first last"><span>About</span><ul title="" class="menu_level_1"><li class="first last"><span>Us</span></li></ul></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($menu));
     }
 
     public function testRenderChildrenWithSpecialAttributes()
     {
-        $about = $this->menu->addChild('About');
+        $menu = new MenuItem('test', new MenuFactory());
+        $about = $menu->addChild('About');
         $about->addChild('Us');
         $about->setChildrenAttribute('title', true);
 
-        $rendered = '<li class="last"><span>About</span><ul title="title" class="menu_level_1"><li class="first last"><span>Us</span></li></ul></li>';
-        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+        $rendered = '<ul><li class="first last"><span>About</span><ul title="title" class="menu_level_1"><li class="first last"><span>Us</span></li></ul></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($menu));
     }
 
     public function testRenderLabelWithAttributes()
     {
-        $about = $this->menu->addChild('About');
-        $about->setLabelAttribute('title', 'About page');
+        $menu = new MenuItem('test', new MenuFactory());
+        $menu->addChild('About', array('labelAttributes' => array('title' => 'About page')));
 
-        $rendered = '<li class="last"><span title="About page">About</span></li>';
-        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+        $rendered = '<ul><li class="first last"><span title="About page">About</span></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($menu));
     }
 
     public function testRenderLabelWithEmptyAttributes()
     {
-        $about = $this->menu->addChild('About');
-        $about->setLabelAttribute('title', '');
-        $about->setLabelAttribute('rel', null);
-        $about->setLabelAttribute('target', false);
+        $menu = new MenuItem('test', new MenuFactory());
+        $menu->addChild('About', array('labelAttributes' => array('title' => '', 'rel' => null, 'target' => false)));
 
-        $rendered = '<li class="last"><span title="">About</span></li>';
-        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+        $rendered = '<ul><li class="first last"><span title="">About</span></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($menu));
     }
 
     public function testRenderLabelWithSpecialAttributes()
     {
-        $about = $this->menu->addChild('About');
-        $about->setLabelAttribute('title', true);
+        $menu = new MenuItem('test', new MenuFactory());
+        $menu->addChild('About', array('labelAttributes' => array('title' => true)));
 
-        $rendered = '<li class="last"><span title="title">About</span></li>';
-        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+        $rendered = '<ul><li class="first last"><span title="title">About</span></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($menu));
     }
 
     public function testRenderWeirdLink()
     {
-        $about = $this->menu->addChild('About', array('uri'=> 'http://en.wikipedia.org/wiki/%22Weird_Al%22_Yankovic?v1=1&v2=2'));
+        $menu = new MenuItem('test', new MenuFactory());
+        $menu->addChild('About', array('uri' => 'http://en.wikipedia.org/wiki/%22Weird_Al%22_Yankovic?v1=1&v2=2'));
 
-        $rendered = '<li class="last"><a href="http://en.wikipedia.org/wiki/%22Weird_Al%22_Yankovic?v1=1&amp;v2=2">About</a></li>';
-        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+        $rendered = '<ul><li class="first last"><a href="http://en.wikipedia.org/wiki/%22Weird_Al%22_Yankovic?v1=1&amp;v2=2">About</a></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($menu));
     }
 
     public function testRenderWholeMenu()
@@ -240,20 +244,22 @@ abstract class AbstractRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderWithCurrentItemAsLink()
     {
-        $about = $this->menu->addChild('About', array('uri' => '/about'));
+        $menu = new MenuItem('test', new MenuFactory());
+        $about = $menu->addChild('About', array('uri' => '/about'));
         $about->setCurrent(true);
 
-        $rendered = '<li class="current last"><a href="/about">About</a></li>';
-        $this->assertEquals($rendered, $this->renderer->renderItem($about));
+        $rendered = '<ul><li class="current first last"><a href="/about">About</a></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($menu));
     }
 
     public function testRenderWithCurrentItemNotAsLink()
     {
-        $about = $this->menu->addChild('About', array('uri' => '/about'));
+        $menu = new MenuItem('test', new MenuFactory());
+        $about = $menu->addChild('About', array('uri' => '/about'));
         $about->setCurrent(true);
 
-        $rendered = '<li class="current last"><span>About</span></li>';
-        $this->assertEquals($rendered, $this->renderer->renderItem($about, array('currentAsLink' => false)));
+        $rendered = '<ul><li class="current first last"><span>About</span></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($menu, array('currentAsLink' => false)));
     }
 
     public function testRenderSubMenuPortionWithClassAndTitle()

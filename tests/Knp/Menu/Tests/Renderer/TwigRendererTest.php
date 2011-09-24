@@ -13,9 +13,7 @@ class TwigRendererTest extends AbstractRendererTest
         }
         $loader = new \Twig_Loader_Filesystem(__DIR__.'/../../../../../src/Knp/Menu/Resources/views');
         $environment = new \Twig_Environment($loader);
-        $renderer = new TwigRenderer('knp_menu.html.twig', true);
-        $environment->addExtension($renderer);
-        $renderer->initRuntime($environment);
+        $renderer = new TwigRenderer($environment, 'knp_menu.html.twig', true);
 
         return $renderer;
     }

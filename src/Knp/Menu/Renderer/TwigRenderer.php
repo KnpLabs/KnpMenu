@@ -36,25 +36,6 @@ class TwigRenderer implements RendererInterface
      */
     public function render(ItemInterface $item, array $options = array())
     {
-        return $this->renderBlock('root', $item, $options);
-    }
-
-    /**
-     * Renders a menu item.
-     *
-     * Used internally in the template to render children.
-     *
-     * @param \Knp\Menu\ItemInterface $item
-     * @param array $options
-     * @return string
-     */
-    public function renderItem(ItemInterface $item, array $options = array())
-    {
-        return $this->renderBlock('item', $item, $options);
-    }
-
-    private function renderBlock($block, ItemInterface $item, array $options = array())
-    {
         $options = array_merge($this->getDefaultOptions(), $options);
 
         $template = $options['template'];
@@ -62,9 +43,7 @@ class TwigRenderer implements RendererInterface
             $template = $this->environment->loadTemplate($template);
         }
 
-        if ($options['compressed']) {
-            $block = 'compressed_'.$block;
-        }
+        $block = $options['compressed'] ? 'compressed_root' : 'root';
 
         // we do not call renderBlock here to avoid too many nested level calls (XDebug limits the level to 100 by default)
         ob_start();

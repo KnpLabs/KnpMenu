@@ -12,12 +12,6 @@
 {% endspaceless %}
 {% endblock %}
 
-{% block compressed_item %}
-{% spaceless %}
-{{ block('item') }}
-{% endspaceless %}
-{% endblock %}
-
 {% block root %}
 {% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
     <ul{{ _self.attributes(item.attributes) }}>

@@ -26,8 +26,7 @@ $twig = new \Twig_Environment($twigLoader);
 
 // setup some renderer
 $renderer = new \Knp\Menu\Renderer\ListRenderer();
-//$menuRenderer = new \Knp\Menu\Renderer\TwigRenderer('knp_menu.html.twig');
-//$menuRenderer->initRuntime($twig);
+//$menuRenderer = new \Knp\Menu\Renderer\TwigRenderer($twig, 'knp_menu.html.twig');
 
 // render a template
 $template = $twig->loadTemplate('menu.twig');
@@ -183,8 +182,8 @@ Using the TwigRenderer
 
 ### Registering the renderer
 
-To use the TwigRender, you need to register the renderer as a Twig extension
-and to add the path of the template in the loader when bootstrapping Twig.
+To use the TwigRenderer, you need to add the path of the template in the loader
+when bootstrapping Twig.
 
 ```php
 <?php
@@ -194,8 +193,7 @@ $twigLoader = new \Twig_Loader_Filesystem(array(
     // your own paths
 ));
 $twig = new \Twig_Environment($twigLoader);
-$menuRenderer = new \Knp\Menu\Renderer\TwigRenderer('knp_menu.html.twig');
-$twig->addExtension($menuRenderer);
+$menuRenderer = new \Knp\Menu\Renderer\TwigRenderer($twig, 'knp_menu.html.twig');
 ```
 
 This works just like any other renderer, and will output an un-ordered list
@@ -209,11 +207,6 @@ echo $menuRenderer->render($menu);
 Behind the scenes, the renderer is using a Twig template to render the menu.
 This template can be customized by you.
 
->**NOTE**
->If you haven't loaded a Twig template yet, you will need to initialize the
->renderer manually as Twig initializes the extensions only on the first template
->load: ``$menuRenderer->initRuntime($twig);``
-
 ### Using a custom template
 
 If you need to customize how the template is rendered - beyond all of the
@@ -222,7 +215,7 @@ the Twig template that renders the menu.
 
 You can change the template used to render the menu in two different ways:
 
-1) Globally: Change the argument passed to the constructor of the renderer.
+1) Globally: Change the second argument passed to the constructor of the renderer.
 
 2) Locally: Pass a `template` option when rendering the menu
 
@@ -235,3 +228,7 @@ The template needs to contain 4 blocks: `root` and `compressed_root` which
 are used to display the root of the menu, and `item` and `compressed_item`
 which are used to render an item. The easiest way to customize the rendering
 is to extend the built-in template and to replace the block you want.
+
+>**NOTE**
+>The built-in templates contains some additional blocks to make it easier
+>to customize it when using the inheritance.

@@ -61,7 +61,7 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
             });
 
             $app['knp_menu.renderer.twig'] = $app->share(function () use ($app){
-                return new TwigRenderer($app['knp_menu.template']);
+                return new TwigRenderer($app['twig'], $app['knp_menu.template']);
             });
 
             if (!isset($app['knp_menu.template'])) {
@@ -71,7 +71,6 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
             $oldTwig = $app->raw('twig');
             $app['twig'] = $app->share(function($c) use ($oldTwig, $app) {
                 $twig = $oldTwig($c);
-                $twig->addExtension($app['knp_menu.renderer.twig']);
                 $twig->addExtension($app['knp_menu.twig_extension']);
 
                 return $twig;

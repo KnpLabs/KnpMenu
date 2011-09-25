@@ -12,12 +12,6 @@
 {% endspaceless %}
 {% endblock %}
 
-{% block compressed_item %}
-{% spaceless %}
-{{ block('item') }}
-{% endspaceless %}
-{% endblock %}
-
 {% block root %}
 {% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
     <ul{{ _self.attributes(item.attributes) }}>
@@ -27,12 +21,19 @@
 {% endblock %}
 
 {% block children %}
+{# save current variables #}
+{% set currentOptions = options %}
+{% set currentItem = item %}
+{# update the depth for children #}
 {% if options.depth is not none %}
-{% set options = options|merge({'depth': options.depth - 1}) %}
+{% set options = currentOptions|merge({'depth': currentOptions.depth - 1}) %}
 {% endif %}
-{% for child in item.children %}
-    {{ knp_menu_twig_item(child, options) }}
+{% for item in currentItem.children %}
+    {{ block('item') }}
 {% endfor %}
+{# restore current variables #}
+{% set item = currentItem %}
+{% set options = currentOptions %}
 {% endblock %}
 
 {% block item %}

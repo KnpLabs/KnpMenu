@@ -4,11 +4,12 @@ namespace Knp\Menu\Silex;
 
 use Knp\Menu\MenuFactory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RequestContext;
 
 /**
  * Factory able to use the Symfony2 Routing component to build the url
  */
-class RouterAwareFactory extends MenuFactory
+class RouterAwareFactory extends MenuFactory implements IsSameRouteInterface
 {
     protected $generator;
 
@@ -26,5 +27,25 @@ class RouterAwareFactory extends MenuFactory
         }
 
         return parent::createItem($name, $options);
+    }
+    public function isSameRoute($urla, $urlb){
+    	$basePath = $this->generator->getContext()->getBaseUrl();
+    	$hostName = $this->generator->getContext()->getHost();
+    	if(strpos($urla, $hostName)>0){
+    		$urla = substr($urla, strpos($urla, $hostName)+strlen($hostName), -1);
+    	}
+    	if(strpos($urlb, $hostName)>0){
+    		$urlb = substr($urlb, strpos($urlb, $hostName)+strlen($hostName), -1);
+    	}
+    	if (!empty($basePath) && 0 === strpos($urla, $basePath)) {
+    		$urla = substr($urla, strlen($basePath));
+    	}
+    	$aRoute = $this->generator->match($urla);
+    	if (!empty($basePath) && 0 === strpos($urlb, $basePath)) {
+    		$urlb = substr($urlb, strlen($basePath));
+    	}
+    	$bRoute = $this->generator->match($urlb);
+    	
+    	return null !== $urla && ($aRoute['_route'] === $bRoute['_route']);
     }
 }

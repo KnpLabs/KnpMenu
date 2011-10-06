@@ -2,6 +2,11 @@
 
 namespace Knp\Menu;
 
+use Knp\Menu\Silex\IsSameRouteInterface;
+
+
+use Knp\Menu\Silex\RouterAwareFactory;
+
 use Knp\Menu\Renderer\RendererInterface;
 use Knp\Menu\Renderer\ListRenderer;
 
@@ -809,8 +814,13 @@ class MenuItem implements ItemInterface
     public function isCurrent()
     {
         if (null === $this->isCurrent) {
-            $currentUri = $this->getCurrentUri();
-            $this->isCurrent = null !== $currentUri && ($this->getUri() === $currentUri);
+        	$currentUri = $this->getCurrentUri();
+        	if($this->factory instanceof IsSameRouteInterface){
+        		$this->isCurrent = $this->factory->isSameRoute($currentUri, $this->getUri());
+        	}
+            else{
+            	$this->isCurrent = null !== $currentUri && ($this->getUri() === $currentUri);
+            }
         }
 
         return $this->isCurrent;

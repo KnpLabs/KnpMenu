@@ -1,0 +1,22 @@
+{
+    "name":         "knplabs/knp-menu",
+    "version":      "1.0",
+    "type":         "library",
+    "description":  "An object oriented menu library",
+    "keywords":     ["menu", "tree"],
+    "homepage":     "http://knplabs.com",
+    "license":      "MIT",
+    "authors":      [
+        {
+            "name":     "Knplabs",
+            "homepage": "http://knplabs.com"
+        },
+        {
+            "name":     "Symfony Community",
+            "homepage": "https://github.com/knplabs/KnpMenu/contributors"
+        }
+    ],
+    "require":      {
+        "php":  ">=5.3.0"
+    }
+}

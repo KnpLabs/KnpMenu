@@ -1,1 +1,5 @@
 /phpunit.xml
+/tests/autoload.php
+/vendor/twig
+/vendor/pimple
+/vendor/Symfony

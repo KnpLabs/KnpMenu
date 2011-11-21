@@ -62,11 +62,12 @@ class MenuFactory implements FactoryInterface
      * The source is an array of data that should match the output from MenuItem->toArray().
      *
      * @param  array $data The array of data to use as a source for the menu tree
+     * @param  string $name The name of the source (if not set in data['name'])
      * @return MenuItem
      */
-    public function createFromArray(array $data)
+    public function createFromArray(array $data, $name = null)
     {
-        $name = isset($data['name']) ? $data['name'] : null;
+        $name = isset($data['name']) ? $data['name'] : $name;
         if (isset($data['children'])) {
             $children = $data['children'];
             unset($data['children']);
@@ -75,8 +76,8 @@ class MenuFactory implements FactoryInterface
         }
 
         $item = $this->createItem($name, $data);
-        foreach ($children as $child) {
-            $item->addChild($this->createFromArray($child));
+        foreach ($children as $name => $child) {
+            $item->addChild($this->createFromArray($child, $name));
         }
 
         return $item;

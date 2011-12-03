@@ -18,5 +18,15 @@
     ],
     "require":      {
         "php":  ">=5.3.0"
+    },
+    "recommends":   {
+        "pimple/pimple": "1.0.*"
+    },
+    "suggests":     {
+        "silex/silex":  "1.0.*",
+        "twig/twig":    ">=1.2"
+    },
+    "autoload":     {
+        "psr-0": { "Knp\\Menu": "src/" }
     }
 }

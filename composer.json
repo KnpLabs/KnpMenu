@@ -8,12 +8,12 @@
     "license":      "MIT",
     "authors":      [
         {
-            "name":     "Knplabs",
+            "name":     "KnpLabs",
             "homepage": "http://knplabs.com"
         },
         {
             "name":     "Symfony Community",
-            "homepage": "https://github.com/knplabs/KnpMenu/contributors"
+            "homepage": "https://github.com/KnpLabs/KnpMenu/contributors"
         }
     ],
     "require":      {

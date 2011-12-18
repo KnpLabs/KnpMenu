@@ -1,0 +1,11 @@
+{% extends 'knp_menu.html.twig' %}
+
+{% import 'knp_menu.html.twig' as macros %}
+
+{% block list %}
+{% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
+    <ol{{ macros.attributes(listAttributes) }}>
+        {{ block('children') }}
+    </ol>
+{% endif %}
+{% endblock %}

@@ -207,6 +207,12 @@ echo $menuRenderer->render($menu);
 Behind the scenes, the renderer is using a Twig template to render the menu.
 This template can be customized by you.
 
+>**NOTE**
+>A second template named `knp_menu_ordered.html.twig` can be used if you
+>want to render the menu using an ordered list. This template extends the
+>previous one which must be available using the `knp_menu.html.twig` name
+>(which is the case when configuring the loader like previously).
+
 ### Using a custom template
 
 If you need to customize how the template is rendered - beyond all of the
@@ -224,10 +230,10 @@ You can change the template used to render the menu in two different ways:
 echo $menuRenderer->render($menu, array('template' => 'my_menu.html.twig'));
 ```
 
-The template needs to contain 4 blocks: `root` and `compressed_root` which
-are used to display the root of the menu, and `item` and `compressed_item`
-which are used to render an item. The easiest way to customize the rendering
-is to extend the built-in template and to replace the block you want.
+The template needs to contain 2 blocks: `root` and `compressed_root` which
+are used to display the root of the menu. The easiest way to customize the
+rendering is to extend the built-in template and to replace the block you
+want.
 
 >**NOTE**
 >The built-in templates contains some additional blocks to make it easier

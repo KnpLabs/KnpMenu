@@ -13,8 +13,13 @@
 {% endblock %}
 
 {% block root %}
+{% set listAttributes = item.attributes %}
+{{ block('list') }}
+{% endblock %}
+
+{% block list %}
 {% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
-    <ul{{ _self.attributes(item.attributes) }}>
+    <ul{{ _self.attributes(listAttributes) }}>
         {{ block('children') }}
     </ul>
 {% endif %}
@@ -62,14 +67,11 @@
         {%- else %}
         {{ block('spanElement') }}
         {%- endif %}
-        {%- if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
-            {%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
-            {%- set childrenClasses = childrenClasses|merge(['menu_level_' ~ item.level]) %}
-            {%- set childrenAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
-            <ul{{ _self.attributes(childrenAttributes) }}>
-                {{ block('children') }}
-            </ul>
-        {%- endif %}
+{# render the list of children#}
+        {%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
+        {%- set childrenClasses = childrenClasses|merge(['menu_level_' ~ item.level]) %}
+        {%- set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
+        {{ block('list') }}
     </li>
 {% endif %}
 {% endblock %}

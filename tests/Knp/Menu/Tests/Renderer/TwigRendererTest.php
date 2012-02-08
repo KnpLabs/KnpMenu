@@ -20,15 +20,6 @@ class TwigRendererTest extends AbstractRendererTest
         return $renderer;
     }
 
-    public function testRenderMenu()
-    {
-        $menu = new MenuItem('test', new MenuFactory());
-        $menu->addChild('About')->addChild('foobar');
-
-        $rendered = '<ul><li class="first last"><span>About</span><ul class="menu_level_1"><li class="first last"><span>foobar</span></li></ul></li></ul>';
-        $this->assertEquals($rendered, $this->createRenderer()->render($menu));
-    }
-
     public function testRenderOrderedList()
     {
         $menu = new MenuItem('test', new MenuFactory());

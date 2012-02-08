@@ -11,9 +11,9 @@ class TwigRenderer implements RendererInterface
     /**
      * @var \Twig_Environment
      */
-    private $environment;
-    private $defaultTemplate;
-    private $renderCompressed = false;
+    protected $environment;
+    protected $defaultTemplate;
+    protected $renderCompressed = false;
 
     /**
      * @param \Twig_Environment $environment
@@ -53,7 +53,7 @@ class TwigRenderer implements RendererInterface
         return $html;
     }
 
-    private function getDefaultOptions()
+    protected function getDefaultOptions()
     {
         return array(
             'depth' => null,

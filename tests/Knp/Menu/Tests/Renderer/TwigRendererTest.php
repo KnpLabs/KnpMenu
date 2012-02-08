@@ -25,7 +25,7 @@ class TwigRendererTest extends AbstractRendererTest
         $menu = new MenuItem('test', new MenuFactory());
         $menu->addChild('About')->addChild('foobar');
 
-        $rendered = '<ol><li class="first last"><span>About</span><ol><li class="first last"><span>foobar</span></li></ol></li></ol>';
+        $rendered = '<ol><li class="first last"><span>About</span><ol class="menu_level_1"><li class="first last"><span>foobar</span></li></ol></li></ol>';
         $this->assertEquals($rendered, $this->createRenderer()->render($menu, array('template' => 'knp_menu_ordered.html.twig')));
     }
 }

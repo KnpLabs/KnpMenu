@@ -12,19 +12,26 @@ class TwigRenderer implements RendererInterface
      * @var \Twig_Environment
      */
     private $environment;
-    private $defaultTemplate;
-    private $renderCompressed = false;
+    private $defaultOptions;
 
     /**
      * @param \Twig_Environment $environment
      * @param string $template
-     * @param boolean $renderCompressed
+     * @param array $defaultOptions
      */
-    public function __construct(\Twig_Environment $environment, $template, $renderCompressed = false)
+    public function __construct(\Twig_Environment $environment, $template, array $defaultOptions = array())
     {
         $this->environment = $environment;
-        $this->defaultTemplate = $template;
-        $this->renderCompressed = $renderCompressed;
+        $this->defaultOptions = array_merge(array(
+            'depth' => null,
+            'currentAsLink' => true,
+            'currentClass' => 'current',
+            'ancestorClass' => 'current_ancestor',
+            'firstClass' => 'first',
+            'lastClass' => 'last',
+            'template' => $template,
+            'compressed' => false,
+        ), $defaultOptions);
     }
 
     /**
@@ -36,7 +43,7 @@ class TwigRenderer implements RendererInterface
      */
     public function render(ItemInterface $item, array $options = array())
     {
-        $options = array_merge($this->getDefaultOptions(), $options);
+        $options = array_merge($this->defaultOptions, $options);
 
         $template = $options['template'];
         if (!$template instanceof \Twig_Template) {
@@ -51,19 +58,5 @@ class TwigRenderer implements RendererInterface
         $html = ob_get_clean();
 
         return $html;
-    }
-
-    private function getDefaultOptions()
-    {
-        return array(
-            'depth' => null,
-            'currentAsLink' => true,
-            'currentClass' => 'current',
-            'ancestorClass' => 'current_ancestor',
-            'firstClass' => 'first',
-            'lastClass' => 'last',
-            'template' => $this->defaultTemplate,
-            'compressed' => $this->renderCompressed,
-        );
     }
 }

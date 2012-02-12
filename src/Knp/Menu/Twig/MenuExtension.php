@@ -31,11 +31,12 @@ class MenuExtension extends \Twig_Extension
      *
      * @param \Knp\Menu\ItemInterface|string $menu
      * @param array $path
+     * @param array $options
      * @return \Knp\Menu\ItemInterface
      */
-    public function get($menu, array $path = array())
+    public function get($menu, array $path = array(), array $options = array())
     {
-        return $this->helper->get($menu, $path);
+        return $this->helper->get($menu, $path, $options);
     }
 
     /**

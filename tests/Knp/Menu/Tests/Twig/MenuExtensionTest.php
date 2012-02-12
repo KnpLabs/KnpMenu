@@ -77,6 +77,19 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($menu, $extension->get('default'));
     }
 
+    public function testGetMenuWithOptions()
+    {
+        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $helper = $this->getHelperMock(array('get'));
+        $helper->expects($this->once())
+            ->method('get')
+            ->with('default', array(), array('foo' => 'bar'))
+            ->will($this->returnValue($menu))
+        ;
+        $extension = new MenuExtension($helper);
+        $this->assertSame($menu, $extension->get('default', array(), array('foo' => 'bar')));
+    }
+
     public function testGetMenuByPath()
     {
         $menu = $this->getMock('Knp\Menu\ItemInterface');

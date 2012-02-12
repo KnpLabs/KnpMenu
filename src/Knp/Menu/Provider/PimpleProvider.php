@@ -13,7 +13,7 @@ class PimpleProvider implements MenuProviderInterface
         $this->menuIds = $menuIds;
     }
 
-    public function get($name)
+    public function get($name, array $options = array())
     {
         if (!isset($this->menuIds[$name])) {
             throw new \InvalidArgumentException(sprintf('The menu "%s" is not defined.', $name));
@@ -22,7 +22,7 @@ class PimpleProvider implements MenuProviderInterface
         return $this->pimple[$this->menuIds[$name]];
     }
 
-    public function has($name)
+    public function has($name, array $options = array())
     {
         return isset($this->menuIds[$name]);
     }

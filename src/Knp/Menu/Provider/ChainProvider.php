@@ -14,21 +14,21 @@ class ChainProvider implements MenuProviderInterface
         $this->providers = $providers;
     }
 
-    public function get($name)
+    public function get($name, array $options = array())
     {
         foreach ($this->providers as $provider) {
-            if ($provider->has($name)) {
-                return $provider->get($name);
+            if ($provider->has($name, $options)) {
+                return $provider->get($name, $options);
             }
         }
 
         throw new \InvalidArgumentException(sprintf('The menu "%s" is not defined.', $name));
     }
 
-    public function has($name)
+    public function has($name, array $options = array())
     {
         foreach ($this->providers as $provider) {
-            if ($provider->has($name)) {
+            if ($provider->has($name, $options)) {
                 return true;
             }
         }

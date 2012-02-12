@@ -43,4 +43,26 @@ class MenuFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, count($item));
         $this->assertTrue(isset($item['john']));
     }
+
+    public function testFromArrayWithChildrenOmittingName()
+    {
+        $factory = new MenuFactory();
+        $array = array(
+            'name' => 'joe',
+            'children' => array(
+                'jack' => array(
+                    'label' => 'Jack',
+                ),
+                'john' => array(
+                    'label' => 'John'
+                )
+            ),
+        );
+        $item = $factory->createFromArray($array);
+        $this->assertEquals('joe', $item->getName());
+        $this->assertEmpty($item->getAttributes());
+        $this->assertEquals(2, count($item));
+        $this->assertTrue(isset($item['john']));
+        $this->assertTrue(isset($item['jack']));
+    }
 }

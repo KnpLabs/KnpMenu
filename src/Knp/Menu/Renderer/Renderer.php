@@ -8,23 +8,16 @@ if (!defined('ENT_SUBSTITUTE')) {
 
 abstract class Renderer
 {
-    /**
-     * Whether or not to render menus with pretty spacing, or fully compressed.
-     */
-    protected $renderCompressed = false;
-
     protected $charset = 'UTF-8';
 
     /**
      * @param string $charset
-     * @param boolean $renderCompressed
      */
-    public function __construct($charset = null, $renderCompressed = false)
+    public function __construct($charset = null)
     {
         if (null !== $charset) {
             $this->charset = (string) $charset;
         }
-        $this->renderCompressed = (boolean) $renderCompressed;
     }
 
     /**
@@ -93,26 +86,6 @@ abstract class Renderer
     protected function fixDoubleEscape($escaped)
     {
         return preg_replace('/&amp;([a-z]+|(#\d+)|(#x[\da-f]+));/i', '&$1;', $escaped);
-    }
-
-    /**
-     * Gets whether to render compressed HTML or not
-     *
-     * @return boolean
-     */
-    public function getRenderCompressed()
-    {
-        return $this->renderCompressed;
-    }
-
-    /**
-     * Set whether to render compressed HTML or not
-     *
-     * @param boolean $bool
-     */
-    public function setRenderCompressed($bool)
-    {
-        $this->renderCompressed = (boolean) $bool;
     }
 
     /**

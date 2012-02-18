@@ -14,9 +14,8 @@ class ListRenderer extends Renderer implements RendererInterface
     /**
      * @param array $defaultOptions
      * @param string $charset
-     * @param boolean $compressed
      */
-    public function __construct(array $defaultOptions = array(), $charset = null, $compressed = false)
+    public function __construct(array $defaultOptions = array(), $charset = null)
     {
         $this->defaultOptions = array_merge(array(
             'depth' => null,
@@ -25,9 +24,10 @@ class ListRenderer extends Renderer implements RendererInterface
             'ancestorClass' => 'current_ancestor',
             'firstClass' => 'first',
             'lastClass' => 'last',
+            'compressed' => false,
         ), $defaultOptions);
 
-        parent::__construct($charset, $compressed);
+        parent::__construct($charset);
     }
 
     /**
@@ -56,9 +56,9 @@ class ListRenderer extends Renderer implements RendererInterface
             return '';
         }
 
-        $html = $this->format('<ul'.$this->renderHtmlAttributes($attributes).'>', 'ul', $item->getLevel());
+        $html = $this->format('<ul'.$this->renderHtmlAttributes($attributes).'>', 'ul', $item->getLevel(), $options);
         $html .= $this->renderChildren($item, $options);
-        $html .= $this->format('</ul>', 'ul', $item->getLevel());
+        $html .= $this->format('</ul>', 'ul', $item->getLevel(), $options);
 
         return $html;
     }
@@ -130,7 +130,7 @@ class ListRenderer extends Renderer implements RendererInterface
         }
 
         // opening li tag
-        $html = $this->format('<li'.$this->renderHtmlAttributes($attributes).'>', 'li', $item->getLevel());
+        $html = $this->format('<li'.$this->renderHtmlAttributes($attributes).'>', 'li', $item->getLevel(), $options);
 
         // render the text/link inside the li tag
         //$html .= $this->format($item->getUri() ? $item->renderLink() : $item->renderLabel(), 'link', $item->getLevel());
@@ -146,7 +146,7 @@ class ListRenderer extends Renderer implements RendererInterface
         $html .= $this->renderList($item, $childrenAttributes, $options);
 
         // closing li tag
-        $html .= $this->format('</li>', 'li', $item->getLevel());
+        $html .= $this->format('</li>', 'li', $item->getLevel(), $options);
 
         return $html;
     }
@@ -171,7 +171,7 @@ class ListRenderer extends Renderer implements RendererInterface
             $text = $this->renderSpanElement($item, $options);
         }
 
-        return $this->format($text, 'link', $item->getLevel());
+        return $this->format($text, 'link', $item->getLevel(), $options);
     }
 
     protected function renderLinkElement(ItemInterface $item, array $options)
@@ -197,11 +197,12 @@ class ListRenderer extends Renderer implements RendererInterface
      * @param  string $html The html to render in an (un)formatted way
      * @param  string $type The type [ul,link,li] of thing being rendered
      * @param integer $level
+     * @param array $options
      * @return string
      */
-    protected function format($html, $type, $level)
+    protected function format($html, $type, $level, array $options)
     {
-        if ($this->renderCompressed) {
+        if ($options['compressed']) {
             return $html;
         }
 

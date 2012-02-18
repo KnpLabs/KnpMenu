@@ -10,8 +10,7 @@ class ListRendererTest extends AbstractRendererTest
 {
     public function createRenderer()
     {
-        $renderer = new ListRenderer();
-        $renderer->setRenderCompressed(true);
+        $renderer = new ListRenderer(array('compressed' => true));
 
         return $renderer;
     }

@@ -122,6 +122,23 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foobar', $menu->getLabelAttribute('title', 'foobar'));
     }
 
+    public function testExtras()
+    {
+        $extras = array('class' => 'test_class', 'title' => 'Test title');
+        $menu = $this->createMenu();
+        $menu->setExtras($extras);
+        $this->assertEquals($extras, $menu->getExtras());
+    }
+
+    public function testDefaultExtras()
+    {
+        $menu = $this->createMenu();
+        $menu->setExtra('class', 'test_class');
+        $this->assertEquals('test_class', $menu->getExtra('class'));
+        $this->assertNull($menu->getExtra('title'));
+        $this->assertEquals('foobar', $menu->getExtra('title', 'foobar'));
+    }
+
     public function testDisplay()
     {
         $menu = $this->createMenu();

@@ -314,4 +314,10 @@ abstract class AbstractRendererTest extends \PHPUnit_Framework_TestCase
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span></li></ul></li></ul>';
         $this->assertEquals($rendered, $this->renderer->render($this->menu, array('depth' => 2)));
     }
+
+    public function testEmptyUncompressed()
+    {
+        $rendered = '';
+        $this->assertEquals($rendered, $this->renderer->render($this->menu, array('depth' => 0, 'compressed' => false)));
+    }
 }

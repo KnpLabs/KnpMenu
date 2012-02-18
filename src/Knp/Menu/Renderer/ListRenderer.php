@@ -26,7 +26,7 @@ class ListRenderer extends Renderer implements RendererInterface
             return '';
         }
 
-        $html = $this->format('<ul'.$this->renderHtmlAttributes($item->getAttributes()).'>', 'ul', $item->getLevel());
+        $html = $this->format('<ul'.$this->renderHtmlAttributes($item->getChildrenAttributes()).'>', 'ul', $item->getLevel());
         $html .= $this->renderChildren($item, $options);
         $html .= $this->format('</ul>', 'ul', $item->getLevel());
 

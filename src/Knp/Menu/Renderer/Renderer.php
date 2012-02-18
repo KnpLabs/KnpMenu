@@ -34,7 +34,7 @@ abstract class Renderer
      * @param string $value
      * @return string
      */
-    public function renderHtmlAttribute($name, $value)
+    protected function renderHtmlAttribute($name, $value)
     {
         if (true === $value) {
             return sprintf('%s="%s"', $name, $this->escape($name));
@@ -49,7 +49,7 @@ abstract class Renderer
      * @param array $attributes
      * @return string
      */
-    public function renderHtmlAttributes(array $attributes)
+    protected function renderHtmlAttributes(array $attributes)
     {
         return implode('', array_map(array($this, 'htmlAttributesCallback'), array_keys($attributes), array_values($attributes)));
     }
@@ -79,7 +79,7 @@ abstract class Renderer
      * @param string $value
      * @return string
      */
-    public function escape($value)
+    protected function escape($value)
     {
         return $this->fixDoubleEscape(htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, $this->charset));
     }

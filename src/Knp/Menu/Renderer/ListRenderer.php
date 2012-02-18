@@ -45,7 +45,7 @@ class ListRenderer extends Renderer implements RendererInterface
      * @param array $options The options to render the item.
      * @return string
      */
-    public function renderChildren(ItemInterface $item, array $options)
+    protected function renderChildren(ItemInterface $item, array $options)
     {
         // render children with a depth - 1
         if (null !== $options['depth']) {
@@ -70,7 +70,7 @@ class ListRenderer extends Renderer implements RendererInterface
      * @param array $options The options to render the item
      * @return string
      */
-    public function renderItem(ItemInterface $item, array $options = array())
+    protected function renderItem(ItemInterface $item, array $options = array())
     {
         $options = array_merge($this->getDefaultOptions(), $options);
 
@@ -140,7 +140,7 @@ class ListRenderer extends Renderer implements RendererInterface
      * @param array $options The options to render the item
      * @return string
      */
-    public function renderLink(ItemInterface $item, array $options = array())
+    protected function renderLink(ItemInterface $item, array $options = array())
     {
         $options = array_merge($this->getDefaultOptions(), $options);
 

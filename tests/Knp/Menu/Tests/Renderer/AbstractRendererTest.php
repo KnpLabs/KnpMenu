@@ -57,7 +57,7 @@ abstract class AbstractRendererTest extends \PHPUnit_Framework_TestCase
         $this->renderer = $this->createRenderer();
 
         $this->menu = new MenuItem('Root li', new MenuFactory());
-        $this->menu->setAttributes(array('class' => 'root'));
+        $this->menu->setChildrenAttributes(array('class' => 'root'));
         $this->pt1 = $this->menu->addChild('Parent 1');
         $this->ch1 = $this->pt1->addChild('Child 1');
         $this->ch2 = $this->pt1->addChild('Child 2');
@@ -96,7 +96,7 @@ abstract class AbstractRendererTest extends \PHPUnit_Framework_TestCase
     public function testRenderRootWithAttributes()
     {
         $menu = new MenuItem('test', new MenuFactory());
-        $menu->setAttributes(array('class' => 'test_class'));
+        $menu->setChildrenAttributes(array('class' => 'test_class'));
         $menu->addChild('c1');
         $rendered = '<ul class="test_class"><li class="first last"><span>c1</span></li></ul>';
         $this->assertEquals($rendered, $this->renderer->render($menu));
@@ -105,7 +105,7 @@ abstract class AbstractRendererTest extends \PHPUnit_Framework_TestCase
     public function testRenderEncodedAttributes()
     {
         $menu = new MenuItem('test', new MenuFactory());
-        $menu->setAttributes(array('title' => 'encode " me >'));
+        $menu->setChildrenAttributes(array('title' => 'encode " me >'));
         $menu->addChild('c1');
         $rendered = '<ul title="encode &quot; me &gt;"><li class="first last"><span>c1</span></li></ul>';
         $this->assertEquals($rendered, $this->renderer->render($menu));
@@ -264,7 +264,7 @@ abstract class AbstractRendererTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderSubMenuPortionWithClassAndTitle()
     {
-        $this->pt2->setAttribute('class', 'parent2_class')->setAttribute('title', 'parent2 title');
+        $this->pt2->setChildrenAttribute('class', 'parent2_class')->setChildrenAttribute('title', 'parent2 title');
         $rendered = '<ul class="parent2_class" title="parent2 title"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul>';
         $this->assertEquals($rendered, $this->renderer->render($this->menu['Parent 2']));
     }

@@ -144,6 +144,22 @@ class HelperTest extends \PHPUnit_Framework_TestCase
         $helper->get('default');
     }
 
+    public function testGetMenuWithOptions()
+    {
+        $rendererProvider = $this->getMock('Knp\Menu\Renderer\RendererProviderInterface');
+        $menuProvider = $this->getMock('Knp\Menu\Provider\MenuProviderInterface');
+        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $menuProvider->expects($this->once())
+            ->method('get')
+            ->with('default', array('foo' => 'bar'))
+            ->will($this->returnValue($menu))
+        ;
+
+        $helper = new Helper($rendererProvider, $menuProvider);
+
+        $this->assertSame($menu, $helper->get('default', array(), array('foo' => 'bar')));
+    }
+
     public function testGetMenuByPath()
     {
         $rendererProvider = $this->getMock('Knp\Menu\Renderer\RendererProviderInterface');

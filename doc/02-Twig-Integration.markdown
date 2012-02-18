@@ -175,6 +175,32 @@ menu object in the other functions:
 {% set item = knp_menu_get('sidebar', ['First section']) %}
 ```
 
+In some cases, you may want to build the menu differently according to the
+place it is used. As of KnpMenu 1.1, the ``knp_menu_get`` function supports
+passing an array of options for the menu provider.
+
+To be able to use these options in the Pimple provide, you should register
+the menu as a factory closure through ``$pimple->protect()``. It will then
+be called with the array of options as first argument and the pimple instance
+as second argument:
+
+```php
+<?php
+$factory = new MenuFactory();
+
+$pimple = new \Pimple();
+// setup the renderer(s) in Pimple
+
+$pimple['menu_main'] = $pimple->protect(function(array $options, $c) use ($factory) {
+    $menu = $factory->createItem('My menu');
+    // setup the menu
+    // you can use the options you passed to the provider
+    // and access the pimple container for this.
+
+    return $menu;
+});
+```
+
 <a name="twig-renderer"></a>
 
 Using the TwigRenderer

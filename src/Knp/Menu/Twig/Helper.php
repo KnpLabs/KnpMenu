@@ -30,11 +30,12 @@ class Helper
      *
      * @param \Knp\Menu\ItemInterface|string $menu
      * @param array $path
+     * @param array $options
      * @return \Knp\Menu\ItemInterface
      * @throws \InvalidArgumentException when the path is invalid
      * @throws \BadMethodCallException when there is no menu provider and the menu is given by name
      */
-    public function get($menu, array $path = array())
+    public function get($menu, array $path = array(), array $options = array())
     {
         if (!$menu instanceof ItemInterface) {
             if (null === $this->menuProvider) {
@@ -42,7 +43,7 @@ class Helper
             }
 
             $menuName = $menu;
-            $menu = $this->menuProvider->get($menuName);
+            $menu = $this->menuProvider->get($menuName, $options);
 
             if (!$menu instanceof ItemInterface) {
                 throw new \LogicException(sprintf('The menu "%s" exists, but is not a valid menu item object. Check where you created the menu to be sure it returns an ItemInterface object.', $menuName));

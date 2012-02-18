@@ -9,12 +9,37 @@ use \Knp\Menu\ItemInterface;
  */
 class ListRenderer extends Renderer implements RendererInterface
 {
+    private $defaultOptions;
+
     /**
-     * @see RendererInterface::render
+     * @param array $defaultOptions
+     * @param string $charset
+     * @param boolean $compressed
+     */
+    public function __construct(array $defaultOptions = array(), $charset = null, $compressed = false)
+    {
+        $this->defaultOptions = array_merge(array(
+            'depth' => null,
+            'currentAsLink' => true,
+            'currentClass' => 'current',
+            'ancestorClass' => 'current_ancestor',
+            'firstClass' => 'first',
+            'lastClass' => 'last',
+        ), $defaultOptions);
+
+        parent::__construct($charset, $compressed);
+    }
+
+    /**
+     * Renders a menu with the specified renderer.
+     *
+     * @param \Knp\Menu\ItemInterface $item
+     * @param array $options
+     * @return string
      */
     public function render(ItemInterface $item, array $options = array())
     {
-        $options = array_merge($this->getDefaultOptions(), $options);
+        $options = array_merge($this->defaultOptions, $options);
 
         return $this->renderList($item, $item->getChildrenAttributes(), $options);
     }
@@ -192,17 +217,5 @@ class ListRenderer extends Renderer implements RendererInterface
         }
 
         return str_repeat(' ', $spacing).$html."\n";
-    }
-
-    protected function getDefaultOptions()
-    {
-        return array(
-            'depth' => null,
-            'currentAsLink' => true,
-            'currentClass' => 'current',
-            'ancestorClass' => 'current_ancestor',
-            'firstClass' => 'first',
-            'lastClass' => 'last',
-        );
     }
 }

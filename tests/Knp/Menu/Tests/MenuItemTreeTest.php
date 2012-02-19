@@ -405,6 +405,29 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @dataProvider getSplitData
+     */
+    public function testSplit($length, $count, $keys)
+    {
+        $splitted = $this->pt1->split($length);
+        $this->assertArrayHasKey('primary', $splitted);
+        $this->assertArrayHasKey('secondary', $splitted);
+        $this->assertCount($count, $splitted['primary']);
+        $this->assertCount(3 - $count, $splitted['secondary']);
+        $this->assertEquals($keys, array_keys($splitted['primary']->getChildren()));
+    }
+
+    public function getSplitData()
+    {
+        $this->setUp();
+        return array(
+            'numeric length' => array(1, 1, array($this->ch1->getName())),
+            'named length' => array('Child 3', 2, array($this->ch1->getName(), $this->ch2->getName())),
+            'child length' => array($this->ch3, 2, array($this->ch1->getName(), $this->ch2->getName())),
+        );
+    }
+
     public function testPathAsString()
     {
         $this->assertEquals('Root li > Parent 2 > Child 4', $this->ch4->getPathAsString(), 'Path with default separator');

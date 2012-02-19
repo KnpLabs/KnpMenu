@@ -166,6 +166,18 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
         $menu->getChild('joe')->setName('jack');
     }
 
+    public function testSetSameName()
+    {
+        $parent = $this->getMock('Knp\Menu\ItemInterface');
+        $parent->expects($this->never())
+            ->method('offsetExists');
+
+        $menu = $this->createMenu('my_name');
+        $menu->setParent($parent);
+        $menu->setName('my_name');
+        $this->assertEquals('my_name', $menu->getName());
+    }
+
     public function testToArrayWithChildren()
     {
         $menu = $this->createMenu();
@@ -317,6 +329,20 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
 
         $menu->callRecursively('setDisplay', array(false));
         $this->assertFalse($menu->isDisplayed());
+    }
+
+    public function testFactory()
+    {
+        $child1 = $this->getMock('Knp\Menu\ItemInterface');
+        $factory = $this->getMock('Knp\Menu\FactoryInterface');
+        $factory->expects($this->once())
+            ->method('createItem')
+            ->will($this->returnValue($child1));
+
+        $menu = $this->createMenu();
+        $menu->setFactory($factory);
+
+        $menu->addChild('child1');
     }
 
     /**

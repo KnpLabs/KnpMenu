@@ -8,11 +8,34 @@ use Knp\Menu\MenuFactory;
 
 class ListRendererTest extends AbstractRendererTest
 {
-    public function createRenderer()
+    protected function createRenderer()
     {
         $renderer = new ListRenderer();
         $renderer->setRenderCompressed(true);
 
         return $renderer;
+    }
+
+    public function testPrettyRendering()
+    {
+        $menu = new MenuItem('Root li', new MenuFactory());
+        $menu->setChildrenAttributes(array('class' => 'root'));
+        $menu->addChild('Parent 1');
+        $menu->addChild('Parent 2');
+
+        $renderer = new ListRenderer();
+        $rendered = <<<HTML
+<ul class="root">
+  <li class="first">
+    <span>Parent 1</span>
+  </li>
+  <li class="last">
+    <span>Parent 2</span>
+  </li>
+</ul>
+
+HTML;
+
+        $this->assertEquals($rendered, $renderer->render($menu));
     }
 }

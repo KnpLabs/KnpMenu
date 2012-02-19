@@ -20,6 +20,7 @@ class MenuItem implements ItemInterface
     protected $labelAttributes = array(); // an array of attributes for the item text
     protected $uri = null; // the uri to use in the anchor tag
     protected $attributes = array(); // an array of attributes for the li
+    protected $extras = array(); // an array of extra stuff associated to the item
 
     /**
      * Options related to rendering
@@ -140,7 +141,7 @@ class MenuItem implements ItemInterface
 
     /**
      * @param  string $label    The text to use when rendering this menu item
-     * @return MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
     public function setLabel($label)
     {
@@ -159,7 +160,7 @@ class MenuItem implements ItemInterface
 
     /**
      * @param  array $attributes
-     * @return MenuItem
+     * @return \Knp\Menu\ItemInterface
      */
     public function setAttributes(array $attributes)
     {
@@ -321,6 +322,55 @@ class MenuItem implements ItemInterface
     public function setLabelAttribute($name, $value)
     {
         $this->labelAttributes[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getExtras()
+    {
+        return $this->extras;
+    }
+
+    /**
+     * Provides a fluent interface
+     *
+     * @param  array $extras
+     * @return \Knp\Menu\ItemInterface
+     */
+    public function setExtras(array $extras)
+    {
+        $this->extras = $extras;
+
+        return $this;
+    }
+
+    /**
+     * @param  string $name     The name of the extra to return
+     * @param  mixed  $default  The value to return if the extra doesn't exist
+     * @return mixed
+     */
+    public function getExtra($name, $default = null)
+    {
+        if (isset($this->extras[$name])) {
+            return $this->extras[$name];
+        }
+
+        return $default;
+    }
+
+    /**
+     * Provides a fluent interface
+     *
+     * @param string $name
+     * @param mixed $value
+     * @return \Knp\Menu\ItemInterface
+     */
+    public function setExtra($name, $value)
+    {
+        $this->extras[$name] = $value;
 
         return $this;
     }

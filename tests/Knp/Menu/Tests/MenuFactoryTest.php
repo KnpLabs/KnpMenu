@@ -40,7 +40,7 @@ class MenuFactoryTest extends \PHPUnit_Framework_TestCase
         $item = $factory->createFromArray($array);
         $this->assertEquals('joe', $item->getName());
         $this->assertEmpty($item->getAttributes());
-        $this->assertEquals(2, count($item));
+        $this->assertCount(2, $item);
         $this->assertTrue(isset($item['john']));
     }
 
@@ -61,7 +61,7 @@ class MenuFactoryTest extends \PHPUnit_Framework_TestCase
         $item = $factory->createFromArray($array);
         $this->assertEquals('joe', $item->getName());
         $this->assertEmpty($item->getAttributes());
-        $this->assertEquals(2, count($item));
+        $this->assertCount(2, $item);
         $this->assertTrue(isset($item['john']));
         $this->assertTrue(isset($item['jack']));
     }

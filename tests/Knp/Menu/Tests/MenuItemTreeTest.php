@@ -80,10 +80,10 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
 
     public function testSampleTreeIntegrity()
     {
-        $this->assertEquals(2, count($this->menu));
-        $this->assertEquals(3, count($this->menu['Parent 1']));
-        $this->assertEquals(1, count($this->menu['Parent 2']));
-        $this->assertEquals(1, count($this->menu['Parent 2']['Child 4']));
+        $this->assertCount(2, $this->menu);
+        $this->assertCount(3, $this->menu['Parent 1']);
+        $this->assertCount(1, $this->menu['Parent 2']);
+        $this->assertCount(1, $this->menu['Parent 2']['Child 4']);
         $this->assertEquals('Grandchild 1', $this->menu['Parent 2']['Child 4']['Grandchild 1']->getName());
     }
 
@@ -201,13 +201,13 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
 
     public function testCountable()
     {
-        $this->assertEquals(2, count($this->menu));
+        $this->assertCount(2, $this->menu);
 
         $this->menu->addChild('New Child');
-        $this->assertEquals(3, count($this->menu));
+        $this->assertCount(3, $this->menu);
 
         unset($this->menu['New Child']);
-        $this->assertEquals(2, count($this->menu));
+        $this->assertCount(2, $this->menu);
     }
 
     public function testIterator()
@@ -223,7 +223,7 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
     public function testGetChildren()
     {
         $children = $this->ch4->getChildren();
-        $this->assertEquals(1, count($children));
+        $this->assertCount(1, $children);
         $this->assertEquals($this->gc1->getName(), $children['Grandchild 1']->getName());
     }
 
@@ -277,9 +277,9 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
         $gc2 = $this->ch4->addChild('gc2');
         $gc3 = $this->ch4->addChild('gc3');
         $gc4 = $this->ch4->addChild('gc4');
-        $this->assertEquals(4, count($this->ch4));
+        $this->assertCount(4, $this->ch4);
         $this->ch4->removeChild('gc4');
-        $this->assertEquals(3, count($this->ch4));
+        $this->assertCount(3, $this->ch4);
         $this->assertTrue($this->ch4->getChild('Grandchild 1')->isFirst());
         $this->assertTrue($this->ch4->getChild('gc3')->isLast());
     }
@@ -287,7 +287,7 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
     public function testRemoveFakeChild()
     {
         $this->menu->removeChild('fake');
-        $this->assertEquals(2, count($this->menu));
+        $this->assertCount(2, $this->menu);
     }
 
     public function testReAddRemovedChild()
@@ -295,7 +295,7 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
         $gc2 = $this->ch4->addChild('gc2');
         $this->ch4->removeChild('gc2');
         $this->menu->addChild($gc2);
-        $this->assertEquals(3, count($this->menu));
+        $this->assertCount(3, $this->menu);
         $this->assertTrue($gc2->isLast());
         $this->assertFalse($this->pt2->isLast());
     }
@@ -388,7 +388,7 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
     public function testSlice($offset, $length, $count, $keys)
     {
         $sliced = $this->pt1->slice($offset, $length);
-        $this->assertEquals($count, count($sliced));
+        $this->assertCount($count, $sliced);
         $this->assertEquals($keys, array_keys($sliced->getChildren()));
     }
 

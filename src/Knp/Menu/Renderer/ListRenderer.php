@@ -107,8 +107,8 @@ class ListRenderer extends Renderer implements RendererInterface
             return '';
         }
 
-        // explode the class string into an array of classes
-        $class = $item->getAttribute('class') ? array($item->getAttribute('class')) : array();
+        // create an array than can be imploded as a class list
+        $class = (array) $item->getAttribute('class');
 
         if ($item->isCurrent()) {
             $class[] = $options['currentClass'];
@@ -137,7 +137,7 @@ class ListRenderer extends Renderer implements RendererInterface
         $html .= $this->renderLink($item, $options);
 
         // renders the embedded ul
-        $childrenClass = $item->getChildrenAttribute('class') ? array($item->getChildrenAttribute('class')) : array();
+        $childrenClass = (array) $item->getChildrenAttribute('class');
         $childrenClass[] = 'menu_level_'.$item->getLevel();
 
         $childrenAttributes = $item->getChildrenAttributes();

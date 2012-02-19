@@ -1,9 +1,9 @@
 {% macro attributes(attributes) %}
 {% for name, value in attributes %}
-    {%- if value is not none and value is not sameas(false) %}
-        {{- ' %s="%s"'|format(name, value is sameas(true) ? name|e : value|e)|raw }}
-    {%- endif %}
-{% endfor %}
+    {%- if value is not none and value is not sameas(false) -%}
+        {{- ' %s="%s"'|format(name, value is sameas(true) ? name|e : value|e)|raw -}}
+    {%- endif -%}
+{%- endfor -%}
 {% endmacro %}
 
 {% block compressed_root %}
@@ -14,7 +14,7 @@
 
 {% block root %}
 {% set listAttributes = item.childrenAttributes %}
-{{ block('list') }}
+{{ block('list') -}}
 {% endblock %}
 
 {% block list %}

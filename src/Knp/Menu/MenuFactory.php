@@ -19,6 +19,7 @@ class MenuFactory implements FactoryInterface
                 'linkAttributes' => array(),
                 'childrenAttributes' => array(),
                 'labelAttributes' => array(),
+                'extras' => array(),
                 'display' => true,
                 'displayChildren' => true,
             ),
@@ -32,6 +33,7 @@ class MenuFactory implements FactoryInterface
             ->setLinkAttributes($options['linkAttributes'])
             ->setChildrenAttributes($options['childrenAttributes'])
             ->setLabelAttributes($options['labelAttributes'])
+            ->setExtras($options['extras'])
             ->setDisplay($options['display'])
             ->setDisplayChildren($options['displayChildren'])
         ;

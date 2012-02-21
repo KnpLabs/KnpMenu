@@ -185,6 +185,35 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     function setLabelAttribute($name, $value);
 
     /**
+     * @return array
+     */
+    function getExtras();
+
+    /**
+     * Provides a fluent interface
+     *
+     * @param  array $extras
+     * @return \Knp\Menu\ItemInterface
+     */
+    function setExtras(array $extras);
+
+    /**
+     * @param  string $name     The name of the extra to return
+     * @param  mixed  $default  The value to return if the extra doesn't exist
+     * @return mixed
+     */
+    function getExtra($name, $default = null);
+
+    /**
+     * Provides a fluent interface
+     *
+     * @param string $name
+     * @param mixed $value
+     * @return \Knp\Menu\ItemInterface
+     */
+    function setExtra($name, $value);
+
+    /**
      * Whether or not this menu item should show its children.
      *
      * @return boolean

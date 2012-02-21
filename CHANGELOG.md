@@ -1,5 +1,6 @@
 ## 1.1.0 (2012-XX-XX)
 
+* Added a way to attach extra data to an item
 * Removed unnecessary optimization in the TwigRenderer
 * Added some whitespace control in the Twig template to ensure an empty rendering is really empty
 * [BC break] Use the childrenAttributes for the root instead of the attributes

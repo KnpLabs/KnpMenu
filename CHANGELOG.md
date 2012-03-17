@@ -1,5 +1,6 @@
 ## 1.1.0 (2012-XX-XX)
 
+* Refactored the ListRenderer to be consistent with the TwigRenderer and provide the same extension points
 * Added a way to attach extra data to an item
 * Removed unnecessary optimization in the TwigRenderer
 * Added some whitespace control in the Twig template to ensure an empty rendering is really empty
@@ -11,7 +12,6 @@
 * Added a template to render an ordered list
 * Refactored the template a bit to make it easier to use an ordered list
 * Allow omitting the name of the child in `fromArray` (the key is used instead)
-
 
 ## 1.0.0 (2011-12-03)
 

@@ -8,23 +8,16 @@ if (!defined('ENT_SUBSTITUTE')) {
 
 abstract class Renderer
 {
-    /**
-     * Whether or not to render menus with pretty spacing, or fully compressed.
-     */
-    protected $renderCompressed = false;
-
     protected $charset = 'UTF-8';
 
     /**
      * @param string $charset
-     * @param boolean $renderCompressed
      */
-    public function __construct($charset = null, $renderCompressed = false)
+    public function __construct($charset = null)
     {
         if (null !== $charset) {
             $this->charset = (string) $charset;
         }
-        $this->renderCompressed = (boolean) $renderCompressed;
     }
 
     /**
@@ -34,7 +27,7 @@ abstract class Renderer
      * @param string $value
      * @return string
      */
-    public function renderHtmlAttribute($name, $value)
+    protected function renderHtmlAttribute($name, $value)
     {
         if (true === $value) {
             return sprintf('%s="%s"', $name, $this->escape($name));
@@ -49,7 +42,7 @@ abstract class Renderer
      * @param array $attributes
      * @return string
      */
-    public function renderHtmlAttributes(array $attributes)
+    protected function renderHtmlAttributes(array $attributes)
     {
         return implode('', array_map(array($this, 'htmlAttributesCallback'), array_keys($attributes), array_values($attributes)));
     }
@@ -79,7 +72,7 @@ abstract class Renderer
      * @param string $value
      * @return string
      */
-    public function escape($value)
+    protected function escape($value)
     {
         return $this->fixDoubleEscape(htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, $this->charset));
     }
@@ -93,26 +86,6 @@ abstract class Renderer
     protected function fixDoubleEscape($escaped)
     {
         return preg_replace('/&amp;([a-z]+|(#\d+)|(#x[\da-f]+));/i', '&$1;', $escaped);
-    }
-
-    /**
-     * Gets whether to render compressed HTML or not
-     *
-     * @return boolean
-     */
-    public function getRenderCompressed()
-    {
-        return $this->renderCompressed;
-    }
-
-    /**
-     * Set whether to render compressed HTML or not
-     *
-     * @param boolean $bool
-     */
-    public function setRenderCompressed($bool)
-    {
-        $this->renderCompressed = (boolean) $bool;
     }
 
     /**

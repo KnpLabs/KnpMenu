@@ -61,7 +61,7 @@ create the menu as a service in the application and register it in the parameter
 ```php
 <?php
 
-$app['my_main_menu'] = function($app) {
+$app['knp_menu.menus'] = array('main' => function($app) {
     $menu = $app['knp_menu.factory']->createItem('root');
     $menu->setCurrentUri($app['request']->getRequestUri());
 
@@ -71,7 +71,6 @@ $app['my_main_menu'] = function($app) {
     return $menu;
 };
 
-$app['knp_menu.menus'] = array('main' => 'my_main_menu');
 ```
 
 

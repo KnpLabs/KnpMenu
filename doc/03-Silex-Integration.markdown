@@ -61,8 +61,7 @@ create the menu as a service in the application and register it in the parameter
 ```php
 <?php
 
-// Menu creation
-$app['my_main_menu'] = function($app) {
+$app['knp_menu.menus'] = array('main' => function($app) {
     $menu = $app['knp_menu.factory']->createItem('root');
     $menu->setCurrentUri($app['request']->getRequestUri());
 
@@ -72,14 +71,6 @@ $app['my_main_menu'] = function($app) {
     return $menu;
 };
 
-// Mapping in Pimple the menu name to the id
-$app['knp_menu.menus'] = array('main' => 'my_main_menu');
-```
-
-Then you can render it by its name using the Twig function ``knp_menu_render``:
-
-```jinja
-{{ knp_menu_render('main') }}
 ```
 
 

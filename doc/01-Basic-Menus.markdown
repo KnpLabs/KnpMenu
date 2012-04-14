@@ -173,7 +173,9 @@ $menu['Home']->setAttribute('id', 'back_to_homepage');
 ```
 
 >**NOTE**
->For the root element, the attributes are displayed on the `<ul>` element.
+>For the root element, the attributes for the `<ul>` element must be set with
+>`setChildrenAttributes()` (or by using the `childrenAttributes` key in the 
+>initialization array).
 
 >**NOTE**
 >`setAttributes()` will overwrite all existing attributes.

@@ -40,9 +40,9 @@ $app->register(new \Knp\Menu\Silex\KnpMenuServiceProvider());
 #### Parameters
 
 * **knp_menu.menus** (optional): an array of ``alias => id`` pair for the
-  menu provider.
+  [menu provider](02-Twig-Integration.markdown#menu-provider).
 * **knp_menu.renderers** (optional): an array of ``alias => id`` pair for
-  the renderer provider.
+  the [renderer provider]((02-Twig-Integration.markdown#renderer-provider)).
 * **knp_menu.default_renderer** (optional): the alias of the default renderer (default to `'list'`)
 * **knp_menu.template** (optional): The template used by default by the TwigRenderer.
 
@@ -74,4 +74,5 @@ $app['my_main_menu'] = function($app) {
 $app['knp_menu.menus'] = array('main' => 'my_main_menu');
 ```
 
-
+Your menu is now available in the [menu provider](02-Twig-Integration.markdown#menu-provider)
+with the name `main`.

@@ -46,6 +46,8 @@ This is ok, but there is a better way. By configuring all of your renderers
 and menus in a central location, you can use a convenient and shorthand syntax
 to render your menus inside a Twig template.
 
+<a name="renderer-provider"></a>
+
 ### Loading your renderers from a provider
 
 To make life simpler, a good option is to centralize the setup of all of
@@ -98,6 +100,8 @@ You can also use another renderer than the default one by passing its name:
 {{ knp_menu_render(menu, {}, 'main') }}
 ```
 
+<a name="get-item-by-path"></a>
+
 ### Retrieving an item by its path in the tree
 
 The Twig extension allow you to retrieve an item in your menu tree by its
@@ -125,6 +129,8 @@ by using an array:
 {# The menu variable contains a Knp\Menu\ItemInterface object #}
 {{ knp_menu_render([menu, 'Comment', 'My comments']) }}
 ```
+
+<a name="menu-provider"></a>
 
 ### Loading the menu from a provider
 

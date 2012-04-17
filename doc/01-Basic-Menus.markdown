@@ -173,16 +173,14 @@ $menu['Home']->setAttribute('id', 'back_to_homepage');
 ```
 
 >**NOTE**
->For the root element, the attributes are displayed on the `<ul>` element.
-
->**NOTE**
 >`setAttributes()` will overwrite all existing attributes.
 
 >**NOTE**
 >To remove an existing attribute, set it to `null`. It will not be rendered.
 
-You can also add link attributes (displayed on the `<a>` element) or label
-attributes (displayed on the `<span>` element when it is not a link):
+You can also add link attributes (displayed on the `<a>` element), label
+attributes (displayed on the `<span>` element when it is not a link) or
+children attributes (rendered on the `<ul>` containing the list of children):
 
 ```php
 <?php
@@ -191,7 +189,18 @@ $menu['KnpLabs.com']->setLinkAttribute('class', 'external-link');
 
 $menu->addChild('Not a link');
 $menu['Not a link']->setLabelAttribute('class', 'no-link-span');
+
+$menu->setChildrenAttribute('class', 'pull-left');
 ```
+
+>**NOTE**
+>For the root element, only the children attributes are used as only the
+>`<ul>` element is displayed.
+
+>**NOTE**
+>In the 1.0 version of the library, the attributes were rendered on the root
+>element instead of rendering the children attributes, which was inconsistent
+>and has been changed for 1.1.
 
 ### Rendering only part of a menu
 

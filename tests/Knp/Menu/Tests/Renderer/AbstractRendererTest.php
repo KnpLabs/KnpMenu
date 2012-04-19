@@ -221,6 +221,28 @@ abstract class AbstractRendererTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($rendered, $this->renderer->render($menu));
     }
 
+    public function testRenderEscapedLabel()
+    {
+        $menu = new MenuItem('test', new MenuFactory());
+        $menu->addChild('About', array('label' => 'Encode " me'));
+        $menu->addChild('Safe', array('label' => 'Encode " me again', 'extras' => array('safe_label' => true)));
+        $menu->addChild('Escaped', array('label' => 'Encode " me too', 'extras' => array('safe_label' => false)));
+
+        $rendered = '<ul><li class="first"><span>Encode &quot; me</span></li><li><span>Encode &quot; me again</span></li><li class="last"><span>Encode &quot; me too</span></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($menu));
+    }
+
+    public function testRenderSafeLabel()
+    {
+        $menu = new MenuItem('test', new MenuFactory());
+        $menu->addChild('About', array('label' => 'Encode " me'));
+        $menu->addChild('Safe', array('label' => 'Encode " me again', 'extras' => array('safe_label' => true)));
+        $menu->addChild('Escaped', array('label' => 'Encode " me too', 'extras' => array('safe_label' => false)));
+
+        $rendered = '<ul><li class="first"><span>Encode &quot; me</span></li><li><span>Encode " me again</span></li><li class="last"><span>Encode &quot; me too</span></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($menu, array('allow_safe_labels' => true)));
+    }
+
     public function testRenderWholeMenu()
     {
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span><ul class="menu_level_1"><li class="first"><span>Child 1</span></li><li><span>Child 2</span></li><li class="last"><span>Child 3</span></li></ul></li><li class="last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul></li></ul>';

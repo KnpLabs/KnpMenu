@@ -31,6 +31,7 @@ class TwigRenderer implements RendererInterface
             'lastClass' => 'last',
             'template' => $template,
             'compressed' => false,
+            'allow_safe_labels' => false,
         ), $defaultOptions);
     }
 

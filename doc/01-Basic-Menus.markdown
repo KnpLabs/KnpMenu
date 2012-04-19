@@ -236,6 +236,13 @@ the second argument to the `render()` method:
 * `firstClass` (default: `first`)
 * `lastClass` (default:  `last`)
 * `compressed` (default: `false`)
+* `allow_safe_labels` (default: `false`)
+
+>**NOTE**
+>When setting the `allow_safe_labels` option to `true`, you can specify that
+>a label should not be escaped by the renderer by adding the `safe_label`
+>extra in the item. Use it with caution as it can create some XSS holes in
+>your application if the label is coming from the user.
 
 The Current Menu Item
 ---------------------

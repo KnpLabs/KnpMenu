@@ -236,57 +236,6 @@ class MenuItemTreeTest extends TestCase
         $this->pt1->setName('Parent 2');
     }
 
-    public function testGetSetCurrentUri()
-    {
-        $this->addChildWithExternalUrl();
-        $this->assertNull($this->menu->getCurrentUri());
-        $this->menu->setCurrentUri('http://symfony-reloaded.org/');
-        $this->assertEquals('http://symfony-reloaded.org/', $this->menu->getCurrentUri());
-        $this->assertEquals('http://symfony-reloaded.org/', $this->menu['child']->getCurrentUri());
-    }
-
-    public function testChildrenCurrentUri()
-    {
-        $this->addChildWithExternalUrl();
-        $this->menu->setCurrentUri('http://symfony-reloaded.org/');
-        $this->menu->addChild('test_child', array('uri' => 'http://php.net/'));
-        $this->assertEquals('http://symfony-reloaded.org/', $this->menu['test_child']->getCurrentUri());
-    }
-
-    public function testGetIsCurrentWhenCurrentUriIsNotSet()
-    {
-        $this->addChildWithExternalUrl();
-        $this->assertFalse($this->menu['child']->isCurrent());
-    }
-
-    public function testGetIsCurrentWhenCurrentUriIsSet()
-    {
-        $this->addChildWithExternalUrl();
-        $this->menu->setCurrentUri('http://www.symfony-reloaded.org');
-        $this->assertTrue($this->menu['child']->isCurrent());
-        $this->assertFalse($this->pt1->isCurrent());
-    }
-
-    public function testGetIsCurrentAncestor()
-    {
-        $this->addChildWithExternalUrl();
-        $this->menu->setCurrentUri('http://php.net');
-        $this->pt1->setUri('http://php.net');
-        $this->assertFalse($this->pt1->isCurrentAncestor());
-        $this->assertTrue($this->menu->isCurrentAncestor());
-    }
-
-    public function testDeepGetIsCurrentAncestor()
-    {
-        $this->addChildWithExternalUrl();
-        $this->menu->setCurrentUri('http://php.net');
-        $this->gc1->setUri('http://php.net');
-        $this->assertFalse($this->pt1->isCurrentAncestor());
-        $this->assertTrue($this->menu->isCurrentAncestor());
-        $this->assertTrue($this->pt2->isCurrentAncestor());
-        $this->assertTrue($this->ch4->isCurrentAncestor());
-    }
-
     public function testGetCurrentItem()
     {
         $this->ch4->setCurrent(true);

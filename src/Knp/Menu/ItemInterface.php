@@ -477,28 +477,23 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     function getCurrentItem();
 
     /**
-     * Set whether or not this menu item is "current"
+     * Sets whether or not this menu item is "current".
+     *
+     * If the state is unknown, use null.
      *
      * Provides a fluent interface
      *
-     * @param boolean $bool Specify that this menu item is current
+     * @param boolean|null $bool Specify that this menu item is current
      * @return ItemInterface
      */
     function setCurrent($bool);
 
     /**
-     * Get whether or not this menu item is "current"
+     * Gets whether or not this menu item is "current".
      *
-     * @return boolean
+     * @return boolean|null
      */
     function isCurrent();
-
-    /**
-     * Returns whether or not this menu is an ancestor of the current menu item
-     *
-     * @return boolean
-     */
-    function isCurrentAncestor();
 
     /**
      * Whether this menu item is last in its parent
@@ -535,30 +530,6 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * @return boolean
      */
     function actsLikeLast();
-
-    /**
-     * Returns the current uri, which is used for determining the current
-     * menu item.
-     *
-     * If the uri isn't set, this asks the parent menu for its current uri.
-     * This would recurse up the tree until the root is hit.
-     *
-     * @return string
-     */
-    function getCurrentUri();
-
-    /**
-     * Sets the current uri, used when determining the current menu item
-     *
-     * This will set the current uri on the root menu item, which all other
-     * menu items will use
-     *
-     * Provides a fluent interface
-     *
-     * @param string $uri
-     * @return ItemInterface
-     */
-    function setCurrentUri($uri);
 
     /**
      * Calls a method recursively on all of the children of this item

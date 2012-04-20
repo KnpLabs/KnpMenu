@@ -4,6 +4,8 @@ namespace Knp\Menu\Tests\Renderer;
 
 use Knp\Menu\MenuItem;
 use Knp\Menu\MenuFactory;
+use Knp\Menu\Matcher\MatcherInterface;
+use Knp\Menu\Matcher\Matcher;
 use Knp\Menu\Tests\TestCase;
 
 abstract class AbstractRendererTest extends TestCase
@@ -11,15 +13,21 @@ abstract class AbstractRendererTest extends TestCase
     /**
      * @var \Knp\Menu\Renderer\RendererInterface
      */
-    private $renderer;
+    protected $renderer;
+
+    /**
+     * @var \Knp\Menu\Matcher\MatcherInterface
+     */
+    private $matcher;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->renderer = $this->createRenderer();
+        $this->matcher = new Matcher();
+        $this->renderer = $this->createRenderer($this->matcher);
     }
 
-    abstract protected function createRenderer();
+    abstract protected function createRenderer(MatcherInterface $matcher);
 
     protected function tearDown()
     {

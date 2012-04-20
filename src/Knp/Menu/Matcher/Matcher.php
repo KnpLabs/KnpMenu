@@ -3,6 +3,7 @@
 namespace Knp\Menu\Matcher;
 
 use Knp\Menu\ItemInterface;
+use Knp\Menu\Matcher\Voter\VoterInterface;
 
 /**
  * Interface implemented by the item matcher
@@ -11,9 +12,19 @@ class Matcher implements MatcherInterface
 {
     private $cache;
 
+    /**
+     * @var \Knp\Menu\Matcher\Voter\VoterInterface[]
+     */
+    private $voters = array();
+
     public function __construct()
     {
         $this->cache = new \SplObjectStorage();
+    }
+
+    public function addVoter(VoterInterface $voter)
+    {
+        $this->voters[] = $voter;
     }
 
     /**
@@ -24,18 +35,26 @@ class Matcher implements MatcherInterface
      */
     public function isCurrent(ItemInterface $item)
     {
-        if ($this->cache->contains($item)) {
-            return $this->cache[$item];
-        }
-
         $current = $item->isCurrent();
         if (null !== $current) {
             return $current;
         }
 
-        // TODO add the voting logic here
+        if ($this->cache->contains($item)) {
+            return $this->cache[$item];
+        }
 
-        return false;
+        foreach ($this->voters as $voter) {
+            $current = $voter->matchItem($item);
+            if (null !== $current) {
+                break;
+            }
+        }
+
+        $current = (boolean) $current;
+        $this->cache[$item] = $current;
+
+        return $current;
     }
 
     /**

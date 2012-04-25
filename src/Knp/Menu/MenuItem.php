@@ -655,7 +655,7 @@ class MenuItem implements ItemInterface
      */
     public function isRoot()
     {
-        return (bool) !$this->getParent();
+        return null === $this->parent;
     }
 
     /**
@@ -737,7 +737,7 @@ class MenuItem implements ItemInterface
      * Returns whether or not this menu items has viewable children
      *
      * This menu MAY have children, but this will return false if the current
-     * user does not have access to vew any of those items
+     * user does not have access to view any of those items
      *
      * @return boolean;
      */
@@ -924,8 +924,13 @@ class MenuItem implements ItemInterface
             return false;
         }
 
+        // A menu acts like first only if it is displayed
+        if (!$this->isDisplayed()) {
+            return false;
+        }
+
         // if we're first and visible, we're first, period.
-        if ($this->isDisplayed() && $this->isFirst()) {
+        if ($this->isFirst()) {
             return true;
         }
 
@@ -933,7 +938,7 @@ class MenuItem implements ItemInterface
         foreach ($children as $child) {
             // loop until we find a visible menu. If its this menu, we're first
             if ($child->isDisplayed()) {
-                return $child->getName() == $this->getName();
+                return $child->getName() === $this->getName();
             }
         }
 
@@ -956,8 +961,13 @@ class MenuItem implements ItemInterface
             return false;
         }
 
+        // A menu acts like last only if it is displayed
+        if (!$this->isDisplayed()) {
+            return false;
+        }
+
         // if we're last and visible, we're last, period.
-        if ($this->isDisplayed() && $this->isLast()) {
+        if ($this->isLast()) {
             return true;
         }
 
@@ -965,7 +975,7 @@ class MenuItem implements ItemInterface
         foreach ($children as $child) {
             // loop until we find a visible menu. If its this menu, we're first
             if ($child->isDisplayed()) {
-                return $child->getName() == $this->getName();
+                return $child->getName() === $this->getName();
             }
         }
 

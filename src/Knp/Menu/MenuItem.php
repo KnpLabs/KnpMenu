@@ -2,6 +2,7 @@
 
 namespace Knp\Menu;
 
+use Knp\Menu\Iterator\ItemIterator;
 use Knp\Menu\Renderer\RendererInterface;
 use Knp\Menu\Renderer\ListRenderer;
 
@@ -1116,7 +1117,7 @@ class MenuItem implements ItemInterface
      */
     public function getIterator()
     {
-        return new \ArrayIterator($this->children);
+        return new ItemIterator($this->children);
     }
 
     /**

@@ -1,5 +1,6 @@
 ## 1.1.0 (2012-XX-XX)
 
+* Made the iterator recursive for the item
 * Fixed building an array of breadcrumbs when a label has only digits
 * Added a way to mark a label as safe
 * Refactored the ListRenderer to be consistent with the TwigRenderer and provide the same extension points

@@ -220,6 +220,26 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testRecursiveIterator()
+    {
+        // Adding an item which does not provide a RecursiveIterator to be sure it works properly.
+        $child = $this->getMock('Knp\Menu\ItemInterface');
+        $child->expects($this->any())
+            ->method('getName')
+            ->will($this->returnValue('Foo'));
+        $child->expects($this->any())
+            ->method('getIterator')
+            ->will($this->returnValue(new \EmptyIterator()));
+        $this->menu->addChild($child);
+
+        $names = array();
+        foreach (new \RecursiveIteratorIterator($this->menu, \RecursiveIteratorIterator::SELF_FIRST) as $value) {
+            $names[] = $value->getName();
+        }
+
+        $this->assertEquals(array('Parent 1', 'Child 1', 'Child 2', 'Child 3', 'Parent 2', 'Child 4', 'Grandchild 1', 'Foo'), $names);
+    }
+
     public function testGetChildren()
     {
         $children = $this->ch4->getChildren();

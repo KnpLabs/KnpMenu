@@ -240,6 +240,16 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('Parent 1', 'Child 1', 'Child 2', 'Child 3', 'Parent 2', 'Child 4', 'Grandchild 1', 'Foo'), $names);
     }
 
+    public function testRecursiveIteratorLeavesOnly()
+    {
+        $names = array();
+        foreach (new \RecursiveIteratorIterator($this->menu, \RecursiveIteratorIterator::LEAVES_ONLY) as $value) {
+            $names[] = $value->getName();
+        }
+
+        $this->assertEquals(array('Child 1', 'Child 2', 'Child 3', 'Grandchild 1'), $names);
+    }
+
     public function testGetChildren()
     {
         $children = $this->ch4->getChildren();

@@ -9,7 +9,9 @@ class ItemIterator extends \ArrayIterator implements \RecursiveIterator
 {
     public function hasChildren()
     {
-        return $this->current()->getIterator() instanceof \RecursiveIterator;
+        $current = $this->current();
+
+        return $current->getIterator() instanceof \RecursiveIterator && 0 < count($current);
     }
 
     public function getChildren()

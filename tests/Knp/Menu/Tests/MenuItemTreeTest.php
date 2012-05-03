@@ -236,14 +236,6 @@ class MenuItemTreeTest extends TestCase
         $this->pt1->setName('Parent 2');
     }
 
-    public function testGetCurrentItem()
-    {
-        $this->ch4->setCurrent(true);
-        $this->assertSame($this->ch4, $this->ch4->getCurrentItem());
-        $this->assertSame($this->ch4, $this->menu->getCurrentItem());
-        $this->assertNull($this->pt1->getCurrentItem());
-    }
-
     public function testGetUri()
     {
         $this->addChildWithExternalUrl();

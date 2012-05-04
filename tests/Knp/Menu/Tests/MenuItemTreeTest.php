@@ -437,6 +437,8 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
     public function testBreadcrumbsArray()
     {
         $this->addChildWithExternalUrl();
+        $this->menu->addChild('123', array('uri' => 'http://www.symfony-reloaded.org'));
+
         $this->assertEquals(array('Root li' => null, 'Parent 1' => null), $this->pt1->getBreadcrumbsArray());
         $this->assertEquals(array('Root li' => null, 'child' => 'http://www.symfony-reloaded.org'), $this->menu['child']->getBreadcrumbsArray());
         $this->assertEquals(array('Root li' => null, 'child' => 'http://www.symfony-reloaded.org', 'subitem1' => null), $this->menu['child']->getBreadcrumbsArray('subitem1'));
@@ -444,6 +446,7 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
             array('Root li' => null, 'child' => 'http://www.symfony-reloaded.org', 'subitem1' => null, 'subitem2' => null, 'subitem3' => 'http://php.net'),
             $this->menu['child']->getBreadcrumbsArray(array('subitem1', 'subitem2' => null, 'subitem3' => 'http://php.net'))
         );
+        $this->assertEquals(array('Root li' => null, '123' => 'http://www.symfony-reloaded.org'), $this->menu['123']->getBreadcrumbsArray());
     }
 
     protected function addChildWithExternalUrl()

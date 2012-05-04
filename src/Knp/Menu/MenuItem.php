@@ -774,24 +774,24 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * Renders an array of label => uri pairs ready to be used for breadcrumbs.
+     * Renders an array ready to be used for breadcrumbs.
+     *
+     * Each element in the array will be an array with 3 keys:
+     * - `label` containing the label of the item
+     * - `url` containing the url of the item (may be `null`)
+     * - `item` containing the original item (may be `null` for the extra items)
      *
      * The subItem can be one of the following forms
      *   * 'subItem'
+     *   * Knp\Menu\ItemInterface object
      *   * array('subItem' => '
      * @homepage')
      *   * array('subItem1', 'subItem2')
-     *
-     * @example
-     * // drill down to the Documentation menu item, then add "Chapter 1" to the breadcrumb
-     * $arr = $menu['Documentation']->getBreadcrumbsArray('Chapter 1');
-     * foreach ($arr as $name => $url)
-     * {
-     *
-     * }
+     *   * array(array('label' => 'subItem1', 'url' => '@homepage'), array('label' => 'subItem2'))
      *
      * @param mixed $subItem A string or array to append onto the end of the array
-     * @param boolean $strict @internal
+     * @param boolean $strict Internal flag to optimize the lookup in parent nodes
+     * @throws \InvalidArgumentException if an element of the subItem is invalid
      * @return array
      */
     public function getBreadcrumbsArray($subItem = null, $strict = false)

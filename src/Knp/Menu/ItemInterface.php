@@ -457,17 +457,10 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * The subItem can be one of the following forms
      *   * 'subItem'
+     *   * Knp\Menu\ItemInterface object
      *   * array('subItem' => '@homepage')
      *   * array('subItem1', 'subItem2')
      *   * array(array('label' => 'subItem1', 'url' => '@homepage'), array('label' => 'subItem2'))
-     *
-     * @example
-     * // drill down to the Documentation menu item, then add "Chapter 1" to the breadcrumb
-     * $arr = $menu['Documentation']->getBreadcrumbsArray('Chapter 1');
-     * foreach ($arr as $name => $url)
-     * {
-     *
-     * }
      *
      * @param  mixed $subItem A string or array to append onto the end of the array
      * @return array

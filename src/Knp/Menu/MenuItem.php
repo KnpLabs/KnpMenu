@@ -815,7 +815,7 @@ class MenuItem implements ItemInterface
             $breadcrumbs[$label] = $obj->getUri();
         } while ($obj = $obj->getParent());
 
-        return array_reverse($breadcrumbs);
+        return array_reverse($breadcrumbs, true);
     }
 
     /**

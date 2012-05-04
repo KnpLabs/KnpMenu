@@ -778,7 +778,8 @@ class MenuItem implements ItemInterface
      *
      * The subItem can be one of the following forms
      *   * 'subItem'
-     *   * array('subItem' => '@homepage')
+     *   * array('subItem' => '
+     * @homepage')
      *   * array('subItem1', 'subItem2')
      *
      * @example
@@ -789,34 +790,83 @@ class MenuItem implements ItemInterface
      *
      * }
      *
-     * @param  mixed $subItem A string or array to append onto the end of the array
+     * @param mixed $subItem A string or array to append onto the end of the array
+     * @param boolean $strict @internal
      * @return array
      */
-    public function getBreadcrumbsArray($subItem = null)
+    public function getBreadcrumbsArray($subItem = null, $strict = false)
     {
         $breadcrumbs = array();
-        $obj = $this;
 
-        if ($subItem) {
-            if (!is_array($subItem)) {
-                $subItem = array((string) $subItem => null);
+        if ($strict) {
+            $breadcrumbs = $subItem;
+        } else {
+            if ($subItem instanceof ItemInterface) {
+                $subItem = array($subItem);
+                $subItem = array(array(
+                    'label' => $subItem->getLabel(),
+                    'uri' => $subItem->getUri(),
+                    'item' => $subItem,
+                ));
             }
-            $subItem = array_reverse($subItem);
+            if (null === $subItem) {
+                $subItem = array();
+            }
+            if (!is_array($subItem) && !$subItem instanceof \Traversable) {
+                $subItem = array($subItem);
+            }
+
             foreach ($subItem as $key => $value) {
-                if (is_numeric($key)) {
-                    $key = $value;
-                    $value = null;
+                switch (true) {
+                    case $value instanceof ItemInterface:
+                        $value = array(
+                            'label' => $value->getLabel(),
+                            'uri' => $value->getUri(),
+                            'item' => $value,
+                        );
+                        break;
+                    case is_array($value):
+                        // Assume we already have the appropriate array format for the element
+                        break;
+                    case is_integer($key):
+                        $value = array(
+                            'label' => (string) $value,
+                            'uri' => null,
+                            'item' => null,
+                        );
+                        break;
+                    case is_scalar($value):
+                        $value = array(
+                            'label' => (string) $key,
+                            'uri' => (string) $value,
+                            'item' => null,
+                        );
+                        break;
+                    case null === $value:
+                        $value = array(
+                            'label' => (string) $key,
+                            'uri' => null,
+                            'item' => null,
+                        );
+                        break;
+                    default:
+                        throw new \InvalidArgumentException(sprintf('Invalid value supplied for the key "%s". It should be an item, an array or a scalar', $key));
                 }
-                $breadcrumbs[(string) $key] = $value;
+                $breadcrumbs[] = $value;
             }
         }
 
-        do {
-            $label = $obj->getLabel();
-            $breadcrumbs[$label] = $obj->getUri();
-        } while ($obj = $obj->getParent());
+        array_unshift($breadcrumbs, array(
+            'label' => $this->getLabel(),
+            'uri' => $this->getUri(),
+            'item' => $this,
+        ));
 
-        return array_reverse($breadcrumbs, true);
+        if ($this->isRoot()) {
+            return $breadcrumbs;
+        }
+
+        return $this->getParent()->getBreadcrumbsArray($breadcrumbs, true);
     }
 
     /**

@@ -1,5 +1,6 @@
 ## 1.1.0 (2012-XX-XX)
 
+* Fixed building an array of breadcrumbs when a label has only digits
 * Added a way to mark a label as safe
 * Refactored the ListRenderer to be consistent with the TwigRenderer and provide the same extension points
 * Added a way to attach extra data to an item

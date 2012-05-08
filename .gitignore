@@ -1,6 +1,4 @@
 /phpunit.xml
-/tests/autoload.php
-/vendor/twig
-/vendor/pimple
-/vendor/Symfony
-/vendor/Silex
+/vendor/
+/composer.lock
+/composer.phar

@@ -1,7 +1,14 @@
 <?php
 
-if (file_exists($file = __DIR__.'/autoload.php')) {
-    require_once $file;
-} elseif (file_exists($file = __DIR__.'/autoload.php.dist')) {
-    require_once $file;
+function includeIfExists($file) {
+    if (file_exists($file)) {
+        return include $file;
+    }
 }
+
+if ((!$loader = includeIfExists(__DIR__.'/../vendor/autoload.php')) && (!$loader = includeIfExists(__DIR__.'/../../../autoload.php'))) {
+    die('You must set up the project dependencies, run the following commands:'.PHP_EOL.
+        'curl -s http://getcomposer.org/installer | php'.PHP_EOL.
+        'php composer.phar install'.PHP_EOL);
+}
+$loader->add('Knp\Menu\Tests\\', __DIR__);

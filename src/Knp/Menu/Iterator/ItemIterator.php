@@ -5,17 +5,15 @@ namespace Knp\Menu\Iterator;
 /**
  * Recursive iterator iterating on an item
  */
-class ItemIterator extends \ArrayIterator implements \RecursiveIterator
+class ItemIterator extends \IteratorIterator implements \RecursiveIterator
 {
     public function hasChildren()
     {
-        $current = $this->current();
-
-        return $current->getIterator() instanceof \RecursiveIterator && 0 < count($current);
+        return 0 < count($this->current());
     }
 
     public function getChildren()
     {
-        return $this->current()->getIterator();
+        return new static($this->current());
     }
 }

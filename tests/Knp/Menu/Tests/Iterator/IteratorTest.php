@@ -2,7 +2,7 @@
 
 namespace Knp\Menu\Tests\Iterator;
 
-use Knp\Menu\Iterator\CurrentItemFilterIterator;
+use Knp\Menu\Iterator\ItemIterator;
 use Knp\Menu\Tests\TestCase;
 
 class IteratorTest extends TestCase
@@ -30,7 +30,7 @@ class IteratorTest extends TestCase
         $this->menu->addChild($child);
 
         $names = array();
-        foreach (new \RecursiveIteratorIterator($this->menu, \RecursiveIteratorIterator::SELF_FIRST) as $value) {
+        foreach (new \RecursiveIteratorIterator(new ItemIterator($this->menu), \RecursiveIteratorIterator::SELF_FIRST) as $value) {
             $names[] = $value->getName();
         }
 
@@ -40,27 +40,10 @@ class IteratorTest extends TestCase
     public function testRecursiveIteratorLeavesOnly()
     {
         $names = array();
-        foreach (new \RecursiveIteratorIterator($this->menu, \RecursiveIteratorIterator::LEAVES_ONLY) as $value) {
+        foreach (new \RecursiveIteratorIterator(new ItemIterator($this->menu), \RecursiveIteratorIterator::LEAVES_ONLY) as $value) {
             $names[] = $value->getName();
         }
 
         $this->assertEquals(array('Child 1', 'Child 2', 'Child 3', 'Grandchild 1'), $names);
-    }
-
-    public function testFilterIterator()
-    {
-        $this->pt1->setCurrent(true);
-        $this->ch2->setCurrent(true);
-        $this->gc1->setCurrent(true);
-
-        $names = array();
-        $iterator = new CurrentItemFilterIterator(
-            new \RecursiveIteratorIterator($this->menu, \RecursiveIteratorIterator::SELF_FIRST)
-        );
-        foreach ($iterator as $value) {
-            $names[] = $value->getName();
-        }
-
-        $this->assertEquals(array('Parent 1', 'Child 2', 'Grandchild 1'), $names);
     }
 }

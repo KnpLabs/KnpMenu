@@ -12,7 +12,7 @@ if (file_exists($pimple)) {
 }
 
 spl_autoload_register(function($class) {
-    $namespaces = array('Knp\Menu\Tests' => __DIR__, 'Knp\Menu' => __DIR__.'/../src', 'Symfony' => __DIR__.'/../vendor/');
+    $namespaces = array('Knp\Menu\Tests' => __DIR__, 'Knp\Menu' => __DIR__.'/../src', 'Symfony' => __DIR__.'/../vendor/', 'Silex' => __DIR__.'/../vendor/Silex/src');
     $class = ltrim($class, '\\');
     foreach ($namespaces as $namespace => $dir) {
         if (0 === strpos($class, $namespace)) {

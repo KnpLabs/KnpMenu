@@ -5,7 +5,6 @@ namespace Knp\Menu\Silex;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Knp\Menu\MenuFactory;
-use Knp\Menu\Silex\RouterAwareFactory;
 use Knp\Menu\Renderer\ListRenderer;
 use Knp\Menu\Renderer\TwigRenderer;
 use Knp\Menu\Provider\PimpleProvider as PimpleMenuProvider;
@@ -25,11 +24,11 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
             return new MenuFactory();
         });
 
-        $app['knp_menu.renderer.list'] = $app->share(function () use ($app){
-            return new ListRenderer($app['charset']);
+        $app['knp_menu.renderer.list'] = $app->share(function () use ($app) {
+            return new ListRenderer(array(), $app['charset']);
         });
 
-        $app['knp_menu.menu_provider'] = $app->share(function () use ($app){
+        $app['knp_menu.menu_provider'] = $app->share(function () use ($app) {
             return new PimpleMenuProvider($app, $app['knp_menu.menus']);
         });
 
@@ -37,7 +36,7 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
             $app['knp_menu.menus'] = array();
         }
 
-        $app['knp_menu.renderer_provider'] = $app->share(function () use ($app){
+        $app['knp_menu.renderer_provider'] = $app->share(function () use ($app) {
             $app['knp_menu.renderers'] = array_merge(
                 array('list' => 'knp_menu.renderer.list'),
                 isset($app['knp_menu.renderer.twig']) ? array('twig' => 'knp_menu.renderer.twig') : array(),
@@ -56,11 +55,11 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
         });
 
         if (isset($app['twig'])) {
-            $app['knp_menu.twig_extension'] = $app->share(function () use ($app){
+            $app['knp_menu.twig_extension'] = $app->share(function () use ($app) {
                 return new MenuExtension($app['knp_menu.helper']);
             });
 
-            $app['knp_menu.renderer.twig'] = $app->share(function () use ($app){
+            $app['knp_menu.renderer.twig'] = $app->share(function () use ($app) {
                 return new TwigRenderer($app['twig'], $app['knp_menu.template']);
             });
 
@@ -68,21 +67,17 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
                 $app['knp_menu.template'] = 'knp_menu.html.twig';
             }
 
-            $oldTwig = $app->raw('twig');
-            $app['twig'] = $app->share(function($c) use ($oldTwig, $app) {
-                $twig = $oldTwig($c);
+            $app['twig'] = $app->share($app->extend('twig', function (\Twig_Environment $twig) use ($app) {
                 $twig->addExtension($app['knp_menu.twig_extension']);
 
                 return $twig;
-            });
+            }));
 
-            $oldLoader = $app->raw('twig.loader.filesystem');
-            $app['twig.loader.filesystem'] = $app->share(function($c) use ($oldLoader, $app) {
-                $loader = $oldLoader($c);
+            $app['twig.loader.filesystem'] = $app->share($app->extend('twig.loader.filesystem', function (\Twig_Loader_Filesystem $loader) use ($app) {
                 $loader->addPath(__DIR__.'/../Resources/views');
 
                 return $loader;
-            });
+            }));
         }
     }
 }

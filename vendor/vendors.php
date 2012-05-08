@@ -15,7 +15,12 @@ set_time_limit(0);
 $vendorDir = __DIR__;
 $deps = array(
     array('Symfony/Component/Routing', 'git://github.com/symfony/Routing.git', 'origin/master'),
+    array('Symfony/Component/HttpFoundation', 'git://github.com/symfony/HttpFoundation.git', 'origin/master'),
+    array('Symfony/Component/HttpKernel', 'git://github.com/symfony/HttpKernel.git', 'origin/master'),
+    array('Symfony/Component/EventDispatcher', 'git://github.com/symfony/EventDispatcher.git', 'origin/master'),
+    array('Symfony/Component/ClassLoader', 'git://github.com/symfony/ClassLoader.git', 'origin/master'),
     array('twig', 'git://github.com/fabpot/Twig.git', 'origin/master'),
+    array('Silex', 'git://github.com/fabpot/Silex.git', 'origin/master'),
     array('pimple', 'git://github.com/fabpot/Pimple.git', 'origin/master'),
 );
 

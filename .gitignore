@@ -3,3 +3,4 @@
 /vendor/twig
 /vendor/pimple
 /vendor/Symfony
+/vendor/Silex

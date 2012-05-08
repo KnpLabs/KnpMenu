@@ -46,4 +46,19 @@ class IteratorTest extends TestCase
 
         $this->assertEquals(array('Child 1', 'Child 2', 'Child 3', 'Grandchild 1'), $names);
     }
+
+    public function testFullTreeIterator()
+    {
+        $fullTreeIterator = new \RecursiveIteratorIterator(
+            new RecursiveItemIterator(new \ArrayIterator(array($this->menu))), // recursive iterator containing the root item
+            \RecursiveIteratorIterator::SELF_FIRST
+        );
+
+        $names = array();
+        foreach ($fullTreeIterator as $value) {
+            $names[] = $value->getName();
+        }
+
+        $this->assertEquals(array('Root li', 'Parent 1', 'Child 1', 'Child 2', 'Child 3', 'Parent 2', 'Child 4', 'Grandchild 1'), $names);
+    }
 }

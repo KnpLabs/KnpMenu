@@ -8,77 +8,8 @@ use Knp\Menu\MenuFactory;
 
 class TestMenuItem extends MenuItem {}
 
-class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
+class MenuItemTreeTest extends TestCase
 {
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $menu;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $pt1;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $ch1;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $ch2;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $ch3;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $pt2;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $ch4;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $gc1;
-
-    public function setUp()
-    {
-        $factory = new MenuFactory();
-        $this->menu = $factory->createItem('Root li', array('attributes' => array('class' => 'root')));
-        $this->pt1 = $this->menu->addChild('Parent 1');
-        $this->ch1 = $this->pt1->addChild('Child 1');
-        $this->ch2 = $this->pt1->addChild('Child 2');
-
-        // add the 3rd child via addChild with an object
-        $this->ch3 = new MenuItem('Child 3', $factory);
-        $this->pt1->addChild($this->ch3);
-
-        $this->pt2 = $this->menu->addChild('Parent 2');
-        $this->ch4 = $this->pt2->addChild('Child 4');
-        $this->gc1 = $this->ch4->addChild('Grandchild 1');
-    }
-
-    public function tearDown()
-    {
-        $this->menu = null;
-        $this->pt1 = null;
-        $this->ch1 = null;
-        $this->ch2 = null;
-        $this->ch3 = null;
-        $this->pt2 = null;
-        $this->ch4 = null;
-        $this->gc1 = null;
-    }
-
     public function testSampleTreeIntegrity()
     {
         $this->assertCount(2, $this->menu);
@@ -209,63 +140,6 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
 
         unset($this->menu['New Child']);
         $this->assertCount(2, $this->menu);
-    }
-
-    public function testIterator()
-    {
-        $count = 0;
-        foreach ($this->pt1 as $key => $value) {
-            $count++;
-            $this->assertEquals('Child '.$count, $key);
-            $this->assertEquals('Child '.$count, $value->getLabel());
-        }
-    }
-
-    public function testRecursiveIterator()
-    {
-        // Adding an item which does not provide a RecursiveIterator to be sure it works properly.
-        $child = $this->getMock('Knp\Menu\ItemInterface');
-        $child->expects($this->any())
-            ->method('getName')
-            ->will($this->returnValue('Foo'));
-        $child->expects($this->any())
-            ->method('getIterator')
-            ->will($this->returnValue(new \EmptyIterator()));
-        $this->menu->addChild($child);
-
-        $names = array();
-        foreach (new \RecursiveIteratorIterator($this->menu, \RecursiveIteratorIterator::SELF_FIRST) as $value) {
-            $names[] = $value->getName();
-        }
-
-        $this->assertEquals(array('Parent 1', 'Child 1', 'Child 2', 'Child 3', 'Parent 2', 'Child 4', 'Grandchild 1', 'Foo'), $names);
-    }
-
-    public function testRecursiveIteratorLeavesOnly()
-    {
-        $names = array();
-        foreach (new \RecursiveIteratorIterator($this->menu, \RecursiveIteratorIterator::LEAVES_ONLY) as $value) {
-            $names[] = $value->getName();
-        }
-
-        $this->assertEquals(array('Child 1', 'Child 2', 'Child 3', 'Grandchild 1'), $names);
-    }
-
-    public function testFilterIterator()
-    {
-        $this->pt1->setCurrent(true);
-        $this->ch2->setCurrent(true);
-        $this->gc1->setCurrent(true);
-
-        $names = array();
-        $iterator = new CurrentItemFilterIterator(
-            new \RecursiveIteratorIterator($this->menu, \RecursiveIteratorIterator::SELF_FIRST)
-        );
-        foreach ($iterator as $value) {
-            $names[] = $value->getName();
-        }
-
-        $this->assertEquals(array('Parent 1', 'Child 2', 'Grandchild 1'), $names);
     }
 
     public function testGetChildren()
@@ -500,18 +374,5 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
     protected function addChildWithExternalUrl()
     {
         $this->menu->addChild('child', array('uri' => 'http://www.symfony-reloaded.org'));
-    }
-
-    // prints a visual representation of our basic testing tree
-    protected function printTestTree()
-    {
-        print('      Menu Structure   '."\n");
-        print('               rt      '."\n");
-        print('             /    \    '."\n");
-        print('          pt1      pt2 '."\n");
-        print('        /  | \      |  '."\n");
-        print('      ch1 ch2 ch3  ch4 '."\n");
-        print('                    |  '."\n");
-        print('                   gc1 '."\n");
     }
 }

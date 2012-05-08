@@ -2,7 +2,7 @@
 
 namespace Knp\Menu\Tests\Iterator;
 
-use Knp\Menu\Iterator\ItemIterator;
+use Knp\Menu\Iterator\RecursiveItemIterator;
 use Knp\Menu\Tests\TestCase;
 
 class IteratorTest extends TestCase
@@ -30,7 +30,7 @@ class IteratorTest extends TestCase
         $this->menu->addChild($child);
 
         $names = array();
-        foreach (new \RecursiveIteratorIterator(new ItemIterator($this->menu), \RecursiveIteratorIterator::SELF_FIRST) as $value) {
+        foreach (new \RecursiveIteratorIterator(new RecursiveItemIterator($this->menu), \RecursiveIteratorIterator::SELF_FIRST) as $value) {
             $names[] = $value->getName();
         }
 
@@ -40,7 +40,7 @@ class IteratorTest extends TestCase
     public function testRecursiveIteratorLeavesOnly()
     {
         $names = array();
-        foreach (new \RecursiveIteratorIterator(new ItemIterator($this->menu), \RecursiveIteratorIterator::LEAVES_ONLY) as $value) {
+        foreach (new \RecursiveIteratorIterator(new RecursiveItemIterator($this->menu), \RecursiveIteratorIterator::LEAVES_ONLY) as $value) {
             $names[] = $value->getName();
         }
 

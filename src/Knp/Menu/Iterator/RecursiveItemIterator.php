@@ -5,7 +5,7 @@ namespace Knp\Menu\Iterator;
 /**
  * Recursive iterator iterating on an item
  */
-class ItemIterator extends \IteratorIterator implements \RecursiveIterator
+class RecursiveItemIterator extends \IteratorIterator implements \RecursiveIterator
 {
     public function hasChildren()
     {

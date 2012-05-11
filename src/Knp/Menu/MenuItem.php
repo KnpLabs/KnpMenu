@@ -1117,7 +1117,7 @@ class MenuItem implements ItemInterface
      */
     public function getIterator()
     {
-        return new ItemIterator($this->children);
+        return new \ArrayIterator($this->children);
     }
 
     /**

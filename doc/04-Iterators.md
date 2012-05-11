@@ -1,9 +1,9 @@
 Iterating over Menus
 ====================
 
-The simpliest way to iterate over your item object is to iterate over its
+The simplest way to iterate over your item object is to iterate over its
 direct children, thanks to the `IteratorAggregate` implementation. But the
-PHP iterators allows much more power to deal with our tree structure.
+PHP iterators allow much more powerful options to deal with our tree structure.
 
 All the examples in this chapter will use the following tree:
 
@@ -21,7 +21,7 @@ I          J
 Iterating recursively
 ---------------------
 
-The `Knp\Menu\Iterator\RecursiveItemIterator` allows to iterate recursively
+The `Knp\Menu\Iterator\RecursiveItemIterator` allows you to iterate recursively
 over a tree of items. Using it is really easy: give it an item, and you will
 have a recursive iterator on this item.
 
@@ -48,7 +48,7 @@ B D I E F C G J H
 ```
 
 Changing the second argument to `\RecursiveIteratorIterator::CHILD_FIRST`
-allows to visit children before their parent and will produce the following
+allows you to visit children before their parent and will produce the following
 order:
 
 ```
@@ -60,10 +60,11 @@ I D E F B J G H C
 >`\RecursiveIteratorIterator`, it will simply give you the direct children
 >like when using the iterator of the item.
 
-The final iterator does not contain the root item, as we started the iteration
-on its children. Fortunately, the `RecursiveItemIterator` does not expect
-getting an item but any iterator over menu items. This allows adding the
-root in the final iterator by changing the inner iterator:
+As you can see, the final iterator does not contain the root item (``A``).
+The reason is simple: the recursive iteration started only on its children.
+Fortunately, the `RecursiveItemIterator` accept any iterator over menu items,
+not only items themselves. This allows you to add the root item in the final
+iterator by changing the iterator wrapped in the `RecursiveItemIterator`:
 
 ```php
 <?php
@@ -137,10 +138,10 @@ foreach ($iterator as $item) {
 Filtering only displayed items
 ------------------------------
 
-The `Knp\Menu\Iterator\DisplayedItemFilterIterator` allows to filter items
-to keep only displayed ones. As hiding an item also hides its children, this
-filters is a recursive filter iterator and is applied on the recursive iterator,
-not on the flattened iterator.
+The `Knp\Menu\Iterator\DisplayedItemFilterIterator` allows you to filter
+items to keep only displayed ones. As hiding an item also hides its children,
+this filter is a recursive filter iterator and is applied on the recursive
+iterator, not on the flattened iterator.
 
 ```php
 <?php

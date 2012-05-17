@@ -3,8 +3,6 @@
 namespace Knp\Menu\Renderer;
 
 use Knp\Menu\ItemInterface;
-use Knp\Menu\Renderer\RendererProviderInterface;
-use Knp\Menu\Provider\MenuProviderInterface;
 
 class TwigRenderer implements RendererInterface
 {
@@ -38,7 +36,7 @@ class TwigRenderer implements RendererInterface
     /**
      * Renders a menu with the specified renderer.
      *
-     * @param \Knp\Menu\ItemInterface $item
+     * @param ItemInterface $item
      * @param array $options
      * @return string
      */

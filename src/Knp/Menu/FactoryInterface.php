@@ -12,15 +12,15 @@ interface FactoryInterface
      *
      * @param string $name
      * @param array $options
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function createItem($name, array $options = array());
 
     /**
      * Create a menu item from a NodeInterface
      *
-     * @param \Knp\Menu\NodeInterface $node
-     * @return \Knp\Menu\ItemInterface
+     * @param NodeInterface $node
+     * @return ItemInterface
      */
     function createFromNode(NodeInterface $node);
 
@@ -29,8 +29,8 @@ interface FactoryInterface
      *
      * The source is an array of data that should match the output from MenuItem->toArray().
      *
-     * @param  array $data The array of data to use as a source for the menu tree
-     * @return \Knp\Menu\ItemInterface
+     * @param array $data The array of data to use as a source for the menu tree
+     * @return ItemInterface
      */
     function createFromArray(array $data);
 }

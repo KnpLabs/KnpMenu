@@ -16,8 +16,8 @@ class Helper
     private $menuProvider;
 
     /**
-     * @param \Knp\Menu\Renderer\RendererProviderInterface $rendererProvider
-     * @param \Knp\Menu\Provider\MenuProviderInterface|null $menuProvider
+     * @param RendererProviderInterface $rendererProvider
+     * @param MenuProviderInterface|null $menuProvider
      */
     public function __construct(RendererProviderInterface $rendererProvider, MenuProviderInterface $menuProvider = null)
     {
@@ -28,12 +28,13 @@ class Helper
     /**
      * Retrieves item in the menu, eventually using the menu provider.
      *
-     * @param \Knp\Menu\ItemInterface|string $menu
+     * @param ItemInterface|string $menu
      * @param array $path
      * @param array $options
-     * @return \Knp\Menu\ItemInterface
-     * @throws \InvalidArgumentException when the path is invalid
      * @throws \BadMethodCallException when there is no menu provider and the menu is given by name
+     * @throws \LogicException
+     * @throws \InvalidArgumentException when the path is invalid
+     * @return ItemInterface
      */
     public function get($menu, array $path = array(), array $options = array())
     {
@@ -69,7 +70,7 @@ class Helper
      * will be used.
      *
      * @throws \InvalidArgumentException
-     * @param \Knp\Menu\ItemInterface|string|array $menu
+     * @param ItemInterface|string|array $menu
      * @param array $options
      * @param string $renderer
      * @return string

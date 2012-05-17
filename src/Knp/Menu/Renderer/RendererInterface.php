@@ -20,8 +20,8 @@ interface RendererInterface
      *      - firstClass: class added to the first child
      *      - lastClass: class added to the last child
      *
-     * @param \Knp\Menu\ItemInterface $item Menu item
-     * @param array $options some rendering options
+     * @param ItemInterface $item    Menu item
+     * @param array         $options some rendering options
      * @return string
      */
     public function render(ItemInterface $item, array $options = array());

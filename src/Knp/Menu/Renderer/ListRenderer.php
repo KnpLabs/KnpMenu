@@ -2,7 +2,7 @@
 
 namespace Knp\Menu\Renderer;
 
-use \Knp\Menu\ItemInterface;
+use Knp\Menu\ItemInterface;
 
 /**
  * Renders MenuItem tree as unordered list
@@ -34,7 +34,7 @@ class ListRenderer extends Renderer implements RendererInterface
     /**
      * Renders a menu with the specified renderer.
      *
-     * @param \Knp\Menu\ItemInterface $item
+     * @param ItemInterface $item
      * @param array $options
      * @return string
      */
@@ -72,7 +72,7 @@ class ListRenderer extends Renderer implements RendererInterface
      * has children).
      * This method updates the depth for the children.
      *
-     * @param \Knp\Menu\ItemInterface $item
+     * @param ItemInterface $item
      * @param array $options The options to render the item.
      * @return string
      */
@@ -97,7 +97,7 @@ class ListRenderer extends Renderer implements RendererInterface
      * This renders the li tag to fit into the parent ul as well as its
      * own nested ul tag if this menu item has children
      *
-     * @param \Knp\Menu\ItemInterface $item
+     * @param ItemInterface $item
      * @param array $options The options to render the item
      * @return string
      */
@@ -160,8 +160,8 @@ class ListRenderer extends Renderer implements RendererInterface
      * the current item and if the text has to be rendered
      * as a link or not.
      *
-     * @param \Knp\Menu\ItemInterface $item The item to render the link or label for
-     * @param array $options The options to render the item
+     * @param ItemInterface $item    The item to render the link or label for
+     * @param array         $options The options to render the item
      * @return string
      */
     protected function renderLink(ItemInterface $item, array $options = array())
@@ -199,8 +199,8 @@ class ListRenderer extends Renderer implements RendererInterface
      * spacing and line-breaking so that the particular thing being rendered
      * makes up its part in a fully-rendered and spaced menu.
      *
-     * @param  string $html The html to render in an (un)formatted way
-     * @param  string $type The type [ul,link,li] of thing being rendered
+     * @param string $html The html to render in an (un)formatted way
+     * @param string $type The type [ul,link,li] of thing being rendered
      * @param integer $level
      * @param array $options
      * @return string

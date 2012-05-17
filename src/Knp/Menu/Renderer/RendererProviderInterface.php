@@ -10,7 +10,7 @@ interface RendererProviderInterface
      * If null is given, a renderer marked as default is returned.
      *
      * @param string $name
-     * @return \Knp\Menu\Renderer\RendererInterface
+     * @return RendererInterface
      * @throws \InvalidArgumentException if the renderer does not exists
      */
     function get($name = null);
@@ -19,7 +19,7 @@ interface RendererProviderInterface
      * Checks whether a renderer exists
      *
      * @param string $name
-     * @return bool
+     * @return boolean
      */
     function has($name);
 }

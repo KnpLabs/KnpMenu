@@ -23,14 +23,14 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Provides a fluent interface
      *
-     * @param  string $name
-     * @return \Knp\Menu\ItemInterface
+     * @param string $name
+     * @return ItemInterface
      */
     function setName($name);
 
     /**
-     * @param  \Knp\Menu\FactoryInterface $factory
-     * @return \Knp\Menu\ItemInterface
+     * @param FactoryInterface $factory
+     * @return ItemInterface
      */
     function setFactory(FactoryInterface $factory);
 
@@ -46,8 +46,8 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Provides a fluent interface
      *
-     * @param  string $uri The uri to set on this menu item
-     * @return \Knp\Menu\ItemInterface
+     * @param string $uri The uri to set on this menu item
+     * @return ItemInterface
      */
     function setUri($uri);
 
@@ -63,8 +63,8 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Provides a fluent interface
      *
-     * @param  string $label    The text to use when rendering this menu item
-     * @return \Knp\Menu\ItemInterface
+     * @param string $label The text to use when rendering this menu item
+     * @return ItemInterface
      */
     function setLabel($label);
 
@@ -76,14 +76,14 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Provides a fluent interface
      *
-     * @param  array $attributes
-     * @return \Knp\Menu\ItemInterface
+     * @param array $attributes
+     * @return ItemInterface
      */
     function setAttributes(array $attributes);
 
     /**
-     * @param  string $name     The name of the attribute to return
-     * @param  mixed  $default  The value to return if the attribute doesn't exist
+     * @param string $name    The name of the attribute to return
+     * @param mixed  $default The value to return if the attribute doesn't exist
      * @return mixed
      */
     function getAttribute($name, $default = null);
@@ -93,7 +93,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @param string $name
      * @param mixed $value
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function setAttribute($name, $value);
 
@@ -105,14 +105,14 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Provides a fluent interface
      *
-     * @param  array $linkAttributes
-     * @return \Knp\Menu\ItemInterface
+     * @param array $linkAttributes
+     * @return ItemInterface
      */
     function setLinkAttributes(array $linkAttributes);
 
     /**
-     * @param  string $name     The name of the attribute to return
-     * @param  mixed  $default  The value to return if the attribute doesn't exist
+     * @param string $name    The name of the attribute to return
+     * @param mixed  $default The value to return if the attribute doesn't exist
      * @return mixed
      */
     function getLinkAttribute($name, $default = null);
@@ -122,7 +122,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @param string $name
      * @param string $value
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function setLinkAttribute($name, $value);
 
@@ -135,13 +135,13 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * Provides a fluent interface
      *
      * @param  array $childrenAttributes
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function setChildrenAttributes(array $childrenAttributes);
 
     /**
-     * @param  string $name     The name of the attribute to return
-     * @param  mixed  $default  The value to return if the attribute doesn't exist
+     * @param string $name    The name of the attribute to return
+     * @param mixed  $default The value to return if the attribute doesn't exist
      * @return mixed
      */
     function getChildrenAttribute($name, $default = null);
@@ -151,7 +151,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @param string $name
      * @param string $value
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function setChildrenAttribute($name, $value);
 
@@ -163,14 +163,14 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Provides a fluent interface
      *
-     * @param  array $labelAttributes
-     * @return \Knp\Menu\ItemInterface
+     * @param array $labelAttributes
+     * @return ItemInterface
      */
     function setLabelAttributes(array $labelAttributes);
 
     /**
-     * @param  string $name     The name of the attribute to return
-     * @param  mixed  $default  The value to return if the attribute doesn't exist
+     * @param string $name    The name of the attribute to return
+     * @param mixed  $default The value to return if the attribute doesn't exist
      * @return mixed
      */
     function getLabelAttribute($name, $default = null);
@@ -180,7 +180,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @param string $name
      * @param mixed $value
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function setLabelAttribute($name, $value);
 
@@ -192,14 +192,14 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Provides a fluent interface
      *
-     * @param  array $extras
-     * @return \Knp\Menu\ItemInterface
+     * @param array $extras
+     * @return ItemInterface
      */
     function setExtras(array $extras);
 
     /**
-     * @param  string $name     The name of the extra to return
-     * @param  mixed  $default  The value to return if the extra doesn't exist
+     * @param string $name    The name of the extra to return
+     * @param mixed  $default The value to return if the extra doesn't exist
      * @return mixed
      */
     function getExtra($name, $default = null);
@@ -209,7 +209,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @param string $name
      * @param mixed $value
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function setExtra($name, $value);
 
@@ -226,7 +226,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * Provides a fluent interface
      *
      * @param boolean $bool
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function setDisplayChildren($bool);
 
@@ -243,7 +243,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * Provides a fluent interface
      *
      * @param boolean $bool
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function setDisplay($bool);
 
@@ -254,15 +254,15 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @param mixed $child   An ItemInterface instance or the name of a new item to create
      * @param array $options If creating a new item, the options passed to the factory for the item
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function addChild($child, array $options = array());
 
     /**
      * Returns the child menu identified by the given name
      *
-     * @param  string $name  Then name of the child menu to return
-     * @return \Knp\Menu\ItemInterface|null
+     * @param string $name Then name of the child menu to return
+     * @return ItemInterface|null
      */
     function getChild($name);
 
@@ -272,7 +272,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * Provides a fluent interface
      *
      * @param integer $position Position to move child to.
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function moveToPosition($position);
 
@@ -281,9 +281,9 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Provides a fluent interface
      *
-     * @param \Knp\Menu\ItemInterface $child Child to move.
-     * @param integer $position Position to move child to.
-     * @return \Knp\Menu\ItemInterface
+     * @param ItemInterface $child    Child to move.
+     * @param integer       $position Position to move child to.
+     * @return ItemInterface
      */
     function moveChildToPosition(ItemInterface $child, $position);
 
@@ -292,7 +292,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Provides a fluent interface
      *
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function moveToFirstPosition();
 
@@ -301,7 +301,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Provides a fluent interface
      *
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function moveToLastPosition();
 
@@ -311,14 +311,14 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * Provides a fluent interface
      *
      * @param array $order New order of children.
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function reorderChildren($order);
 
     /**
      * Makes a deep copy of menu tree. Every item is copied as another object.
      *
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function copy();
 
@@ -342,7 +342,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @param mixed $offset Name of child, child object, or numeric offset.
      * @param mixed $length Name of child, child object, or numeric length.
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function slice($offset, $length = 0);
 
@@ -366,7 +366,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Returns the root ItemInterface of this menu tree
      *
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function getRoot();
 
@@ -378,7 +378,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     function isRoot();
 
     /**
-     * @return MenuItem|null
+     * @return ItemInterface|null
      */
     function getParent();
 
@@ -387,8 +387,8 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Provides a fluent interface
      *
-     * @param \Knp\Menu\ItemInterface|null $parent
-     * @return \Knp\Menu\ItemInterface
+     * @param ItemInterface|null $parent
+     * @return ItemInterface
      */
     function setParent(ItemInterface $parent = null);
 
@@ -402,8 +402,8 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Provides a fluent interface
      *
-     * @param  array $children An array of ItemInterface objects
-     * @return \Knp\Menu\ItemInterface
+     * @param array $children An array of ItemInterface objects
+     * @return ItemInterface
      */
     function setChildren(array $children);
 
@@ -412,18 +412,18 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Provides a fluent interface
      *
-     * @param mixed $name The name of ItemInterface instance or the ItemInterface to remove
-     * @return \Knp\Menu\ItemInterface
+     * @param ItemInterface|string $name The name of ItemInterface instance or the ItemInterface to remove
+     * @return ItemInterface
      */
     function removeChild($name);
 
     /**
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function getFirstChild();
 
     /**
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function getLastChild();
 
@@ -457,12 +457,12 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * The subItem can be one of the following forms
      *   * 'subItem'
-     *   * Knp\Menu\ItemInterface object
+     *   * ItemInterface object
      *   * array('subItem' => '@homepage')
      *   * array('subItem1', 'subItem2')
      *   * array(array('label' => 'subItem1', 'url' => '@homepage'), array('label' => 'subItem2'))
      *
-     * @param  mixed $subItem A string or array to append onto the end of the array
+     * @param mixed $subItem A string or array to append onto the end of the array
      * @return array
      */
     function getBreadcrumbsArray($subItem = null);
@@ -470,7 +470,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Returns the current menu item if it is a child of this menu item
      *
-     * @return \Knp\Menu\ItemInterface|null
+     * @return ItemInterface|null
      * @deprecated this method is flawed and will be removed in 2.0
      * @see \Knp\Menu\Iterator\CurrentItemFilterIterator
      */
@@ -482,7 +482,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * Provides a fluent interface
      *
      * @param boolean $bool Specify that this menu item is current
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function setCurrent($bool);
 
@@ -501,14 +501,14 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     function isCurrentAncestor();
 
     /**
-     * Whether or not this menu item is last in its parent
+     * Whether this menu item is last in its parent
      *
      * @return boolean
      */
     function isLast();
 
     /**
-     * Whether or not this menu item is first in its parent
+     * Whether this menu item is first in its parent
      *
      * @return boolean
      */
@@ -541,9 +541,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * menu item.
      *
      * If the uri isn't set, this asks the parent menu for its current uri.
-     * This would recurse up the tree until the root is hit. Once the root
-     * is hit, if it still doesn't know the currentUri, it gets it from the
-     * request object.
+     * This would recurse up the tree until the root is hit.
      *
      * @return string
      */
@@ -558,7 +556,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * Provides a fluent interface
      *
      * @param string $uri
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function setCurrentUri($uri);
 
@@ -572,7 +570,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @param string $method
      * @param array $arguments
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     function callRecursively($method, $arguments = array());
 

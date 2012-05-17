@@ -19,7 +19,7 @@ interface MenuProviderInterface
      *
      * @param string $name
      * @param array $options
-     * @return bool
+     * @return boolean
      */
     function has($name, array $options = array());
 }

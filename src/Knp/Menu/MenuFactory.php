@@ -63,8 +63,8 @@ class MenuFactory implements FactoryInterface
      *
      * The source is an array of data that should match the output from MenuItem->toArray().
      *
-     * @param  array $data The array of data to use as a source for the menu tree
-     * @param  string $name The name of the source (if not set in data['name'])
+     * @param array  $data The array of data to use as a source for the menu tree
+     * @param string $name The name of the source (if not set in data['name'])
      * @return MenuItem
      */
     public function createFromArray(array $data, $name = null)

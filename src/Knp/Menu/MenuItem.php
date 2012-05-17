@@ -8,42 +8,89 @@ namespace Knp\Menu;
 class MenuItem implements ItemInterface
 {
     /**
-     * Properties on this menu item
+     * Name of this menu item (used for id by parent menu)
+     * @var string
      */
-    protected $name = null; // the name of this menu item (used for id by parent menu)
-    protected $label = null; // the label to output, name is used by default
-    protected $linkAttributes = array(); // an array of attributes for the item link
-    protected $childrenAttributes = array(); // an array of attributes for the children list
-    protected $labelAttributes = array(); // an array of attributes for the item text
-    protected $uri = null; // the uri to use in the anchor tag
-    protected $attributes = array(); // an array of attributes for the li
-    protected $extras = array(); // an array of extra stuff associated to the item
+    protected $name = null;
+    /**
+     * Label to output, name is used by default
+     * @var string
+     */
+    protected $label = null;
+    /**
+     * Attributes for the item link
+     * @var array
+     */
+    protected $linkAttributes = array();
+    /**
+     * Attributes for the children list
+     * @var array
+     */
+    protected $childrenAttributes = array();
+    /**
+     * Attributes for the item text
+     * @var array
+     */
+    protected $labelAttributes = array();
+    /**
+     * Uri to use in the anchor tag
+     * @var string
+     */
+    protected $uri = null;
+    /**
+     * Attributes for the item
+     * @var array
+     */
+    protected $attributes = array();
+    /**
+     * Extra stuff associated to the item
+     * @var array
+     */
+    protected $extras = array();
 
     /**
-     * Options related to rendering
+     * Whether the item is displayed
+     * @var boolean
      */
-    protected $display = true; // boolean to render this menu
-    protected $displayChildren = true; // boolean to render the children of this menu
+    protected $display = true;
+    /**
+     * Whether the children of the item are displayed
+     * @var boolean
+     */
+    protected $displayChildren = true;
 
     /**
-     * Metadata on this menu item
+     * Child items
+     * @var ItemInterface[]
      */
-    protected $children = array(); // an array of ItemInterface children
-    protected $parent = null; // parent ItemInterface
-    protected $isCurrent = null; // whether or not this menu item is current
-    protected $currentUri = null; // the current uri to use for selecting current menu
+    protected $children = array();
+    /**
+     * Parent item
+     * @var ItemInterface|null
+     */
+    protected $parent = null;
+    /**
+     * whether the item is current. null means unknown
+     * @var boolean|null
+     */
+    protected $isCurrent = null;
+    /**
+     * Current uri to use for selecting current menu
+     * @var string
+     */
+    protected $currentUri = null;
 
     /**
-     * @var \Knp\Menu\FactoryInterface
+     * @var FactoryInterface
      */
     protected $factory;
 
     /**
      * Class constructor
      *
-     * @param string $name      The name of this menu, which is how its parent will
-     *                          reference it. Also used as label if label not specified
-     * @param \Knp\Menu\FactoryInterface $factory
+     * @param string $name The name of this menu, which is how its parent will
+     *                     reference it. Also used as label if label not specified
+     * @param FactoryInterface $factory
      */
     public function __construct($name, FactoryInterface $factory)
     {
@@ -52,8 +99,8 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @param  \Knp\Menu\FactoryInterface $factory
-     * @return \Knp\Menu\ItemInterface
+     * @param FactoryInterface $factory
+     * @return ItemInterface
      */
     public function setFactory(FactoryInterface $factory)
     {
@@ -71,8 +118,9 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @param  string $name
-     * @return \Knp\Menu\ItemInterface
+     * @param string $name
+     * @throws \InvalidArgumentException if the name is already used by a sibling
+     * @return ItemInterface
      */
     public function setName($name)
     {
@@ -114,8 +162,8 @@ class MenuItem implements ItemInterface
     /**
      * Set the uri for a menu item
      *
-     * @param  string $uri The uri to set on this menu item
-     * @return \Knp\Menu\ItemInterface
+     * @param string $uri The uri to set on this menu item
+     * @return ItemInterface
      */
     public function setUri($uri)
     {
@@ -137,8 +185,8 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @param  string $label    The text to use when rendering this menu item
-     * @return \Knp\Menu\ItemInterface
+     * @param string $label The text to use when rendering this menu item
+     * @return ItemInterface
      */
     public function setLabel($label)
     {
@@ -156,8 +204,8 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @param  array $attributes
-     * @return \Knp\Menu\ItemInterface
+     * @param array $attributes
+     * @return ItemInterface
      */
     public function setAttributes(array $attributes)
     {
@@ -167,9 +215,8 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @param  string $name     The name of the attribute to return
-     * @param  mixed  $default  The value to return if the attribute doesn't exist
-     *
+     * @param string $name    The name of the attribute to return
+     * @param mixed  $default The value to return if the attribute doesn't exist
      * @return mixed
      */
     public function getAttribute($name, $default = null)
@@ -197,8 +244,8 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @param  array $linkAttributes
-     * @return \Knp\Menu\ItemInterface
+     * @param array $linkAttributes
+     * @return ItemInterface
      */
     public function setLinkAttributes(array $linkAttributes)
     {
@@ -208,9 +255,8 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @param  string $name     The name of the attribute to return
-     * @param  mixed  $default  The value to return if the attribute doesn't exist
-     *
+     * @param string $name    The name of the attribute to return
+     * @param mixed  $default The value to return if the attribute doesn't exist
      * @return mixed
      */
     public function getLinkAttribute($name, $default = null)
@@ -225,8 +271,7 @@ class MenuItem implements ItemInterface
     /**
      * @param string $name
      * @param string $value
-     *
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     public function setLinkAttribute($name, $value)
     {
@@ -244,8 +289,8 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @param  array $childrenAttributes
-     * @return \Knp\Menu\ItemInterface
+     * @param array $childrenAttributes
+     * @return ItemInterface
      */
     public function setChildrenAttributes(array $childrenAttributes)
     {
@@ -255,9 +300,8 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @param  string $name     The name of the attribute to return
-     * @param  mixed  $default  The value to return if the attribute doesn't exist
-     *
+     * @param string $name    The name of the attribute to return
+     * @param mixed  $default The value to return if the attribute doesn't exist
      * @return mixed
      */
     public function getChildrenAttribute($name, $default = null)
@@ -272,8 +316,7 @@ class MenuItem implements ItemInterface
     /**
      * @param string $name
      * @param string $value
-     *
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     public function setChildrenAttribute($name, $value)
     {
@@ -291,8 +334,8 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @param  array $labelAttributes
-     * @return \Knp\Menu\ItemInterface
+     * @param array $labelAttributes
+     * @return ItemInterface
      */
     public function setLabelAttributes(array $labelAttributes)
     {
@@ -302,9 +345,8 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @param  string $name     The name of the attribute to return
-     * @param  mixed  $default  The value to return if the attribute doesn't exist
-     *
+     * @param string $name    The name of the attribute to return
+     * @param mixed  $default The value to return if the attribute doesn't exist
      * @return mixed
      */
     public function getLabelAttribute($name, $default = null)
@@ -334,8 +376,8 @@ class MenuItem implements ItemInterface
     /**
      * Provides a fluent interface
      *
-     * @param  array $extras
-     * @return \Knp\Menu\ItemInterface
+     * @param array $extras
+     * @return ItemInterface
      */
     public function setExtras(array $extras)
     {
@@ -345,8 +387,8 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @param  string $name     The name of the extra to return
-     * @param  mixed  $default  The value to return if the extra doesn't exist
+     * @param string $name    The name of the extra to return
+     * @param mixed  $default The value to return if the extra doesn't exist
      * @return mixed
      */
     public function getExtra($name, $default = null)
@@ -363,7 +405,7 @@ class MenuItem implements ItemInterface
      *
      * @param string $name
      * @param mixed $value
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     public function setExtra($name, $value)
     {
@@ -386,7 +428,7 @@ class MenuItem implements ItemInterface
      * Set whether or not this menu item should show its children
      *
      * @param boolean $bool
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     public function setDisplayChildren($bool)
     {
@@ -409,7 +451,7 @@ class MenuItem implements ItemInterface
      * Set whether or not this menu to show this menu item
      *
      * @param boolean $bool
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     public function setDisplay($bool)
     {
@@ -425,7 +467,8 @@ class MenuItem implements ItemInterface
      *
      * @param mixed $child   An ItemInterface instance or the name of a new item to create
      * @param array $options If creating a new item, the options passed to the factory for the item
-     * @return \Knp\Menu\ItemInterface
+     * @throws \InvalidArgumentException if the item is already in a tree
+     * @return ItemInterface
      */
     public function addChild($child, array $options = array())
     {
@@ -446,8 +489,8 @@ class MenuItem implements ItemInterface
     /**
      * Returns the child menu identified by the given name
      *
-     * @param  string $name  Then name of the child menu to return
-     * @return \Knp\Menu\ItemInterface|null
+     * @param string $name Then name of the child menu to return
+     * @return ItemInterface|null
      */
     public function getChild($name)
     {
@@ -458,7 +501,7 @@ class MenuItem implements ItemInterface
      * Moves child to specified position. Rearange other children accordingly.
      *
      * @param integer $position Position to move child to.
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     public function moveToPosition($position)
     {
@@ -470,9 +513,9 @@ class MenuItem implements ItemInterface
     /**
      * Moves child to specified position. Rearange other children accordingly.
      *
-     * @param \Knp\Menu\ItemInterface $child Child to move.
-     * @param integer $position Position to move child to.
-     * @return \Knp\Menu\ItemInterface
+     * @param ItemInterface $child    Child to move.
+     * @param integer       $position Position to move child to.
+     * @return ItemInterface
      */
     public function moveChildToPosition(ItemInterface $child, $position)
     {
@@ -493,7 +536,7 @@ class MenuItem implements ItemInterface
     /**
      * Moves child to first position. Rearange other children accordingly.
      *
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     public function moveToFirstPosition()
     {
@@ -503,7 +546,7 @@ class MenuItem implements ItemInterface
     /**
      * Moves child to last position. Rearange other children accordingly.
      *
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     public function moveToLastPosition()
     {
@@ -514,7 +557,8 @@ class MenuItem implements ItemInterface
      * Reorder children.
      *
      * @param array $order New order of children.
-     * @return \Knp\Menu\ItemInterface
+     * @throws \InvalidArgumentException
+     * @return ItemInterface
      */
     public function reorderChildren($order)
     {
@@ -541,7 +585,7 @@ class MenuItem implements ItemInterface
     /**
      * Makes a deep copy of menu tree. Every item is copied as another object.
      *
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     public function copy()
     {
@@ -575,7 +619,7 @@ class MenuItem implements ItemInterface
      *
      * @param mixed $offset Name of child, child object, or numeric offset.
      * @param mixed $length Name of child, child object, or numeric length.
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     public function slice($offset, $length = null)
     {
@@ -633,7 +677,7 @@ class MenuItem implements ItemInterface
     /**
      * Returns the root MenuItem of this menu tree
      *
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     public function getRoot()
     {
@@ -648,7 +692,7 @@ class MenuItem implements ItemInterface
     /**
      * Returns whether or not this menu item is the root menu item
      *
-     * @return bool
+     * @return boolean
      */
     public function isRoot()
     {
@@ -656,7 +700,7 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @return \Knp\Menu\ItemInterface|null
+     * @return ItemInterface|null
      */
     public function getParent()
     {
@@ -666,8 +710,8 @@ class MenuItem implements ItemInterface
     /**
      * Used internally when adding and removing children
      *
-     * @param \Knp\Menu\ItemInterface $parent
-     * @return \Knp\Menu\ItemInterface
+     * @param ItemInterface $parent
+     * @return ItemInterface
      */
     public function setParent(ItemInterface $parent = null)
     {
@@ -677,7 +721,7 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @return array of ItemInterface objects
+     * @return ItemInterface[]
      */
     public function getChildren()
     {
@@ -685,8 +729,8 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @param  array $children An array of ItemInterface objects
-     * @return \Knp\Menu\ItemInterface
+     * @param array $children An array of ItemInterface objects
+     * @return ItemInterface
      */
     public function setChildren(array $children)
     {
@@ -698,12 +742,12 @@ class MenuItem implements ItemInterface
     /**
      * Removes a child from this menu item
      *
-     * @param mixed $name The name of MenuItem instance to remove
-     * @return \Knp\Menu\ItemInterface
+     * @param ItemInterface|string $name The name of ItemInterface instance or the ItemInterface to remove
+     * @return ItemInterface
      */
     public function removeChild($name)
     {
-        $name = ($name instanceof ItemInterface) ? $name->getName() : $name;
+        $name = $name instanceof ItemInterface ? $name->getName() : $name;
 
         if (isset($this->children[$name])) {
             // unset the child and reset it so it looks independent
@@ -715,7 +759,7 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @return MenuItem
+     * @return ItemInterface
      */
     public function getFirstChild()
     {
@@ -723,7 +767,7 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @return MenuItem
+     * @return ItemInterface
      */
     public function getLastChild()
     {
@@ -736,7 +780,7 @@ class MenuItem implements ItemInterface
      * This menu MAY have children, but this will return false if the current
      * user does not have access to view any of those items
      *
-     * @return boolean;
+     * @return boolean
      */
     public function hasChildren()
     {
@@ -785,8 +829,8 @@ class MenuItem implements ItemInterface
      *   * array('subItem1', 'subItem2')
      *   * array(array('label' => 'subItem1', 'url' => '@homepage'), array('label' => 'subItem2'))
      *
-     * @param mixed $subItem A string or array to append onto the end of the array
-     * @param boolean $strict Internal flag to optimize the lookup in parent nodes
+     * @param mixed   $subItem A string or array to append onto the end of the array
+     * @param boolean $strict  Internal flag to optimize the lookup in parent nodes
      * @throws \InvalidArgumentException if an element of the subItem is invalid
      * @return array
      */
@@ -868,7 +912,7 @@ class MenuItem implements ItemInterface
     /**
      * Returns the current menu item if it is a child of this menu item
      *
-     * @return \Knp\Menu\ItemInterface|null
+     * @return ItemInterface|null
      * @deprecated this method is flawed and will be removed in 2.0
      * @see \Knp\Menu\Iterator\CurrentItemFilterIterator
      */
@@ -891,7 +935,7 @@ class MenuItem implements ItemInterface
      * Set whether or not this menu item is "current"
      *
      * @param boolean $bool Specify that this menu item is current
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     public function setCurrent($bool)
     {
@@ -903,13 +947,13 @@ class MenuItem implements ItemInterface
     /**
      * Get whether or not this menu item is "current"
      *
-     * @return bool
+     * @return boolean
      */
     public function isCurrent()
     {
         if (null === $this->isCurrent) {
             $currentUri = $this->getCurrentUri();
-            $this->isCurrent = null !== $currentUri && ($this->getUri() === $currentUri);
+            $this->isCurrent = null !== $currentUri && $this->getUri() === $currentUri;
         }
 
         return $this->isCurrent;
@@ -932,7 +976,9 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @return bool Whether or not this menu item is last in its parent
+     * Whether this menu item is last in its parent
+     *
+     * @return boolean
      */
     public function isLast()
     {
@@ -945,7 +991,9 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * @return bool Whether or not this menu item is first in its parent
+     * Whether this menu item is first in its parent
+     *
+     * @return boolean
      */
     public function isFirst()
     {
@@ -1036,9 +1084,7 @@ class MenuItem implements ItemInterface
      * menu item.
      *
      * If the uri isn't set, this asks the parent menu for its current uri.
-     * This would recurse up the tree until the root is hit. Once the root
-     * is hit, if it still doesn't know the currentUri, it gets it from the
-     * request object.
+     * This would recurse up the tree until the root is hit.
      *
      * @return string
      */
@@ -1078,7 +1124,7 @@ class MenuItem implements ItemInterface
      * Provides a fluent interface
      *
      * @param string $uri
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     public function setCurrentUri($uri)
     {
@@ -1101,13 +1147,12 @@ class MenuItem implements ItemInterface
      *
      * @param string $method
      * @param array $arguments
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      */
     public function callRecursively($method, $arguments = array())
     {
         call_user_func_array(array($this, $method), $arguments);
 
-        /* @var $child \Knp\Menu\ItemInterface */
         foreach ($this->children as $child) {
             $child->callRecursively($method, $arguments);
         }

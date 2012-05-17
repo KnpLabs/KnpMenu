@@ -52,8 +52,8 @@ abstract class Renderer
      *
      * It removes empty attributes.
      *
-     * @param  string $name   The attribute name
-     * @param  string $value  The attribute value
+     * @param string $name  The attribute name
+     * @param string $value The attribute value
      *
      * @return string The HTML representation of the HTML key attribute pair.
      */
@@ -80,7 +80,7 @@ abstract class Renderer
     /**
      * Fixes double escaped strings.
      *
-     * @param  string $escaped  string to fix
+     * @param string $escaped string to fix
      * @return string A single escaped string
      */
     protected function fixDoubleEscape($escaped)

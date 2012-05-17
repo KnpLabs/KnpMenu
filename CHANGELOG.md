@@ -1,3 +1,9 @@
+## 2.0 (2012-XX-XX)
+
+* [BC break] Changed the format of the breadcrumb array
+  Instead of storing the elements with the label as key and the uri as value
+  the array now stores an array of array elements with 3 keys: `label`, `uri` and `item`.
+
 ## 1.1.0 (2012-05-17)
 
 * Marked `Knp\Menu\ItemInterface::getCurrentItem` as deprecated

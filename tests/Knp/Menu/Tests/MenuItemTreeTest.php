@@ -361,14 +361,54 @@ class MenuItemTreeTest extends TestCase
         $this->addChildWithExternalUrl();
         $this->menu->addChild('123', array('uri' => 'http://www.symfony-reloaded.org'));
 
-        $this->assertEquals(array('Root li' => null, 'Parent 1' => null), $this->pt1->getBreadcrumbsArray());
-        $this->assertEquals(array('Root li' => null, 'child' => 'http://www.symfony-reloaded.org'), $this->menu['child']->getBreadcrumbsArray());
-        $this->assertEquals(array('Root li' => null, 'child' => 'http://www.symfony-reloaded.org', 'subitem1' => null), $this->menu['child']->getBreadcrumbsArray('subitem1'));
         $this->assertEquals(
-            array('Root li' => null, 'child' => 'http://www.symfony-reloaded.org', 'subitem1' => null, 'subitem2' => null, 'subitem3' => 'http://php.net'),
-            $this->menu['child']->getBreadcrumbsArray(array('subitem1', 'subitem2' => null, 'subitem3' => 'http://php.net'))
+            array(array('label' => 'Root li', 'uri' => null, 'item' => $this->menu), array('label' => 'Parent 1', 'uri' => null, 'item' => $this->pt1)),
+            $this->pt1->getBreadcrumbsArray()
         );
-        $this->assertEquals(array('Root li' => null, '123' => 'http://www.symfony-reloaded.org'), $this->menu['123']->getBreadcrumbsArray());
+        $this->assertEquals(
+            array(array('label' => 'Root li', 'uri' => null, 'item' => $this->menu), array('label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child'])),
+            $this->menu['child']->getBreadcrumbsArray()
+        );
+        $this->assertEquals(
+            array(
+                array('label' => 'Root li', 'uri' => null, 'item' => $this->menu),
+                array('label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child']),
+                array('label' => 'subitem1', 'uri' => null, 'item' => null),
+            ),
+            $this->menu['child']->getBreadcrumbsArray('subitem1')
+        );
+
+        $item = $this->getMock('Knp\Menu\ItemInterface');
+        $item->expects($this->any())
+            ->method('getLabel')
+            ->will($this->returnValue('mock'));
+        $item->expects($this->any())
+            ->method('getUri')
+            ->will($this->returnValue('foo'));
+
+        $this->assertEquals(
+            array(
+                array('label' => 'Root li', 'uri' => null, 'item' => $this->menu),
+                array('label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child']),
+                array('label' => 'subitem1', 'uri' => null, 'item' => null),
+                array('label' => 'subitem2', 'uri' => null, 'item' => null),
+                array('label' => 'subitem3', 'uri' => 'http://php.net', 'item' => null),
+                array('label' => 'subitem4', 'uri' => null, 'item' => null),
+                array('label' => 'mock', 'uri' => 'foo', 'item' => $item),
+            ),
+            $this->menu['child']->getBreadcrumbsArray(array(
+                'subitem1',
+                'subitem2' => null,
+                'subitem3' => 'http://php.net',
+                array('label' => 'subitem4', 'uri' => null, 'item' => null),
+                $item,
+            ))
+        );
+
+        $this->assertEquals(
+            array(array('label' => 'Root li', 'uri' => null, 'item' => $this->menu), array('label' => '123', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['123'])),
+            $this->menu['123']->getBreadcrumbsArray()
+        );
     }
 
     protected function addChildWithExternalUrl()

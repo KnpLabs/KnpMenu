@@ -2,9 +2,7 @@
 
 namespace Knp\Menu\Tests;
 
-use Knp\Menu\Iterator\CurrentItemFilterIterator;
 use Knp\Menu\MenuItem;
-use Knp\Menu\MenuFactory;
 
 class TestMenuItem extends MenuItem {}
 
@@ -317,6 +315,7 @@ class MenuItemTreeTest extends TestCase
     public function getSliceData()
     {
         $this->setUp();
+
         return array(
             'numeric offset and numeric length' => array(0, 2, 2, array($this->ch1->getName(), $this->ch2->getName())),
             'numeric offset and no length' => array(0, null, 3, array($this->ch1->getName(), $this->ch2->getName(), $this->ch3->getName())),
@@ -343,6 +342,7 @@ class MenuItemTreeTest extends TestCase
     public function getSplitData()
     {
         $this->setUp();
+
         return array(
             'numeric length' => array(1, 1, array($this->ch1->getName())),
             'named length' => array('Child 3', 2, array($this->ch1->getName(), $this->ch2->getName())),

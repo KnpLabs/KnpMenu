@@ -4,86 +4,27 @@ namespace Knp\Menu\Tests\Renderer;
 
 use Knp\Menu\MenuItem;
 use Knp\Menu\MenuFactory;
+use Knp\Menu\Tests\TestCase;
 
-abstract class AbstractRendererTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractRendererTest extends TestCase
 {
     /**
      * @var \Knp\Menu\Renderer\RendererInterface
      */
     private $renderer;
 
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $menu;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $pt1;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $ch1;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $ch2;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $ch3;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $pt2;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $ch4;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $gc1;
-
-    public function setUp()
+    protected function setUp()
     {
+        parent::setUp();
         $this->renderer = $this->createRenderer();
-
-        $this->menu = new MenuItem('Root li', new MenuFactory());
-        $this->menu->setChildrenAttributes(array('class' => 'root'));
-        $this->pt1 = $this->menu->addChild('Parent 1');
-        $this->ch1 = $this->pt1->addChild('Child 1');
-        $this->ch2 = $this->pt1->addChild('Child 2');
-
-        // add the 3rd child via addChild with an object
-        $this->ch3 = new MenuItem('Child 3', new MenuFactory());
-        $this->pt1->addChild($this->ch3);
-
-        $this->pt2 = $this->menu->addChild('Parent 2');
-        $this->ch4 = $this->pt2->addChild('Child 4');
-        $this->gc1 = $this->ch4->addChild('Grandchild 1');
     }
 
     abstract protected function createRenderer();
 
-    public function tearDown()
+    protected function tearDown()
     {
+        parent::tearDown();
         $this->renderer = null;
-        $this->menu = null;
-        $this->pt1 = null;
-        $this->ch1 = null;
-        $this->ch2 = null;
-        $this->ch3 = null;
-        $this->pt2 = null;
-        $this->ch4 = null;
-        $this->gc1 = null;
     }
 
     public function testRenderEmptyRoot()

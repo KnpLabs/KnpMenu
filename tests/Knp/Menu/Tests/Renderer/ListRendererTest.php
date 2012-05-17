@@ -3,8 +3,6 @@
 namespace Knp\Menu\Tests\Renderer;
 
 use Knp\Menu\Renderer\ListRenderer;
-use Knp\Menu\MenuItem;
-use Knp\Menu\MenuFactory;
 
 class ListRendererTest extends AbstractRendererTest
 {
@@ -17,11 +15,6 @@ class ListRendererTest extends AbstractRendererTest
 
     public function testPrettyRendering()
     {
-        $menu = new MenuItem('Root li', new MenuFactory());
-        $menu->setChildrenAttributes(array('class' => 'root'));
-        $menu->addChild('Parent 1');
-        $menu->addChild('Parent 2');
-
         $renderer = new ListRenderer();
         $rendered = <<<HTML
 <ul class="root">
@@ -35,6 +28,6 @@ class ListRendererTest extends AbstractRendererTest
 
 HTML;
 
-        $this->assertEquals($rendered, $renderer->render($menu));
+        $this->assertEquals($rendered, $renderer->render($this->menu, array('depth' => 1)));
     }
 }

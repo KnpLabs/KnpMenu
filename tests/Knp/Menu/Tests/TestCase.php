@@ -2,7 +2,6 @@
 
 namespace Knp\Menu\Tests;
 
-use Knp\Menu\Iterator\CurrentItemFilterIterator;
 use Knp\Menu\MenuItem;
 use Knp\Menu\MenuFactory;
 
@@ -51,7 +50,7 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $factory = new MenuFactory();
-        $this->menu = $factory->createItem('Root li', array('attributes' => array('class' => 'root')));
+        $this->menu = $factory->createItem('Root li', array('childrenAttributes' => array('class' => 'root')));
         $this->pt1 = $this->menu->addChild('Parent 1');
         $this->ch1 = $this->pt1->addChild('Child 1');
         $this->ch2 = $this->pt1->addChild('Child 2');

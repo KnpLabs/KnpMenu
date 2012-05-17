@@ -38,6 +38,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
         $menu = $this->getMock('Knp\Menu\ItemInterface');
         $pimple['menu'] = $pimple->protect(function($options, $c) use ($menu) {
             $c['options'] = $options;
+
             return $menu;
         });
         $provider = new PimpleProvider($pimple, array('default' => 'menu'));

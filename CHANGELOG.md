@@ -1,5 +1,6 @@
-## 1.1.0 (2012-XX-XX)
+## 1.1.0 (2012-05-17)
 
+* Marked `Knp\Menu\ItemInterface::getCurrentItem` as deprecated
 * Added a recursive filter iterator keeping only displayed items
 * Added a filter iterator keeping only current items
 * Added a recursive iterator for the item

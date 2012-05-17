@@ -2,7 +2,7 @@
 
 namespace Knp\Menu\Renderer;
 
-use \Knp\Menu\ItemInterface;
+use Knp\Menu\ItemInterface;
 
 /**
  * Renders MenuItem tree as a breadcrumb
@@ -18,8 +18,11 @@ class BreadcrumbRenderer extends Renderer implements RendererInterface
     public function __construct(array $defaultOptions = array(), $charset = null)
     {
         $this->defaultOptions = array_merge(array(
+            'current_as_link' => true,
+            'current_class' => 'current',
             'additional_path' => null,
             'compressed' => false,
+            'allow_safe_labels' => false,
             'root_attributes' => array(),
         ), $defaultOptions);
 
@@ -72,8 +75,9 @@ class BreadcrumbRenderer extends Renderer implements RendererInterface
     protected function renderList(array $breadcrumb, array $options)
     {
         $html = '';
-        foreach ($breadcrumb as $label => $uri) {
-            $html .= $this->renderItem($label, $uri, $options);
+        foreach ($breadcrumb as $element) {
+            $element = array_replace(array('label' => null, 'uri' => null, 'item' => null), $element);
+            $html .= $this->renderItem($element['label'], $element['uri'], $options, $element['item']);
         }
 
         return $html;
@@ -83,18 +87,22 @@ class BreadcrumbRenderer extends Renderer implements RendererInterface
      * @param string $label
      * @param string $uri
      * @param array $options
+     * @param \Knp\Menu\ItemInterface|null $item
      * @return string
      */
-    protected function renderItem($label, $uri, array $options)
+    protected function renderItem($label, $uri, array $options, ItemInterface $item = null)
     {
+        $isCurrent = null !== $item && $item->isCurrent();
+        $attributes = $isCurrent ? array('class' => $options['current_class']) : array();
+
         // opening li tag
-        $html = $this->format('<li>', 'li', 1, $options);
+        $html = $this->format('<li'.$this->renderHtmlAttributes($attributes).'>', 'li', 1, $options);
 
         // render the text/link inside the li tag
-        if (null === $uri) {
-            $content = $this->renderLabel($label, $options);
+        if (null === $uri || ($isCurrent && !$options['current_as_link'])) {
+            $content = $this->renderLabel($label, $options, $item);
         } else {
-            $content = sprintf('<a href="%s">%s</a>', $this->escape($uri), $this->renderLabel($label, $options));
+            $content = sprintf('<a href="%s">%s</a>', $this->escape($uri), $this->renderLabel($label, $options, $item));
         }
         $html .= $this->format($content, 'link', 1, $options);
 
@@ -104,8 +112,18 @@ class BreadcrumbRenderer extends Renderer implements RendererInterface
         return $html;
     }
 
-    protected function renderLabel($label, array $options)
+    /**
+     * @param string $label
+     * @param array $options
+     * @param \Knp\Menu\ItemInterface|null $item
+     * @return string
+     */
+    protected function renderLabel($label, array $options, ItemInterface $item = null)
     {
+        if ($options['allow_safe_labels'] && null !== $item && $item->getExtra('safe_label', false)) {
+            return $item->getLabel();
+        }
+
         return $this->escape($label);
     }
 

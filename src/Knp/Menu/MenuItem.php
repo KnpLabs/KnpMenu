@@ -2,10 +2,6 @@
 
 namespace Knp\Menu;
 
-use Knp\Menu\Iterator\ItemIterator;
-use Knp\Menu\Renderer\RendererInterface;
-use Knp\Menu\Renderer\ListRenderer;
-
 /**
  * Default implementation of the ItemInterface
  */
@@ -1090,6 +1086,8 @@ class MenuItem implements ItemInterface
             'attributes' => $this->attributes,
             'labelAttributes' => $this->labelAttributes,
             'linkAttributes' => $this->linkAttributes,
+            'childrenAttributes' => $this->childrenAttributes,
+            'extras' => $this->extras,
             'display' => $this->display,
             'displayChildren' => $this->displayChildren,
         );

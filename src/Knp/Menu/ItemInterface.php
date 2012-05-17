@@ -472,6 +472,8 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * Returns the current menu item if it is a child of this menu item
      *
      * @return \Knp\Menu\ItemInterface|null
+     * @deprecated this method is flawed and will be removed in 2.0
+     * @see \Knp\Menu\Iterator\CurrentItemFilterIterator
      */
     function getCurrentItem();
 

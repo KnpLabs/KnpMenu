@@ -11,6 +11,10 @@
             "homepage": "http://knplabs.com"
         },
         {
+            "name":     "Christophe Coevoet",
+            "email":    "stof@notk.org"
+        },
+        {
             "name":     "Symfony Community",
             "homepage": "https://github.com/KnpLabs/KnpMenu/contributors"
         }
@@ -18,14 +22,22 @@
     "require":      {
         "php":  ">=5.3.0"
     },
-    "recommend":    {
-        "pimple/pimple": "1.0.*"
+    "require-dev":  {
+        "pimple/pimple": "1.0.*",
+        "silex/silex":  "1.0.*",
+        "twig/twig":    ">=1.2,<2.0-dev"
     },
     "suggest":      {
-        "silex/silex":  "1.0.*",
-        "twig/twig":    ">=1.2"
+        "pimple/pimple": "for the built-in implementations of the menu provider and renderer provider",
+        "silex/silex":  "for the integration with your silex application",
+        "twig/twig":    "for the TwigRenderer and the integration with your templates"
     },
     "autoload":     {
-        "psr-0": { "Knp\\Menu": "src/" }
+        "psr-0": { "Knp\\Menu\\": "src/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Knp\Menu;
 
+use Knp\Menu\Iterator\ItemIterator;
 use Knp\Menu\Renderer\RendererInterface;
 use Knp\Menu\Renderer\ListRenderer;
 
@@ -655,7 +656,7 @@ class MenuItem implements ItemInterface
      */
     public function isRoot()
     {
-        return (bool) !$this->getParent();
+        return null === $this->parent;
     }
 
     /**
@@ -737,7 +738,7 @@ class MenuItem implements ItemInterface
      * Returns whether or not this menu items has viewable children
      *
      * This menu MAY have children, but this will return false if the current
-     * user does not have access to vew any of those items
+     * user does not have access to view any of those items
      *
      * @return boolean;
      */
@@ -773,55 +774,107 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * Renders an array of label => uri pairs ready to be used for breadcrumbs.
+     * Renders an array ready to be used for breadcrumbs.
+     *
+     * Each element in the array will be an array with 3 keys:
+     * - `label` containing the label of the item
+     * - `url` containing the url of the item (may be `null`)
+     * - `item` containing the original item (may be `null` for the extra items)
      *
      * The subItem can be one of the following forms
      *   * 'subItem'
-     *   * array('subItem' => '@homepage')
+     *   * Knp\Menu\ItemInterface object
+     *   * array('subItem' => '
+     * @homepage')
      *   * array('subItem1', 'subItem2')
+     *   * array(array('label' => 'subItem1', 'url' => '@homepage'), array('label' => 'subItem2'))
      *
-     * @example
-     * // drill down to the Documentation menu item, then add "Chapter 1" to the breadcrumb
-     * $arr = $menu['Documentation']->getBreadcrumbsArray('Chapter 1');
-     * foreach ($arr as $name => $url)
-     * {
-     *
-     * }
-     *
-     * @param  mixed $subItem A string or array to append onto the end of the array
+     * @param mixed $subItem A string or array to append onto the end of the array
+     * @param boolean $strict Internal flag to optimize the lookup in parent nodes
+     * @throws \InvalidArgumentException if an element of the subItem is invalid
      * @return array
      */
-    public function getBreadcrumbsArray($subItem = null)
+    public function getBreadcrumbsArray($subItem = null, $strict = false)
     {
         $breadcrumbs = array();
-        $obj = $this;
 
-        if ($subItem) {
-            if (!is_array($subItem)) {
-                $subItem = array((string) $subItem => null);
+        if ($strict) {
+            $breadcrumbs = $subItem;
+        } else {
+            if ($subItem instanceof ItemInterface) {
+                $subItem = array($subItem);
+                $subItem = array(array(
+                    'label' => $subItem->getLabel(),
+                    'uri' => $subItem->getUri(),
+                    'item' => $subItem,
+                ));
             }
-            $subItem = array_reverse($subItem);
+            if (null === $subItem) {
+                $subItem = array();
+            }
+            if (!is_array($subItem) && !$subItem instanceof \Traversable) {
+                $subItem = array($subItem);
+            }
+
             foreach ($subItem as $key => $value) {
-                if (is_numeric($key)) {
-                    $key = $value;
-                    $value = null;
+                switch (true) {
+                    case $value instanceof ItemInterface:
+                        $value = array(
+                            'label' => $value->getLabel(),
+                            'uri' => $value->getUri(),
+                            'item' => $value,
+                        );
+                        break;
+                    case is_array($value):
+                        // Assume we already have the appropriate array format for the element
+                        break;
+                    case is_integer($key):
+                        $value = array(
+                            'label' => (string) $value,
+                            'uri' => null,
+                            'item' => null,
+                        );
+                        break;
+                    case is_scalar($value):
+                        $value = array(
+                            'label' => (string) $key,
+                            'uri' => (string) $value,
+                            'item' => null,
+                        );
+                        break;
+                    case null === $value:
+                        $value = array(
+                            'label' => (string) $key,
+                            'uri' => null,
+                            'item' => null,
+                        );
+                        break;
+                    default:
+                        throw new \InvalidArgumentException(sprintf('Invalid value supplied for the key "%s". It should be an item, an array or a scalar', $key));
                 }
-                $breadcrumbs[(string) $key] = $value;
+                $breadcrumbs[] = $value;
             }
         }
 
-        do {
-            $label = $obj->getLabel();
-            $breadcrumbs[$label] = $obj->getUri();
-        } while ($obj = $obj->getParent());
+        array_unshift($breadcrumbs, array(
+            'label' => $this->getLabel(),
+            'uri' => $this->getUri(),
+            'item' => $this,
+        ));
 
-        return array_reverse($breadcrumbs);
+        if ($this->isRoot()) {
+            return $breadcrumbs;
+        }
+
+        return $this->getParent()->getBreadcrumbsArray($breadcrumbs, true);
     }
 
     /**
      * Returns the current menu item if it is a child of this menu item
      *
      * @return \Knp\Menu\ItemInterface|null
+     * @deprecated this method is flawed and will be removed in 2.0
+     * @see \Knp\Menu\Iterator\CurrentItemFilterIterator
      */
     public function getCurrentItem()
     {
@@ -924,8 +977,13 @@ class MenuItem implements ItemInterface
             return false;
         }
 
+        // A menu acts like first only if it is displayed
+        if (!$this->isDisplayed()) {
+            return false;
+        }
+
         // if we're first and visible, we're first, period.
-        if ($this->isDisplayed() && $this->isFirst()) {
+        if ($this->isFirst()) {
             return true;
         }
 
@@ -933,7 +991,7 @@ class MenuItem implements ItemInterface
         foreach ($children as $child) {
             // loop until we find a visible menu. If its this menu, we're first
             if ($child->isDisplayed()) {
-                return $child->getName() == $this->getName();
+                return $child->getName() === $this->getName();
             }
         }
 
@@ -956,8 +1014,13 @@ class MenuItem implements ItemInterface
             return false;
         }
 
+        // A menu acts like last only if it is displayed
+        if (!$this->isDisplayed()) {
+            return false;
+        }
+
         // if we're last and visible, we're last, period.
-        if ($this->isDisplayed() && $this->isLast()) {
+        if ($this->isLast()) {
             return true;
         }
 
@@ -965,7 +1028,7 @@ class MenuItem implements ItemInterface
         foreach ($children as $child) {
             // loop until we find a visible menu. If its this menu, we're first
             if ($child->isDisplayed()) {
-                return $child->getName() == $this->getName();
+                return $child->getName() === $this->getName();
             }
         }
 

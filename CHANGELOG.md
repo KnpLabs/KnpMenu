@@ -1,5 +1,17 @@
-## 1.1.0 (2012-XX-XX)
+## 2.0 (2012-XX-XX)
 
+* [BC break] Changed the format of the breadcrumb array
+  Instead of storing the elements with the label as key and the uri as value
+  the array now stores an array of array elements with 3 keys: `label`, `uri` and `item`.
+
+## 1.1.0 (2012-05-17)
+
+* Marked `Knp\Menu\ItemInterface::getCurrentItem` as deprecated
+* Added a recursive filter iterator keeping only displayed items
+* Added a filter iterator keeping only current items
+* Added a recursive iterator for the item
+* Fixed building an array of breadcrumbs when a label has only digits
+* Added a way to mark a label as safe
 * Refactored the ListRenderer to be consistent with the TwigRenderer and provide the same extension points
 * Added a way to attach extra data to an item
 * Removed unnecessary optimization in the TwigRenderer

@@ -25,6 +25,7 @@ class ListRenderer extends Renderer implements RendererInterface
             'firstClass' => 'first',
             'lastClass' => 'last',
             'compressed' => false,
+            'allow_safe_labels' => false,
         ), $defaultOptions);
 
         parent::__construct($charset);
@@ -186,6 +187,10 @@ class ListRenderer extends Renderer implements RendererInterface
 
     protected function renderLabel(ItemInterface $item, array $options)
     {
+        if ($options['allow_safe_labels'] && $item->getExtra('safe_label', false)) {
+            return $item->getLabel();
+        }
+
         return $this->escape($item->getLabel());
     }
 

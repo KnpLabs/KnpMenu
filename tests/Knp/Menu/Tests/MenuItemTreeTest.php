@@ -2,82 +2,14 @@
 
 namespace Knp\Menu\Tests;
 
+use Knp\Menu\Iterator\CurrentItemFilterIterator;
 use Knp\Menu\MenuItem;
 use Knp\Menu\MenuFactory;
 
 class TestMenuItem extends MenuItem {}
 
-class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
+class MenuItemTreeTest extends TestCase
 {
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $menu;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $pt1;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $ch1;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $ch2;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $ch3;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $pt2;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $ch4;
-
-    /**
-     * @var \Knp\Menu\MenuItem
-     */
-    private $gc1;
-
-    public function setUp()
-    {
-        $factory = new MenuFactory();
-        $this->menu = $factory->createItem('Root li', array('attributes' => array('class' => 'root')));
-        $this->pt1 = $this->menu->addChild('Parent 1');
-        $this->ch1 = $this->pt1->addChild('Child 1');
-        $this->ch2 = $this->pt1->addChild('Child 2');
-
-        // add the 3rd child via addChild with an object
-        $this->ch3 = new MenuItem('Child 3', $factory);
-        $this->pt1->addChild($this->ch3);
-
-        $this->pt2 = $this->menu->addChild('Parent 2');
-        $this->ch4 = $this->pt2->addChild('Child 4');
-        $this->gc1 = $this->ch4->addChild('Grandchild 1');
-    }
-
-    public function tearDown()
-    {
-        $this->menu = null;
-        $this->pt1 = null;
-        $this->ch1 = null;
-        $this->ch2 = null;
-        $this->ch3 = null;
-        $this->pt2 = null;
-        $this->ch4 = null;
-        $this->gc1 = null;
-    }
-
     public function testSampleTreeIntegrity()
     {
         $this->assertCount(2, $this->menu);
@@ -208,16 +140,6 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
 
         unset($this->menu['New Child']);
         $this->assertCount(2, $this->menu);
-    }
-
-    public function testIterator()
-    {
-        $count = 0;
-        foreach ($this->pt1 as $key => $value) {
-            $count++;
-            $this->assertEquals('Child '.$count, $key);
-            $this->assertEquals('Child '.$count, $value->getLabel());
-        }
     }
 
     public function testGetChildren()
@@ -437,30 +359,60 @@ class MenuItemTreeTest extends \PHPUnit_Framework_TestCase
     public function testBreadcrumbsArray()
     {
         $this->addChildWithExternalUrl();
-        $this->assertEquals(array('Root li' => null, 'Parent 1' => null), $this->pt1->getBreadcrumbsArray());
-        $this->assertEquals(array('Root li' => null, 'child' => 'http://www.symfony-reloaded.org'), $this->menu['child']->getBreadcrumbsArray());
-        $this->assertEquals(array('Root li' => null, 'child' => 'http://www.symfony-reloaded.org', 'subitem1' => null), $this->menu['child']->getBreadcrumbsArray('subitem1'));
+        $this->menu->addChild('123', array('uri' => 'http://www.symfony-reloaded.org'));
+
         $this->assertEquals(
-            array('Root li' => null, 'child' => 'http://www.symfony-reloaded.org', 'subitem1' => null, 'subitem2' => null, 'subitem3' => 'http://php.net'),
-            $this->menu['child']->getBreadcrumbsArray(array('subitem1', 'subitem2' => null, 'subitem3' => 'http://php.net'))
+            array(array('label' => 'Root li', 'uri' => null, 'item' => $this->menu), array('label' => 'Parent 1', 'uri' => null, 'item' => $this->pt1)),
+            $this->pt1->getBreadcrumbsArray()
+        );
+        $this->assertEquals(
+            array(array('label' => 'Root li', 'uri' => null, 'item' => $this->menu), array('label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child'])),
+            $this->menu['child']->getBreadcrumbsArray()
+        );
+        $this->assertEquals(
+            array(
+                array('label' => 'Root li', 'uri' => null, 'item' => $this->menu),
+                array('label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child']),
+                array('label' => 'subitem1', 'uri' => null, 'item' => null),
+            ),
+            $this->menu['child']->getBreadcrumbsArray('subitem1')
+        );
+
+        $item = $this->getMock('Knp\Menu\ItemInterface');
+        $item->expects($this->any())
+            ->method('getLabel')
+            ->will($this->returnValue('mock'));
+        $item->expects($this->any())
+            ->method('getUri')
+            ->will($this->returnValue('foo'));
+
+        $this->assertEquals(
+            array(
+                array('label' => 'Root li', 'uri' => null, 'item' => $this->menu),
+                array('label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child']),
+                array('label' => 'subitem1', 'uri' => null, 'item' => null),
+                array('label' => 'subitem2', 'uri' => null, 'item' => null),
+                array('label' => 'subitem3', 'uri' => 'http://php.net', 'item' => null),
+                array('label' => 'subitem4', 'uri' => null, 'item' => null),
+                array('label' => 'mock', 'uri' => 'foo', 'item' => $item),
+            ),
+            $this->menu['child']->getBreadcrumbsArray(array(
+                'subitem1',
+                'subitem2' => null,
+                'subitem3' => 'http://php.net',
+                array('label' => 'subitem4', 'uri' => null, 'item' => null),
+                $item,
+            ))
+        );
+
+        $this->assertEquals(
+            array(array('label' => 'Root li', 'uri' => null, 'item' => $this->menu), array('label' => '123', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['123'])),
+            $this->menu['123']->getBreadcrumbsArray()
         );
     }
 
     protected function addChildWithExternalUrl()
     {
         $this->menu->addChild('child', array('uri' => 'http://www.symfony-reloaded.org'));
-    }
-
-    // prints a visual representation of our basic testing tree
-    protected function printTestTree()
-    {
-        print('      Menu Structure   '."\n");
-        print('               rt      '."\n");
-        print('             /    \    '."\n");
-        print('          pt1      pt2 '."\n");
-        print('        /  | \      |  '."\n");
-        print('      ch1 ch2 ch3  ch4 '."\n");
-        print('                    |  '."\n");
-        print('                   gc1 '."\n");
     }
 }

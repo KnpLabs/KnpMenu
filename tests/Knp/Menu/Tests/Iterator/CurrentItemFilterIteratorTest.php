@@ -4,6 +4,7 @@ namespace Knp\Menu\Tests\Iterator;
 
 use Knp\Menu\Iterator\CurrentItemFilterIterator;
 use Knp\Menu\Iterator\RecursiveItemIterator;
+use Knp\Menu\Matcher\Matcher;
 use Knp\Menu\Tests\TestCase;
 
 class CurrentItemFilterIteratorTest extends TestCase
@@ -16,7 +17,7 @@ class CurrentItemFilterIteratorTest extends TestCase
 
         $names = array();
         // FilterIterator expects an Iterator implementation explicitly, not an IteratorAggregate.
-        $iterator = new CurrentItemFilterIterator($this->menu->getIterator());
+        $iterator = new CurrentItemFilterIterator($this->menu->getIterator(), new Matcher());
 
         foreach ($iterator as $value) {
             $names[] = $value->getName();
@@ -33,7 +34,8 @@ class CurrentItemFilterIteratorTest extends TestCase
 
         $names = array();
         $iterator = new CurrentItemFilterIterator(
-            new \RecursiveIteratorIterator(new RecursiveItemIterator($this->menu), \RecursiveIteratorIterator::SELF_FIRST)
+            new \RecursiveIteratorIterator(new RecursiveItemIterator($this->menu), \RecursiveIteratorIterator::SELF_FIRST),
+            new Matcher()
         );
 
         foreach ($iterator as $value) {

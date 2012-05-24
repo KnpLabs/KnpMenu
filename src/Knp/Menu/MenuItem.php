@@ -33,6 +33,16 @@ class MenuItem implements ItemInterface
      */
     protected $labelAttributes = array();
     /**
+     * Route use by the uri
+     * @var string
+     */
+    protected $route = null;
+    /**
+     * Route parameters use by the uri
+     * @var string
+     */
+    protected $routeParameters = array();
+    /**
      * Uri to use in the anchor tag
      * @var string
      */
@@ -149,6 +159,52 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * Get the route for a menu item
+     *
+     * @return string
+     */
+    public function getRoute()
+    {
+        return $this->route;
+    }
+
+    /**
+     * Set the route for a menu item
+     *
+     * @param  string $route The route to set on this menu item
+     * @return ItemInterface
+     */
+    public function setRoute($route)
+    {
+        $this->route = $route;
+
+        return $this;
+    }
+
+    /**
+     * Get route parameters for a menu item
+     *
+     * @return string
+     */
+    public function getRouteParameters()
+    {
+        return $this->routeParameters;
+    }
+
+    /**
+     * Set the route parameters for a menu item
+     *
+     * @param  string $routeParameters Route parameters to set on this menu item
+     * @return ItemInterface
+     */
+    public function setRouteParameters($routeParameters)
+    {
+        $this->routeParameters = $routeParameters;
+
+        return $this;
+    }
+    
     /**
      * Get the uri for a menu item
      *
@@ -1177,6 +1233,8 @@ class MenuItem implements ItemInterface
         $array = array(
             'name' => $this->name,
             'label' => $this->label,
+            'route' => $this->route,
+            'routeParameters' => $this->routeParameters,
             'uri' => $this->uri,
             'attributes' => $this->attributes,
             'labelAttributes' => $this->labelAttributes,

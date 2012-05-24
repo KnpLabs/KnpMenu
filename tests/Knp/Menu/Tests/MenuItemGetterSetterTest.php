@@ -207,6 +207,8 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
             array(
                 'name' => 'test_menu',
                 'label' => null,
+                'route' => null,
+                'routeParameters' => array(),
                 'uri' => 'homepage',
                 'attributes' => array(),
                 'labelAttributes' => array(),
@@ -219,6 +221,8 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
                     'jack' => array(
                         'name' => 'jack',
                         'label' => null,
+                        'route' => null,
+                        'routeParameters' => array(),
                         'uri' => 'http://php.net',
                         'attributes' => array(),
                         'labelAttributes' => array(),
@@ -231,6 +235,8 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
                             'john' => array(
                                 'name' => 'john',
                                 'label' => null,
+                                'route' => null,
+                                'routeParameters' => array(),
                                 'uri' => null,
                                 'attributes' => array(),
                                 'labelAttributes' => array(),
@@ -246,6 +252,8 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
                     'joe' => array(
                         'name' => 'joe',
                         'label' => 'test',
+                        'route' => null,
+                        'routeParameters' => array(),
                         'uri' => null,
                         'attributes' => array('class' => 'leaf'),
                         'labelAttributes' => array('class' => 'center'),
@@ -274,6 +282,8 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
             array(
                 'name' => 'test_menu',
                 'label' => null,
+                'route' => null,
+                'routeParameters' => array(),
                 'uri' => 'homepage',
                 'attributes' => array(),
                 'labelAttributes' => array(),
@@ -286,6 +296,8 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
                     'jack' => array(
                         'name' => 'jack',
                         'label' => null,
+                        'route' => null,
+                        'routeParameters' => array(),
                         'uri' => 'http://php.net',
                         'attributes' => array(),
                         'labelAttributes' => array(),
@@ -298,6 +310,8 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
                     'joe' => array(
                         'name' => 'joe',
                         'label' => 'test',
+                        'route' => null,
+                        'routeParameters' => array(),
                         'uri' => null,
                         'attributes' => array('class' => 'leaf'),
                         'labelAttributes' => array('class' => 'center'),
@@ -323,6 +337,8 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
             array(
                 'name' => 'test_menu',
                 'label' => null,
+                'route' => null,
+                'routeParameters' => array(),
                 'uri' => 'homepage',
                 'attributes' => array(),
                 'labelAttributes' => array(),

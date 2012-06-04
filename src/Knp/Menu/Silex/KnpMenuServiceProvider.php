@@ -88,7 +88,7 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
      * and should be used for "dynamic" configuration (whenever
      * a service must be requested).
      */
-    function boot(Application $app)
+    public function boot(Application $app)
     {
         // TODO: Implement boot() method.
     }

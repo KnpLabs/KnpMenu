@@ -80,4 +80,16 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
             }));
         }
     }
+    
+    /**
+     * Bootstraps the application.
+     *
+     * This method is called after all services are registers
+     * and should be used for "dynamic" configuration (whenever
+     * a service must be requested).
+     */
+    function boot(Application $app)
+    {
+        // TODO: Implement boot() method.
+    }
 }

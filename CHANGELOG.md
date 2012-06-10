@@ -1,4 +1,4 @@
-## 1.1.1 (2012-06-10)
+## 1.1.2 (2012-06-10)
 
 * Updated the Silex service provider for the change in the interface
 

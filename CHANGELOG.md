@@ -1,3 +1,7 @@
+## 1.1.1 (2012-06-10)
+
+* Updated the Silex service provider for the change in the interface
+
 ## 1.1.1 (2012-05-17)
 
 * Added the children attributes and the extras in the array export

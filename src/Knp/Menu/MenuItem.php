@@ -842,7 +842,6 @@ class MenuItem implements ItemInterface
             $breadcrumbs = $subItem;
         } else {
             if ($subItem instanceof ItemInterface) {
-                $subItem = array($subItem);
                 $subItem = array(array(
                     'label' => $subItem->getLabel(),
                     'uri' => $subItem->getUri(),

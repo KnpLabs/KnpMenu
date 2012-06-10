@@ -409,6 +409,15 @@ class MenuItemTreeTest extends TestCase
             array(array('label' => 'Root li', 'uri' => null, 'item' => $this->menu), array('label' => '123', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['123'])),
             $this->menu['123']->getBreadcrumbsArray()
         );
+
+        $this->assertEquals(
+            array(
+                array('label' => 'Root li', 'uri' => null, 'item' => $this->menu),
+                array('label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child']),
+                array('label' => 'mock', 'uri' => 'foo', 'item' => $item),
+            ),
+            $this->menu['child']->getBreadcrumbsArray($item)
+        );
     }
 
     protected function addChildWithExternalUrl()

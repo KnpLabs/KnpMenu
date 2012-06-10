@@ -867,7 +867,7 @@ class MenuItem implements ItemInterface
                     case is_array($value):
                         // Assume we already have the appropriate array format for the element
                         break;
-                    case is_integer($key):
+                    case is_integer($key) && is_string($value):
                         $value = array(
                             'label' => (string) $value,
                             'uri' => null,

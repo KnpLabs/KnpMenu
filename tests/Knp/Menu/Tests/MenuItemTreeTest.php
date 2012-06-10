@@ -420,6 +420,14 @@ class MenuItemTreeTest extends TestCase
         );
     }
 
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testBreadcrumbsArrayInvalidData()
+    {
+        $this->pt1->getBreadcrumbsArray(array(new \stdClass()));
+    }
+
     protected function addChildWithExternalUrl()
     {
         $this->menu->addChild('child', array('uri' => 'http://www.symfony-reloaded.org'));

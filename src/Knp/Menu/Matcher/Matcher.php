@@ -13,7 +13,7 @@ class Matcher implements MatcherInterface
     private $cache;
 
     /**
-     * @var \Knp\Menu\Matcher\Voter\VoterInterface[]
+     * @var VoterInterface[]
      */
     private $voters = array();
 
@@ -22,6 +22,11 @@ class Matcher implements MatcherInterface
         $this->cache = new \SplObjectStorage();
     }
 
+    /**
+     * Adds a voter in the matcher.
+     *
+     * @param VoterInterface $voter
+     */
     public function addVoter(VoterInterface $voter)
     {
         $this->voters[] = $voter;
@@ -30,7 +35,7 @@ class Matcher implements MatcherInterface
     /**
      * Checks whether an item is current.
      *
-     * @param \Knp\Menu\ItemInterface $item
+     * @param ItemInterface $item
      * @return boolean
      */
     public function isCurrent(ItemInterface $item)
@@ -60,7 +65,7 @@ class Matcher implements MatcherInterface
     /**
      * Checks whether an item is the ancestor of a current item.
      *
-     * @param \Knp\Menu\ItemInterface $item
+     * @param ItemInterface $item
      * @param integer $depth The max depth to look for the item
      * @return boolean
      */

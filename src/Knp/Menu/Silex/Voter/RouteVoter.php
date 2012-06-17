@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 class RouteVoter implements VoterInterface
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\Request
+     * @var Request
      */
     private $request;
 
@@ -27,7 +27,7 @@ class RouteVoter implements VoterInterface
      * If the voter is not able to determine a result,
      * it should return null to let other voters do the job.
      *
-     * @param \Knp\Menu\ItemInterface $item
+     * @param ItemInterface $item
      * @return boolean|null
      */
     public function matchItem(ItemInterface $item)

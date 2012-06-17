@@ -14,7 +14,7 @@ class ListRenderer extends Renderer implements RendererInterface
     private $defaultOptions;
 
     /**
-     * @param \Knp\Menu\Matcher\MatcherInterface $matcher
+     * @param MatcherInterface $matcher
      * @param array $defaultOptions
      * @param string $charset
      */

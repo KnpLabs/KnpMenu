@@ -16,7 +16,7 @@ abstract class AbstractRendererTest extends TestCase
     protected $renderer;
 
     /**
-     * @var \Knp\Menu\Matcher\MatcherInterface
+     * @var MatcherInterface
      */
     private $matcher;
 

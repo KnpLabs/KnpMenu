@@ -22,7 +22,7 @@ class UriVoter implements VoterInterface
      * If the voter is not able to determine a result,
      * it should return null to let other voters do the job.
      *
-     * @param \Knp\Menu\ItemInterface $item
+     * @param ItemInterface $item
      * @return boolean|null
      */
     public function matchItem(ItemInterface $item)

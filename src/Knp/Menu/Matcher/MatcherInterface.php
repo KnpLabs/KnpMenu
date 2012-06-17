@@ -12,7 +12,7 @@ interface MatcherInterface
     /**
      * Checks whether an item is current.
      *
-     * @param \Knp\Menu\ItemInterface $item
+     * @param ItemInterface $item
      * @return boolean
      */
     function isCurrent(ItemInterface $item);
@@ -20,7 +20,7 @@ interface MatcherInterface
     /**
      * Checks whether an item is the ancestor of a current item.
      *
-     * @param \Knp\Menu\ItemInterface $item
+     * @param ItemInterface $item
      * @param integer $depth The max depth to look for the item
      * @return boolean
      */

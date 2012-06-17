@@ -17,7 +17,7 @@ class TwigRenderer implements RendererInterface
     /**
      * @param \Twig_Environment $environment
      * @param string $template
-     * @param \Knp\Menu\Matcher\MatcherInterface $matcher
+     * @param MatcherInterface $matcher
      * @param array $defaultOptions
      */
     public function __construct(\Twig_Environment $environment, $template, MatcherInterface $matcher, array $defaultOptions = array())

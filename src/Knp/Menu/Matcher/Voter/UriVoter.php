@@ -11,6 +11,11 @@ class UriVoter implements VoterInterface
 {
     private $uri;
 
+    public function __construct($uri = null)
+    {
+        $this->uri = $uri;
+    }
+
     public function setUri($uri)
     {
         $this->uri = $uri;

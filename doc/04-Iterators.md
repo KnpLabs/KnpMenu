@@ -103,8 +103,10 @@ It is a filter iterator applied on another iterator.
 $root = /* get your root item from somewhere */;
 $menu = $root['B'];
 
+$itemMatcher = \Knp\Menu\Matcher\Matcher();
+
 // create the iterator
-$iterator = new \Knp\Menu\Iterator\CurrentItemFilterIterator($menu->getIterator());
+$iterator = new \Knp\Menu\Iterator\CurrentItemFilterIterator($menu->getIterator(), $itemMatcher);
 
 foreach ($iterator as $item) {
     echo $item->getName() . " ";
@@ -121,6 +123,8 @@ filter on the previous recursive iterator:
 
 $menu = /* get your root item from somewhere */;
 
+$itemMatcher = \Knp\Menu\Matcher\Matcher();
+
 $treeIterator = new \RecursiveIteratorIterator(
     new \Knp\Menu\Iterator\RecursiveItemIterator(
         new \ArrayIterator(array($menu))
@@ -128,7 +132,7 @@ $treeIterator = new \RecursiveIteratorIterator(
     \RecursiveIteratorIterator::SELF_FIRST
 );
 
-$iterator = new \Knp\Menu\Iterator\CurrentItemFilterIterator($treeIterator);
+$iterator = new \Knp\Menu\Iterator\CurrentItemFilterIterator($treeIterator, $itemMatcher);
 
 foreach ($iterator as $item) {
     echo $item->getName() . " ";

@@ -63,7 +63,6 @@ create the menu as a service in the application and register it in the parameter
 
 $app['my_main_menu'] = function($app) {
     $menu = $app['knp_menu.factory']->createItem('root');
-    $menu->setCurrentUri($app['request']->getRequestUri());
 
     $menu->addChild('Home', array('route' => 'homepage'));
     // ... add more children

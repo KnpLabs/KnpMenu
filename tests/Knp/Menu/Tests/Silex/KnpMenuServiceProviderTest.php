@@ -2,8 +2,9 @@
 
 namespace Knp\Menu\Tests\Silex;
 
-use Knp\Menu\ItemInterface;
+use Knp\Menu\Matcher\Matcher;
 use Knp\Menu\Silex\KnpMenuServiceProvider;
+use Knp\Menu\Silex\Voter\RouteVoter;
 use Silex\Application;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
@@ -65,12 +66,6 @@ class KnpMenuServiceProviderTest extends \PHPUnit_Framework_TestCase
     {
         $app = $this->bootstrapApp();
 
-        $app['test.menu.my'] = $app->extend('test.menu.my', function (\Knp\Menu\ItemInterface $menu) {
-            $menu->setCurrentUri('http://knplabs.com');
-
-            return $menu;
-        });
-
         $request = Request::create('/twig');
         $response = $app->handle($request);
         $this->assertEquals('<ul class="nav"><li class="first"><a href="/twig">Home</a></li><li class="current last"><a href="http://knplabs.com">KnpLabs</a></li></ul>', $response->getContent());
@@ -98,6 +93,17 @@ class KnpMenuServiceProviderTest extends \PHPUnit_Framework_TestCase
 
             return $root;
         };
+
+        $app['test.voter'] = $app->share(function (Application $app) {
+            $voter = new RouteVoter();
+            $voter->setRequest($app['request']);
+
+            return $voter;
+        });
+
+        $app['knp_menu.matcher.configure'] = $app->protect(function (Matcher $matcher) use ($app) {
+            $matcher->addVoter($app['test.voter']);
+        });
 
         $app->get('/twig', function (Application $app) {
             return $app['twig']->render('main', array('renderer' => 'twig'));

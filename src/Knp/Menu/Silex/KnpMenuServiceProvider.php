@@ -4,6 +4,7 @@ namespace Knp\Menu\Silex;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Knp\Menu\Matcher\Matcher;
 use Knp\Menu\MenuFactory;
 use Knp\Menu\Renderer\ListRenderer;
 use Knp\Menu\Renderer\TwigRenderer;
@@ -24,8 +25,18 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
             return new MenuFactory();
         });
 
+        $app['knp_menu.matcher'] = $app->share(function () use ($app) {
+            $matcher = new Matcher();
+
+            if (isset($app['knp_menu.matcher.configure'])) {
+                $app['knp_menu.matcher.configure']($matcher);
+            }
+
+            return $matcher;
+        });
+
         $app['knp_menu.renderer.list'] = $app->share(function () use ($app) {
-            return new ListRenderer(array(), $app['charset']);
+            return new ListRenderer($app['knp_menu.matcher'], array(), $app['charset']);
         });
 
         $app['knp_menu.menu_provider'] = $app->share(function () use ($app) {
@@ -60,7 +71,7 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
             });
 
             $app['knp_menu.renderer.twig'] = $app->share(function () use ($app) {
-                return new TwigRenderer($app['twig'], $app['knp_menu.template']);
+                return new TwigRenderer($app['twig'], $app['knp_menu.template'], $app['knp_menu.matcher']);
             });
 
             if (!isset($app['knp_menu.template'])) {

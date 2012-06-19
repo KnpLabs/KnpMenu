@@ -74,11 +74,6 @@ class MenuItem implements ItemInterface
      * @var boolean|null
      */
     protected $isCurrent = null;
-    /**
-     * Current uri to use for selecting current menu
-     * @var string
-     */
-    protected $currentUri = null;
 
     /**
      * @var FactoryInterface
@@ -479,7 +474,6 @@ class MenuItem implements ItemInterface
         }
 
         $child->setParent($this);
-        $child->setCurrentUri($this->getCurrentUri());
 
         $this->children[$child->getName()] = $child;
 
@@ -909,36 +903,16 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * Returns the current menu item if it is a child of this menu item
+     * Set whether or not this menu item is "current".
      *
-     * @return ItemInterface|null
-     * @deprecated this method is flawed and will be removed in 2.0
-     * @see \Knp\Menu\Iterator\CurrentItemFilterIterator
-     */
-    public function getCurrentItem()
-    {
-        if ($this->isCurrent()) {
-            return $this;
-        }
-
-        foreach ($this->children as $child) {
-            if ($current = $child->getCurrentItem()) {
-                return $current;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Set whether or not this menu item is "current"
+     * If the state is unknown, use null.
      *
-     * @param boolean $bool Specify that this menu item is current
+     * @param boolean|null $bool Specify that this menu item is current
      * @return ItemInterface
      */
     public function setCurrent($bool)
     {
-        $this->isCurrent = (bool) $bool;
+        $this->isCurrent = $bool;
 
         return $this;
     }
@@ -946,32 +920,11 @@ class MenuItem implements ItemInterface
     /**
      * Get whether or not this menu item is "current"
      *
-     * @return boolean
+     * @return boolean|null
      */
     public function isCurrent()
     {
-        if (null === $this->isCurrent) {
-            $currentUri = $this->getCurrentUri();
-            $this->isCurrent = null !== $currentUri && $this->getUri() === $currentUri;
-        }
-
         return $this->isCurrent;
-    }
-
-    /**
-     * Returns whether or not this menu is an ancestor of the current menu item
-     *
-     * @return boolean
-     */
-    public function isCurrentAncestor()
-    {
-        foreach ($this->getChildren() as $child) {
-            if ($child->isCurrent() || $child->isCurrentAncestor()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -1076,64 +1029,6 @@ class MenuItem implements ItemInterface
         }
 
         return false;
-    }
-
-    /**
-     * Returns the current uri, which is used for determining the current
-     * menu item.
-     *
-     * If the uri isn't set, this asks the parent menu for its current uri.
-     * This would recurse up the tree until the root is hit.
-     *
-     * @return string
-     */
-    public function getCurrentUri()
-    {
-        if ($this->currentUri === null) {
-            if ($this->getParent() && ($currentUri = $this->getParent()->getCurrentUri())) {
-                /**
-                 * This should look strange. But, if we ask our parent for the
-                 * current uri, and it returns it successfully, then one of two
-                 * different things just happened:
-                 *
-                 *   1) The parent already had the currentUri calculated, but it
-                 *      hadn't been passed down to the child yet. This technically
-                 *      should not happen, but we allow for the possibility. In
-                 *      that case, currentUri is still blank and we set it here.
-                 *   2) The parent did not have the currentUri calculated, and upon
-                 *      calculating it, it set it on itself and all of its children.
-                 *      In that case, this menu item and all of its children will
-                 *      now have the currentUri just by asking the parent.
-                 */
-                if ($this->currentUri === null) {
-                    $this->setCurrentUri($currentUri);
-                }
-            }
-        }
-
-        return $this->currentUri;
-    }
-
-    /**
-     * Sets the current uri, used when determining the current menu item
-     *
-     * This will set the current uri on the root menu item, which all other
-     * menu items will use
-     *
-     * Provides a fluent interface
-     *
-     * @param string $uri
-     * @return ItemInterface
-     */
-    public function setCurrentUri($uri)
-    {
-        $this->currentUri = $uri;
-
-        foreach ($this->getChildren() as $child) {
-            $child->setCurrentUri($uri);
-        }
-
-        return $this;
     }
 
     /**

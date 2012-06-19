@@ -1,5 +1,6 @@
 ## 2.0 (2012-XX-XX)
 
+* [BC break] Refactored the way to mark items as current
 * [BC break] Changed the format of the breadcrumb array
   Instead of storing the elements with the label as key and the uri as value
   the array now stores an array of array elements with 3 keys: `label`, `uri` and `item`.

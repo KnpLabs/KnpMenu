@@ -818,8 +818,7 @@ class MenuItem implements ItemInterface
      * The subItem can be one of the following forms
      *   * 'subItem'
      *   * Knp\Menu\ItemInterface object
-     *   * array('subItem' => '
-     * @homepage')
+     *   * array('subItem' => '@homepage')
      *   * array('subItem1', 'subItem2')
      *   * array(array('label' => 'subItem1', 'url' => '@homepage'), array('label' => 'subItem2'))
      *

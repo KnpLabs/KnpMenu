@@ -51,4 +51,16 @@ class RouterAwareFactoryTest extends \PHPUnit_Framework_TestCase
         $item = $factory->createItem('test_item', array('route' => 'homepage', 'routeAbsolute' => true));
         $this->assertEquals('http://php.net', $item->getUri());
     }
+
+    public function testCreateItemAppendsRouteUnderExtras()
+    {
+        $generator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
+        $factory = new RouterAwareFactory($generator);
+
+        $item = $factory->createItem('test_item', array('route' => 'homepage'));
+        $this->assertEquals(array('homepage'), $item->getExtra('routes'));
+
+        $item = $factory->createItem('test_item', array('route' => 'homepage', 'extras' => array('routes' => array('other_page'))));
+        $this->assertContains('homepage', $item->getExtra('routes'));
+    }
 }

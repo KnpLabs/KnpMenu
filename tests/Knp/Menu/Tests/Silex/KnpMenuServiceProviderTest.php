@@ -68,6 +68,12 @@ class KnpMenuServiceProviderTest extends \PHPUnit_Framework_TestCase
 
         $request = Request::create('/twig');
         $response = $app->handle($request);
+        $this->assertEquals('<ul class="nav"><li class="current first"><a href="/twig">Home</a></li><li class="last"><a href="http://knplabs.com">KnpLabs</a></li></ul>', $response->getContent());
+
+        $app = $this->bootstrapApp();
+
+        $request = Request::create('/other-twig');
+        $response = $app->handle($request);
         $this->assertEquals('<ul class="nav"><li class="first"><a href="/twig">Home</a></li><li class="current last"><a href="http://knplabs.com">KnpLabs</a></li></ul>', $response->getContent());
     }
 
@@ -89,7 +95,7 @@ class KnpMenuServiceProviderTest extends \PHPUnit_Framework_TestCase
 
             $root = $factory->createItem('root', array('childrenAttributes' => array('class' => 'nav')));
             $root->addChild('home', array('route' => 'homepage', 'label' => 'Home'));
-            $root->addChild('KnpLabs', array('uri' => 'http://knplabs.com', 'extras' => array('routes' => 'homepage')));
+            $root->addChild('KnpLabs', array('uri' => 'http://knplabs.com', 'extras' => array('routes' => 'other_route')));
 
             return $root;
         };
@@ -108,6 +114,10 @@ class KnpMenuServiceProviderTest extends \PHPUnit_Framework_TestCase
         $app->get('/twig', function (Application $app) {
             return $app['twig']->render('main', array('renderer' => 'twig'));
         })->bind('homepage');
+
+        $app->get('/other-twig', function (Application $app) {
+            return $app['twig']->render('main', array('renderer' => 'twig'));
+        })->bind('other_route');
 
         $app->get('/list', function (Application $app) {
             return $app['twig']->render('main', array('renderer' => 'list'));

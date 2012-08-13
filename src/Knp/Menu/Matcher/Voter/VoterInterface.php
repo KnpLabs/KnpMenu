@@ -18,5 +18,5 @@ interface VoterInterface
      * @param ItemInterface $item
      * @return boolean|null
      */
-    function matchItem(ItemInterface $item);
+    public function matchItem(ItemInterface $item);
 }

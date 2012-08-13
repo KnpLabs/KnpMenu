@@ -6,7 +6,7 @@ use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\Voter\VoterInterface;
 
 /**
- * Interface implemented by the item matcher
+ * A MatcherInterface implementation using a voter system
  */
 class Matcher implements MatcherInterface
 {
@@ -33,10 +33,7 @@ class Matcher implements MatcherInterface
     }
 
     /**
-     * Checks whether an item is current.
-     *
-     * @param ItemInterface $item
-     * @return boolean
+     * {@inheritdoc}
      */
     public function isCurrent(ItemInterface $item)
     {
@@ -63,11 +60,7 @@ class Matcher implements MatcherInterface
     }
 
     /**
-     * Checks whether an item is the ancestor of a current item.
-     *
-     * @param ItemInterface $item
-     * @param integer $depth The max depth to look for the item
-     * @return boolean
+     * {@inheritdoc}
      */
     public function isAncestor(ItemInterface $item, $depth = null)
     {
@@ -86,7 +79,7 @@ class Matcher implements MatcherInterface
     }
 
     /**
-     * Clears the state of the matcher.
+     * {@inheritdoc}
      */
     public function clear()
     {

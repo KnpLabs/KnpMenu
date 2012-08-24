@@ -7,8 +7,8 @@ use Knp\Menu\Matcher\Voter\UriVoter;
 class UriVoterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @param string $uri
-     * @param string $itemUri
+     * @param string  $uri
+     * @param string  $itemUri
      * @param boolean $expected
      *
      * @dataProvider provideData

@@ -131,9 +131,10 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string $template
+     * @param string                $template
      * @param \Knp\Menu\Twig\Helper $helper
-     * @return \Twig_TemplateInterface
+     *
+     * @return \Twig_Template
      */
     private function getTemplate($template, $helper)
     {

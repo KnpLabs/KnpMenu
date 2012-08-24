@@ -16,9 +16,9 @@ class TwigRenderer implements RendererInterface
 
     /**
      * @param \Twig_Environment $environment
-     * @param string $template
-     * @param MatcherInterface $matcher
-     * @param array $defaultOptions
+     * @param string            $template
+     * @param MatcherInterface  $matcher
+     * @param array             $defaultOptions
      */
     public function __construct(\Twig_Environment $environment, $template, MatcherInterface $matcher, array $defaultOptions = array())
     {
@@ -38,13 +38,6 @@ class TwigRenderer implements RendererInterface
         ), $defaultOptions);
     }
 
-    /**
-     * Renders a menu with the specified renderer.
-     *
-     * @param ItemInterface $item
-     * @param array $options
-     * @return string
-     */
     public function render(ItemInterface $item, array $options = array())
     {
         $options = array_merge($this->defaultOptions, $options);

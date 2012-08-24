@@ -21,15 +21,6 @@ class RouteVoter implements VoterInterface
         $this->request = $request;
     }
 
-    /**
-     * Checks whether an item is current.
-     *
-     * If the voter is not able to determine a result,
-     * it should return null to let other voters do the job.
-     *
-     * @param ItemInterface $item
-     * @return boolean|null
-     */
     public function matchItem(ItemInterface $item)
     {
         if (null === $this->request) {

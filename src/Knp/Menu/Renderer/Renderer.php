@@ -25,6 +25,7 @@ abstract class Renderer
      *
      * @param string $name
      * @param string $value
+     *
      * @return string
      */
     protected function renderHtmlAttribute($name, $value)
@@ -40,6 +41,7 @@ abstract class Renderer
      * Renders HTML attributes
      *
      * @param array $attributes
+     *
      * @return string
      */
     protected function renderHtmlAttributes(array $attributes)
@@ -70,6 +72,7 @@ abstract class Renderer
      * Escapes an HTML value
      *
      * @param string $value
+     *
      * @return string
      */
     protected function escape($value)
@@ -81,6 +84,7 @@ abstract class Renderer
      * Fixes double escaped strings.
      *
      * @param string $escaped string to fix
+     *
      * @return string A single escaped string
      */
     protected function fixDoubleEscape($escaped)

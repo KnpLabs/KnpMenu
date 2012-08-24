@@ -61,7 +61,7 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
             $app['knp_menu.default_renderer'] = 'list';
         }
 
-        $app['knp_menu.helper'] = $app->share(function () use ($app){
+        $app['knp_menu.helper'] = $app->share(function () use ($app) {
             return new Helper($app['knp_menu.renderer_provider'], $app['knp_menu.menu_provider']);
         });
 
@@ -91,13 +91,6 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
             }));
         }
     }
-    
-    /**
-     * Bootstraps the application.
-     *
-     * This method is called after all services are registers
-     * and should be used for "dynamic" configuration (whenever
-     * a service must be requested).
-     */
+
     public function boot(Application $app){}
 }

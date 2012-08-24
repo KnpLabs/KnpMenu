@@ -8,7 +8,7 @@ class MatcherTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @param boolean|null $flag
-     * @param boolean $expected
+     * @param boolean      $expected
      *
      * @dataProvider provideItemFlag
      */

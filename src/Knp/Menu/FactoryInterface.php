@@ -11,18 +11,20 @@ interface FactoryInterface
      * Creates a menu item
      *
      * @param string $name
-     * @param array $options
+     * @param array  $options
+     *
      * @return ItemInterface
      */
-    function createItem($name, array $options = array());
+    public function createItem($name, array $options = array());
 
     /**
      * Create a menu item from a NodeInterface
      *
      * @param NodeInterface $node
+     *
      * @return ItemInterface
      */
-    function createFromNode(NodeInterface $node);
+    public function createFromNode(NodeInterface $node);
 
     /**
      * Creates a new menu item (and tree if $data['children'] is set).
@@ -30,7 +32,8 @@ interface FactoryInterface
      * The source is an array of data that should match the output from MenuItem->toArray().
      *
      * @param array $data The array of data to use as a source for the menu tree
+     *
      * @return ItemInterface
      */
-    function createFromArray(array $data);
+    public function createFromArray(array $data);
 }

@@ -15,8 +15,8 @@ class ListRenderer extends Renderer implements RendererInterface
 
     /**
      * @param MatcherInterface $matcher
-     * @param array $defaultOptions
-     * @param string $charset
+     * @param array            $defaultOptions
+     * @param string           $charset
      */
     public function __construct(MatcherInterface $matcher, array $defaultOptions = array(), $charset = null)
     {
@@ -36,13 +36,6 @@ class ListRenderer extends Renderer implements RendererInterface
         parent::__construct($charset);
     }
 
-    /**
-     * Renders a menu with the specified renderer.
-     *
-     * @param ItemInterface $item
-     * @param array $options
-     * @return string
-     */
     public function render(ItemInterface $item, array $options = array())
     {
         $options = array_merge($this->defaultOptions, $options);
@@ -84,7 +77,8 @@ class ListRenderer extends Renderer implements RendererInterface
      * This method updates the depth for the children.
      *
      * @param ItemInterface $item
-     * @param array $options The options to render the item.
+     * @param array         $options The options to render the item.
+     *
      * @return string
      */
     protected function renderChildren(ItemInterface $item, array $options)
@@ -109,7 +103,8 @@ class ListRenderer extends Renderer implements RendererInterface
      * own nested ul tag if this menu item has children
      *
      * @param ItemInterface $item
-     * @param array $options The options to render the item
+     * @param array         $options The options to render the item
+     *
      * @return string
      */
     protected function renderItem(ItemInterface $item, array $options)
@@ -173,6 +168,7 @@ class ListRenderer extends Renderer implements RendererInterface
      *
      * @param ItemInterface $item    The item to render the link or label for
      * @param array         $options The options to render the item
+     *
      * @return string
      */
     protected function renderLink(ItemInterface $item, array $options = array())
@@ -210,10 +206,11 @@ class ListRenderer extends Renderer implements RendererInterface
      * spacing and line-breaking so that the particular thing being rendered
      * makes up its part in a fully-rendered and spaced menu.
      *
-     * @param string $html The html to render in an (un)formatted way
-     * @param string $type The type [ul,link,li] of thing being rendered
+     * @param string  $html    The html to render in an (un)formatted way
+     * @param string  $type    The type [ul,link,li] of thing being rendered
      * @param integer $level
-     * @param array $options
+     * @param array   $options
+     *
      * @return string
      */
     protected function format($html, $type, $level, array $options)

@@ -41,12 +41,6 @@ class MenuFactory implements FactoryInterface
         return $item;
     }
 
-    /**
-     * Create a menu item from a NodeInterface
-     *
-     * @param NodeInterface $node
-     * @return MenuItem
-     */
     public function createFromNode(NodeInterface $node)
     {
         $item = $this->createItem($node->getName(), $node->getOptions());
@@ -58,15 +52,6 @@ class MenuFactory implements FactoryInterface
         return $item;
     }
 
-    /**
-     * Creates a new menu item (and tree if $data['children'] is set).
-     *
-     * The source is an array of data that should match the output from MenuItem->toArray().
-     *
-     * @param array  $data The array of data to use as a source for the menu tree
-     * @param string $name The name of the source (if not set in data['name'])
-     * @return MenuItem
-     */
     public function createFromArray(array $data, $name = null)
     {
         $name = isset($data['name']) ? $data['name'] : $name;

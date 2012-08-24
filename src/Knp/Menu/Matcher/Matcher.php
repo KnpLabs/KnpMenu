@@ -32,12 +32,6 @@ class Matcher implements MatcherInterface
         $this->voters[] = $voter;
     }
 
-    /**
-     * Checks whether an item is current.
-     *
-     * @param ItemInterface $item
-     * @return boolean
-     */
     public function isCurrent(ItemInterface $item)
     {
         $current = $item->isCurrent();
@@ -62,13 +56,6 @@ class Matcher implements MatcherInterface
         return $current;
     }
 
-    /**
-     * Checks whether an item is the ancestor of a current item.
-     *
-     * @param ItemInterface $item
-     * @param integer $depth The max depth to look for the item
-     * @return boolean
-     */
     public function isAncestor(ItemInterface $item, $depth = null)
     {
         if (0 === $depth) {
@@ -85,9 +72,6 @@ class Matcher implements MatcherInterface
         return false;
     }
 
-    /**
-     * Clears the state of the matcher.
-     */
     public function clear()
     {
         $this->cache = new \SplObjectStorage();

@@ -16,7 +16,8 @@ interface VoterInterface
      * it should return null to let other voters do the job.
      *
      * @param ItemInterface $item
+     *
      * @return boolean|null
      */
-    function matchItem(ItemInterface $item);
+    public function matchItem(ItemInterface $item);
 }

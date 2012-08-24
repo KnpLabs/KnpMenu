@@ -383,7 +383,8 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $name
      * @param string $uri
-     * @param array $attributes
+     * @param array  $attributes
+     *
      * @return \Knp\Menu\MenuItem
      */
     protected function createMenu($name = 'test_menu', $uri = 'homepage', array $attributes = array())

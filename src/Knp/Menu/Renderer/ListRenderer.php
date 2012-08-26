@@ -11,7 +11,7 @@ use Knp\Menu\Matcher\MatcherInterface;
 class ListRenderer extends Renderer implements RendererInterface
 {
     protected $matcher;
-    private $defaultOptions;
+    protected $defaultOptions;
 
     /**
      * @param MatcherInterface $matcher

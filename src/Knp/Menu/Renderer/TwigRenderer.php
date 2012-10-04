@@ -57,4 +57,19 @@ class TwigRenderer implements RendererInterface
 
         return $html;
     }
+
+    public function getEnvironment()
+    {
+        return $this->environment;
+    } 
+
+    public function getMatcher()
+    {
+        return $this->matcher;
+    }
+
+    public function getDefaultOptions()
+    {
+        return $this->defaultOptions;
+    } 
 }

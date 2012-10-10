@@ -51,8 +51,10 @@ class MenuFactory implements FactoryInterface
     {
         $item = $this->createItem($node->getName(), $node->getOptions());
 
-        foreach ($node->getChildren() as $childNode) {
-            $item->addChild($this->createFromNode($childNode));
+        if ($item->getDisplayChildren()) {
+            foreach ($node->getChildren() as $childNode) {
+                $item->addChild($this->createFromNode($childNode));
+            }
         }
 
         return $item;

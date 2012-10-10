@@ -49,11 +49,11 @@ class ListRenderer extends Renderer implements RendererInterface
     {
         /**
          * Return an empty string if any of the following are true:
-         *   a) This menu item has been explicitly set to hide its children
-         *   b) The menu has no children eligible to be displayed
-         *   c) The depth is 0
+         *   a) The depth is 0
+         *   b) This menu item has been explicitly set to hide its children
+         *   c) The menu has no children eligible to be displayed
          */
-        if (!$item->getDisplayChildren() || !$item->hasChildren() || 0 === $options['depth']) {
+        if (0 === $options['depth'] || !$item->getDisplayChildren() || !$item->hasChildren()) {
             return '';
         }
 

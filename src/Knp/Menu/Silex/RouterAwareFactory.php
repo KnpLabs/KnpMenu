@@ -17,7 +17,7 @@ class RouterAwareFactory extends MenuFactory
         $this->generator = $generator;
     }
 
-    public function createItem($name, array $options = array())
+    public function createItem($name, array $options = array(), $menuItemClass = null)
     {
         if (!empty($options['route'])) {
             $params = isset($options['routeParameters']) ? $options['routeParameters'] : array();
@@ -28,6 +28,6 @@ class RouterAwareFactory extends MenuFactory
             $options = array_merge_recursive(array('extras' => array('routes' => array($options['route']))), $options);
         }
 
-        return parent::createItem($name, $options);
+        return parent::createItem($name, $options, $menuItemClass = null);
     }
 }

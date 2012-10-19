@@ -7,9 +7,13 @@ namespace Knp\Menu;
  */
 class MenuFactory implements FactoryInterface
 {
-    public function createItem($name, array $options = array())
+    public function createItem($name, array $options = array(), $menuItemClass = null)
     {
-        $item = new MenuItem($name, $this);
+        if (!is_null($menuItemClass)) {
+            $item = new $menuItemClass($name, $this);
+        } else {
+            $item = new MenuItem($name, $this);
+        }
 
         $options = array_merge(
             array(

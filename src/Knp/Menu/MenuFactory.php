@@ -9,7 +9,7 @@ class MenuFactory implements FactoryInterface
 {
     public function createItem($name, array $options = array(), $menuItemClass = null)
     {
-        if(!is_null($menuItemClass)){
+        if (!is_null($menuItemClass)) {
             $item = new $menuItemClass($name, $this);
         } else {
             $item = new MenuItem($name, $this);

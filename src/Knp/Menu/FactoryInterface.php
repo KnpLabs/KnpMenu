@@ -12,10 +12,11 @@ interface FactoryInterface
      *
      * @param string $name
      * @param array  $options
+     * @param string $menuItemClass
      *
      * @return ItemInterface
      */
-    public function createItem($name, array $options = array());
+    public function createItem($name, array $options = array(), $menuItemClass = null);
 
     /**
      * Create a menu item from a NodeInterface

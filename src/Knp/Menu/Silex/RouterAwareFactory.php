@@ -25,7 +25,10 @@ class RouterAwareFactory extends MenuFactory
             $options['uri'] = $this->generator->generate($options['route'], $params, $absolute);
 
             // adding the item route to the extras under the 'routes' key (for the Silex RouteVoter)
-            $options = array_merge_recursive(array('extras' => array('routes' => array($options['route']))), $options);
+            $options = array_merge_recursive(array('extras' => array(
+                'routes' => array($options['route']),
+                'routeParameters' => array($options['route']=>$params),
+            )), $options);
         }
 
         return parent::buildOptions($options);

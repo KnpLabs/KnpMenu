@@ -11,7 +11,22 @@ class MenuFactory implements FactoryInterface
     {
         $item = new MenuItem($name, $this);
 
-        $options = array_merge(
+        $options = $this->buildOptions($options);
+        $this->configureItem($item, $options);
+
+        return $item;
+    }
+
+    /**
+     * Builds the full option array used to configure the item.
+     *
+     * @param array $options
+     *
+     * @return array
+     */
+    protected function buildOptions(array $options)
+    {
+        return array_merge(
             array(
                 'uri' => null,
                 'label' => null,
@@ -25,7 +40,16 @@ class MenuFactory implements FactoryInterface
             ),
             $options
         );
+    }
 
+    /**
+     * Configures the newly created item with the passed options
+     *
+     * @param ItemInterface $item
+     * @param array         $options
+     */
+    protected function configureItem(ItemInterface $item, array $options)
+    {
         $item
             ->setUri($options['uri'])
             ->setLabel($options['label'])
@@ -37,8 +61,6 @@ class MenuFactory implements FactoryInterface
             ->setDisplay($options['display'])
             ->setDisplayChildren($options['displayChildren'])
         ;
-
-        return $item;
     }
 
     public function createFromNode(NodeInterface $node)

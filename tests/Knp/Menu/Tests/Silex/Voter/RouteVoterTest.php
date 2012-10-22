@@ -37,8 +37,13 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
         $item = $this->getMock('Knp\Menu\ItemInterface');
         $item->expects($this->any())
             ->method('getExtra')
-            ->with($this->equalTo('routes'))
-            ->will($this->returnValue($itemRoutes));
+            ->with($this->logicalOr($this->equalTo('routes'), $this->equalTo('routesParameters')))
+            ->will($this->returnCallback(function ($parameter) use ($itemRoutes) {
+                switch ($parameter) {
+                    case 'routes': return $itemRoutes;
+                    case 'routesParameters': return array();
+                }
+            }));
 
         $request = new Request();
         $request->attributes->set('_route', $route);
@@ -57,7 +62,7 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
             'same single route' => array('foo', 'foo', true),
             'different single route' => array('foo', 'bar', null),
             'matching mutiple routes' => array('foo', array('foo', 'baz'), true),
-            'different single route' => array('foo', array('bar', 'baz'), null),
+            'different multiple routes' => array('foo', array('bar', 'baz'), null),
         );
     }
 }

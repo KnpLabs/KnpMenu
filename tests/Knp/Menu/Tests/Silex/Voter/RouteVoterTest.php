@@ -42,8 +42,10 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
             ->with($this->logicalOr($this->equalTo('routes'), $this->equalTo('routesParameters')))
             ->will($this->returnCallback(function ($parameter) use ($itemRoutes, $itemsRoutesParameters) {
                 switch ($parameter) {
-                    case 'routes': return $itemRoutes;
-                    case 'routesParameters': return $itemsRoutesParameters;
+                    case 'routes':
+                        return $itemRoutes;
+                    case 'routesParameters':
+                        return $itemsRoutesParameters;
                 }
             }));
 

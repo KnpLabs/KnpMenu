@@ -293,47 +293,6 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     public function getChild($name);
 
     /**
-     * Moves child to specified position. Rearange other children accordingly.
-     *
-     * Provides a fluent interface
-     *
-     * @param integer $position Position to move child to.
-     *
-     * @return ItemInterface
-     */
-    public function moveToPosition($position);
-
-    /**
-     * Moves child to specified position. Rearange other children accordingly.
-     *
-     * Provides a fluent interface
-     *
-     * @param ItemInterface $child    Child to move.
-     * @param integer       $position Position to move child to.
-     *
-     * @return ItemInterface
-     */
-    public function moveChildToPosition(ItemInterface $child, $position);
-
-    /**
-     * Moves child to first position. Rearange other children accordingly.
-     *
-     * Provides a fluent interface
-     *
-     * @return ItemInterface
-     */
-    public function moveToFirstPosition();
-
-    /**
-     * Moves child to last position. Rearange other children accordingly.
-     *
-     * Provides a fluent interface
-     *
-     * @return ItemInterface
-     */
-    public function moveToLastPosition();
-
-    /**
      * Reorder children.
      *
      * Provides a fluent interface
@@ -350,40 +309,6 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * @return ItemInterface
      */
     public function copy();
-
-    /**
-     * Get slice of menu as another menu.
-     *
-     * If offset and/or length are numeric, it works like in array_slice function:
-     *
-     *   If offset is non-negative, slice will start at the offset.
-     *   If offset is negative, slice will start that far from the end.
-     *
-     *   If length is null, slice will have all elements.
-     *   If length is positive, slice will have that many elements.
-     *   If length is negative, slice will stop that far from the end.
-     *
-     * It's possible to mix names/object/numeric, for example:
-     *   slice("child1", 2);
-     *   slice(3, $child5);
-     * Note: when using a child as limit, it will not be included in the returned menu.
-     * the slice is done before this menu.
-     *
-     * @param mixed $offset Name of child, child object, or numeric offset.
-     * @param mixed $length Name of child, child object, or numeric length.
-     *
-     * @return ItemInterface
-     */
-    public function slice($offset, $length = 0);
-
-    /**
-     * Split menu into two distinct menus.
-     *
-     * @param mixed $length Name of child, child object, or numeric length.
-     *
-     * @return array Array with two menus, with "primary" and "secondary" key
-     */
-    public function split($length);
 
     /**
      * Returns the level of this menu item
@@ -472,38 +397,6 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     public function hasChildren();
 
     /**
-     * A string representation of this menu item
-     *
-     * e.g. Top Level > Second Level > This menu
-     *
-     * @param string $separator
-     *
-     * @return string
-     */
-    public function getPathAsString($separator = ' > ');
-
-    /**
-     * Renders an array ready to be used for breadcrumbs.
-     *
-     * Each element in the array will be an array with 3 keys:
-     * - `label` containing the label of the item
-     * - `url` containing the url of the item (may be `null`)
-     * - `item` containing the original item (may be `null` for the extra items)
-     *
-     * The subItem can be one of the following forms
-     *   * 'subItem'
-     *   * ItemInterface object
-     *   * array('subItem' => '@homepage')
-     *   * array('subItem1', 'subItem2')
-     *   * array(array('label' => 'subItem1', 'url' => '@homepage'), array('label' => 'subItem2'))
-     *
-     * @param mixed $subItem A string or array to append onto the end of the array
-     *
-     * @return array
-     */
-    public function getBreadcrumbsArray($subItem = null);
-
-    /**
      * Sets whether or not this menu item is "current".
      *
      * If the state is unknown, use null.
@@ -558,21 +451,6 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * @return boolean
      */
     public function actsLikeLast();
-
-    /**
-     * Calls a method recursively on all of the children of this item
-     *
-     * @example
-     * $menu->callRecursively('setShowChildren', array(false));
-     *
-     * Provides a fluent interface
-     *
-     * @param string $method
-     * @param array  $arguments
-     *
-     * @return ItemInterface
-     */
-    public function callRecursively($method, $arguments = array());
 
     /**
      * Exports this menu item to an array

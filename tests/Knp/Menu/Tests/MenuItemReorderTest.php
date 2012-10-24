@@ -16,25 +16,13 @@ class MenuItemReorderTest extends \PHPUnit_Framework_TestCase
         $menu->addChild('c3');
         $menu->addChild('c4');
 
-        $menu['c3']->moveToFirstPosition();
-        $arr = array_keys($menu->getChildren());
-        $this->assertEquals(array('c3', 'c1', 'c2', 'c4'), $arr);
-
-        $menu['c2']->moveToLastPosition();
-        $arr = array_keys($menu->getChildren());
-        $this->assertEquals(array('c3', 'c1', 'c4', 'c2'), $arr);
-
-        $menu['c1']->moveToPosition(2);
-        $arr = array_keys($menu->getChildren());
-        $this->assertEquals(array('c3', 'c4', 'c1', 'c2'), $arr);
-
         $menu->reorderChildren(array('c4', 'c3', 'c2', 'c1'));
         $arr = array_keys($menu->getChildren());
         $this->assertEquals(array('c4', 'c3', 'c2', 'c1'), $arr);
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testReorderingWithTooManyItemNames()
     {
@@ -45,7 +33,7 @@ class MenuItemReorderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testReorderingWithWrongItemNames()
     {

@@ -43,10 +43,7 @@ class RouteVoter implements VoterInterface
                 if (isset($parameters[$testedRoute['route']])) {
                     $testedRoute['parameters'] = $parameters[$testedRoute['route']];
                     trigger_error(
-                        sprintf(
-                            'Using the routeParameters extra is deprecated. The parameters should be passed along the route in %s',
-                            $item->getPathAsString()
-                        ),
+                        'Using the routeParameters extra is deprecated. The parameters should be passed along the route.',
                         E_USER_DEPRECATED
                     );
                 }

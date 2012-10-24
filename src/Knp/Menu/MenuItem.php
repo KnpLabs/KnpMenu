@@ -2,6 +2,8 @@
 
 namespace Knp\Menu;
 
+use Knp\Menu\Util\MenuManipulator;
+
 /**
  * Default implementation of the ItemInterface
  */
@@ -79,6 +81,8 @@ class MenuItem implements ItemInterface
      * @var FactoryInterface
      */
     protected $factory;
+
+    private $manipulator;
 
     /**
      * Class constructor
@@ -340,37 +344,81 @@ class MenuItem implements ItemInterface
         return isset($this->children[$name]) ? $this->children[$name] : null;
     }
 
+    /**
+     * Moves child to specified position. Rearange other children accordingly.
+     *
+     * Provides a fluent interface
+     *
+     * @deprecated Use \Knp\Menu\Util\MenuManipulator
+     *
+     * @param integer $position Position to move child to.
+     *
+     * @return ItemInterface
+     */
     public function moveToPosition($position)
     {
-        $this->getParent()->moveChildToPosition($this, $position);
+        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
+
+        $this->getManipulator()->moveToPosition($this, $position);
 
         return $this;
     }
 
+    /**
+     * Moves child to specified position. Rearange other children accordingly.
+     *
+     * Provides a fluent interface
+     *
+     * @deprecated Use \Knp\Menu\Util\MenuManipulator
+     *
+     * @param ItemInterface $child    Child to move.
+     * @param integer       $position Position to move child to.
+     *
+     * @return ItemInterface
+     */
     public function moveChildToPosition(ItemInterface $child, $position)
     {
-        $name = $child->getName();
-        $order = array_keys($this->children);
+        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
 
-        $oldPosition = array_search($name, $order);
-        unset($order[$oldPosition]);
-
-        $order = array_values($order);
-
-        array_splice($order, $position, 0, $name);
-        $this->reorderChildren($order);
+        $this->getManipulator()->moveChildToPosition($this, $child, $position);
 
         return $this;
     }
 
+    /**
+     * Moves child to first position. Rearange other children accordingly.
+     *
+     * Provides a fluent interface
+     *
+     * @deprecated Use \Knp\Menu\Util\MenuManipulator
+     *
+     * @return ItemInterface
+     */
     public function moveToFirstPosition()
     {
-        return $this->moveToPosition(0);
+        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
+
+        $this->getManipulator()->moveToFirstPosition($this);
+
+        return $this;
     }
 
+    /**
+     * Moves child to last position. Rearange other children accordingly.
+     *
+     * Provides a fluent interface
+     *
+     * @deprecated Use \Knp\Menu\Util\MenuManipulator
+     *
+     * @return ItemInterface
+     */
     public function moveToLastPosition()
     {
-        return $this->moveToPosition($this->getParent()->count());
+        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
+
+        $this->getManipulator()->moveToLastPosition($this);
+
+        return $this;
     }
 
     public function reorderChildren($order)
@@ -407,39 +455,37 @@ class MenuItem implements ItemInterface
         return $newMenu;
     }
 
+    /**
+     * Get slice of menu as another menu.
+     *
+     * @deprecated Use \Knp\Menu\Util\MenuManipulator
+     *
+     * @param mixed $offset Name of child, child object, or numeric offset.
+     * @param mixed $length Name of child, child object, or numeric length.
+     *
+     * @return ItemInterface
+     */
     public function slice($offset, $length = null)
     {
-        $names = array_keys($this->getChildren());
-        if ($offset instanceof ItemInterface) {
-            $offset = $offset->getName();
-        }
-        if (!is_numeric($offset)) {
-            $offset = array_search($offset, $names);
-        }
+        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
 
-        if (null !== $length) {
-            if ($length instanceof ItemInterface) {
-                $length = $length->getName();
-            }
-            if (!is_numeric($length)) {
-                $index = array_search($length, $names);
-                $length = ($index < $offset) ? 0 : $index - $offset;
-            }
-        }
-        $item = $this->copy();
-        $children =  array_slice($item->getChildren(), $offset, $length);
-        $item->setChildren($children);
-
-        return $item;
+        return $this->getManipulator()->slice($this, $offset, $length);
     }
 
+    /**
+     * Split menu into two distinct menus.
+     *
+     * @deprecated Use \Knp\Menu\Util\MenuManipulator
+     *
+     * @param mixed $length Name of child, child object, or numeric length.
+     *
+     * @return array Array with two menus, with "primary" and "secondary" key
+     */
     public function split($length)
     {
-        $ret = array();
-        $ret['primary'] = $this->slice(0, $length);
-        $ret['secondary'] = $this->slice($length);
+        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
 
-        return $ret;
+        return $this->getManipulator()->split($this, $length);
     }
 
     public function getLevel()
@@ -520,99 +566,36 @@ class MenuItem implements ItemInterface
         return false;
     }
 
+    /**
+     * A string representation of this menu item
+     *
+     * @deprecated Use \Knp\Menu\Util\MenuManipulator
+     *
+     * @param string $separator
+     *
+     * @return string
+     */
     public function getPathAsString($separator = ' > ')
     {
-        $children = array();
-        $obj = $this;
+        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
 
-        do {
-            $children[] = $obj->getLabel();
-        } while ($obj = $obj->getParent());
-
-        return implode($separator, array_reverse($children));
+        return $this->getManipulator()->getPathAsString($this, $separator);
     }
 
     /**
-     * {@inheritDoc}
+     * Renders an array ready to be used for breadcrumbs.
      *
-     * @param  mixed                     $subItem A string or array to append onto the end of the array
-     * @param  boolean                   $strict  Internal flag to optimize the lookup in parent nodes
+     * @deprecated Use \Knp\Menu\Util\MenuManipulator
+     *
+     * @param mixed $subItem A string or array to append onto the end of the array
      *
      * @return array
-     * @throws \InvalidArgumentException if an element of the subItem is invalid
      */
-    public function getBreadcrumbsArray($subItem = null, $strict = false)
+    public function getBreadcrumbsArray($subItem = null)
     {
-        $breadcrumbs = array();
+        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
 
-        if ($strict) {
-            $breadcrumbs = $subItem;
-        } else {
-            if ($subItem instanceof ItemInterface) {
-                $subItem = array(array(
-                    'label' => $subItem->getLabel(),
-                    'uri' => $subItem->getUri(),
-                    'item' => $subItem,
-                ));
-            }
-            if (null === $subItem) {
-                $subItem = array();
-            }
-            if (!is_array($subItem) && !$subItem instanceof \Traversable) {
-                $subItem = array($subItem);
-            }
-
-            foreach ($subItem as $key => $value) {
-                switch (true) {
-                    case $value instanceof ItemInterface:
-                        $value = array(
-                            'label' => $value->getLabel(),
-                            'uri' => $value->getUri(),
-                            'item' => $value,
-                        );
-                        break;
-                    case is_array($value):
-                        // Assume we already have the appropriate array format for the element
-                        break;
-                    case is_integer($key) && is_string($value):
-                        $value = array(
-                            'label' => (string) $value,
-                            'uri' => null,
-                            'item' => null,
-                        );
-                        break;
-                    case is_scalar($value):
-                        $value = array(
-                            'label' => (string) $key,
-                            'uri' => (string) $value,
-                            'item' => null,
-                        );
-                        break;
-                    case null === $value:
-                        $value = array(
-                            'label' => (string) $key,
-                            'uri' => null,
-                            'item' => null,
-                        );
-                        break;
-                    default:
-                        throw new \InvalidArgumentException(sprintf('Invalid value supplied for the key "%s". It should be an item, an array or a scalar', $key));
-                }
-                $breadcrumbs[] = $value;
-            }
-        }
-
-        array_unshift($breadcrumbs, array(
-            'label' => $this->getLabel(),
-            'uri' => $this->getUri(),
-            'item' => $this,
-        ));
-
-        if ($this->isRoot()) {
-            return $breadcrumbs;
-        }
-
-        return $this->getParent()->getBreadcrumbsArray($breadcrumbs, true);
+        return $this->getManipulator()->getBreadcrumbsArray($this, $subItem);
     }
 
     public function setCurrent($bool)
@@ -703,13 +686,23 @@ class MenuItem implements ItemInterface
         return false;
     }
 
+    /**
+     * Calls a method recursively on all of the children of this item
+     *
+     * Provides a fluent interface
+     *
+     * @deprecated Use \Knp\Menu\Util\MenuManipulator
+     *
+     * @param string $method
+     * @param array  $arguments
+     *
+     * @return ItemInterface
+     */
     public function callRecursively($method, $arguments = array())
     {
-        call_user_func_array(array($this, $method), $arguments);
+        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
 
-        foreach ($this->children as $child) {
-            $child->callRecursively($method, $arguments);
-        }
+        $this->getManipulator()->callRecursively($this, $method, $arguments);
 
         return $this;
     }
@@ -787,5 +780,17 @@ class MenuItem implements ItemInterface
     public function offsetUnset($name)
     {
         $this->removeChild($name);
+    }
+
+    /**
+     * @return MenuManipulator
+     */
+    private function getManipulator()
+    {
+        if (null === $this->manipulator) {
+            $this->manipulator = new MenuManipulator();
+        }
+
+        return $this->manipulator;
     }
 }

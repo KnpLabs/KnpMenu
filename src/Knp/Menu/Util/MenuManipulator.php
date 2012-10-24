@@ -1,0 +1,272 @@
+<?php
+
+namespace Knp\Menu\Util;
+
+use Knp\Menu\ItemInterface;
+
+class MenuManipulator
+{
+    /**
+     * Moves item to specified position. Rearange siblings accordingly.
+     *
+     * @param ItemInterface $item
+     * @param integer       $position Position to move child to.
+     */
+    public function moveToPosition(ItemInterface $item, $position)
+    {
+        $this->moveChildToPosition($item->getParent(), $item, $position);
+    }
+
+    /**
+     * Moves child to specified position. Rearange other children accordingly.
+     *
+     * @param ItemInterface $item
+     * @param ItemInterface $child    Child to move.
+     * @param integer       $position Position to move child to.
+     */
+    public function moveChildToPosition(ItemInterface $item, ItemInterface $child, $position)
+    {
+        $name = $child->getName();
+        $order = array_keys($item->getChildren());
+
+        $oldPosition = array_search($name, $order);
+        unset($order[$oldPosition]);
+
+        $order = array_values($order);
+
+        array_splice($order, $position, 0, $name);
+        $item->reorderChildren($order);
+    }
+
+    /**
+     * Moves item to first position. Rearange siblings accordingly.
+     *
+     * @param ItemInterface $item
+     */
+    public function moveToFirstPosition(ItemInterface $item)
+    {
+        $this->moveToPosition($item, 0);
+    }
+
+    /**
+     * Moves item to last position. Rearange siblings accordingly.
+     *
+     * @param ItemInterface $item
+     */
+    public function moveToLastPosition(ItemInterface $item)
+    {
+        $this->moveToPosition($item, $item->getParent()->count());
+    }
+
+    /**
+     * Get slice of menu as another menu.
+     *
+     * If offset and/or length are numeric, it works like in array_slice function:
+     *
+     *   If offset is non-negative, slice will start at the offset.
+     *   If offset is negative, slice will start that far from the end.
+     *
+     *   If length is null, slice will have all elements.
+     *   If length is positive, slice will have that many elements.
+     *   If length is negative, slice will stop that far from the end.
+     *
+     * It's possible to mix names/object/numeric, for example:
+     *   slice("child1", 2);
+     *   slice(3, $child5);
+     * Note: when using a child as limit, it will not be included in the returned menu.
+     * the slice is done before this menu.
+     *
+     * @param ItemInterface $item
+     * @param mixed         $offset Name of child, child object, or numeric offset.
+     * @param mixed         $length Name of child, child object, or numeric length.
+     *
+     * @return ItemInterface
+     */
+    public function slice(ItemInterface $item, $offset, $length = null)
+    {
+        $names = array_keys($item->getChildren());
+        if ($offset instanceof ItemInterface) {
+            $offset = $offset->getName();
+        }
+        if (!is_numeric($offset)) {
+            $offset = array_search($offset, $names);
+        }
+
+        if (null !== $length) {
+            if ($length instanceof ItemInterface) {
+                $length = $length->getName();
+            }
+            if (!is_numeric($length)) {
+                $index = array_search($length, $names);
+                $length = ($index < $offset) ? 0 : $index - $offset;
+            }
+        }
+
+        $slicedItem = $item->copy();
+        $children = array_slice($slicedItem->getChildren(), $offset, $length);
+        $slicedItem->setChildren($children);
+
+        return $slicedItem;
+    }
+
+    /**
+     * Split menu into two distinct menus.
+     *
+     * @param ItemInterface $item
+     * @param mixed         $length Name of child, child object, or numeric length.
+     *
+     * @return array Array with two menus, with "primary" and "secondary" key
+     */
+    public function split(ItemInterface $item, $length)
+    {
+        return array(
+            'primary' => $this->slice($item, 0, $length),
+            'secondary' => $this->slice($item, $length),
+        );
+    }
+
+    /**
+     * Calls a method recursively on all of the children of this item
+     *
+     * @example
+     * $menu->callRecursively('setShowChildren', array(false));
+     *
+     * @param ItemInterface $item
+     * @param string        $method
+     * @param array         $arguments
+     */
+    public function callRecursively(ItemInterface $item, $method, $arguments = array())
+    {
+        call_user_func_array(array($item, $method), $arguments);
+
+        foreach ($item->getChildren() as $child) {
+            $this->callRecursively($child, $method, $arguments);
+        }
+    }
+
+    /**
+     * A string representation of this menu item
+     *
+     * e.g. Top Level > Second Level > This menu
+     *
+     * @param ItemInterface $item
+     * @param string        $separator
+     *
+     * @return string
+     */
+    public function getPathAsString(ItemInterface $item, $separator = ' > ')
+    {
+        $children = array();
+        $obj = $item;
+
+        do {
+            $children[] = $obj->getLabel();
+        } while ($obj = $obj->getParent());
+
+        return implode($separator, array_reverse($children));
+    }
+
+    /**
+     * Renders an array ready to be used for breadcrumbs.
+     *
+     * Each element in the array will be an array with 3 keys:
+     * - `label` containing the label of the item
+     * - `url` containing the url of the item (may be `null`)
+     * - `item` containing the original item (may be `null` for the extra items)
+     *
+     * The subItem can be one of the following forms
+     *   * 'subItem'
+     *   * ItemInterface object
+     *   * array('subItem' => '@homepage')
+     *   * array('subItem1', 'subItem2')
+     *   * array(array('label' => 'subItem1', 'url' => '@homepage'), array('label' => 'subItem2'))
+     *
+     * @param ItemInterface $item
+     * @param mixed         $subItem A string or array to append onto the end of the array
+     *
+     * @return array
+     *
+     * @throws \InvalidArgumentException if an element of the subItem is invalid
+     */
+    public function getBreadcrumbsArray(ItemInterface $item, $subItem = null)
+    {
+        $breadcrumbs = $this->buildBreadcrumbsArray($item);
+
+        if (null === $subItem) {
+            return $breadcrumbs;
+        }
+
+        if ($subItem instanceof ItemInterface) {
+            $breadcrumbs[] = $this->getBreadcrumbsItem($subItem);
+
+            return $breadcrumbs;
+        }
+
+        if (!is_array($subItem) && !$subItem instanceof \Traversable) {
+            $subItem = array($subItem);
+        }
+
+        foreach ($subItem as $key => $value) {
+            switch (true) {
+                case $value instanceof ItemInterface:
+                    $value = $this->getBreadcrumbsItem($value);
+                    break;
+
+                case is_array($value):
+                    // Assume we already have the appropriate array format for the element
+                    break;
+
+                case is_integer($key) && is_string($value):
+                    $value = array(
+                        'label' => (string) $value,
+                        'uri' => null,
+                        'item' => null,
+                    );
+                    break;
+
+                case is_scalar($value):
+                    $value = array(
+                        'label' => (string) $key,
+                        'uri' => (string) $value,
+                        'item' => null,
+                    );
+                    break;
+
+                case null === $value:
+                    $value = array(
+                        'label' => (string) $key,
+                        'uri' => null,
+                        'item' => null,
+                    );
+                    break;
+
+                default:
+                    throw new \InvalidArgumentException(sprintf('Invalid value supplied for the key "%s". It should be an item, an array or a scalar', $key));
+            }
+
+            $breadcrumbs[] = $value;
+        }
+
+        return $breadcrumbs;
+    }
+
+    private function buildBreadcrumbsArray(ItemInterface $item)
+    {
+        $breadcrumb = array();
+
+        do {
+            $breadcrumb[] = $this->getBreadcrumbsItem($item);
+        } while ($item = $item->getParent());
+
+        return array_reverse($breadcrumb);
+    }
+
+    private function getBreadcrumbsItem(ItemInterface $item)
+    {
+        return array(
+            'label' => $item->getLabel(),
+            'uri' => $item->getUri(),
+            'item' => $item,
+        );
+    }
+}

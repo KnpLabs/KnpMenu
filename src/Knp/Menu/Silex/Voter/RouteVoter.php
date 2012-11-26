@@ -36,7 +36,7 @@ class RouteVoter implements VoterInterface
         $parameters = (array) $item->getExtra('routesParameters', array());
         foreach ($routes as $testedRoute) {
             if ($route !== $testedRoute) {
-                break;
+                continue;
             }
 
             if (isset($parameters[$route])) {

@@ -69,6 +69,7 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
             'same single route' => array('foo', array(), 'foo', array(), true),
             'different single route' => array('foo', array(), 'bar', array(), null),
             'matching mutiple routes' => array('foo', array(), array('foo', 'baz'), array(), true),
+            'matching mutiple routes 2' => array('baz', array(), array('foo', 'baz'), array(), true),
             'different multiple routes' => array('foo', array(), array('bar', 'baz'), array(), null),
 
             'same single route with different parameters' => array(

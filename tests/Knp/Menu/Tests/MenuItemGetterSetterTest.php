@@ -155,6 +155,14 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(false, $menu->getDisplayChildren());
     }
 
+    public function testShowChildrenIfAncestorCurrent()
+    {
+        $menu = $this->createMenu();
+        $this->assertEquals(false, $menu->getDisplayChildrenIfAncestorCurrent());
+        $menu->setDisplayChildrenIfAncestorCurrent(true);
+        $this->assertEquals(true, $menu->getDisplayChildrenIfAncestorCurrent());
+    }
+
     public function testParent()
     {
         $menu = $this->createMenu();

@@ -219,6 +219,11 @@ $renderer->render($menu);
 // render everything except for Home AND its children
 $menu['Home']->setDisplay(false);
 $renderer->render($menu);
+
+// only render children if the ancestor 'Home'
+// is current or the child itself is current
+$menu['Home']->setDisplayChildrenIfAncestorCurrent(true);
+
 ```
 
 Using the above controls, you can specify exactly which part of your menu

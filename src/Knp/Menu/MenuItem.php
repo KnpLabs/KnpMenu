@@ -60,6 +60,13 @@ class MenuItem implements ItemInterface
     protected $displayChildren = true;
 
     /**
+     * Whether children of an item are only displayed when the item is current
+     * or the child item is current
+     * @var boolean
+     */
+    protected $displayChildrenIfAncestorCurrent = false;
+
+    /**
      * Child items
      * @var ItemInterface[]
      */
@@ -304,6 +311,18 @@ class MenuItem implements ItemInterface
     public function setDisplayChildren($bool)
     {
         $this->displayChildren = (bool) $bool;
+
+        return $this;
+    }
+
+    public function getDisplayChildrenIfAncestorCurrent()
+    {
+        return $this->displayChildrenIfAncestorCurrent;
+    }
+
+    public function setDisplayChildrenIfAncestorCurrent($bool)
+    {
+        $this->displayChildrenIfAncestorCurrent = (bool) $bool;
 
         return $this;
     }

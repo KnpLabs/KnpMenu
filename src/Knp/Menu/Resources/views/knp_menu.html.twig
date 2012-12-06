@@ -71,7 +71,7 @@
         {%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
         {%- set childrenClasses = childrenClasses|merge(['menu_level_' ~ item.level]) %}
         {%- set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
-        {% if matcher.isCurrent(item) or (item.displayChildrenIfAncestorCurrent and matcher.isAncestor(item)) %}
+        {% if not item.displayChildrenIfAncestorCurrent or (matcher.isCurrent(item) or matcher.isAncestor(item)) %}
             {{ block('list') }}
         {% endif %}
     </li>

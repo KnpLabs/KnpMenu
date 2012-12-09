@@ -92,6 +92,17 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
                 'foo', array('foo' => array('1' => 'bar')),
                 true
             ),
+    		'same single route with same type parameters' => array(
+                'foo', array('1' => 2),
+                'foo', array('foo' => array('1' => 2)),
+                true
+            ),
+            'same single route with different type parameters' => array(
+                'foo', array('1' => 2),
+                'foo', array('foo' => array('1' => '2')),
+                true
+            ),
+            
         );
     }
 }

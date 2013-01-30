@@ -102,7 +102,16 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
                 'foo', array('foo' => array('1' => '2')),
                 true
             ),
-            
+            'same single route with object and integer parameter' => array(
+                'foo', array('1' => new \stdClass()),
+                'foo', array('foo' => array('1' => 2)),
+                null
+            ),
+            'same single route with object and string parameter' => array(
+                'foo', array('1' => new \stdClass()),
+                'foo', array('foo' => array('1' => '2')),
+                null
+            ),
         );
     }
 }

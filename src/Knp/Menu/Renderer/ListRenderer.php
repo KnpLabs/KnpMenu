@@ -23,7 +23,7 @@ class ListRenderer extends Renderer implements RendererInterface
         $this->matcher = $matcher;
         $this->defaultOptions = array_merge(array(
             'depth' => null,
-            'current_scan_depth' => null,
+            'currentScanDepth' => null,
             'currentAsLink' => true,
             'currentClass' => 'current',
             'ancestorClass' => 'current_ancestor',
@@ -89,8 +89,8 @@ class ListRenderer extends Renderer implements RendererInterface
             $options['depth'] = $options['depth'] - 1;
         }
 
-        if (null !== $options['current_scan_depth']) {
-            $options['current_scan_depth'] = $options['current_scan_depth'] - 1;
+        if (null !== $options['currentScanDepth']) {
+            $options['currentScanDepth'] = $options['currentScanDepth'] - 1;
         }
 
         $html = '';
@@ -124,7 +124,7 @@ class ListRenderer extends Renderer implements RendererInterface
 
         if ($this->matcher->isCurrent($item)) {
             $class[] = $options['currentClass'];
-        } elseif ($this->matcher->isAncestor($item, $options['current_scan_depth'])) {
+        } elseif ($this->matcher->isAncestor($item, $options['currentScanDepth'])) {
             $class[] = $options['ancestorClass'];
         }
 

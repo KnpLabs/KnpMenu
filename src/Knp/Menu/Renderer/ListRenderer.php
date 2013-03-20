@@ -89,7 +89,7 @@ class ListRenderer extends Renderer implements RendererInterface
             $options['depth'] = $options['depth'] - 1;
         }
 
-        if (null !== $options['matchingDepth']) {
+        if (null !== $options['matchingDepth'] && $options['matchingDepth'] > 0) {
             $options['matchingDepth'] = $options['matchingDepth'] - 1;
         }
 

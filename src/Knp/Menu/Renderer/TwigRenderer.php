@@ -26,7 +26,7 @@ class TwigRenderer implements RendererInterface
         $this->matcher = $matcher;
         $this->defaultOptions = array_merge(array(
             'depth' => null,
-            'currentScanDepth' => null,
+            'matchingDepth' => null,
             'currentAsLink' => true,
             'currentClass' => 'current',
             'ancestorClass' => 'current_ancestor',

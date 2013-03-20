@@ -230,7 +230,7 @@ Most renderers also support several other options, which can be passed as
 the second argument to the `render()` method:
 
 * `depth`
-* `currentScanDepth`: The depth of the scan to determine whether an item
+* `matchingDepth`: The depth of the scan to determine whether an item
   is an ancestor of the current item.
 * `currentAsLink` (default: `true`)
 * `currentClass` (default: `current`)

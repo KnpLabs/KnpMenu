@@ -24,7 +24,7 @@ $twigLoader = new \Twig_Loader_Filesystem(array(
 ));
 $twig = new \Twig_Environment($twigLoader);
 
-$itemMatcher = \Knp\Menu\Matcher\Matcher();
+$itemMatcher = new \Knp\Menu\Matcher\Matcher();
 // setup some renderer
 $renderer = new \Knp\Menu\Renderer\ListRenderer($itemMatcher);
 //$menuRenderer = new \Knp\Menu\Renderer\TwigRenderer($twig, 'knp_menu.html.twig', $itemMatcher);

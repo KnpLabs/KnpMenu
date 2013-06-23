@@ -1,5 +1,8 @@
 ## 2.0.0 (2013-XX-XX)
 
+* [BC break] Deprecated the methods `createFromArray` and `createFromNode` in the MenuFactory and
+  removed them from `Knp\Menu\FactoryInterface`. Use `Knp\Menu\Loader\ArrayLoader` and
+  `Knp\Menu\Loader\NodeLoader` instead.
 * [BC break] Deprecated the methods `moveToPosition`, `moveToFirstPosition`, `moveToLastPosition`,
   `moveChildToPosition`, `callRecursively`, `toArray`, `getPathAsString` and `getBreadcrumbsArray`
   in the MenuItem and removed them from `Knp\Menu\ItemInterface`. Use `Knp\Menu\Util\MenuManipulator`

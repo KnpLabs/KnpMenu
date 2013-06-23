@@ -6,63 +6,21 @@ use Knp\Menu\MenuFactory;
 
 class MenuFactoryTest extends \PHPUnit_Framework_TestCase
 {
-    public function testFromArrayWithoutChildren()
+    public function testCreateItem()
     {
         $factory = new MenuFactory();
-        $array = array(
-            'name' => 'joe',
-            'uri' => '/foobar',
+
+        $item = $factory->createItem('test', array(
+            'uri' => 'http://example.com',
+            'linkAttributes' => array('class' => 'foo'),
             'display' => false,
-        );
-        $item = $factory->createFromArray($array);
-        $this->assertEquals('joe', $item->getName());
-        $this->assertEquals('/foobar', $item->getUri());
+            'displayChildren' => false,
+        ));
+
+        $this->assertInstanceOf('Knp\Menu\ItemInterface', $item);
+        $this->assertEquals('test', $item->getName());
         $this->assertFalse($item->isDisplayed());
-        $this->assertEmpty($item->getAttributes());
-        $this->assertEmpty($item->getChildren());
-    }
-
-    public function testFromArrayWithChildren()
-    {
-        $factory = new MenuFactory();
-        $array = array(
-            'name' => 'joe',
-            'children' => array(
-                'jack' => array(
-                    'name' => 'jack',
-                    'label' => 'Jack',
-                ),
-                array(
-                    'name' => 'john'
-                )
-            ),
-        );
-        $item = $factory->createFromArray($array);
-        $this->assertEquals('joe', $item->getName());
-        $this->assertEmpty($item->getAttributes());
-        $this->assertCount(2, $item);
-        $this->assertTrue(isset($item['john']));
-    }
-
-    public function testFromArrayWithChildrenOmittingName()
-    {
-        $factory = new MenuFactory();
-        $array = array(
-            'name' => 'joe',
-            'children' => array(
-                'jack' => array(
-                    'label' => 'Jack',
-                ),
-                'john' => array(
-                    'label' => 'John'
-                )
-            ),
-        );
-        $item = $factory->createFromArray($array);
-        $this->assertEquals('joe', $item->getName());
-        $this->assertEmpty($item->getAttributes());
-        $this->assertCount(2, $item);
-        $this->assertTrue(isset($item['john']));
-        $this->assertTrue(isset($item['jack']));
+        $this->assertFalse($item->getDisplayChildren());
+        $this->assertEquals('foo', $item->getLinkAttribute('class'));
     }
 }

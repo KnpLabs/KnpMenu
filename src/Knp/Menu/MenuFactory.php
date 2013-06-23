@@ -2,6 +2,9 @@
 
 namespace Knp\Menu;
 
+use Knp\Menu\Loader\ArrayLoader;
+use Knp\Menu\Loader\NodeLoader;
+
 /**
  * Factory to create a menu from a tree
  */
@@ -63,32 +66,41 @@ class MenuFactory implements FactoryInterface
         ;
     }
 
+    /**
+     * Create a menu item from a NodeInterface
+     *
+     * @deprecated Use \Knp\Menu\Loader\NodeLoader
+     *
+     * @param NodeInterface $node
+     *
+     * @return ItemInterface
+     */
     public function createFromNode(NodeInterface $node)
     {
-        $item = $this->createItem($node->getName(), $node->getOptions());
+        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Loader\NodeLoader instead', E_USER_DEPRECATED);
 
-        foreach ($node->getChildren() as $childNode) {
-            $item->addChild($this->createFromNode($childNode));
-        }
+        $loader = new NodeLoader($this);
 
-        return $item;
+        return $loader->load($node);
     }
 
-    public function createFromArray(array $data, $name = null)
+    /**
+     * Creates a new menu item (and tree if $data['children'] is set).
+     *
+     * The source is an array of data that should match the output from MenuManipulator->toArray().
+     *
+     * @deprecated Use \Knp\Menu\Loader\ArrayLoader
+     *
+     * @param array $data The array of data to use as a source for the menu tree
+     *
+     * @return ItemInterface
+     */
+    public function createFromArray(array $data)
     {
-        $name = isset($data['name']) ? $data['name'] : $name;
-        if (isset($data['children'])) {
-            $children = $data['children'];
-            unset($data['children']);
-        } else {
-            $children = array();
-        }
+        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Loader\ArrayLoader instead', E_USER_DEPRECATED);
 
-        $item = $this->createItem($name, $data);
-        foreach ($children as $name => $child) {
-            $item->addChild($this->createFromArray($child, $name));
-        }
+        $loader = new ArrayLoader($this);
 
-        return $item;
+        return $loader->load($data);
     }
 }

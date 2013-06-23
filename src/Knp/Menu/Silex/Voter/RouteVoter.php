@@ -34,22 +34,60 @@ class RouteVoter implements VoterInterface
 
         $routes = (array) $item->getExtra('routes', array());
         $parameters = (array) $item->getExtra('routesParameters', array());
-        foreach ($routes as $testedRoute) {
-            if ($route !== $testedRoute) {
-                continue;
-            }
 
-            if (isset($parameters[$route])) {
-                foreach ($parameters[$route] as $name => $value) {
-                    if ($this->request->attributes->get($name) != $value) {
-                        return null;
-                    }
+        foreach ($routes as $testedRoute) {
+            if (is_string($testedRoute)) {
+                $testedRoute = array('route' => $testedRoute);
+
+                // BC layer for the configuration of route params
+                if (isset($parameters[$testedRoute['route']])) {
+                    $testedRoute['parameters'] = $parameters[$testedRoute['route']];
+                    trigger_error(
+                        sprintf(
+                            'Using the routeParameters extra is deprecated. The parameters should be passed along the route in %s',
+                            $item->getPathAsString()
+                        ),
+                        E_USER_DEPRECATED
+                    );
                 }
             }
 
-            return true;
+            if (!is_array($testedRoute)) {
+                throw new \InvalidArgumentException('Routes extra items must be strings or arrays.');
+            }
+
+            if ($this->isMatchingRoute($testedRoute)) {
+                return true;
+            }
         }
 
         return null;
+    }
+
+    private function isMatchingRoute(array $testedRoute)
+    {
+        $route = $this->request->attributes->get('_route');
+
+        if (!isset($testedRoute['route'])) {
+            throw new \InvalidArgumentException('Routes extra items must have "route" key.');
+        }
+
+        if ($route !== $testedRoute['route']) {
+            return false;
+        }
+
+        if (!isset($testedRoute['parameters'])) {
+            return true;
+        }
+
+        $routeParameters = $this->request->attributes->get('_route_params', array());
+
+        foreach ($testedRoute['parameters'] as $name => $value) {
+            if (!isset($routeParameters[$name]) || $routeParameters[$name] !== (string) $value) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

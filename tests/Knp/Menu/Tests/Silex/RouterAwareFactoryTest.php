@@ -58,9 +58,9 @@ class RouterAwareFactoryTest extends \PHPUnit_Framework_TestCase
         $factory = new RouterAwareFactory($generator);
 
         $item = $factory->createItem('test_item', array('route' => 'homepage'));
-        $this->assertEquals(array('homepage'), $item->getExtra('routes'));
+        $this->assertEquals(array(array('route' => 'homepage', 'parameters' => array())), $item->getExtra('routes'));
 
         $item = $factory->createItem('test_item', array('route' => 'homepage', 'extras' => array('routes' => array('other_page'))));
-        $this->assertContains('homepage', $item->getExtra('routes'));
+        $this->assertContains(array('route' => 'homepage', 'parameters' => array()), $item->getExtra('routes'));
     }
 }

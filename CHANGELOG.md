@@ -1,6 +1,9 @@
-## 2.0 (2012-XX-XX)
+## 2.0.0 alpha 1 (2013-06-23)
 
 * [BC break] Refactored the way to mark items as current
+  ``setCurrentUri``, ``getCurrentUri`` and ``getCurrentItem`` have been removed from the ItemInterface.
+  Determining the current items is now delegated to a matcher, and the default implementation
+  uses voters to apply the matching. Getting the current items can be done thanks to the CurrentItemFilterIterator.
 * [BC break] Changed the format of the breadcrumb array
   Instead of storing the elements with the label as key and the uri as value
   the array now stores an array of array elements with 3 keys: `label`, `uri` and `item`.

@@ -169,6 +169,26 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
                 array(),
                 null
             ),
+            'matching pattern without parameters' => array(
+                'foo', array('1' => 'bar'),
+                array(array('pattern' => '/fo/')), array(),
+                true
+            ),
+            'non matching pattern without parameters' => array(
+                'foo', array('1' => 'bar'),
+                array(array('pattern' => '/bar/')), array(),
+                null
+            ),
+            'matching pattern with parameters' => array(
+                'foo', array('1' => 'bar'),
+                array(array('pattern' => '/fo/', 'parameters' => array('1' => 'bar'))), array(),
+                true
+            ),
+            'matching pattern with different parameters' => array(
+                'foo', array('1' => 'bar'),
+                array(array('pattern' => '/fo/', 'parameters' => array('1' => 'baz'))), array(),
+                null
+            ),
             // Test the BC layer for the old way to pass parameters
             'same single route with different parameters deprecated way' => array(
                 'foo', array('1' => 'bar'),

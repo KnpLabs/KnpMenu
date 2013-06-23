@@ -68,12 +68,16 @@ class RouteVoter implements VoterInterface
     {
         $route = $this->request->attributes->get('_route');
 
-        if (!isset($testedRoute['route'])) {
-            throw new \InvalidArgumentException('Routes extra items must have "route" key.');
-        }
-
-        if ($route !== $testedRoute['route']) {
-            return false;
+        if (isset($testedRoute['route'])) {
+            if ($route !== $testedRoute['route']) {
+                return false;
+            }
+        } elseif (!empty($testedRoute['pattern'])) {
+            if (!preg_match($testedRoute['pattern'], $route)) {
+                return false;
+            }
+        } else {
+            throw new \InvalidArgumentException('Routes extra items must have a "route" or "pattern" key.');
         }
 
         if (!isset($testedRoute['parameters'])) {

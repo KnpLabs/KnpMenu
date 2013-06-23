@@ -82,6 +82,10 @@ class MenuItem implements ItemInterface
      */
     protected $factory;
 
+    /**
+     * @deprecated this property is only part of the BC layer for deprecated methods
+     * @var MenuManipulator
+     */
     private $manipulator;
 
     /**
@@ -707,31 +711,20 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * Exports this menu item to an array
+     *
+     * @deprecated Use \Knp\Menu\Util\MenuManipulator
+     *
+     * @param integer $depth
+     *
+     * @return array
+     */
     public function toArray($depth = null)
     {
-        $array = array(
-            'name' => $this->name,
-            'label' => $this->label,
-            'uri' => $this->uri,
-            'attributes' => $this->attributes,
-            'labelAttributes' => $this->labelAttributes,
-            'linkAttributes' => $this->linkAttributes,
-            'childrenAttributes' => $this->childrenAttributes,
-            'extras' => $this->extras,
-            'display' => $this->display,
-            'displayChildren' => $this->displayChildren,
-        );
+        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
 
-        // export the children as well, unless explicitly disabled
-        if (0 !== $depth) {
-            $childDepth = (null === $depth) ? null : $depth - 1;
-            $array['children'] = array();
-            foreach ($this->children as $key => $child) {
-                $array['children'][$key] = $child->toArray($childDepth);
-            }
-        }
-
-        return $array;
+        return $this->getManipulator()->toArray($this, $depth);
     }
 
     /**

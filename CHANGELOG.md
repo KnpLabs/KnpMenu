@@ -1,7 +1,7 @@
 ## 2.0.0 (2013-XX-XX)
 
 * [BC break] Deprecated the methods `moveToPosition`, `moveToFirstPosition`, `moveToLastPosition`,
-  `moveChildToPosition`, `callRecursively`, `getPathAsString` and `getBreadcrumbsArray`
+  `moveChildToPosition`, `callRecursively`, `toArray`, `getPathAsString` and `getBreadcrumbsArray`
   in the MenuItem and removed them from `Knp\Menu\ItemInterface`. Use `Knp\Menu\Util\MenuManipulator`
   instead.
 * Made the RouterVoter comaptible with SensioFrameworkExtraBundle param converters

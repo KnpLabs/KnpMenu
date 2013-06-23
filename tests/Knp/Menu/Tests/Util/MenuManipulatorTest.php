@@ -207,4 +207,180 @@ class MenuManipulatorTest extends TestCase
         $manipulator->callRecursively($menu, 'setDisplay', array(false));
         $this->assertFalse($menu->isDisplayed());
     }
+
+    public function testToArrayWithChildren()
+    {
+        $menu = $this->createMenu();
+        $menu->addChild('jack', array('uri' => 'http://php.net', 'linkAttributes' => array('title' => 'php'), 'display' => false))
+            ->addChild('john', array('current' => true))->setCurrent(true)
+        ;
+        $menu->addChild('joe', array(
+            'attributes' => array('class' => 'leaf'),
+            'label' => 'test',
+            'labelAttributes' => array('class' => 'center'),
+            'displayChildren' => false,
+        ))->setCurrent(false);
+
+        $manipulator = new MenuManipulator();
+
+        $this->assertEquals(
+            array(
+                'name' => 'test_menu',
+                'label' => 'test_menu',
+                'uri' => 'homepage',
+                'attributes' => array(),
+                'labelAttributes' => array(),
+                'linkAttributes' => array(),
+                'childrenAttributes' => array(),
+                'extras' => array(),
+                'display' => true,
+                'displayChildren' => true,
+                'current' => null,
+                'children' => array(
+                    'jack' => array(
+                        'name' => 'jack',
+                        'label' => 'jack',
+                        'uri' => 'http://php.net',
+                        'attributes' => array(),
+                        'labelAttributes' => array(),
+                        'linkAttributes' => array('title' => 'php'),
+                        'childrenAttributes' => array(),
+                        'extras' => array(),
+                        'display' => false,
+                        'displayChildren' => true,
+                        'current' => null,
+                        'children' => array(
+                            'john' => array(
+                                'name' => 'john',
+                                'label' => 'john',
+                                'uri' => null,
+                                'attributes' => array(),
+                                'labelAttributes' => array(),
+                                'linkAttributes' => array(),
+                                'childrenAttributes' => array(),
+                                'extras' => array(),
+                                'display' => true,
+                                'displayChildren' => true,
+                                'children' => array(),
+                                'current' => true,
+                            ),
+                        ),
+                    ),
+                    'joe' => array(
+                        'name' => 'joe',
+                        'label' => 'test',
+                        'uri' => null,
+                        'attributes' => array('class' => 'leaf'),
+                        'labelAttributes' => array('class' => 'center'),
+                        'linkAttributes' => array(),
+                        'childrenAttributes' => array(),
+                        'extras' => array(),
+                        'display' => true,
+                        'displayChildren' => false,
+                        'children' => array(),
+                        'current' => false,
+                    ),
+                ),
+            ),
+            $manipulator->toArray($menu)
+        );
+    }
+
+    public function testToArrayWithLimitedChildren()
+    {
+        $menu = $this->createMenu();
+        $menu->addChild('jack', array('uri' => 'http://php.net', 'linkAttributes' => array('title' => 'php'), 'display' => false))
+            ->addChild('john')
+        ;
+        $menu->addChild('joe', array('attributes' => array('class' => 'leaf'), 'label' => 'test', 'labelAttributes' => array('class' => 'center'), 'displayChildren' => false));
+
+        $manipulator = new MenuManipulator();
+
+        $this->assertEquals(
+            array(
+                'name' => 'test_menu',
+                'label' => 'test_menu',
+                'uri' => 'homepage',
+                'attributes' => array(),
+                'labelAttributes' => array(),
+                'linkAttributes' => array(),
+                'childrenAttributes' => array(),
+                'extras' => array(),
+                'display' => true,
+                'displayChildren' => true,
+                'current' => null,
+                'children' => array(
+                    'jack' => array(
+                        'name' => 'jack',
+                        'label' => 'jack',
+                        'uri' => 'http://php.net',
+                        'attributes' => array(),
+                        'labelAttributes' => array(),
+                        'linkAttributes' => array('title' => 'php'),
+                        'childrenAttributes' => array(),
+                        'extras' => array(),
+                        'display' => false,
+                        'displayChildren' => true,
+                        'current' => null,
+                    ),
+                    'joe' => array(
+                        'name' => 'joe',
+                        'label' => 'test',
+                        'uri' => null,
+                        'attributes' => array('class' => 'leaf'),
+                        'labelAttributes' => array('class' => 'center'),
+                        'linkAttributes' => array(),
+                        'childrenAttributes' => array(),
+                        'extras' => array(),
+                        'display' => true,
+                        'displayChildren' => false,
+                        'current' => null,
+                    ),
+                ),
+            ),
+            $manipulator->toArray($menu, 1)
+        );
+    }
+
+    public function testToArrayWithoutChildren()
+    {
+        $menu = $this->createMenu();
+        $menu->addChild('jack', array('uri' => 'http://php.net', 'linkAttributes' => array('title' => 'php'), 'display' => false));
+        $menu->addChild('joe', array('attributes' => array('class' => 'leaf'), 'label' => 'test', 'labelAttributes' => array('class' => 'center'), 'displayChildren' => false));
+
+        $manipulator = new MenuManipulator();
+
+        $this->assertEquals(
+            array(
+                'name' => 'test_menu',
+                'label' => 'test_menu',
+                'uri' => 'homepage',
+                'attributes' => array(),
+                'labelAttributes' => array(),
+                'linkAttributes' => array(),
+                'childrenAttributes' => array(),
+                'extras' => array(),
+                'display' => true,
+                'displayChildren' => true,
+                'current' => null,
+            ),
+            $manipulator->toArray($menu, 0)
+        );
+    }
+
+    /**
+     * Create a new MenuItem
+     *
+     * @param string $name
+     * @param string $uri
+     * @param array  $attributes
+     *
+     * @return \Knp\Menu\MenuItem
+     */
+    private function createMenu($name = 'test_menu', $uri = 'homepage', array $attributes = array())
+    {
+        $factory = new MenuFactory();
+
+        return $factory->createItem($name, array('attributes' => $attributes, 'uri' => $uri));
+    }
 }

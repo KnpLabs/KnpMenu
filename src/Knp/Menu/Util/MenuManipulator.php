@@ -167,6 +167,40 @@ class MenuManipulator
     }
 
     /**
+     * @param ItemInterface $item
+     * @param integer|null  $depth the depth until which children should be exported (null means unlimited)
+     *
+     * @return array
+     */
+    public function toArray(ItemInterface $item, $depth = null)
+    {
+        $array = array(
+            'name' => $item->getName(),
+            'label' => $item->getLabel(),
+            'uri' => $item->getUri(),
+            'attributes' => $item->getAttributes(),
+            'labelAttributes' => $item->getLabelAttributes(),
+            'linkAttributes' => $item->getLinkAttributes(),
+            'childrenAttributes' => $item->getChildrenAttributes(),
+            'extras' => $item->getExtras(),
+            'display' => $item->isDisplayed(),
+            'displayChildren' => $item->getDisplayChildren(),
+            'current' => $item->isCurrent(),
+        );
+
+        // export the children as well, unless explicitly disabled
+        if (0 !== $depth) {
+            $childDepth = null === $depth ? null : $depth - 1;
+            $array['children'] = array();
+            foreach ($item->getChildren() as $key => $child) {
+                $array['children'][$key] = $this->toArray($child, $childDepth);
+            }
+        }
+
+        return $array;
+    }
+
+    /**
      * Renders an array ready to be used for breadcrumbs.
      *
      * Each element in the array will be an array with 3 keys:

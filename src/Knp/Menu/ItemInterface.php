@@ -451,19 +451,4 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * @return boolean
      */
     public function actsLikeLast();
-
-    /**
-     * Exports this menu item to an array
-     *
-     * The children are exported until the specified depth:
-     *      null: no limit
-     *      0: no children
-     *      1: only direct children
-     *      ...
-     *
-     * @param integer $depth
-     *
-     * @return array
-     */
-    public function toArray($depth = null);
 }

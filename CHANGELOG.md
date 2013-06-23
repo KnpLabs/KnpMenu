@@ -1,3 +1,32 @@
+## 2.0.0 (2013-XX-XX)
+
+* Made the RouterVoter comaptible with SensioFrameworkExtraBundle param converters
+* Added the possibility to match routes using a regex on their name in the RouterVoter
+* [BC break] Refactored the RouterVoter to make it more flexible
+    The way to pass routes in the item extras has changed.
+
+    Before:
+
+    ```php
+    'extras' => array(
+        'routes' => array('foo', 'bar'),
+        'routeParameters' => array('foo' => array('id' => 4)),
+    )
+    ```
+
+    After:
+
+    ```php
+    'extras' => array(
+        'routes' => array(
+             array('route' => 'foo', 'parameters' => array('id' => 4)),
+            'bar',
+        )
+    )
+    ```
+
+    The old syntax is kept until the final release, but using it will trigger a E_USER_DEPRECATED error.
+
 ## 2.0.0 alpha 1 (2013-06-23)
 
 * [BC break] Refactored the way to mark items as current

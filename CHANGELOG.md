@@ -1,5 +1,9 @@
-## 2.0.0 (2013-XX-XX)
+## 2.0.0 beta 1 (2013-XX-XX)
 
+* Introduced extension points in the MenuFactory through `Knp\Menu\Factory\ExtensionInterface`
+* [BC break compared to 2.0 alpha 1] The inheritance extension points introduced in alpha1 are
+  deprecated in favor of extensions and will be removed before the stable release.
+* `Knp\Menu\Silex\RouterAwareFactory` is deprecated in favor of `Knp\Menu\Silex\RoutingExtension`.
 * [BC break] Deprecated the methods `createFromArray` and `createFromNode` in the MenuFactory and
   removed them from `Knp\Menu\FactoryInterface`. Use `Knp\Menu\Loader\ArrayLoader` and
   `Knp\Menu\Loader\NodeLoader` instead.
@@ -9,7 +13,7 @@
   instead.
 * Made the RouterVoter comaptible with SensioFrameworkExtraBundle param converters
 * Added the possibility to match routes using a regex on their name in the RouterVoter
-* [BC break] Refactored the RouterVoter to make it more flexible
+* [BC break compared to 2.0 alpha 1] Refactored the RouterVoter to make it more flexible
     The way to pass routes in the item extras has changed.
 
     Before:
@@ -36,10 +40,12 @@
 
 ## 2.0.0 alpha 1 (2013-06-23)
 
+* Added protected methods `buildOptions` and `configureItem` in the MenuFactory as extension point by inheritance
 * [BC break] Refactored the way to mark items as current
   ``setCurrentUri``, ``getCurrentUri`` and ``getCurrentItem`` have been removed from the ItemInterface.
   Determining the current items is now delegated to a matcher, and the default implementation
   uses voters to apply the matching. Getting the current items can be done thanks to the CurrentItemFilterIterator.
+* [BC break] The signature of the CurrentItemFilterIterator constructor changed to accept the item matcher
 * [BC break] Changed the format of the breadcrumb array
   Instead of storing the elements with the label as key and the uri as value
   the array now stores an array of array elements with 3 keys: `label`, `uri` and `item`.

@@ -27,15 +27,6 @@ class KnpMenuServiceProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Knp\Menu\MenuFactory', get_class($app['knp_menu.factory']));
     }
 
-    public function testFactoryWithRouter()
-    {
-        $app = new Application();
-        $app->register(new KnpMenuServiceProvider());
-        $app->register(new UrlGeneratorServiceProvider());
-
-        $this->assertInstanceOf('Knp\Menu\Silex\RouterAwareFactory', $app['knp_menu.factory']);
-    }
-
     public function testTwigRendererNotRegistered()
     {
         $app = new Application();

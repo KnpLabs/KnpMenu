@@ -18,11 +18,13 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $app['knp_menu.factory'] = $app->share(function () use ($app) {
+            $factory = new MenuFactory();
+
             if (isset($app['url_generator'])) {
-                return new RouterAwareFactory($app['url_generator']);
+                $factory->addExtension(new RoutingExtension($app['url_generator']));
             }
 
-            return new MenuFactory();
+            return $factory;
         });
 
         $app['knp_menu.matcher'] = $app->share(function () use ($app) {

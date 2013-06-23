@@ -41,7 +41,12 @@ class RouteVoter implements VoterInterface
 
             if (isset($parameters[$route])) {
                 foreach ($parameters[$route] as $name => $value) {
-                    if ($this->request->attributes->get($name) != $value) {
+                    $requestValue = $this->request->attributes->get($name);
+                    if (is_object($requestValue) && is_int($value)) {
+                        return null;
+                    }
+
+                    if ($requestValue != $value) {
                         return null;
                     }
                 }

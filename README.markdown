@@ -6,6 +6,8 @@ It is used by the [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) for 
 but can now be used stand-alone.
 
 [![Build Status](https://secure.travis-ci.org/KnpLabs/KnpMenu.png)](http://travis-ci.org/KnpLabs/KnpMenu)
+[![Latest Stable Version](https://poser.pugx.org/knplabs/knp-menu/v/stable.png)](https://packagist.org/packages/knplabs/knp-menu)
+[![Latest Unstable Version](https://poser.pugx.org/knplabs/knp-menu/v/unstable.png)](https://packagist.org/packages/knplabs/knp-menu)
 
 ```php
 <?php

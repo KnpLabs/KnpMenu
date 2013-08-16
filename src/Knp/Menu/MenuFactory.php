@@ -13,13 +13,13 @@ use Knp\Menu\Loader\NodeLoader;
 class MenuFactory implements FactoryInterface
 {
     /**
-     * @var \SplPriorityQueue|ExtensionInterface[]
+     * @var array
      */
     private $extensions;
 
     public function __construct()
     {
-        $this->extensions = new \SplPriorityQueue();
+        $this->extensions = array();
 
         $this->addExtension(new CoreExtension(), -10);
     }
@@ -29,19 +29,23 @@ class MenuFactory implements FactoryInterface
         // TODO remove this BC layer before releasing 2.0
         $processedOptions = $this->buildOptions($options);
         if ($processedOptions !== $options) {
-             trigger_error(sprintf('Overwriting Knp\Menu\MenuFactory::buildOptions is deprecated. Use a factory extension instead of %s.', get_class($this)), E_USER_DEPRECATED);
+            trigger_error(sprintf('Overwriting Knp\Menu\MenuFactory::buildOptions is deprecated. Use a factory extension instead of %s.', get_class($this)), E_USER_DEPRECATED);
 
             $options = $processedOptions;
         }
 
-        foreach (clone $this->extensions as $extension) {
-            $options = $extension->buildOptions($options);
+        foreach ($this->extensions as $extensions) {
+            foreach ($extensions as $extension) {
+                $options = $extension->buildOptions($options);
+            }
         }
 
         $item = new MenuItem($name, $this);
 
-        foreach (clone $this->extensions as $extension) {
-            $extension->buildItem($item, $options);
+        foreach ($this->extensions as $extensions) {
+            foreach ($extensions as $extension) {
+                $extension->buildItem($item, $options);
+            }
         }
 
         // TODO remove this BC layer before releasing 2.0
@@ -62,7 +66,8 @@ class MenuFactory implements FactoryInterface
      */
     public function addExtension(ExtensionInterface $extension, $priority = 0)
     {
-        $this->extensions->insert($extension, $priority);
+        $this->extensions[$priority][] = $extension;
+        krsort($this->extensions);
     }
 
     /**

@@ -13,14 +13,17 @@ use Knp\Menu\Loader\NodeLoader;
 class MenuFactory implements FactoryInterface
 {
     /**
-     * @var array
+     * @var array[]
      */
-    private $extensions;
+    private $extensions = array();
+
+    /**
+     * @var ExtensionInterface[]
+     */
+    private $sorted = array();
 
     public function __construct()
     {
-        $this->extensions = array();
-
         $this->addExtension(new CoreExtension(), -10);
     }
 
@@ -34,18 +37,14 @@ class MenuFactory implements FactoryInterface
             $options = $processedOptions;
         }
 
-        foreach ($this->extensions as $extensions) {
-            foreach ($extensions as $extension) {
-                $options = $extension->buildOptions($options);
-            }
+        foreach ($this->getExtensions() as $extension) {
+            $options = $extension->buildOptions($options);
         }
 
         $item = new MenuItem($name, $this);
 
-        foreach ($this->extensions as $extensions) {
-            foreach ($extensions as $extension) {
-                $extension->buildItem($item, $options);
-            }
+        foreach ($this->getExtensions() as $extension) {
+            $extension->buildItem($item, $options);
         }
 
         // TODO remove this BC layer before releasing 2.0
@@ -67,7 +66,7 @@ class MenuFactory implements FactoryInterface
     public function addExtension(ExtensionInterface $extension, $priority = 0)
     {
         $this->extensions[$priority][] = $extension;
-        krsort($this->extensions);
+        $this->sorted = array();
     }
 
     /**
@@ -120,5 +119,20 @@ class MenuFactory implements FactoryInterface
         $loader = new ArrayLoader($this);
 
         return $loader->load($data);
+    }
+
+    /**
+     * Sorts the internal list of extensions by priority.
+     *
+     * @return ExtensionInterface[]
+     */
+    private function getExtensions()
+    {
+        if (0 === count($this->sorted)) {
+            krsort($this->extensions);
+            $this->sorted = call_user_func_array('array_merge', $this->extensions);
+        }
+
+        return $this->sorted;
     }
 }

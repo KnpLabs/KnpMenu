@@ -13,14 +13,17 @@ use Knp\Menu\Loader\NodeLoader;
 class MenuFactory implements FactoryInterface
 {
     /**
-     * @var \SplPriorityQueue|ExtensionInterface[]
+     * @var array[]
      */
-    private $extensions;
+    private $extensions = array();
+
+    /**
+     * @var ExtensionInterface[]
+     */
+    private $sorted = array();
 
     public function __construct()
     {
-        $this->extensions = new \SplPriorityQueue();
-
         $this->addExtension(new CoreExtension(), -10);
     }
 
@@ -29,18 +32,18 @@ class MenuFactory implements FactoryInterface
         // TODO remove this BC layer before releasing 2.0
         $processedOptions = $this->buildOptions($options);
         if ($processedOptions !== $options) {
-             trigger_error(sprintf('Overwriting Knp\Menu\MenuFactory::buildOptions is deprecated. Use a factory extension instead of %s.', get_class($this)), E_USER_DEPRECATED);
+            trigger_error(sprintf('Overwriting Knp\Menu\MenuFactory::buildOptions is deprecated. Use a factory extension instead of %s.', get_class($this)), E_USER_DEPRECATED);
 
             $options = $processedOptions;
         }
 
-        foreach (clone $this->extensions as $extension) {
+        foreach ($this->getExtensions() as $extension) {
             $options = $extension->buildOptions($options);
         }
 
         $item = new MenuItem($name, $this);
 
-        foreach (clone $this->extensions as $extension) {
+        foreach ($this->getExtensions() as $extension) {
             $extension->buildItem($item, $options);
         }
 
@@ -62,7 +65,8 @@ class MenuFactory implements FactoryInterface
      */
     public function addExtension(ExtensionInterface $extension, $priority = 0)
     {
-        $this->extensions->insert($extension, $priority);
+        $this->extensions[$priority][] = $extension;
+        $this->sorted = array();
     }
 
     /**
@@ -115,5 +119,20 @@ class MenuFactory implements FactoryInterface
         $loader = new ArrayLoader($this);
 
         return $loader->load($data);
+    }
+
+    /**
+     * Sorts the internal list of extensions by priority.
+     *
+     * @return ExtensionInterface[]
+     */
+    private function getExtensions()
+    {
+        if (0 === count($this->sorted)) {
+            krsort($this->extensions);
+            $this->sorted = call_user_func_array('array_merge', $this->extensions);
+        }
+
+        return $this->sorted;
     }
 }

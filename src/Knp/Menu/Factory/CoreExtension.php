@@ -50,10 +50,29 @@ class CoreExtension implements ExtensionInterface
             ->setLinkAttributes($options['linkAttributes'])
             ->setChildrenAttributes($options['childrenAttributes'])
             ->setLabelAttributes($options['labelAttributes'])
-            ->setExtras($options['extras'])
             ->setCurrent($options['current'])
             ->setDisplay($options['display'])
             ->setDisplayChildren($options['displayChildren'])
         ;
+
+        $this->buildExtras( $item, $options );
+    }
+
+    /**
+     * Configures the newly created item's extras
+     * Extras are processed one by one in order not to reset values set by other extensions
+     *
+     * @param ItemInterface $item
+     * @param array         $options
+     */
+    private function buildExtras(ItemInterface $item, array $options)
+    {
+        if( !empty( $options['extras'] ) )
+        {
+            foreach( $options['extras'] as $key => $value )
+            {
+                $item->setExtra( $key, $value );
+            }
+        }
     }
 }

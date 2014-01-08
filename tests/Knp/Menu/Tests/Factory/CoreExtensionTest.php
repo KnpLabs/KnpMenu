@@ -12,24 +12,44 @@ use Knp\Menu\MenuItem;
 
 class CoreExtensionTest extends \PHPUnit_Framework_TestCase
 {
+    public function testBuildOptions()
+    {
+        $extension = $this->getExtension();
+        $item = $this->createItem( 'test' );
+
+        $options = $extension->buildOptions( array() );
+
+        $this->assertArrayHasKey( 'uri', $options );
+        $this->assertArrayHasKey( 'label', $options );
+        $this->assertArrayHasKey( 'attributes', $options );
+        $this->assertArrayHasKey( 'linkAttributes', $options );
+        $this->assertArrayHasKey( 'childrenAttributes', $options );
+        $this->assertArrayHasKey( 'labelAttributes', $options );
+        $this->assertArrayHasKey( 'extras', $options );
+        $this->assertArrayHasKey( 'current', $options );
+        $this->assertArrayHasKey( 'display', $options );
+        $this->assertArrayHasKey( 'displayChildren', $options );
+    }
 
     public function testBuildItemsSetsExtras()
     {
         $item = $this->createItem( 'test' );
-        $item->setExtra( 'test', 'original value' );
-        $options = array(
-            'extras' => array(
-                'test1' => 'options value 1',
-                'test2' => 'options value 2',
+        $item->setExtra( 'test1', 'original value' );
+        $extension = $this->getExtension();
+        $options = $extension->buildOptions(
+            array(
+                'extras' => array(
+                    'test1' => 'options value 1',
+                    'test2' => 'options value 2',
+                )
             )
         );
 
-        $extension = $this->getExtension();
         $extension->buildItem( $item, $options );
 
         $extras = $item->getExtras();
 
-        $this->assertEquals( 3, count( $extras ) );
+        $this->assertEquals( 2, count( $extras ) );
 
         $this->assertArrayHasKey( 'test1', $extras );
         $this->assertEquals( 'options value 1', $item->getExtra( 'test1' ) );
@@ -41,18 +61,20 @@ class CoreExtensionTest extends \PHPUnit_Framework_TestCase
     public function testBuildItemDoesNotOverrideExistingExtras()
     {
         $item = $this->createItem( 'test' );
-        $item->setExtra( 'test', 'original value' );
-        $options = array(
-            'extras' => array(
-                'test' => 'options value',
+        $item->setExtra( 'test1', 'original value' );
+        $extension = $this->getExtension();
+        $options = $extension->buildOptions(
+            array(
+                'extras' => array(
+                    'test2' => 'options value',
+                )
             )
         );
 
-        $extension = $this->getExtension();
         $extension->buildItem( $item, $options );
 
-        $this->assertArrayHasKey( 'test', $item->getExtras() );
-        $this->assertEquals( 'original value', $item->getExtra( 'test' ) );
+        $this->assertArrayHasKey( 'test1', $item->getExtras() );
+        $this->assertEquals( 'original value', $item->getExtra( 'test1' ) );
     }
 
     private function getExtension()

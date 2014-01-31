@@ -30,7 +30,7 @@ class MenuFactory implements FactoryInterface
     /**
      * @param string $name
      * @param array $options
-     * @return ItemInterface|MenuItem
+     * @return MenuItem
      */
     public function createItem($name, array $options = array())
     {

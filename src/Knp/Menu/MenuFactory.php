@@ -29,14 +29,6 @@ class MenuFactory implements FactoryInterface
 
     public function createItem($name, array $options = array())
     {
-        // TODO remove this BC layer before releasing 2.0
-        $processedOptions = $this->buildOptions($options);
-        if ($processedOptions !== $options) {
-            trigger_error(sprintf('Overwriting Knp\Menu\MenuFactory::buildOptions is deprecated. Use a factory extension instead of %s.', get_class($this)), E_USER_DEPRECATED);
-
-            $options = $processedOptions;
-        }
-
         foreach ($this->getExtensions() as $extension) {
             $options = $extension->buildOptions($options);
         }
@@ -45,13 +37,6 @@ class MenuFactory implements FactoryInterface
 
         foreach ($this->getExtensions() as $extension) {
             $extension->buildItem($item, $options);
-        }
-
-        // TODO remove this BC layer before releasing 2.0
-        if (method_exists($this, 'configureItem')) {
-            trigger_error(sprintf('Overwriting Knp\Menu\MenuFactory::configureItem is deprecated. Use a factory extension instead of %s.', get_class($this)), E_USER_DEPRECATED);
-
-            $this->configureItem($item, $options);
         }
 
         return $item;
@@ -67,20 +52,6 @@ class MenuFactory implements FactoryInterface
     {
         $this->extensions[$priority][] = $extension;
         $this->sorted = null;
-    }
-
-    /**
-     * Builds the full option array used to configure the item.
-     *
-     * @deprecated Use a Knp\Menu\Factory\ExtensionInterface instead
-     *
-     * @param array $options
-     *
-     * @return array
-     */
-    protected function buildOptions(array $options)
-    {
-        return $options;
     }
 
     /**

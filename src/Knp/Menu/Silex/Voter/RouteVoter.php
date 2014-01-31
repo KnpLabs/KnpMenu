@@ -14,7 +14,7 @@ class RouteVoter implements VoterInterface
     /**
      * @var Request
      */
-    private $request;
+    protected $request;
 
     public function setRequest(Request $request)
     {

@@ -55,7 +55,7 @@ class CoreExtension implements ExtensionInterface
             ->setDisplayChildren($options['displayChildren'])
         ;
 
-        $this->buildExtras( $item, $options );
+        $this->buildExtras($item, $options);
     }
 
     /**
@@ -67,11 +67,9 @@ class CoreExtension implements ExtensionInterface
      */
     private function buildExtras(ItemInterface $item, array $options)
     {
-        if( !empty( $options['extras'] ) )
-        {
-            foreach( $options['extras'] as $key => $value )
-            {
-                $item->setExtra( $key, $value );
+        if (!empty($options['extras'])) {
+            foreach ($options['extras'] as $key => $value) {
+                $item->setExtra($key, $value);
             }
         }
     }

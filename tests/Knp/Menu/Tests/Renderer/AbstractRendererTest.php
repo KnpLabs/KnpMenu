@@ -291,4 +291,25 @@ abstract class AbstractRendererTest extends TestCase
         $rendered = '';
         $this->assertEquals($rendered, $this->renderer->render($this->menu, array('depth' => 0, 'compressed' => false)));
     }
+
+    public function testMatchingDepth0()
+    {
+        $this->menu['Parent 1']['Child 1']->setCurrent(true);
+        $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($this->menu, array('depth' => 1,'matchingDepth' => 1)));
+    }
+
+    public function testMatchingDepth1()
+    {
+        $this->menu['Parent 1']['Child 1']->setCurrent(true);
+        $rendered = '<ul class="root"><li class="current_ancestor first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($this->menu, array('depth' => 1,'matchingDepth' => 2)));
+    }
+
+    public function testMatchingDepth2()
+    {
+        $this->menu['Parent 1']['Child 1']->setCurrent(true);
+        $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($this->menu, array('depth' => 1,'matchingDepth' => 0)));
+    }
 }

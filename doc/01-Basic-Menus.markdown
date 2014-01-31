@@ -230,6 +230,7 @@ Most renderers also support several other options, which can be passed as
 the second argument to the `render()` method:
 
 * `depth`
+* `template` (i.e. `AcmePortalBundle:Global:menu.html.twig`)
 * `currentAsLink` (default: `true`)
 * `currentClass` (default: `current`)
 * `ancestorClass` (default: `current_ancestor`)
@@ -244,6 +245,8 @@ the second argument to the `render()` method:
 >a label should not be escaped by the renderer by adding the `safe_label`
 >extra in the item. Use it with caution as it can create some XSS holes in
 >your application if the label is coming from the user.
+>If the default `template` option in config.yml is not enough, you can use the `template` within 
+the knp_menu_render tag to use different templates.
 
 The Current Menu Item
 ---------------------

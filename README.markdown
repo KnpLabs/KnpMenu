@@ -10,8 +10,26 @@ but can now be used stand-alone.
 [![Latest Unstable Version](https://poser.pugx.org/knplabs/knp-menu/v/unstable.png)](https://packagist.org/packages/knplabs/knp-menu)
 [![Gitter chat](https://badges.gitter.im/KnpLabs/KnpMenu.png)](https://gitter.im/KnpLabs/KnpMenu)
 
+## Installation
+
+KnpMenu uses Composer, please checkout the [composer website](http://getcomposer.org) for more information.
+
+The simple following command will install `knp-menu` into your project. It also add a new
+entry in your `composer.json` and update the `composer.lock` as well.
+
+```bash
+$ composer require 'knplabs/knp-menu:2.0.*@dev'
+```
+
+> KnpMenu follows the PSR-0 convention names for its classes, which means you can easily integrate `knp-menu` classes loading in your own autoloader.
+
+## Getting Started
+
 ```php
 <?php
+
+// Include dependencies installed with composer
+require 'vendor/autoload.php';
 
 use Knp\Menu\MenuFactory;
 use Knp\Menu\Renderer\ListRenderer;
@@ -23,7 +41,7 @@ $menu->addChild('Comments', array('uri' => '#comments'));
 $menu->addChild('Symfony2', array('uri' => 'http://symfony-reloaded.org/'));
 $menu->addChild('Coming soon');
 
-$renderer = new ListRenderer();
+$renderer = new ListRenderer(new \Knp\Menu\Matcher\Matcher());
 echo $renderer->render($menu);
 ```
 
@@ -51,26 +69,10 @@ the first and last items, submenus, ...
 
 > The bulk of the documentation can be found in the `doc` directory.
 
-## Installation
-
-KnpMenu does not provide an autoloader but follow the PSR-0 convention. You
-can use any compliant autoloader for the library, for instance the Symfony2
-[ClassLoader component](https://github.com/symfony/ClassLoader).
-Assuming you cloned the library in `vendor/KnpMenu`, it will be configured
-this way:
-
-```php
-<?php
-$loader->registerNamespaces(array(
-    'Knp\Menu' => __DIR__.'/vendor/KnpMenu/src'
-    // ...
-));
-```
-
 ## What now?
 
 Follow the tutorial in `doc/01-Basics-Menus.markdown` and `doc/02-Twig-Integration.markdown`
-to discover how `KnpMenu` will rock your world!
+to discover how KnpMenu will rock your world!
 
 ## Credits
 

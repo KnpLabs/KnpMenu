@@ -26,9 +26,6 @@ Using the KnpMenuExtension
 ```php
 <?php
 
-// registering the autoloader for the library.
-$app['autoloader']->registerNamespace('Knp\Menu', __DIR__.'/vendor/KnpMenu/src');
-
 // registering the extension
 $app->register(new \Knp\Menu\Silex\KnpMenuServiceProvider());
 ```

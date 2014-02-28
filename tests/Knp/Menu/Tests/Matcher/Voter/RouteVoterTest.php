@@ -1,8 +1,8 @@
 <?php
 
-namespace Knp\Menu\Tests\Silex\Voter;
+namespace Knp\Menu\Tests\Matcher\Voter;
 
-use Knp\Menu\Silex\Voter\RouteVoter;
+use Knp\Menu\Matcher\Voter\RouteVoter;
 use Symfony\Component\HttpFoundation\Request;
 
 class RouteVoterTest extends \PHPUnit_Framework_TestCase

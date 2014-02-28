@@ -4,7 +4,7 @@ namespace Knp\Menu\Tests\Silex;
 
 use Knp\Menu\Matcher\Matcher;
 use Knp\Menu\Silex\KnpMenuServiceProvider;
-use Knp\Menu\Silex\Voter\RouteVoter;
+use Knp\Menu\Matcher\Voter\RouteVoter;
 use Silex\Application;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;

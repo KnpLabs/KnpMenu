@@ -28,9 +28,8 @@ Now we can use autoloader from Composer by:
 ```json
 {
     "require": {
-        "knplabs/knp-menu": "*"
-    },
-    "minimum-stability": "dev"
+        "knplabs/knp-menu": "dev-master"
+    }
 }
 ```
 

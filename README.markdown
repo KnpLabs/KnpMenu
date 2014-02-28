@@ -12,27 +12,12 @@ but can now be used stand-alone.
 
 ## Installation
 
-`knp-menu` uses [Composer](http://getcomposer.org).
+`knp-menu` uses Composer, please checkout the [composer website](http://getcomposer.org) for more information.
 
-The first step to use `knp-menu` is to download composer:
+The simple following command will install `knp-menu` into your project. It also add a new entry in your `composer.json` and update the `composer.lock` as well.
 
 ```bash
-$ curl -s http://getcomposer.org/installer | php
-```
-
-Create a `composer.json` file with this content.
-
-```json
-{
-    "require": {
-        "knplabs/knp-menu": "dev-master"
-    }
-}
-```
-
-Then we have to install our dependencies using:
-```bash
-$ php composer.phar install
+$ composer require 'knplabs/knp-menu:2.0.*@dev'
 ```
 
 > `knp-menu` follows the PSR-0 convention names for its classes, which means you can easily integrate `knp-menu` classes loading in your own autoloader.

@@ -12,15 +12,16 @@ but can now be used stand-alone.
 
 ## Installation
 
-`KnpMenu` uses Composer, please checkout the [composer website](http://getcomposer.org) for more information.
+KnpMenu uses Composer, please checkout the [composer website](http://getcomposer.org) for more information.
 
-The simple following command will install `knp-menu` into your project. It also add a new entry in your `composer.json` and update the `composer.lock` as well.
+The simple following command will install `knp-menu` into your project. It also add a new
+entry in your `composer.json` and update the `composer.lock` as well.
 
 ```bash
 $ composer require 'knplabs/knp-menu:2.0.*@dev'
 ```
 
-> `KnpMenu` follows the PSR-0 convention names for its classes, which means you can easily integrate `knp-menu` classes loading in your own autoloader.
+> KnpMenu follows the PSR-0 convention names for its classes, which means you can easily integrate `knp-menu` classes loading in your own autoloader.
 
 ## Getting Started
 
@@ -71,7 +72,7 @@ the first and last items, submenus, ...
 ## What now?
 
 Follow the tutorial in `doc/01-Basics-Menus.markdown` and `doc/02-Twig-Integration.markdown`
-to discover how `KnpMenu` will rock your world!
+to discover how KnpMenu will rock your world!
 
 ## Credits
 

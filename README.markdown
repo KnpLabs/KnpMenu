@@ -10,6 +10,34 @@ but can now be used stand-alone.
 [![Latest Unstable Version](https://poser.pugx.org/knplabs/knp-menu/v/unstable.png)](https://packagist.org/packages/knplabs/knp-menu)
 [![Gitter chat](https://badges.gitter.im/KnpLabs/KnpMenu.png)](https://gitter.im/KnpLabs/KnpMenu)
 
+## Installation
+
+The new version of `knp-menu` uses [Composer](http://getcomposer.org).
+The first step to use `knp-menu` is to download composer:
+
+```bash
+$ curl -s http://getcomposer.org/installer | php
+```
+
+Then we have to install our dependencies using:
+```bash
+$ php composer.phar install
+```
+Now we can use autoloader from Composer by:
+
+```json
+{
+    "require": {
+        "knplabs/knp-menu": "*"
+    },
+    "minimum-stability": "dev"
+}
+```
+
+> `knp-menu` follows the PSR-0 convention names for its classes, which means you can easily integrate `knp-menu` classes loading in your own autoloader.
+
+## Getting Started
+
 ```php
 <?php
 
@@ -23,7 +51,7 @@ $menu->addChild('Comments', array('uri' => '#comments'));
 $menu->addChild('Symfony2', array('uri' => 'http://symfony-reloaded.org/'));
 $menu->addChild('Coming soon');
 
-$renderer = new ListRenderer();
+$renderer = new ListRenderer(new \Knp\Menu\Matcher\Matcher());
 echo $renderer->render($menu);
 ```
 
@@ -50,22 +78,6 @@ This way you can finally avoid writing an ugly template to show the selected ite
 the first and last items, submenus, ...
 
 > The bulk of the documentation can be found in the `doc` directory.
-
-## Installation
-
-KnpMenu does not provide an autoloader but follow the PSR-0 convention. You
-can use any compliant autoloader for the library, for instance the Symfony2
-[ClassLoader component](https://github.com/symfony/ClassLoader).
-Assuming you cloned the library in `vendor/KnpMenu`, it will be configured
-this way:
-
-```php
-<?php
-$loader->registerNamespaces(array(
-    'Knp\Menu' => __DIR__.'/vendor/KnpMenu/src'
-    // ...
-));
-```
 
 ## What now?
 

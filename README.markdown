@@ -12,18 +12,15 @@ but can now be used stand-alone.
 
 ## Installation
 
-The new version of `knp-menu` uses [Composer](http://getcomposer.org).
+`knp-menu` uses [Composer](http://getcomposer.org).
+
 The first step to use `knp-menu` is to download composer:
 
 ```bash
 $ curl -s http://getcomposer.org/installer | php
 ```
 
-Then we have to install our dependencies using:
-```bash
-$ php composer.phar install
-```
-Now we can use autoloader from Composer by:
+Create a `composer.json` file with this content.
 
 ```json
 {
@@ -33,12 +30,20 @@ Now we can use autoloader from Composer by:
 }
 ```
 
+Then we have to install our dependencies using:
+```bash
+$ php composer.phar install
+```
+
 > `knp-menu` follows the PSR-0 convention names for its classes, which means you can easily integrate `knp-menu` classes loading in your own autoloader.
 
 ## Getting Started
 
 ```php
 <?php
+
+// Include dependencies installed with composer
+require 'vendor/autoload.php';
 
 use Knp\Menu\MenuFactory;
 use Knp\Menu\Renderer\ListRenderer;

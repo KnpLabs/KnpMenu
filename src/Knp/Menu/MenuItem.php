@@ -442,7 +442,7 @@ class MenuItem implements ItemInterface
             $newChildren[$name] = $child;
         }
 
-        $this->children = $newChildren;
+        $this->setChildren($newChildren);
 
         return $this;
     }
@@ -450,7 +450,7 @@ class MenuItem implements ItemInterface
     public function copy()
     {
         $newMenu = clone $this;
-        $newMenu->children = array();
+        $newMenu->setChildren(array());
         $newMenu->setParent(null);
         foreach ($this->getChildren() as $child) {
             $newMenu->addChild($child->copy());

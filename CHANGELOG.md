@@ -1,5 +1,7 @@
-## 2.0.0 beta 1 (2013-XX-XX)
+## 2.0.0 beta 1 (2014-XX-XX)
 
+* [BC break] Refactored the way of rendering twig templates. Every template should extends
+  the `knp_menu.html.twig` template.
 * Introduced extension points in the MenuFactory through `Knp\Menu\Factory\ExtensionInterface`
 * [BC break compared to 2.0 alpha 1] The inheritance extension points introduced in alpha1 are
   deprecated in favor of extensions and will be removed before the stable release.
@@ -11,7 +13,7 @@
   `moveChildToPosition`, `callRecursively`, `toArray`, `getPathAsString` and `getBreadcrumbsArray`
   in the MenuItem and removed them from `Knp\Menu\ItemInterface`. Use `Knp\Menu\Util\MenuManipulator`
   instead.
-* Made the RouterVoter comaptible with SensioFrameworkExtraBundle param converters
+* Made the RouterVoter compatible with SensioFrameworkExtraBundle param converters
 * Added the possibility to match routes using a regex on their name in the RouterVoter
 * [BC break compared to 2.0 alpha 1] Refactored the RouterVoter to make it more flexible
     The way to pass routes in the item extras has changed.

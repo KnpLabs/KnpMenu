@@ -48,9 +48,7 @@ class TwigRenderer implements RendererInterface
             $template = $this->environment->loadTemplate($template);
         }
 
-        $block = $options['compressed'] ? 'compressed_root' : 'root';
-
-        $html = $template->renderBlock($block, array('item' => $item, 'options' => $options, 'matcher' => $this->matcher));
+        $html = $template->render(array('item' => $item, 'options' => $options, 'matcher' => $this->matcher));
 
         if ($options['clear_matcher']) {
             $this->matcher->clear();

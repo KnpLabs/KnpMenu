@@ -1,5 +1,6 @@
 ## 2.0.0 beta 1 (2014-XX-XX)
 
+* [BC break] Changed the TwigRenderer to accept a menu template only as a string
 * [BC break] Refactored the way of rendering twig templates. Every template should extends
   the `knp_menu.html.twig` template.
 * Introduced extension points in the MenuFactory through `Knp\Menu\Factory\ExtensionInterface`

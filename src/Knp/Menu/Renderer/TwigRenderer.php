@@ -43,12 +43,7 @@ class TwigRenderer implements RendererInterface
     {
         $options = array_merge($this->defaultOptions, $options);
 
-        $template = $options['template'];
-        if (!$template instanceof \Twig_Template) {
-            $template = $this->environment->loadTemplate($template);
-        }
-
-        $html = $template->render(array('item' => $item, 'options' => $options, 'matcher' => $this->matcher));
+        $html = $this->environment->render($options['template'], array('item' => $item, 'options' => $options, 'matcher' => $this->matcher));
 
         if ($options['clear_matcher']) {
             $this->matcher->clear();

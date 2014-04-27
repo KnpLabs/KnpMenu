@@ -63,6 +63,14 @@
     {%- if item.actsLikeLast %}
         {%- set classes = classes|merge([options.lastClass]) %}
     {%- endif %}
+
+    {# Mark item as "leaf" (no children) or as "branch" (has children that are displayed) #}
+    {% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren and options.branchClass is not empty %}
+        {%- set classes = classes|merge([options.branchClass]) %}
+    {% elseif options.leafClass is not empty %}
+        {%- set classes = classes|merge([options.leafClass]) %}
+    {%- endif %}
+
     {%- set attributes = item.attributes %}
     {%- if classes is not empty %}
         {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}

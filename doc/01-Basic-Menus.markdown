@@ -281,11 +281,23 @@ $matcher->addVoter(new UriVoter($_SERVER['REQUEST_URI']));
 $renderer = new ListRenderer($matcher);
 ```
 
-The library provides 2 implementations of the VoterInterface:
+The library provides 3 implementations of the VoterInterface:
 
  * `Knp\Menu\Matcher\Voter\UriVoter` matching against the uri of the item
  * `Knp\Menu\Matcher\Voter\RouteVoter` matching the `_route` attribute of a
+ * `Knp\Menu\Matcher\Voter\RegexpVoter` matching against the uri of the item using a regular expression
    Symfony Request object against the `routes` extra of the item
+
+Here are some examples for instantiation of voters:
+
+```php
+<?php
+
+$regexpVoter = new \Knp\Menu\Matcher\Voter\RegexpVoter('/^StartOfUri/');
+
+$routeVoter = new \Knp\Menu\Silex\Voter\RouteVoter('the_route_i_want_to_test');
+$routeVoter->setRequest($symfonyRequest);
+```
 
 Creating a Menu from a Tree structure
 -------------------------------------

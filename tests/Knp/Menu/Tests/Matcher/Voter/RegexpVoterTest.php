@@ -20,8 +20,7 @@ class RegexpVoterTest extends \PHPUnit_Framework_TestCase
             ->method('getUri')
             ->will($this->returnValue($itemUri));
 
-        $voter = new RegexpVoter();
-        $voter->setRegexp($exp);
+        $voter = new RegexpVoter($exp);
 
         $this->assertSame($expected, $voter->matchItem($item));
     }

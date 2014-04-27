@@ -20,8 +20,7 @@ class UriVoterTest extends \PHPUnit_Framework_TestCase
             ->method('getUri')
             ->will($this->returnValue($itemUri));
 
-        $voter = new UriVoter();
-        $voter->setUri($uri);
+        $voter = new UriVoter($uri);
 
         $this->assertSame($expected, $voter->matchItem($item));
     }

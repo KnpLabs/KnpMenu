@@ -2,7 +2,7 @@
 
 namespace Knp\Menu\Tests\Silex;
 
-use Knp\Menu\Silex\RoutingExtension;
+use Knp\Menu\Integration\Symfony\RoutingExtension;
 
 class RoutingExtensionTest extends \PHPUnit_Framework_TestCase
 {
@@ -78,5 +78,4 @@ class RoutingExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertContains(array('route' => 'homepage', 'parameters' => array()), $processedOptions['extras']['routes']);
         $this->assertContains('other_page', $processedOptions['extras']['routes']);
     }
-
 }

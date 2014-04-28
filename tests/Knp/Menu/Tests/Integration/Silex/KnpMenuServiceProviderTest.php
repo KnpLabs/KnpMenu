@@ -1,9 +1,9 @@
 <?php
 
-namespace Knp\Menu\Tests\Silex;
+namespace Knp\Menu\Tests\Integration\Silex;
 
 use Knp\Menu\Matcher\Matcher;
-use Knp\Menu\Silex\KnpMenuServiceProvider;
+use Knp\Menu\Integration\Silex\KnpMenuServiceProvider;
 use Knp\Menu\Matcher\Voter\RouteVoter;
 use Silex\Application;
 use Silex\Provider\TwigServiceProvider;

@@ -30,7 +30,7 @@ Using the KnpMenuExtension
 $app['autoloader']->registerNamespace('Knp\Menu', __DIR__.'/vendor/KnpMenu/src');
 
 // registering the extension
-$app->register(new \Knp\Menu\Silex\KnpMenuServiceProvider());
+$app->register(new \Knp\Menu\Integration\Silex\KnpMenuServiceProvider());
 ```
 
 >**WARNING**

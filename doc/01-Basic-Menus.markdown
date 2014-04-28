@@ -240,8 +240,8 @@ the second argument to the `render()` method:
 * `compressed` (default: `false`)
 * `allow_safe_labels` (default: `false`)
 * `clear_matcher` (default `true`): whether to clear the internal cache of the matcher after rendering
-* `leafClass` (default: `null`): class for leaf elements in your html tree
-* `branchClass` (default: `null`): class for branch elements in your html tree
+* `leaf_class` (default: `null`): class for leaf elements in your html tree
+* `branch_class` (default: `null`): class for branch elements in your html tree
 
 >**NOTE**
 >When setting the `allow_safe_labels` option to `true`, you can specify that

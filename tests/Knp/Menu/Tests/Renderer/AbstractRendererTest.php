@@ -317,6 +317,6 @@ abstract class AbstractRendererTest extends TestCase
     {
         $rendered = '<ul class="root"><li class="first branch"><span>Parent 1</span><ul class="menu_level_1"><li class="first leaf"><span>Child 1</span></li><li class="leaf"><span>Child 2</span></li><li class="last leaf"><span>Child 3</span></li></ul></li><li class="last branch"><span>Parent 2</span><ul class="menu_level_1"><li class="first last leaf"><span>Child 4</span></li></ul></li></ul>';
 
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, array('depth' => 2, 'leafClass' => 'leaf', 'branchClass' => 'branch')));
+        $this->assertEquals($rendered, $this->renderer->render($this->menu, array('depth' => 2, 'leaf_class' => 'leaf', 'branch_class' => 'branch')));
     }
 }

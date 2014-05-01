@@ -32,6 +32,8 @@ class ListRenderer extends Renderer implements RendererInterface
             'compressed' => false,
             'allow_safe_labels' => false,
             'clear_matcher' => true,
+            'leaf_class' => null,
+            'branch_class' => null,
         ), $defaultOptions);
 
         parent::__construct($charset);
@@ -133,6 +135,14 @@ class ListRenderer extends Renderer implements RendererInterface
         }
         if ($item->actsLikeLast()) {
             $class[] = $options['lastClass'];
+        }
+
+        if ($item->hasChildren() && $options['depth'] !== 0) {
+            if (null !== $options['branch_class'] && $item->getDisplayChildren()) {
+                $class[] = $options['branch_class'];
+            }
+        } elseif (null !== $options['leaf_class']) {
+            $class[] = $options['leaf_class'];
         }
 
         // retrieve the attributes and put the final class string back on it

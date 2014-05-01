@@ -36,6 +36,8 @@ class TwigRenderer implements RendererInterface
             'compressed' => false,
             'allow_safe_labels' => false,
             'clear_matcher' => true,
+            'leaf_class' => null,
+            'branch_class' => null,
         ), $defaultOptions);
     }
 

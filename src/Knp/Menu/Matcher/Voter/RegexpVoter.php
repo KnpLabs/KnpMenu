@@ -5,7 +5,7 @@ namespace Knp\Menu\Matcher\Voter;
 use Knp\Menu\ItemInterface;
 
 /**
- * Implements the VoterInterface so can be used as voter for "current" class
+ * Implements the VoterInterface which can be used as voter for "current" class
  * `matchItem` will return true if the pattern you're searching for is found in the URI of the item
  */
 class RegexpVoter implements VoterInterface

@@ -285,7 +285,7 @@ The library provides 3 implementations of the VoterInterface:
 
  * `Knp\Menu\Matcher\Voter\UriVoter` matching against the uri of the item
  * `Knp\Menu\Matcher\Voter\RouteVoter` matching the `_route` attribute of a
- * `Knp\Menu\Matcher\Voter\RegexpVoter` matching against the uri of the item using a regular expression
+ * `Knp\Menu\Matcher\Voter\RegexVoter` matching against the uri of the item using a regular expression
    Symfony Request object against the `routes` extra of the item
 
 Here are some examples for instantiation of voters:
@@ -293,7 +293,7 @@ Here are some examples for instantiation of voters:
 ```php
 <?php
 
-$regexpVoter = new \Knp\Menu\Matcher\Voter\RegexpVoter('/^StartOfUri/');
+$regexVoter = new \Knp\Menu\Matcher\Voter\RegexVoter('/^StartOfUri/');
 
 $routeVoter = new \Knp\Menu\Silex\Voter\RouteVoter('the_route_i_want_to_test');
 $routeVoter->setRequest($symfonyRequest);

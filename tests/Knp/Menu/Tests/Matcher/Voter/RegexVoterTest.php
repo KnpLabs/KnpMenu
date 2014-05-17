@@ -2,9 +2,9 @@
 
 namespace Knp\Menu\Tests\Matcher\Voter;
 
-use Knp\Menu\Matcher\Voter\RegexpVoter;
+use Knp\Menu\Matcher\Voter\RegexVoter;
 
-class RegexpVoterTest extends \PHPUnit_Framework_TestCase
+class RegexVoterTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @param string  $exp
@@ -20,7 +20,7 @@ class RegexpVoterTest extends \PHPUnit_Framework_TestCase
             ->method('getUri')
             ->will($this->returnValue($itemUri));
 
-        $voter = new RegexpVoter($exp);
+        $voter = new RegexVoter($exp);
 
         $this->assertSame($expected, $voter->matchItem($item));
     }

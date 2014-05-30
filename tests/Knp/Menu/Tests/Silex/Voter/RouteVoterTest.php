@@ -62,6 +62,7 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
      * @param boolean      $deprecatedCall
      *
      * @dataProvider provideData
+     * @throws
      */
     public function testMatching($route, array $parameters, $itemRoutes, array $itemsRoutesParameters, $expected, $deprecatedCall = false)
     {
@@ -76,7 +77,8 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
                     case 'routesParameters':
                         return $itemsRoutesParameters;
                 }
-            }));
+            }))
+        ;
 
         $request = new Request();
         $request->attributes->set('_route', $route);
@@ -110,13 +112,17 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             'no request route' => array(null, array(), 'foo', array(), null),
+            'integer parameters' => array(
+                'foo', array('bar' => 128),
+                array(array('route' => 'foo', 'parameters' => array('bar' => 128))), array(),
+                true
+            ),
             'no item route' => array('foo', array(), null, array(), null),
             'same single route' => array('foo', array(), 'foo', array(), true),
             'different single route' => array('foo', array(), 'bar', array(), null),
             'matching multiple routes' => array('foo', array(), array('foo', 'baz'), array(), true),
             'matching multiple routes 2' => array('baz', array(), array('foo', 'baz'), array(), true),
             'different multiple routes' => array('foo', array(), array('bar', 'baz'), array(), null),
-
             'same single route with different parameters' => array(
                 'foo', array('1' => 'bar'),
                 array(array('route' => 'foo', 'parameters' => array('1' => 'baz'))), array(),

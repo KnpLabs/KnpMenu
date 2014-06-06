@@ -115,7 +115,7 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
             'integer parameters' => array(
                 'foo', array('bar' => 128),
                 array(array('route' => 'foo', 'parameters' => array('bar' => 128))), array(),
-                true
+                null
             ),
             'no item route' => array('foo', array(), null, array(), null),
             'same single route' => array('foo', array(), 'foo', array(), true),

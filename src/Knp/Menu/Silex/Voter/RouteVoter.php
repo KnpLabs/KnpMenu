@@ -15,7 +15,7 @@ class RouteVoter extends BaseRouteVoter
     public function __construct()
     {
         trigger_error(
-            __CLASS__ . ' is deprecated because of namespace, use Knp\\Menu\\Matcher\\RouteVoter instead.',
+            __CLASS__ . ' is deprecated because of namespace, use Knp\\Menu\\Matcher\\Voter\\RouteVoter instead.',
             E_USER_DEPRECATED
         );
     }

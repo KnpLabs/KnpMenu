@@ -2,25 +2,25 @@
 
 namespace Knp\Menu\Tests\Matcher\Voter;
 
-use Knp\Menu\Matcher\Voter\UriVoter;
+use Knp\Menu\Matcher\Voter\RegexVoter;
 
-class UriVoterTest extends \PHPUnit_Framework_TestCase
+class RegexVoterTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @param string  $uri
+     * @param string  $exp
      * @param string  $itemUri
      * @param boolean $expected
      *
      * @dataProvider provideData
      */
-    public function testMatching($uri, $itemUri, $expected)
+    public function testMatching($exp, $itemUri, $expected)
     {
         $item = $this->getMock('Knp\Menu\ItemInterface');
         $item->expects($this->any())
             ->method('getUri')
             ->will($this->returnValue($itemUri));
 
-        $voter = new UriVoter($uri);
+        $voter = new RegexVoter($exp);
 
         $this->assertSame($expected, $voter->matchItem($item));
     }
@@ -28,10 +28,10 @@ class UriVoterTest extends \PHPUnit_Framework_TestCase
     public function provideData()
     {
         return array(
-            'no uri' => array(null, 'foo', null),
+            'no regexp' => array(null, 'foo', null),
             'no item uri' => array('foo', null, null),
-            'same uri' => array('foo', 'foo', true),
-            'different uri' => array('foo', 'bar', null),
+            'matching uri' => array('/^foo/', 'foobar', true),
+            'not matching uri' => array('/^foo/', 'barfoo', null),
         );
     }
 }

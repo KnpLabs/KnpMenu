@@ -284,7 +284,7 @@ $renderer = new ListRenderer($matcher);
 The library provides 2 implementations of the VoterInterface:
 
  * `Knp\Menu\Matcher\Voter\UriVoter` matching against the uri of the item
- * `Knp\Menu\Silex\Voter\RouteVoter` matching the `_route` attribute of a
+ * `Knp\Menu\Matcher\Voter\RouteVoter` matching the `_route` attribute of a
    Symfony Request object against the `routes` extra of the item
 
 Creating a Menu from a Tree structure

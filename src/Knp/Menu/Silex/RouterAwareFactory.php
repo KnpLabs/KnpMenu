@@ -2,6 +2,7 @@
 
 namespace Knp\Menu\Silex;
 
+use Knp\Menu\Integration\Symfony\RoutingExtension;
 use Knp\Menu\MenuFactory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -14,7 +15,7 @@ class RouterAwareFactory extends MenuFactory
 {
     public function __construct(UrlGeneratorInterface $generator)
     {
-        trigger_error(__CLASS__ . ' is deprecated. Use Knp\Menu\Silex\RoutingExtension instead.', E_USER_DEPRECATED);
+        trigger_error(__CLASS__ . ' is deprecated. Use Knp\Menu\Integration\Symfony\RoutingExtension instead.', E_USER_DEPRECATED);
 
         parent::__construct();
         $this->addExtension(new RoutingExtension($generator));

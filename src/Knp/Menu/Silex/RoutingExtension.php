@@ -2,13 +2,18 @@
 
 namespace Knp\Menu\Silex;
 
-class RoutingExtension
+use Knp\Menu\Integration\Symfony\RoutingExtension as BaseRoutingExtension;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
+class RoutingExtension extends BaseRoutingExtension
 {
-    public function __construct()
+    public function __construct(UrlGeneratorInterface $generator)
     {
         trigger_error(
-            __CLASS__ . ' is deprecated because of namespace, use Knp\Menu\Integration\Symfony\RoutingExtension instead.',
+            __CLASS__ . ' is deprecated, use Knp\Menu\Integration\Symfony\RoutingExtension instead.',
             E_USER_DEPRECATED
         );
+        
+        parent::__construct($generator);
     }
 }

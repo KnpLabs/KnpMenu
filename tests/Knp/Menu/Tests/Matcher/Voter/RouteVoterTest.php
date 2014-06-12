@@ -62,7 +62,7 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
      * @param boolean      $deprecatedCall
      *
      * @dataProvider provideData
-     * @throws
+     * @throws \PHPUnit_Framework_Error|\Exception
      */
     public function testMatching($route, array $parameters, $itemRoutes, array $itemsRoutesParameters, $expected, $deprecatedCall = false)
     {

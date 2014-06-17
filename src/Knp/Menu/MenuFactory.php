@@ -13,7 +13,7 @@ use Knp\Menu\Loader\NodeLoader;
 class MenuFactory implements FactoryInterface
 {
     /**
-     * @var ExtensionInterface[]
+     * @var array
      */
     private $extensions = array();
 
@@ -27,11 +27,6 @@ class MenuFactory implements FactoryInterface
         $this->addExtension(new CoreExtension(), -10);
     }
 
-    /**
-     * @param  string $name
-     * @param  array  $options
-     * @return MenuItem
-     */
     public function createItem($name, array $options = array())
     {
         foreach ($this->getExtensions() as $extension) {

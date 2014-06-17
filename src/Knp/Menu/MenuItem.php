@@ -108,18 +108,11 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * @param  string $name
-     * @return self
-     */
     public function setName($name)
     {
         if ($this->name == $name) {
@@ -147,18 +140,11 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getUri()
     {
         return $this->uri;
     }
 
-    /**
-     * @param  string $uri
-     * @return self
-     */
     public function setUri($uri)
     {
         $this->uri = $uri;
@@ -166,18 +152,11 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getLabel()
     {
         return ($this->label !== null) ? $this->label : $this->name;
     }
 
-    /**
-     * @param  string $label
-     * @return self
-     */
     public function setLabel($label)
     {
         $this->label = $label;
@@ -185,18 +164,11 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @return mixed[]
-     */
     public function getAttributes()
     {
         return $this->attributes;
     }
 
-    /**
-     * @param  mixed[] $attributes
-     * @return self
-     */
     public function setAttributes(array $attributes)
     {
         $this->attributes = $attributes;
@@ -204,11 +176,6 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @param  string $name
-     * @param  mixed  $default
-     * @return mixed
-     */
     public function getAttribute($name, $default = null)
     {
         if (isset($this->attributes[$name])) {
@@ -218,11 +185,6 @@ class MenuItem implements ItemInterface
         return $default;
     }
 
-    /**
-     * @param  string $name
-     * @param  mixed  $value
-     * @return self
-     */
     public function setAttribute($name, $value)
     {
         $this->attributes[$name] = $value;
@@ -230,18 +192,11 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @return string[]
-     */
     public function getLinkAttributes()
     {
         return $this->linkAttributes;
     }
 
-    /**
-     * @param  string[] $linkAttributes
-     * @return self
-     */
     public function setLinkAttributes(array $linkAttributes)
     {
         $this->linkAttributes = $linkAttributes;
@@ -249,11 +204,6 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @param  string $name
-     * @param  mixed  $default
-     * @return mixed
-     */
     public function getLinkAttribute($name, $default = null)
     {
         if (isset($this->linkAttributes[$name])) {
@@ -263,11 +213,6 @@ class MenuItem implements ItemInterface
         return $default;
     }
 
-    /**
-     * @param  string $name
-     * @param  mixed  $value
-     * @return self
-     */
     public function setLinkAttribute($name, $value)
     {
         $this->linkAttributes[$name] = $value;
@@ -275,18 +220,11 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @return mixed[]
-     */
     public function getChildrenAttributes()
     {
         return $this->childrenAttributes;
     }
 
-    /**
-     * @param  mixed[] $childrenAttributes
-     * @return self
-     */
     public function setChildrenAttributes(array $childrenAttributes)
     {
         $this->childrenAttributes = $childrenAttributes;
@@ -294,11 +232,6 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @param  string $name
-     * @param  mixed  $default
-     * @return mixed
-     */
     public function getChildrenAttribute($name, $default = null)
     {
         if (isset($this->childrenAttributes[$name])) {
@@ -308,11 +241,6 @@ class MenuItem implements ItemInterface
         return $default;
     }
 
-    /**
-     * @param  string $name
-     * @param  mixed  $value
-     * @return self
-     */
     public function setChildrenAttribute($name, $value)
     {
         $this->childrenAttributes[$name] = $value;
@@ -320,18 +248,11 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @return string[]
-     */
     public function getLabelAttributes()
     {
         return $this->labelAttributes;
     }
 
-    /**
-     * @param  array $labelAttributes
-     * @return self
-     */
     public function setLabelAttributes(array $labelAttributes)
     {
         $this->labelAttributes = $labelAttributes;
@@ -339,11 +260,6 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @param  string $name
-     * @param  string $default
-     * @return string
-     */
     public function getLabelAttribute($name, $default = null)
     {
         if (isset($this->labelAttributes[$name])) {
@@ -353,11 +269,6 @@ class MenuItem implements ItemInterface
         return $default;
     }
 
-    /**
-     * @param  string $name
-     * @param  string $value
-     * @return self
-     */
     public function setLabelAttribute($name, $value)
     {
         $this->labelAttributes[$name] = $value;
@@ -365,18 +276,11 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getExtras()
     {
         return $this->extras;
     }
 
-    /**
-     * @param  array $extras
-     * @return self
-     */
     public function setExtras(array $extras)
     {
         $this->extras = $extras;
@@ -384,11 +288,6 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @param  string $name
-     * @param  mixed  $default
-     * @return mixed
-     */
     public function getExtra($name, $default = null)
     {
         if (isset($this->extras[$name])) {
@@ -398,11 +297,6 @@ class MenuItem implements ItemInterface
         return $default;
     }
 
-    /**
-     * @param  string $name
-     * @param  mixed  $value
-     * @return self
-     */
     public function setExtra($name, $value)
     {
         $this->extras[$name] = $value;
@@ -410,18 +304,11 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @return boolean
-     */
     public function getDisplayChildren()
     {
         return $this->displayChildren;
     }
 
-    /**
-     * @param  boolean $bool
-     * @return self
-     */
     public function setDisplayChildren($bool)
     {
         $this->displayChildren = (bool) $bool;
@@ -429,18 +316,11 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @return boolean
-     */
     public function isDisplayed()
     {
         return $this->display;
     }
 
-    /**
-     * @param  boolean $bool
-     * @return self
-     */
     public function setDisplay($bool)
     {
         $this->display = (bool) $bool;
@@ -448,11 +328,6 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @param  ItemInterface|string $child
-     * @param  array                $options
-     * @return ItemInterface
-     */
     public function addChild($child, array $options = array())
     {
         if (!$child instanceof ItemInterface) {
@@ -468,17 +343,11 @@ class MenuItem implements ItemInterface
         return $child;
     }
 
-    /**
-     * @return ItemInterface|null
-     */
     public function getChild($name)
     {
         return isset($this->children[$name]) ? $this->children[$name] : null;
     }
 
-    /**
-     * @return self
-     */
     public function reorderChildren($order)
     {
         if (count($order) != $this->count()) {
@@ -501,9 +370,6 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @return ItemInterface
-     */
     public function copy()
     {
         $newMenu = clone $this;
@@ -516,17 +382,11 @@ class MenuItem implements ItemInterface
         return $newMenu;
     }
 
-    /**
-     * @return integer
-     */
     public function getLevel()
     {
         return $this->parent ? $this->parent->getLevel() + 1 : 0;
     }
 
-    /**
-     * @return ItemInterface
-     */
     public function getRoot()
     {
         $obj = $this;
@@ -537,26 +397,16 @@ class MenuItem implements ItemInterface
         return $found;
     }
 
-    /**
-     * @return boolean
-     */
     public function isRoot()
     {
         return null === $this->parent;
     }
 
-    /**
-     * @return ItemInterface
-     */
     public function getParent()
     {
         return $this->parent;
     }
 
-    /**
-     * @param  ItemInterface $parent
-     * @return self
-     */
     public function setParent(ItemInterface $parent = null)
     {
         $this->parent = $parent;
@@ -564,18 +414,11 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @return ItemInterface[]
-     */
     public function getChildren()
     {
         return $this->children;
     }
 
-    /**
-     * @param  ItemInterface[] $children
-     * @return self
-     */
     public function setChildren(array $children)
     {
         $this->children = $children;
@@ -583,10 +426,6 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @param  string|ItemInterface $name
-     * @return self
-     */
     public function removeChild($name)
     {
         $name = $name instanceof ItemInterface ? $name->getName() : $name;
@@ -600,25 +439,16 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @return ItemInterface|false
-     */
     public function getFirstChild()
     {
         return reset($this->children);
     }
 
-    /**
-     * @return ItemInterface|false
-     */
     public function getLastChild()
     {
         return end($this->children);
     }
 
-    /**
-     * @return boolean
-     */
     public function hasChildren()
     {
         foreach ($this->children as $child) {
@@ -630,10 +460,6 @@ class MenuItem implements ItemInterface
         return false;
     }
 
-    /**
-     * @param  boolean $bool
-     * @return self
-     */
     public function setCurrent($bool)
     {
         $this->isCurrent = $bool;
@@ -641,17 +467,11 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    /**
-     * @return boolean
-     */
     public function isCurrent()
     {
         return $this->isCurrent;
     }
 
-    /**
-     * @return boolean
-     */
     public function isLast()
     {
         // if this is root, then return false
@@ -662,9 +482,6 @@ class MenuItem implements ItemInterface
         return $this->getParent()->getLastChild() === $this;
     }
 
-    /**
-     * @return boolean
-     */
     public function isFirst()
     {
         // if this is root, then return false
@@ -675,9 +492,6 @@ class MenuItem implements ItemInterface
         return $this->getParent()->getFirstChild() === $this;
     }
 
-    /**
-     * @return boolean
-     */
     public function actsLikeFirst()
     {
         // root items are never "marked" as first
@@ -706,9 +520,6 @@ class MenuItem implements ItemInterface
         return false;
     }
 
-    /**
-     * @return boolean
-     */
     public function actsLikeLast()
     {
         // root items are never "marked" as last

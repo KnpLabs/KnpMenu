@@ -59,12 +59,10 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
      * @param string|array $itemRoutes
      * @param array        $itemsRoutesParameters
      * @param boolean      $expected
-     * @param boolean      $deprecatedCall
      *
      * @dataProvider provideData
-     * @throws \PHPUnit_Framework_Error|\Exception
      */
-    public function testMatching($route, array $parameters, $itemRoutes, array $itemsRoutesParameters, $expected, $deprecatedCall = false)
+    public function testMatching($route, array $parameters, $itemRoutes, array $itemsRoutesParameters, $expected)
     {
         $item = $this->getMock('Knp\Menu\ItemInterface');
         $item->expects($this->any())
@@ -87,25 +85,7 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
         $voter = new RouteVoter();
         $voter->setRequest($request);
 
-        $deprecatedErrorCatched = false;
-        set_error_handler(function ($errorNumber, $message, $file, $line) use (&$deprecatedErrorCatched) {
-            if ($errorNumber & E_USER_DEPRECATED) {
-                $deprecatedErrorCatched = true;
-                return true;
-            }
-
-            return \PHPUnit_Util_ErrorHandler::handleError($errorNumber, $message, $file, $line);
-        });
-
-        try {
-            $this->assertSame($expected, $voter->matchItem($item));
-        } catch (\Exception $e) {
-            restore_error_handler();
-            throw $e;
-        }
-
-        restore_error_handler();
-        $this->assertSame($deprecatedCall, $deprecatedErrorCatched);
+        $this->assertSame($expected, $voter->matchItem($item));
     }
 
     public function provideData()
@@ -258,23 +238,6 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
                 array(array('pattern' => '/fo/', 'parameters' => array('1' => 'baz'))),
                 array(),
                 null
-            ),
-            // Test the BC layer for the old way to pass parameters
-            'same single route with different parameters deprecated way' => array(
-                'foo',
-                array('1' => 'bar'),
-                'foo',
-                array('foo' => array('1' => 'baz')),
-                null,
-                true,
-            ),
-            'same single route with same parameters deprecated way' => array(
-                'foo',
-                array('1' => 'bar'),
-                'foo',
-                array('foo' => array('1' => 'bar')),
-                true,
-                true,
             ),
         );
     }

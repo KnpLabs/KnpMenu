@@ -37,15 +37,6 @@ class RouteVoter implements VoterInterface
         foreach ($routes as $testedRoute) {
             if (is_string($testedRoute)) {
                 $testedRoute = array('route' => $testedRoute);
-
-                // BC layer for the configuration of route params
-                if (isset($parameters[$testedRoute['route']])) {
-                    $testedRoute['parameters'] = $parameters[$testedRoute['route']];
-                    trigger_error(
-                        'Using the routeParameters extra is deprecated. The parameters should be passed along the route.',
-                        E_USER_DEPRECATED
-                    );
-                }
             }
 
             if (!is_array($testedRoute)) {

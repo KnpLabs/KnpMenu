@@ -4,8 +4,6 @@ namespace Knp\Menu;
 
 use Knp\Menu\Factory\CoreExtension;
 use Knp\Menu\Factory\ExtensionInterface;
-use Knp\Menu\Loader\ArrayLoader;
-use Knp\Menu\Loader\NodeLoader;
 
 /**
  * Factory to create a menu from a tree

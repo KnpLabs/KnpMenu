@@ -2,8 +2,6 @@
 
 namespace Knp\Menu;
 
-use Knp\Menu\Util\MenuManipulator;
-
 /**
  * Default implementation of the ItemInterface
  */
@@ -85,8 +83,8 @@ class MenuItem implements ItemInterface
     /**
      * Class constructor
      *
-     * @param string $name The name of this menu, which is how its parent will
-     *                     reference it. Also used as label if label not specified
+     * @param string           $name    The name of this menu, which is how its parent will
+     *                                  reference it. Also used as label if label not specified
      * @param FactoryInterface $factory
      */
     public function __construct($name, FactoryInterface $factory)
@@ -596,4 +594,3 @@ class MenuItem implements ItemInterface
         $this->removeChild($name);
     }
 }
-

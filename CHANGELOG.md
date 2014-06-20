@@ -1,4 +1,9 @@
-## 2.0.0 beta 1 (2014-XX-XX)
+## 2.0.0 beta 1 (2014-06-19)
+
+* [BC break] Added the new `Integration` namespace and removed the `Silex` one.
+* Added a new Voter based on regular expression: `Knp\Menu\Matcher\Voter\RegexVoter`
+
+## 2.0.0 alpha 2 (2014-05-01)
 
 * [BC break] Changed the TwigRenderer to accept a menu template only as a string
 * [BC break] Refactored the way of rendering twig templates. Every template should extends

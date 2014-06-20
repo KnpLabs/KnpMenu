@@ -1,13 +1,17 @@
 ## 2.0.0 beta 1 (2014-06-19)
 
-* [BC break] Added the new `Integration` namespace
+* [BC break] Added the new `Integration` namespace and removed the `Silex` one.
+* Added a new Voter based on regular expression: `Knp\Menu\Matcher\Voter\RegexVoter`
+
+## 2.0.0 aplha 2 (2014-05-1)
+
 * [BC break] Changed the TwigRenderer to accept a menu template only as a string
 * [BC break] Refactored the way of rendering twig templates. Every template should extends
   the `knp_menu.html.twig` template.
 * Introduced extension points in the MenuFactory through `Knp\Menu\Factory\ExtensionInterface`
 * [BC break compared to 2.0 alpha 1] The inheritance extension points introduced in alpha1 are
   deprecated in favor of extensions and will be removed before the stable release.
-* `Knp\Menu\Silex\RouterAwareFactory` is deprecated in favor of `Knp\Menu\Integration\Symfony\RoutingExtension`.
+* `Knp\Menu\Silex\RouterAwareFactory` is deprecated in favor of `Knp\Menu\Silex\RoutingExtension`.
 * [BC break] Deprecated the methods `createFromArray` and `createFromNode` in the MenuFactory and
   removed them from `Knp\Menu\FactoryInterface`. Use `Knp\Menu\Loader\ArrayLoader` and
   `Knp\Menu\Loader\NodeLoader` instead.

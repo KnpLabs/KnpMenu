@@ -3,6 +3,7 @@
 namespace Knp\Menu\Renderer;
 
 use Knp\Menu\ItemInterface;
+use Knp\Menu\Util\MenuManipulator;
 
 /**
  * Renders MenuItem tree as a breadcrumb
@@ -10,12 +11,14 @@ use Knp\Menu\ItemInterface;
 class BreadcrumbRenderer extends Renderer implements RendererInterface
 {
     private $defaultOptions;
+    private $itemManipulator;
 
     /**
-     * @param array $defaultOptions
-     * @param string $charset
+     * @param array           $defaultOptions
+     * @param string          $charset
+     * @param MenuManipulator $menuManipulator
      */
-    public function __construct(array $defaultOptions = array(), $charset = null)
+    public function __construct(MenuManipulator $itemManipulator, array $defaultOptions = array(), $charset = null)
     {
         $this->defaultOptions = array_merge(array(
             'current_as_link' => true,
@@ -25,6 +28,7 @@ class BreadcrumbRenderer extends Renderer implements RendererInterface
             'allow_safe_labels' => false,
             'root_attributes' => array(),
         ), $defaultOptions);
+        $this->itemManipulator = $itemManipulator;
 
         parent::__construct($charset);
     }
@@ -32,15 +36,15 @@ class BreadcrumbRenderer extends Renderer implements RendererInterface
     /**
      * Renders a menu with the specified renderer.
      *
-     * @param \Knp\Menu\ItemInterface $item
-     * @param array $options
+     * @param  \Knp\Menu\ItemInterface $item
+     * @param  array                   $options
      * @return string
      */
     public function render(ItemInterface $item, array $options = array())
     {
         $options = array_merge($this->defaultOptions, $options);
 
-        $breadcrumb = $item->getBreadcrumbsArray($options['additional_path']);
+        $breadcrumb = $this->itemManipulator->getBreadcrumbsArray($item, $options['additional_path']);
 
         if (empty($breadcrumb)) {
             return '';
@@ -52,8 +56,8 @@ class BreadcrumbRenderer extends Renderer implements RendererInterface
     /**
      * Renders the breadcrumb
      *
-     * @param array $breadcrumb
-     * @param array $options
+     * @param  array $breadcrumb
+     * @param  array $options
      * @return string
      */
     protected function renderBreadcrumb(array $breadcrumb, array $options)
@@ -68,8 +72,8 @@ class BreadcrumbRenderer extends Renderer implements RendererInterface
     /**
      * Renders the breadcrumb list
      *
-     * @param array $breadcrumb
-     * @param array $options
+     * @param  array $breadcrumb
+     * @param  array $options
      * @return string
      */
     protected function renderList(array $breadcrumb, array $options)
@@ -84,10 +88,10 @@ class BreadcrumbRenderer extends Renderer implements RendererInterface
     }
 
     /**
-     * @param string $label
-     * @param string $uri
-     * @param array $options
-     * @param \Knp\Menu\ItemInterface|null $item
+     * @param  string                       $label
+     * @param  string                       $uri
+     * @param  array                        $options
+     * @param  \Knp\Menu\ItemInterface|null $item
      * @return string
      */
     protected function renderItem($label, $uri, array $options, ItemInterface $item = null)
@@ -113,9 +117,9 @@ class BreadcrumbRenderer extends Renderer implements RendererInterface
     }
 
     /**
-     * @param string $label
-     * @param array $options
-     * @param \Knp\Menu\ItemInterface|null $item
+     * @param  string                       $label
+     * @param  array                        $options
+     * @param  \Knp\Menu\ItemInterface|null $item
      * @return string
      */
     protected function renderLabel($label, array $options, ItemInterface $item = null)
@@ -132,10 +136,10 @@ class BreadcrumbRenderer extends Renderer implements RendererInterface
      * spacing and line-breaking so that the particular thing being rendered
      * makes up its part in a fully-rendered and spaced menu.
      *
-     * @param  string $html The html to render in an (un)formatted way
-     * @param  string $type The type [ul,link,li] of thing being rendered
-     * @param integer $level
-     * @param array $options
+     * @param  string  $html The html to render in an (un)formatted way
+     * @param  string  $type The type [ul,link,li] of thing being rendered
+     * @param  integer $level
+     * @param  array   $options
      * @return string
      */
     protected function format($html, $type, $level, array $options)

@@ -36,8 +36,8 @@ class BreadcrumbRenderer extends Renderer implements RendererInterface
     /**
      * Renders a menu with the specified renderer.
      *
-     * @param  \Knp\Menu\ItemInterface $item
-     * @param  array                   $options
+     * @param  ItemInterface $item
+     * @param  array         $options
      * @return string
      */
     public function render(ItemInterface $item, array $options = array())
@@ -88,10 +88,10 @@ class BreadcrumbRenderer extends Renderer implements RendererInterface
     }
 
     /**
-     * @param  string                       $label
-     * @param  string                       $uri
-     * @param  array                        $options
-     * @param  \Knp\Menu\ItemInterface|null $item
+     * @param  string             $label
+     * @param  string             $uri
+     * @param  array              $options
+     * @param  ItemInterface|null $item
      * @return string
      */
     protected function renderItem($label, $uri, array $options, ItemInterface $item = null)
@@ -117,9 +117,9 @@ class BreadcrumbRenderer extends Renderer implements RendererInterface
     }
 
     /**
-     * @param  string                       $label
-     * @param  array                        $options
-     * @param  \Knp\Menu\ItemInterface|null $item
+     * @param  string             $label
+     * @param  array              $options
+     * @param  ItemInterface|null $item
      * @return string
      */
     protected function renderLabel($label, array $options, ItemInterface $item = null)

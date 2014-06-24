@@ -41,7 +41,7 @@ class BreadcrumbRendererTest extends TestCase
     {
         $this->pt1->setUri('foobar')->setCurrent(true);
 
-        $renderer = new BreadcrumbRenderer(new MenuManipulator, array('compressed' => true, 'current_as_link' => false));
+        $renderer = new BreadcrumbRenderer(new MenuManipulator, array('compressed' => true, 'currentAsLink' => false));
 
         $expected = '<ul><li>Root li</li><li class="current">Parent 1</li><li>Child 1</li></ul>';
 
@@ -52,7 +52,7 @@ class BreadcrumbRendererTest extends TestCase
     {
         $this->pt1->setCurrent(true);
 
-        $renderer = new BreadcrumbRenderer(new MenuManipulator, array('compressed' => true, 'current_class' => 'foo'));
+        $renderer = new BreadcrumbRenderer(new MenuManipulator, array('compressed' => true, 'currentClass' => 'foo'));
 
         $expected = '<ul><li>Root li</li><li class="foo">Parent 1</li><li>Child 1</li></ul>';
 

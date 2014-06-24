@@ -10,7 +10,6 @@ use Knp\Menu\Util\MenuManipulator;
  */
 class BreadcrumbRenderer extends Renderer implements RendererInterface
 {
-    private $defaultOptions;
     private $itemManipulator;
 
     /**
@@ -20,17 +19,13 @@ class BreadcrumbRenderer extends Renderer implements RendererInterface
      */
     public function __construct(MenuManipulator $itemManipulator, array $defaultOptions = array(), $charset = null)
     {
-        $this->defaultOptions = array_merge(array(
-            'current_as_link' => true,
-            'current_class' => 'current',
+        $this->itemManipulator = $itemManipulator;
+        $defaultOptions = array_merge(array(
             'additional_path' => null,
-            'compressed' => false,
-            'allow_safe_labels' => false,
             'root_attributes' => array(),
         ), $defaultOptions);
-        $this->itemManipulator = $itemManipulator;
 
-        parent::__construct($charset);
+        parent::__construct($defaultOptions, $charset);
     }
 
     /**
@@ -97,13 +92,13 @@ class BreadcrumbRenderer extends Renderer implements RendererInterface
     protected function renderItem($label, $uri, array $options, ItemInterface $item = null)
     {
         $isCurrent = null !== $item && $item->isCurrent();
-        $attributes = $isCurrent ? array('class' => $options['current_class']) : array();
+        $attributes = $isCurrent ? array('class' => $options['currentClass']) : array();
 
         // opening li tag
         $html = $this->format('<li'.$this->renderHtmlAttributes($attributes).'>', 'li', 1, $options);
 
         // render the text/link inside the li tag
-        if (null === $uri || ($isCurrent && !$options['current_as_link'])) {
+        if (null === $uri || ($isCurrent && !$options['currentAsLink'])) {
             $content = $this->renderLabel($label, $options, $item);
         } else {
             $content = sprintf('<a href="%s">%s</a>', $this->escape($uri), $this->renderLabel($label, $options, $item));

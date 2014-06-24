@@ -8,10 +8,9 @@ use Knp\Menu\Matcher\MatcherInterface;
 /**
  * Renders MenuItem tree as unordered list
  */
-class ListRenderer extends Renderer implements RendererInterface
+class ListRenderer extends Renderer
 {
     protected $matcher;
-    protected $defaultOptions;
 
     /**
      * @param MatcherInterface $matcher
@@ -21,22 +20,8 @@ class ListRenderer extends Renderer implements RendererInterface
     public function __construct(MatcherInterface $matcher, array $defaultOptions = array(), $charset = null)
     {
         $this->matcher = $matcher;
-        $this->defaultOptions = array_merge(array(
-            'depth' => null,
-            'matchingDepth' => null,
-            'currentAsLink' => true,
-            'currentClass' => 'current',
-            'ancestorClass' => 'current_ancestor',
-            'firstClass' => 'first',
-            'lastClass' => 'last',
-            'compressed' => false,
-            'allow_safe_labels' => false,
-            'clear_matcher' => true,
-            'leaf_class' => null,
-            'branch_class' => null,
-        ), $defaultOptions);
 
-        parent::__construct($charset);
+        parent::__construct($defaultOptions, $charset);
     }
 
     public function render(ItemInterface $item, array $options = array())

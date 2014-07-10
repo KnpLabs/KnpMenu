@@ -64,6 +64,14 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($attributes, $menu->getAttributes());
     }
 
+    public function testNoneValueAttribute()
+    {
+        $attributes = array('itemscope' => null, 'itemtype' => 'http://data-vocabulary.org/Breadcrumb');
+        $menu = $this->createMenu();
+        $menu->setAttributes($attributes);
+        $this->assertEquals($attributes, $menu->getAttributes());
+    }
+
     public function testDefaultAttribute()
     {
         $menu = $this->createMenu(null, null, array('id' => 'test_id'));

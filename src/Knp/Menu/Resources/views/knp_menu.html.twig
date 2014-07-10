@@ -2,7 +2,9 @@
 
 {% macro attributes(attributes) %}
 {% for name, value in attributes %}
-    {%- if value is not none and value is not sameas(false) -%}
+    {%- if value is null -%}
+        {{- ' %s'|format(name)|raw -}}
+    {%- elseif value is not none and value is not sameas(false) -%}
         {{- ' %s="%s"'|format(name, value is sameas(true) ? name|e : value|e)|raw -}}
     {%- endif -%}
 {%- endfor -%}

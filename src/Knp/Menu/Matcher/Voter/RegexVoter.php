@@ -35,4 +35,4 @@ class RegexVoter implements VoterInterface
 
         return null;
     }
-} 
+}

@@ -16,12 +16,6 @@ class UriVoter implements VoterInterface
         $this->uri = $uri;
     }
 
-    public function setUri($uri)
-    {
-        $this->uri = $uri;
-        trigger_error(sprintf('This method is deprecated. You really need this setter ? Please tell us in what conditions by creating an issue at http://github.com/KnpLabs/KnpMenu.'), E_USER_DEPRECATED);
-    }
-
     public function matchItem(ItemInterface $item)
     {
         if (null === $this->uri || null === $item->getUri()) {

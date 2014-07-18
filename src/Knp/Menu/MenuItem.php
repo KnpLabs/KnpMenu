@@ -2,8 +2,6 @@
 
 namespace Knp\Menu;
 
-use Knp\Menu\Util\MenuManipulator;
-
 /**
  * Default implementation of the ItemInterface
  */
@@ -83,16 +81,10 @@ class MenuItem implements ItemInterface
     protected $factory;
 
     /**
-     * @deprecated this property is only part of the BC layer for deprecated methods
-     * @var MenuManipulator
-     */
-    private $manipulator;
-
-    /**
      * Class constructor
      *
-     * @param string $name The name of this menu, which is how its parent will
-     *                     reference it. Also used as label if label not specified
+     * @param string           $name    The name of this menu, which is how its parent will
+     *                                  reference it. Also used as label if label not specified
      * @param FactoryInterface $factory
      */
     public function __construct($name, FactoryInterface $factory)
@@ -101,6 +93,12 @@ class MenuItem implements ItemInterface
         $this->factory = $factory;
     }
 
+    /**
+     * setFactory
+     *
+     * @param FactoryInterface $factory
+     * @return self
+     */
     public function setFactory(FactoryInterface $factory)
     {
         $this->factory = $factory;
@@ -348,83 +346,6 @@ class MenuItem implements ItemInterface
         return isset($this->children[$name]) ? $this->children[$name] : null;
     }
 
-    /**
-     * Moves child to specified position. Rearange other children accordingly.
-     *
-     * Provides a fluent interface
-     *
-     * @deprecated Use \Knp\Menu\Util\MenuManipulator
-     *
-     * @param integer $position Position to move child to.
-     *
-     * @return ItemInterface
-     */
-    public function moveToPosition($position)
-    {
-        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
-
-        $this->getManipulator()->moveToPosition($this, $position);
-
-        return $this;
-    }
-
-    /**
-     * Moves child to specified position. Rearange other children accordingly.
-     *
-     * Provides a fluent interface
-     *
-     * @deprecated Use \Knp\Menu\Util\MenuManipulator
-     *
-     * @param ItemInterface $child    Child to move.
-     * @param integer       $position Position to move child to.
-     *
-     * @return ItemInterface
-     */
-    public function moveChildToPosition(ItemInterface $child, $position)
-    {
-        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
-
-        $this->getManipulator()->moveChildToPosition($this, $child, $position);
-
-        return $this;
-    }
-
-    /**
-     * Moves child to first position. Rearange other children accordingly.
-     *
-     * Provides a fluent interface
-     *
-     * @deprecated Use \Knp\Menu\Util\MenuManipulator
-     *
-     * @return ItemInterface
-     */
-    public function moveToFirstPosition()
-    {
-        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
-
-        $this->getManipulator()->moveToFirstPosition($this);
-
-        return $this;
-    }
-
-    /**
-     * Moves child to last position. Rearange other children accordingly.
-     *
-     * Provides a fluent interface
-     *
-     * @deprecated Use \Knp\Menu\Util\MenuManipulator
-     *
-     * @return ItemInterface
-     */
-    public function moveToLastPosition()
-    {
-        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
-
-        $this->getManipulator()->moveToLastPosition($this);
-
-        return $this;
-    }
-
     public function reorderChildren($order)
     {
         if (count($order) != $this->count()) {
@@ -457,39 +378,6 @@ class MenuItem implements ItemInterface
         }
 
         return $newMenu;
-    }
-
-    /**
-     * Get slice of menu as another menu.
-     *
-     * @deprecated Use \Knp\Menu\Util\MenuManipulator
-     *
-     * @param mixed $offset Name of child, child object, or numeric offset.
-     * @param mixed $length Name of child, child object, or numeric length.
-     *
-     * @return ItemInterface
-     */
-    public function slice($offset, $length = null)
-    {
-        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
-
-        return $this->getManipulator()->slice($this, $offset, $length);
-    }
-
-    /**
-     * Split menu into two distinct menus.
-     *
-     * @deprecated Use \Knp\Menu\Util\MenuManipulator
-     *
-     * @param mixed $length Name of child, child object, or numeric length.
-     *
-     * @return array Array with two menus, with "primary" and "secondary" key
-     */
-    public function split($length)
-    {
-        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
-
-        return $this->getManipulator()->split($this, $length);
     }
 
     public function getLevel()
@@ -568,38 +456,6 @@ class MenuItem implements ItemInterface
         }
 
         return false;
-    }
-
-    /**
-     * A string representation of this menu item
-     *
-     * @deprecated Use \Knp\Menu\Util\MenuManipulator
-     *
-     * @param string $separator
-     *
-     * @return string
-     */
-    public function getPathAsString($separator = ' > ')
-    {
-        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
-
-        return $this->getManipulator()->getPathAsString($this, $separator);
-    }
-
-    /**
-     * Renders an array ready to be used for breadcrumbs.
-     *
-     * @deprecated Use \Knp\Menu\Util\MenuManipulator
-     *
-     * @param mixed $subItem A string or array to append onto the end of the array
-     *
-     * @return array
-     */
-    public function getBreadcrumbsArray($subItem = null)
-    {
-        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
-
-        return $this->getManipulator()->getBreadcrumbsArray($this, $subItem);
     }
 
     public function setCurrent($bool)
@@ -691,43 +547,6 @@ class MenuItem implements ItemInterface
     }
 
     /**
-     * Calls a method recursively on all of the children of this item
-     *
-     * Provides a fluent interface
-     *
-     * @deprecated Use \Knp\Menu\Util\MenuManipulator
-     *
-     * @param string $method
-     * @param array  $arguments
-     *
-     * @return ItemInterface
-     */
-    public function callRecursively($method, $arguments = array())
-    {
-        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
-
-        $this->getManipulator()->callRecursively($this, $method, $arguments);
-
-        return $this;
-    }
-
-    /**
-     * Exports this menu item to an array
-     *
-     * @deprecated Use \Knp\Menu\Util\MenuManipulator
-     *
-     * @param integer $depth
-     *
-     * @return array
-     */
-    public function toArray($depth = null)
-    {
-        trigger_error(__METHOD__ . ' is deprecated. Use Knp\Menu\Util\MenuManipulator instead', E_USER_DEPRECATED);
-
-        return $this->getManipulator()->toArray($this, $depth);
-    }
-
-    /**
      * Implements Countable
      */
     public function count()
@@ -773,17 +592,5 @@ class MenuItem implements ItemInterface
     public function offsetUnset($name)
     {
         $this->removeChild($name);
-    }
-
-    /**
-     * @return MenuManipulator
-     */
-    private function getManipulator()
-    {
-        if (null === $this->manipulator) {
-            $this->manipulator = new MenuManipulator();
-        }
-
-        return $this->manipulator;
     }
 }

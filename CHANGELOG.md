@@ -1,6 +1,6 @@
 ## 2.0.0 (2014-07-18)
 
-* [BC break] Clean code and removed BC break compatibility
+* [BC break] Clean code and removed the BC layer
 
 ## 2.0.0 beta 1 (2014-06-19)
 

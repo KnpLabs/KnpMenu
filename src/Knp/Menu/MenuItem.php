@@ -96,7 +96,7 @@ class MenuItem implements ItemInterface
     /**
      * setFactory
      *
-     * @param  FactoryInterface $factory
+     * @param FactoryInterface $factory
      * @return self
      */
     public function setFactory(FactoryInterface $factory)

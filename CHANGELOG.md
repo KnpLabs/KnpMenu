@@ -1,3 +1,7 @@
+## 2.0.0 (2014-07-18)
+
+* [BC break] Clean code and removed the BC layer
+
 ## 2.0.0 beta 1 (2014-06-19)
 
 * [BC break] Added the new `Integration` namespace and removed the `Silex` one.

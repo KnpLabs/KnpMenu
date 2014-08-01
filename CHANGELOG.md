@@ -1,4 +1,4 @@
-## 2.0.1 (2014-XX-XX)
+## 2.0.1 (2014-08-01)
 
 * Fixed voter conventions on RouteVoter
 

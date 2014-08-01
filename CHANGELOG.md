@@ -1,3 +1,7 @@
+## 2.0.1 (2014-XX-XX)
+
+* Fixed voter conventions on RouteVoter
+
 ## 2.0.0 (2014-07-18)
 
 * [BC break] Clean code and removed the BC layer

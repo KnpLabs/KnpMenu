@@ -37,7 +37,6 @@ class RouteVoter implements VoterInterface
         }
 
         $routes = (array) $item->getExtra('routes', array());
-        $parameters = (array) $item->getExtra('routesParameters', array());
 
         foreach ($routes as $testedRoute) {
             if (is_string($testedRoute)) {
@@ -76,7 +75,7 @@ class RouteVoter implements VoterInterface
             return true;
         }
 
-        $routeParameters = $this->request->attributes->get('_route_params', array());
+        $routeParameters = $this->request->attributes->get('_route_params', array()) + $this->request->query->all();
 
         foreach ($testedRoute['parameters'] as $name => $value) {
             if (!isset($routeParameters[$name]) || $routeParameters[$name] !== (string) $value) {

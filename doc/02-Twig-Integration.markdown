@@ -159,7 +159,7 @@ $pimple['menu_sidebar'] = ... //
 // $rendererProvider = ...
 $menuProvider = new \Knp\Menu\Provider\PimpleProvider(
     $pimple,
-    array('main' => 'main_menu', 'sidebar' => 'menu_sidebar')
+    array('main' => 'menu_main', 'sidebar' => 'menu_sidebar')
 );
 $helper = new \Knp\Menu\Twig\Helper($rendererProvider, $menuProvider);
 $menuExtension = new \Knp\Menu\Twig\MenuExtension($helper);

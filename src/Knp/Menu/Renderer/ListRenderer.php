@@ -43,7 +43,7 @@ class ListRenderer extends Renderer implements RendererInterface
     {
         $options = array_merge($this->defaultOptions, $options);
 
-        $html = $this->renderList($item, $item->getChildrenAttributes(), $options);
+        $html = $this->renderList($item, $item->getAttributes(), $options);
 
         if ($options['clear_matcher']) {
             $this->matcher->clear();

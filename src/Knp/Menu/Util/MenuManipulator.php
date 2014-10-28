@@ -7,7 +7,7 @@ use Knp\Menu\ItemInterface;
 class MenuManipulator
 {
     /**
-     * Moves item to specified position. Rearange siblings accordingly.
+     * Moves item to specified position. Rearrange siblings accordingly.
      *
      * @param ItemInterface $item
      * @param integer       $position Position to move child to.
@@ -18,7 +18,7 @@ class MenuManipulator
     }
 
     /**
-     * Moves child to specified position. Rearange other children accordingly.
+     * Moves child to specified position. Rearrange other children accordingly.
      *
      * @param ItemInterface $item
      * @param ItemInterface $child    Child to move.
@@ -39,7 +39,7 @@ class MenuManipulator
     }
 
     /**
-     * Moves item to first position. Rearange siblings accordingly.
+     * Moves item to first position. Rearrange siblings accordingly.
      *
      * @param ItemInterface $item
      */
@@ -49,7 +49,7 @@ class MenuManipulator
     }
 
     /**
-     * Moves item to last position. Rearange siblings accordingly.
+     * Moves item to last position. Rearrange siblings accordingly.
      *
      * @param ItemInterface $item
      */

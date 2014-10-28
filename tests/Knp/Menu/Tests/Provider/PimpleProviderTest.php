@@ -3,19 +3,20 @@
 namespace Knp\Menu\Tests\Provider;
 
 use Knp\Menu\Provider\PimpleProvider;
+use Pimple\Container;
 
 class PimpleProviderTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        if (!class_exists('Pimple')) {
+        if (!class_exists('Pimple\Container')) {
             $this->markTestSkipped('Pimple is not available');
         }
     }
 
     public function testHas()
     {
-        $provider = new PimpleProvider(new \Pimple(), array('first' => 'first', 'second' => 'dummy'));
+        $provider = new PimpleProvider(new Container(), array('first' => 'first', 'second' => 'dummy'));
         $this->assertTrue($provider->has('first'));
         $this->assertTrue($provider->has('second'));
         $this->assertFalse($provider->has('third'));
@@ -23,7 +24,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetExistentMenu()
     {
-        $pimple = new \Pimple();
+        $pimple = new Container();
         $menu = $this->getMock('Knp\Menu\ItemInterface');
         $pimple['menu'] = function() use ($menu) {
             return $menu;
@@ -34,7 +35,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetMenuAsClosure()
     {
-        $pimple = new \Pimple();
+        $pimple = new Container();
         $menu = $this->getMock('Knp\Menu\ItemInterface');
         $pimple['menu'] = $pimple->protect(function($options, $c) use ($menu) {
             $c['options'] = $options;
@@ -48,11 +49,11 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testGetNonExistentMenu()
     {
-        $provider = new PimpleProvider(new \Pimple());
+        $provider = new PimpleProvider(new Container());
         $provider->get('non-existent');
     }
 }

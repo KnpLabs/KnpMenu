@@ -2,15 +2,17 @@
 
 namespace Knp\Menu\Renderer;
 
+use Pimple\Container;
+
 class PimpleProvider implements RendererProviderInterface
 {
-    private $pimple;
+    private $app;
     private $rendererIds;
     private $defaultRenderer;
 
-    public function __construct(\Pimple $pimple, $defaultRenderer, array $rendererIds)
+    public function __construct(Container $app, $defaultRenderer, array $rendererIds)
     {
-        $this->pimple = $pimple;
+        $this->app = $app;
         $this->rendererIds = $rendererIds;
         $this->defaultRenderer = $defaultRenderer;
     }
@@ -25,7 +27,7 @@ class PimpleProvider implements RendererProviderInterface
             throw new \InvalidArgumentException(sprintf('The renderer "%s" is not defined.', $name));
         }
 
-        return $this->pimple[$this->rendererIds[$name]];
+        return $this->app[$this->rendererIds[$name]];
     }
 
     public function has($name)

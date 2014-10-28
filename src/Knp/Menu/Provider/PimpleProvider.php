@@ -2,14 +2,16 @@
 
 namespace Knp\Menu\Provider;
 
+use Pimple\Container;
+
 class PimpleProvider implements MenuProviderInterface
 {
-    private $pimple;
+    private $app;
     private $menuIds;
 
-    public function __construct(\Pimple $pimple, array $menuIds = array())
+    public function __construct(Container $app, array $menuIds = array())
     {
-        $this->pimple = $pimple;
+        $this->app = $app;
         $this->menuIds = $menuIds;
     }
 
@@ -19,10 +21,10 @@ class PimpleProvider implements MenuProviderInterface
             throw new \InvalidArgumentException(sprintf('The menu "%s" is not defined.', $name));
         }
 
-        $menu = $this->pimple[$this->menuIds[$name]];
+        $menu = $this->app[$this->menuIds[$name]];
 
         if ($menu instanceof \Closure) {
-            $menu = $menu($options, $this->pimple);
+            $menu = $menu($options, $this->app);
         }
 
         return $menu;

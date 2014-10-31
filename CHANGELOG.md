@@ -1,5 +1,7 @@
 ## 2.1.0
 
+* `Knp\Menu\Provider\PimpleProvider` is deprecated in favor of `Knp\Menu\Integration\Pimple\PimpleMenuProvider`
+* `Knp\Menu\Renderer\PimpleProvider` is deprecated in favor of `Knp\Menu\Integration\Pimple\PimpleRendererProvider`
 * `Knp\Menu\Twig\Helper` is deprecated in favor of `Knp\Menu\Templating\Helper`
 * `Knp\Menu\Twig\MenuExtension` is deprecated in favor of `Knp\Menu\Integration\Twig\MenuExtension`
 * `Knp\Menu\Renderer\TwigRenderer` is deprecated in favor of `Knp\Menu\Integration\Twig\TwigRenderer`

@@ -1,10 +1,10 @@
 <?php
 
-namespace Knp\Menu\Tests\Provider;
+namespace Knp\Menu\Tests\Integration\Pimple;
 
-use Knp\Menu\Provider\PimpleProvider;
+use Knp\Menu\Integration\Pimple\PimpleMenuProvider;
 
-class PimpleProviderTest extends \PHPUnit_Framework_TestCase
+class PimpleMenuProviderTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
@@ -15,7 +15,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testHas()
     {
-        $provider = new PimpleProvider(new \Pimple(), array('first' => 'first', 'second' => 'dummy'));
+        $provider = new PimpleMenuProvider(new \Pimple(), array('first' => 'first', 'second' => 'dummy'));
         $this->assertTrue($provider->has('first'));
         $this->assertTrue($provider->has('second'));
         $this->assertFalse($provider->has('third'));
@@ -28,7 +28,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
         $pimple['menu'] = function() use ($menu) {
             return $menu;
         };
-        $provider = new PimpleProvider($pimple, array('default' => 'menu'));
+        $provider = new PimpleMenuProvider($pimple, array('default' => 'menu'));
         $this->assertSame($menu, $provider->get('default'));
     }
 
@@ -41,7 +41,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
 
             return $menu;
         });
-        $provider = new PimpleProvider($pimple, array('default' => 'menu'));
+        $provider = new PimpleMenuProvider($pimple, array('default' => 'menu'));
 
         $this->assertSame($menu, $provider->get('default', array('foo' => 'bar')));
         $this->assertEquals(array('foo' => 'bar'), $pimple['options']);
@@ -52,7 +52,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetNonExistentMenu()
     {
-        $provider = new PimpleProvider(new \Pimple());
+        $provider = new PimpleMenuProvider(new \Pimple());
         $provider->get('non-existent');
     }
 }

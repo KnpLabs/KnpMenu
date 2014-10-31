@@ -1,10 +1,10 @@
 <?php
 
-namespace Knp\Menu\Tests\Renderer;
+namespace Knp\Menu\Tests\Integration\Pimple;
 
-use Knp\Menu\Renderer\PimpleProvider;
+use Knp\Menu\Integration\Pimple\PimpleRendererProvider;
 
-class PimpleProviderTest extends \PHPUnit_Framework_TestCase
+class PimpleRendererProviderTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
@@ -15,7 +15,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testHas()
     {
-        $provider = new PimpleProvider(new \Pimple(), 'first', array('first' => 'first', 'second' => 'dummy'));
+        $provider = new PimpleRendererProvider(new \Pimple(), 'first', array('first' => 'first', 'second' => 'dummy'));
         $this->assertTrue($provider->has('first'));
         $this->assertTrue($provider->has('second'));
         $this->assertFalse($provider->has('third'));
@@ -28,7 +28,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
         $pimple['renderer'] = function() use ($renderer) {
             return $renderer;
         };
-        $provider = new PimpleProvider($pimple, 'default',  array('default' => 'renderer'));
+        $provider = new PimpleRendererProvider($pimple, 'default',  array('default' => 'renderer'));
         $this->assertSame($renderer, $provider->get('default'));
     }
 
@@ -39,7 +39,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
         $pimple['renderer'] = function() use ($renderer) {
             return $renderer;
         };
-        $provider = new PimpleProvider($pimple, 'default',  array('default' => 'renderer'));
+        $provider = new PimpleRendererProvider($pimple, 'default',  array('default' => 'renderer'));
         $this->assertSame($renderer, $provider->get());
     }
 
@@ -48,7 +48,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetNonExistentRenderer()
     {
-        $provider = new PimpleProvider(new \Pimple(), 'default', array());
+        $provider = new PimpleRendererProvider(new \Pimple(), 'default', array());
         $provider->get('non-existent');
     }
 }

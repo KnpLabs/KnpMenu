@@ -1,8 +1,8 @@
 <?php
 
-namespace Knp\Menu\Tests\Twig;
+namespace Knp\Menu\Tests\Templating;
 
-use Knp\Menu\Twig\Helper;
+use Knp\Menu\Templating\Helper;
 
 class HelperTest extends \PHPUnit_Framework_TestCase
 {

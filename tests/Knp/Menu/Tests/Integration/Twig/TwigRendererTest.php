@@ -1,8 +1,9 @@
 <?php
 
-namespace Knp\Menu\Tests\Renderer;
+namespace Knp\Menu\Tests\Integration\Twig;
 
-use Knp\Menu\Renderer\TwigRenderer;
+use Knp\Menu\Tests\Renderer\AbstractRendererTest;
+use Knp\Menu\Integration\Twig\TwigRenderer;
 use Knp\Menu\MenuItem;
 use Knp\Menu\MenuFactory;
 use Knp\Menu\Matcher\MatcherInterface;
@@ -14,7 +15,7 @@ class TwigRendererTest extends AbstractRendererTest
         if (!class_exists('Twig_Environment')) {
             $this->markTestSkipped('Twig is not available');
         }
-        $loader = new \Twig_Loader_Filesystem(__DIR__.'/../../../../../src/Knp/Menu/Resources/views');
+        $loader = new \Twig_Loader_Filesystem(__DIR__.'/../../../../../../src/Knp/Menu/Resources/views');
         $environment = new \Twig_Environment($loader);
         $renderer = new TwigRenderer($environment, 'knp_menu.html.twig', $matcher, array('compressed' => true));
 

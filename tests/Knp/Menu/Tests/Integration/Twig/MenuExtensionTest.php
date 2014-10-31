@@ -1,8 +1,8 @@
 <?php
 
-namespace Knp\Menu\Tests\Twig;
+namespace Knp\Menu\Tests\Integration\Twig;
 
-use Knp\Menu\Twig\MenuExtension;
+use Knp\Menu\Integration\Twig\MenuExtension;
 
 class MenuExtensionTest extends \PHPUnit_Framework_TestCase
 {
@@ -142,7 +142,7 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
 
     private function getHelperMock(array $methods)
     {
-        return $this->getMockBuilder('Knp\Menu\Twig\Helper')
+        return $this->getMockBuilder('Knp\Menu\Templating\Helper')
             ->disableOriginalConstructor()
             ->setMethods($methods)
             ->getMock()
@@ -165,7 +165,7 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param string                $template
-     * @param \Knp\Menu\Twig\Helper $helper
+     * @param \Knp\Menu\Templating\Helper $helper
      *
      * @return \Twig_Template
      */

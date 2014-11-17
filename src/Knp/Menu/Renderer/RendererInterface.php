@@ -4,6 +4,11 @@ namespace Knp\Menu\Renderer;
 
 use Knp\Menu\ItemInterface;
 
+/**
+ * Interface RendererInterface
+ *
+ * @package Knp\Menu\Renderer
+ */
 interface RendererInterface
 {
     /**

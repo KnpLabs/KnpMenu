@@ -4,12 +4,13 @@ namespace Knp\Menu;
 
 /**
  * Interface implemented by a node to construct a menu from a tree.
+ *
+ * @package Knp\Menu
  */
 interface NodeInterface
 {
     /**
      * Get the name of the node
-     *
      * Each child of a node must have a unique name
      *
      * @return string

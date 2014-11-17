@@ -9,10 +9,17 @@ use Knp\Menu\Provider\MenuProviderInterface;
 /**
  * Helper class containing logic to retrieve and render menus from templating engines
  *
+ * @package Knp\Menu\Twig
  */
 class Helper
 {
+    /**
+     * @var RendererProviderInterface
+     */
     private $rendererProvider;
+    /**
+     * @var MenuProviderInterface|null
+     */
     private $menuProvider;
 
     /**

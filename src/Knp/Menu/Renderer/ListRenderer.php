@@ -7,10 +7,19 @@ use Knp\Menu\Matcher\MatcherInterface;
 
 /**
  * Renders MenuItem tree as unordered list
+ *
+ * @package Knp\Menu\Renderer
  */
 class ListRenderer extends Renderer implements RendererInterface
 {
+    /**
+     * @var MatcherInterface
+     */
     protected $matcher;
+
+    /**
+     * @var array
+     */
     protected $defaultOptions;
 
     /**
@@ -20,25 +29,34 @@ class ListRenderer extends Renderer implements RendererInterface
      */
     public function __construct(MatcherInterface $matcher, array $defaultOptions = array(), $charset = null)
     {
-        $this->matcher = $matcher;
-        $this->defaultOptions = array_merge(array(
-            'depth' => null,
-            'matchingDepth' => null,
-            'currentAsLink' => true,
-            'currentClass' => 'current',
-            'ancestorClass' => 'current_ancestor',
-            'firstClass' => 'first',
-            'lastClass' => 'last',
-            'compressed' => false,
-            'allow_safe_labels' => false,
-            'clear_matcher' => true,
-            'leaf_class' => null,
-            'branch_class' => null,
-        ), $defaultOptions);
+        $this->matcher        = $matcher;
+        $this->defaultOptions = array_merge(
+            array(
+                'depth'             => null,
+                'matchingDepth'     => null,
+                'currentAsLink'     => true,
+                'currentClass'      => 'current',
+                'ancestorClass'     => 'current_ancestor',
+                'firstClass'        => 'first',
+                'lastClass'         => 'last',
+                'compressed'        => false,
+                'allow_safe_labels' => false,
+                'clear_matcher'     => true,
+                'leaf_class'        => null,
+                'branch_class'      => null,
+            ),
+            $defaultOptions
+        );
 
         parent::__construct($charset);
     }
 
+    /**
+     * @param ItemInterface $item
+     * @param array         $options
+     *
+     * @return string
+     */
     public function render(ItemInterface $item, array $options = array())
     {
         $options = array_merge($this->defaultOptions, $options);
@@ -52,6 +70,13 @@ class ListRenderer extends Renderer implements RendererInterface
         return $html;
     }
 
+    /**
+     * @param ItemInterface $item
+     * @param array         $attributes
+     * @param array         $options
+     *
+     * @return string
+     */
     protected function renderList(ItemInterface $item, array $attributes, array $options)
     {
         /**
@@ -122,7 +147,7 @@ class ListRenderer extends Renderer implements RendererInterface
         }
 
         // create an array than can be imploded as a class list
-        $class = (array) $item->getAttribute('class');
+        $class = (array)$item->getAttribute('class');
 
         if ($this->matcher->isCurrent($item)) {
             $class[] = $options['currentClass'];
@@ -159,10 +184,10 @@ class ListRenderer extends Renderer implements RendererInterface
         $html .= $this->renderLink($item, $options);
 
         // renders the embedded ul
-        $childrenClass = (array) $item->getChildrenAttribute('class');
+        $childrenClass   = (array)$item->getChildrenAttribute('class');
         $childrenClass[] = 'menu_level_'.$item->getLevel();
 
-        $childrenAttributes = $item->getChildrenAttributes();
+        $childrenAttributes          = $item->getChildrenAttributes();
         $childrenAttributes['class'] = implode(' ', $childrenClass);
 
         $html .= $this->renderList($item, $childrenAttributes, $options);
@@ -197,16 +222,43 @@ class ListRenderer extends Renderer implements RendererInterface
         return $this->format($text, 'link', $item->getLevel(), $options);
     }
 
+    /**
+     * @param ItemInterface $item
+     * @param array         $options
+     *
+     * @return string
+     */
     protected function renderLinkElement(ItemInterface $item, array $options)
     {
-        return sprintf('<a href="%s"%s>%s</a>', $this->escape($item->getUri()), $this->renderHtmlAttributes($item->getLinkAttributes()), $this->renderLabel($item, $options));
+        return sprintf(
+            '<a href="%s"%s>%s</a>',
+            $this->escape($item->getUri()),
+            $this->renderHtmlAttributes($item->getLinkAttributes()),
+            $this->renderLabel($item, $options)
+        );
     }
 
+    /**
+     * @param ItemInterface $item
+     * @param array         $options
+     *
+     * @return string
+     */
     protected function renderSpanElement(ItemInterface $item, array $options)
     {
-        return sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $this->renderLabel($item, $options));
+        return sprintf(
+            '<span%s>%s</span>',
+            $this->renderHtmlAttributes($item->getLabelAttributes()),
+            $this->renderLabel($item, $options)
+        );
     }
 
+    /**
+     * @param ItemInterface $item
+     * @param array         $options
+     *
+     * @return string
+     */
     protected function renderLabel(ItemInterface $item, array $options)
     {
         if ($options['allow_safe_labels'] && $item->getExtra('safe_label', false)) {
@@ -221,8 +273,8 @@ class ListRenderer extends Renderer implements RendererInterface
      * spacing and line-breaking so that the particular thing being rendered
      * makes up its part in a fully-rendered and spaced menu.
      *
-     * @param string  $html    The html to render in an (un)formatted way
-     * @param string  $type    The type [ul,link,li] of thing being rendered
+     * @param string  $html The html to render in an (un)formatted way
+     * @param string  $type The type [ul,link,li] of thing being rendered
      * @param integer $level
      * @param array   $options
      *

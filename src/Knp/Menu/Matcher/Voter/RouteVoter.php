@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Voter based on the route
+ *
+ * @package Knp\Menu\Matcher\Voter
  */
 class RouteVoter implements VoterInterface
 {
@@ -15,16 +17,27 @@ class RouteVoter implements VoterInterface
      */
     private $request;
 
+    /**
+     * @param Request $request
+     */
     public function __construct(Request $request = null)
     {
         $this->request = $request;
     }
 
+    /**
+     * @param Request $request
+     */
     public function setRequest(Request $request)
     {
         $this->request = $request;
     }
 
+    /**
+     * @param ItemInterface $item
+     *
+     * @return bool|null
+     */
     public function matchItem(ItemInterface $item)
     {
         if (null === $this->request) {
@@ -56,6 +69,11 @@ class RouteVoter implements VoterInterface
         return null;
     }
 
+    /**
+     * @param array $testedRoute
+     *
+     * @return bool
+     */
     private function isMatchingRoute(array $testedRoute)
     {
         $route = $this->request->attributes->get('_route');

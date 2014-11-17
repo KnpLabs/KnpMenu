@@ -4,6 +4,8 @@ namespace Knp\Menu;
 
 /**
  * Interface implemented by the factory to create items
+ *
+ * @package Knp\Menu
  */
 interface FactoryInterface
 {

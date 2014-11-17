@@ -5,13 +5,26 @@ namespace Knp\Menu\Renderer;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\MatcherInterface;
 
+/**
+ * Class TwigRenderer
+ *
+ * @package Knp\Menu\Renderer
+ */
 class TwigRenderer implements RendererInterface
 {
     /**
      * @var \Twig_Environment
      */
     private $environment;
+
+    /**
+     * @var MatcherInterface
+     */
     private $matcher;
+
+    /**
+     * @var array
+     */
     private $defaultOptions;
 
     /**
@@ -41,6 +54,12 @@ class TwigRenderer implements RendererInterface
         ), $defaultOptions);
     }
 
+    /**
+     * @param ItemInterface $item
+     * @param array         $options
+     *
+     * @return mixed
+     */
     public function render(ItemInterface $item, array $options = array())
     {
         $options = array_merge($this->defaultOptions, $options);

@@ -4,73 +4,99 @@ namespace Knp\Menu;
 
 /**
  * Default implementation of the ItemInterface
+ *
+ * @package Knp\Menu
  */
 class MenuItem implements ItemInterface
 {
     /**
      * Name of this menu item (used for id by parent menu)
+     *
      * @var string
      */
     protected $name = null;
+
     /**
      * Label to output, name is used by default
+     *
      * @var string
      */
     protected $label = null;
+
     /**
      * Attributes for the item link
+     *
      * @var array
      */
     protected $linkAttributes = array();
+
     /**
      * Attributes for the children list
+     *
      * @var array
      */
     protected $childrenAttributes = array();
+
     /**
      * Attributes for the item text
+     *
      * @var array
      */
     protected $labelAttributes = array();
+
     /**
      * Uri to use in the anchor tag
+     *
      * @var string
      */
     protected $uri = null;
+
     /**
      * Attributes for the item
+     *
      * @var array
      */
     protected $attributes = array();
+
     /**
      * Extra stuff associated to the item
+     *
      * @var array
      */
     protected $extras = array();
 
+
     /**
      * Whether the item is displayed
+     *
      * @var boolean
      */
     protected $display = true;
+
     /**
      * Whether the children of the item are displayed
+     *
      * @var boolean
      */
     protected $displayChildren = true;
 
     /**
      * Child items
+     *
      * @var ItemInterface[]
      */
     protected $children = array();
+
     /**
      * Parent item
+     *
      * @var ItemInterface|null
      */
     protected $parent = null;
+
     /**
      * whether the item is current. null means unknown
+     *
      * @var boolean|null
      */
     protected $isCurrent = null;
@@ -89,7 +115,7 @@ class MenuItem implements ItemInterface
      */
     public function __construct($name, FactoryInterface $factory)
     {
-        $this->name = (string) $name;
+        $this->name    = (string)$name;
         $this->factory = $factory;
     }
 
@@ -97,6 +123,7 @@ class MenuItem implements ItemInterface
      * setFactory
      *
      * @param FactoryInterface $factory
+     *
      * @return self
      */
     public function setFactory(FactoryInterface $factory)
@@ -106,11 +133,21 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     *
+     * @return MenuItem|ItemInterface
+     *
+     * @throw \InvalidArgumentException
+     */
     public function setName($name)
     {
         if ($this->name == $name) {
@@ -122,14 +159,14 @@ class MenuItem implements ItemInterface
             throw new \InvalidArgumentException('Cannot rename item, name is already used by sibling.');
         }
 
-        $oldName = $this->name;
+        $oldName    = $this->name;
         $this->name = $name;
 
         if (null !== $parent) {
             $names = array_keys($parent->getChildren());
             $items = array_values($parent->getChildren());
 
-            $offset = array_search($oldName, $names);
+            $offset         = array_search($oldName, $names);
             $names[$offset] = $name;
 
             $parent->setChildren(array_combine($names, $items));
@@ -138,11 +175,19 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getUri()
     {
         return $this->uri;
     }
 
+    /**
+     * @param string $uri
+     *
+     * @return MenuItem|ItemInterface
+     */
     public function setUri($uri)
     {
         $this->uri = $uri;
@@ -150,11 +195,19 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getLabel()
     {
         return ($this->label !== null) ? $this->label : $this->name;
     }
 
+    /**
+     * @param string $label
+     *
+     * @return MenuItem|ItemInterface
+     */
     public function setLabel($label)
     {
         $this->label = $label;
@@ -162,11 +215,19 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getAttributes()
     {
         return $this->attributes;
     }
 
+    /**
+     * @param array $attributes
+     *
+     * @return MenuItem|ItemInterface
+     */
     public function setAttributes(array $attributes)
     {
         $this->attributes = $attributes;
@@ -174,6 +235,12 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @param string $name
+     * @param null   $default
+     *
+     * @return mixed|null
+     */
     public function getAttribute($name, $default = null)
     {
         if (isset($this->attributes[$name])) {
@@ -183,6 +250,12 @@ class MenuItem implements ItemInterface
         return $default;
     }
 
+    /**
+     * @param string $name
+     * @param mixed  $value
+     *
+     * @return MenuItem|ItemInterface
+     */
     public function setAttribute($name, $value)
     {
         $this->attributes[$name] = $value;
@@ -190,11 +263,19 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getLinkAttributes()
     {
         return $this->linkAttributes;
     }
 
+    /**
+     * @param array $linkAttributes
+     *
+     * @return MenuItem|ItemInterface
+     */
     public function setLinkAttributes(array $linkAttributes)
     {
         $this->linkAttributes = $linkAttributes;
@@ -202,6 +283,12 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @param string $name
+     * @param null   $default
+     *
+     * @return mixed|null
+     */
     public function getLinkAttribute($name, $default = null)
     {
         if (isset($this->linkAttributes[$name])) {
@@ -211,6 +298,12 @@ class MenuItem implements ItemInterface
         return $default;
     }
 
+    /**
+     * @param string $name
+     * @param string $value
+     *
+     * @return MenuItem|ItemInterface
+     */
     public function setLinkAttribute($name, $value)
     {
         $this->linkAttributes[$name] = $value;
@@ -218,11 +311,19 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getChildrenAttributes()
     {
         return $this->childrenAttributes;
     }
 
+    /**
+     * @param array $childrenAttributes
+     *
+     * @return MenuItem
+     */
     public function setChildrenAttributes(array $childrenAttributes)
     {
         $this->childrenAttributes = $childrenAttributes;
@@ -230,6 +331,12 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @param string $name
+     * @param null   $default
+     *
+     * @return null
+     */
     public function getChildrenAttribute($name, $default = null)
     {
         if (isset($this->childrenAttributes[$name])) {
@@ -239,6 +346,12 @@ class MenuItem implements ItemInterface
         return $default;
     }
 
+    /**
+     * @param string $name
+     * @param string $value
+     *
+     * @return MenuItem
+     */
     public function setChildrenAttribute($name, $value)
     {
         $this->childrenAttributes[$name] = $value;
@@ -246,11 +359,19 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getLabelAttributes()
     {
         return $this->labelAttributes;
     }
 
+    /**
+     * @param array $labelAttributes
+     *
+     * @return MenuItem
+     */
     public function setLabelAttributes(array $labelAttributes)
     {
         $this->labelAttributes = $labelAttributes;
@@ -258,6 +379,12 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @param string $name
+     * @param null   $default
+     *
+     * @return null
+     */
     public function getLabelAttribute($name, $default = null)
     {
         if (isset($this->labelAttributes[$name])) {
@@ -267,6 +394,12 @@ class MenuItem implements ItemInterface
         return $default;
     }
 
+    /**
+     * @param string $name
+     * @param mixed  $value
+     *
+     * @return MenuItem
+     */
     public function setLabelAttribute($name, $value)
     {
         $this->labelAttributes[$name] = $value;
@@ -274,11 +407,19 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @return array
+     */
     public function getExtras()
     {
         return $this->extras;
     }
 
+    /**
+     * @param array $extras
+     *
+     * @return MenuItem
+     */
     public function setExtras(array $extras)
     {
         $this->extras = $extras;
@@ -286,6 +427,12 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @param string $name
+     * @param null   $default
+     *
+     * @return null
+     */
     public function getExtra($name, $default = null)
     {
         if (isset($this->extras[$name])) {
@@ -295,6 +442,12 @@ class MenuItem implements ItemInterface
         return $default;
     }
 
+    /**
+     * @param string $name
+     * @param mixed  $value
+     *
+     * @return MenuItem
+     */
     public function setExtra($name, $value)
     {
         $this->extras[$name] = $value;
@@ -302,36 +455,62 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function getDisplayChildren()
     {
         return $this->displayChildren;
     }
 
+    /**
+     * @param bool $bool
+     *
+     * @return MenuItem
+     */
     public function setDisplayChildren($bool)
     {
-        $this->displayChildren = (bool) $bool;
+        $this->displayChildren = (bool)$bool;
 
         return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isDisplayed()
     {
         return $this->display;
     }
 
+    /**
+     * @param bool $bool
+     *
+     * @return MenuItem
+     */
     public function setDisplay($bool)
     {
-        $this->display = (bool) $bool;
+        $this->display = (bool)$bool;
 
         return $this;
     }
 
+    /**
+     * @param ItemInterface|string $child
+     * @param array                $options
+     *
+     * @return ItemInterface|string
+     *
+     * @throw \InvalidArgumentException
+     */
     public function addChild($child, array $options = array())
     {
         if (!$child instanceof ItemInterface) {
             $child = $this->factory->createItem($child, $options);
         } elseif (null !== $child->getParent()) {
-            throw new \InvalidArgumentException('Cannot add menu item as child, it already belongs to another menu (e.g. has a parent).');
+            throw new \InvalidArgumentException(
+                'Cannot add menu item as child, it already belongs to another menu (e.g. has a parent).'
+            );
         }
 
         $child->setParent($this);
@@ -341,11 +520,23 @@ class MenuItem implements ItemInterface
         return $child;
     }
 
+    /**
+     * @param string $name
+     *
+     * @return ItemInterface|null
+     */
     public function getChild($name)
     {
         return isset($this->children[$name]) ? $this->children[$name] : null;
     }
 
+    /**
+     * @param array $order
+     *
+     * @return MenuItem
+     *
+     * @throw \InvalidArgumentException
+     */
     public function reorderChildren($order)
     {
         if (count($order) != $this->count()) {
@@ -356,10 +547,10 @@ class MenuItem implements ItemInterface
 
         foreach ($order as $name) {
             if (!isset($this->children[$name])) {
-                throw new \InvalidArgumentException('Cannot find children named ' . $name);
+                throw new \InvalidArgumentException('Cannot find children named '.$name);
             }
 
-            $child = $this->children[$name];
+            $child              = $this->children[$name];
             $newChildren[$name] = $child;
         }
 
@@ -368,6 +559,9 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @return MenuItem
+     */
     public function copy()
     {
         $newMenu = clone $this;
@@ -380,11 +574,17 @@ class MenuItem implements ItemInterface
         return $newMenu;
     }
 
+    /**
+     * @return int
+     */
     public function getLevel()
     {
         return $this->parent ? $this->parent->getLevel() + 1 : 0;
     }
 
+    /**
+     * @return MenuItem
+     */
     public function getRoot()
     {
         $obj = $this;
@@ -395,16 +595,27 @@ class MenuItem implements ItemInterface
         return $found;
     }
 
+    /**
+     * @return bool
+     */
     public function isRoot()
     {
         return null === $this->parent;
     }
 
+    /**
+     * @return ItemInterface|null
+     */
     public function getParent()
     {
         return $this->parent;
     }
 
+    /**
+     * @param ItemInterface $parent
+     *
+     * @return MenuItem
+     */
     public function setParent(ItemInterface $parent = null)
     {
         $this->parent = $parent;
@@ -412,11 +623,19 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @return ItemInterface[]
+     */
     public function getChildren()
     {
         return $this->children;
     }
 
+    /**
+     * @param array $children
+     *
+     * @return MenuItem
+     */
     public function setChildren(array $children)
     {
         $this->children = $children;
@@ -424,6 +643,11 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @param ItemInterface|string $name
+     *
+     * @return MenuItem
+     */
     public function removeChild($name)
     {
         $name = $name instanceof ItemInterface ? $name->getName() : $name;
@@ -437,16 +661,25 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getFirstChild()
     {
         return reset($this->children);
     }
 
+    /**
+     * @return mixed
+     */
     public function getLastChild()
     {
         return end($this->children);
     }
 
+    /**
+     * @return bool
+     */
     public function hasChildren()
     {
         foreach ($this->children as $child) {
@@ -458,6 +691,11 @@ class MenuItem implements ItemInterface
         return false;
     }
 
+    /**
+     * @param bool|null $bool
+     *
+     * @return MenuItem
+     */
     public function setCurrent($bool)
     {
         $this->isCurrent = $bool;
@@ -465,11 +703,17 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function isCurrent()
     {
         return $this->isCurrent;
     }
 
+    /**
+     * @return bool
+     */
     public function isLast()
     {
         // if this is root, then return false
@@ -480,6 +724,9 @@ class MenuItem implements ItemInterface
         return $this->getParent()->getLastChild() === $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isFirst()
     {
         // if this is root, then return false
@@ -490,6 +737,9 @@ class MenuItem implements ItemInterface
         return $this->getParent()->getFirstChild() === $this;
     }
 
+    /**
+     * @return bool
+     */
     public function actsLikeFirst()
     {
         // root items are never "marked" as first
@@ -507,6 +757,7 @@ class MenuItem implements ItemInterface
             return true;
         }
 
+        /** @var ItemInterface[] $children */
         $children = $this->getParent()->getChildren();
         foreach ($children as $child) {
             // loop until we find a visible menu. If its this menu, we're first
@@ -518,6 +769,9 @@ class MenuItem implements ItemInterface
         return false;
     }
 
+    /**
+     * @return bool
+     */
     public function actsLikeLast()
     {
         // root items are never "marked" as last
@@ -535,6 +789,7 @@ class MenuItem implements ItemInterface
             return true;
         }
 
+        /** @var ItemInterface[] $children */
         $children = array_reverse($this->getParent()->getChildren());
         foreach ($children as $child) {
             // loop until we find a visible menu. If its this menu, we're first
@@ -548,6 +803,8 @@ class MenuItem implements ItemInterface
 
     /**
      * Implements Countable
+     *
+     * @return int
      */
     public function count()
     {
@@ -556,6 +813,8 @@ class MenuItem implements ItemInterface
 
     /**
      * Implements IteratorAggregate
+     *
+     * @return \ArrayIterator|\Traversable
      */
     public function getIterator()
     {
@@ -564,6 +823,10 @@ class MenuItem implements ItemInterface
 
     /**
      * Implements ArrayAccess
+     *
+     * @param mixed $name
+     *
+     * @return bool
      */
     public function offsetExists($name)
     {
@@ -572,6 +835,10 @@ class MenuItem implements ItemInterface
 
     /**
      * Implements ArrayAccess
+     *
+     * @param mixed $name
+     *
+     * @return ItemInterface|mixed|null
      */
     public function offsetGet($name)
     {
@@ -580,6 +847,11 @@ class MenuItem implements ItemInterface
 
     /**
      * Implements ArrayAccess
+     *
+     * @param mixed $name
+     * @param mixed $value
+     *
+     * @return ItemInterface|void
      */
     public function offsetSet($name, $value)
     {
@@ -588,6 +860,8 @@ class MenuItem implements ItemInterface
 
     /**
      * Implements ArrayAccess
+     *
+     * @param mixed $name
      */
     public function offsetUnset($name)
     {

@@ -4,6 +4,11 @@ namespace Knp\Menu\Loader;
 
 use Knp\Menu\ItemInterface;
 
+/**
+ * Interface LoaderInterface
+ *
+ * @package Knp\Menu\Loader
+ */
 interface LoaderInterface
 {
     /**

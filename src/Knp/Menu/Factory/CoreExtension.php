@@ -5,7 +5,9 @@ namespace Knp\Menu\Factory;
 use Knp\Menu\ItemInterface;
 
 /**
- * core factory extension with the main logic
+ * Core factory extension with the main logic
+ *
+ * @package Knp\Menu\Factory
  */
 class CoreExtension implements ExtensionInterface
 {
@@ -20,16 +22,16 @@ class CoreExtension implements ExtensionInterface
     {
         return array_merge(
             array(
-                'uri' => null,
-                'label' => null,
-                'attributes' => array(),
-                'linkAttributes' => array(),
+                'uri'                => null,
+                'label'              => null,
+                'attributes'         => array(),
+                'linkAttributes'     => array(),
                 'childrenAttributes' => array(),
-                'labelAttributes' => array(),
-                'extras' => array(),
-                'current' => null,
-                'display' => true,
-                'displayChildren' => true,
+                'labelAttributes'    => array(),
+                'extras'             => array(),
+                'current'            => null,
+                'display'            => true,
+                'displayChildren'    => true,
             ),
             $options
         );
@@ -52,8 +54,7 @@ class CoreExtension implements ExtensionInterface
             ->setLabelAttributes($options['labelAttributes'])
             ->setCurrent($options['current'])
             ->setDisplay($options['display'])
-            ->setDisplayChildren($options['displayChildren'])
-        ;
+            ->setDisplayChildren($options['displayChildren']);
 
         $this->buildExtras($item, $options);
     }

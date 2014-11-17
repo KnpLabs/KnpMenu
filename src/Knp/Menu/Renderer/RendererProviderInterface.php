@@ -2,6 +2,11 @@
 
 namespace Knp\Menu\Renderer;
 
+/**
+ * Interface RendererProviderInterface
+ *
+ * @package Knp\Menu\Renderer
+ */
 interface RendererProviderInterface
 {
     /**
@@ -12,6 +17,7 @@ interface RendererProviderInterface
      * @param string $name
      *
      * @return RendererInterface
+     *
      * @throws \InvalidArgumentException if the renderer does not exists
      */
     public function get($name = null);

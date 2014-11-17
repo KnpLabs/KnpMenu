@@ -7,9 +7,14 @@ use Knp\Menu\Matcher\Voter\VoterInterface;
 
 /**
  * A MatcherInterface implementation using a voter system
+ *
+ * @package Knp\Menu\Matcher
  */
 class Matcher implements MatcherInterface
 {
+    /**
+     * @var \SplObjectStorage
+     */
     private $cache;
 
     /**
@@ -17,6 +22,9 @@ class Matcher implements MatcherInterface
      */
     private $voters = array();
 
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->cache = new \SplObjectStorage();
@@ -32,6 +40,11 @@ class Matcher implements MatcherInterface
         $this->voters[] = $voter;
     }
 
+    /**
+     * @param ItemInterface $item
+     *
+     * @return bool|null
+     */
     public function isCurrent(ItemInterface $item)
     {
         $current = $item->isCurrent();
@@ -50,12 +63,18 @@ class Matcher implements MatcherInterface
             }
         }
 
-        $current = (boolean) $current;
+        $current            = (boolean)$current;
         $this->cache[$item] = $current;
 
         return $current;
     }
 
+    /**
+     * @param ItemInterface $item
+     * @param null          $depth
+     *
+     * @return bool
+     */
     public function isAncestor(ItemInterface $item, $depth = null)
     {
         if (0 === $depth) {
@@ -72,6 +91,9 @@ class Matcher implements MatcherInterface
         return false;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function clear()
     {
         $this->cache = new \SplObjectStorage();

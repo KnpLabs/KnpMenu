@@ -7,27 +7,49 @@ use Knp\Menu\ItemInterface;
 
 /**
  * Loader importing a menu tree from an array.
- *
  * The array should match the output of MenuManipulator::toArray
+ *
+ * @package Knp\Menu\Loader
  */
 class ArrayLoader implements LoaderInterface
 {
+    /**
+     * @var FactoryInterface
+     */
     private $factory;
 
+    /**
+     * @param FactoryInterface $factory
+     */
     public function __construct(FactoryInterface $factory)
     {
         $this->factory = $factory;
     }
 
+    /**
+     * @param mixed $data
+     *
+     * @return ItemInterface
+     */
     public function load($data)
     {
         if (!$this->supports($data)) {
-            throw new \InvalidArgumentException(sprintf('Unsupported data. Expected an array but got ', is_object($data) ? get_class($data) : gettype($data)));
+            throw new \InvalidArgumentException(
+                sprintf(
+                    'Unsupported data. Expected an array but got ',
+                    is_object($data) ? get_class($data) : gettype($data)
+                )
+            );
         }
 
         return $this->fromArray($data);
     }
 
+    /**
+     * @param mixed $data
+     *
+     * @return bool
+     */
     public function supports($data)
     {
         return is_array($data);

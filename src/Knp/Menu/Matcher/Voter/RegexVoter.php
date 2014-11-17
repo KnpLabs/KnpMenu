@@ -7,6 +7,8 @@ use Knp\Menu\ItemInterface;
 /**
  * Implements the VoterInterface which can be used as voter for "current" class
  * `matchItem` will return true if the pattern you're searching for is found in the URI of the item
+ *
+ * @package Knp\Menu\Matcher\Voter
  */
 class RegexVoter implements VoterInterface
 {
@@ -23,6 +25,11 @@ class RegexVoter implements VoterInterface
         $this->regexp = $regexp;
     }
 
+    /**
+     * @param ItemInterface $item
+     *
+     * @return bool|null
+     */
     public function matchItem(ItemInterface $item)
     {
         if (null === $this->regexp || null === $item->getUri()) {

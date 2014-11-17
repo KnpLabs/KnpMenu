@@ -6,6 +6,8 @@ use Knp\Menu\ItemInterface;
 
 /**
  * Interface implemented by the matching voters
+ *
+ * @package Knp\Menu\Matcher\Voter
  */
 interface VoterInterface
 {

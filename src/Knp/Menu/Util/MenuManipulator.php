@@ -4,6 +4,11 @@ namespace Knp\Menu\Util;
 
 use Knp\Menu\ItemInterface;
 
+/**
+ * Class MenuManipulator
+ *
+ * @package Knp\Menu\Util
+ */
 class MenuManipulator
 {
     /**
@@ -26,7 +31,7 @@ class MenuManipulator
      */
     public function moveChildToPosition(ItemInterface $item, ItemInterface $child, $position)
     {
-        $name = $child->getName();
+        $name  = $child->getName();
         $order = array_keys($item->getChildren());
 
         $oldPosition = array_search($name, $order);
@@ -97,13 +102,13 @@ class MenuManipulator
                 $length = $length->getName();
             }
             if (!is_numeric($length)) {
-                $index = array_search($length, $names);
+                $index  = array_search($length, $names);
                 $length = ($index < $offset) ? 0 : $index - $offset;
             }
         }
 
         $slicedItem = $item->copy();
-        $children = array_slice($slicedItem->getChildren(), $offset, $length);
+        $children   = array_slice($slicedItem->getChildren(), $offset, $length);
         $slicedItem->setChildren($children);
 
         return $slicedItem;
@@ -120,7 +125,7 @@ class MenuManipulator
     public function split(ItemInterface $item, $length)
     {
         return array(
-            'primary' => $this->slice($item, 0, $length),
+            'primary'   => $this->slice($item, 0, $length),
             'secondary' => $this->slice($item, $length),
         );
     }
@@ -128,8 +133,7 @@ class MenuManipulator
     /**
      * Calls a method recursively on all of the children of this item
      *
-     * @example
-     * $menu->callRecursively('setShowChildren', array(false));
+     * @example $menu->callRecursively('setShowChildren', array(false));
      *
      * @param ItemInterface $item
      * @param string        $method
@@ -157,7 +161,7 @@ class MenuManipulator
     public function getPathAsString(ItemInterface $item, $separator = ' > ')
     {
         $children = array();
-        $obj = $item;
+        $obj      = $item;
 
         do {
             $children[] = $obj->getLabel();
@@ -175,22 +179,22 @@ class MenuManipulator
     public function toArray(ItemInterface $item, $depth = null)
     {
         $array = array(
-            'name' => $item->getName(),
-            'label' => $item->getLabel(),
-            'uri' => $item->getUri(),
-            'attributes' => $item->getAttributes(),
-            'labelAttributes' => $item->getLabelAttributes(),
-            'linkAttributes' => $item->getLinkAttributes(),
+            'name'               => $item->getName(),
+            'label'              => $item->getLabel(),
+            'uri'                => $item->getUri(),
+            'attributes'         => $item->getAttributes(),
+            'labelAttributes'    => $item->getLabelAttributes(),
+            'linkAttributes'     => $item->getLinkAttributes(),
             'childrenAttributes' => $item->getChildrenAttributes(),
-            'extras' => $item->getExtras(),
-            'display' => $item->isDisplayed(),
-            'displayChildren' => $item->getDisplayChildren(),
-            'current' => $item->isCurrent(),
+            'extras'             => $item->getExtras(),
+            'display'            => $item->isDisplayed(),
+            'displayChildren'    => $item->getDisplayChildren(),
+            'current'            => $item->isCurrent(),
         );
 
         // export the children as well, unless explicitly disabled
         if (0 !== $depth) {
-            $childDepth = null === $depth ? null : $depth - 1;
+            $childDepth        = null === $depth ? null : $depth - 1;
             $array['children'] = array();
             foreach ($item->getChildren() as $key => $child) {
                 $array['children'][$key] = $this->toArray($child, $childDepth);
@@ -252,30 +256,35 @@ class MenuManipulator
 
                 case is_integer($key) && is_string($value):
                     $value = array(
-                        'label' => (string) $value,
-                        'uri' => null,
-                        'item' => null,
+                        'label' => (string)$value,
+                        'uri'   => null,
+                        'item'  => null,
                     );
                     break;
 
                 case is_scalar($value):
                     $value = array(
-                        'label' => (string) $key,
-                        'uri' => (string) $value,
-                        'item' => null,
+                        'label' => (string)$key,
+                        'uri'   => (string)$value,
+                        'item'  => null,
                     );
                     break;
 
                 case null === $value:
                     $value = array(
-                        'label' => (string) $key,
-                        'uri' => null,
-                        'item' => null,
+                        'label' => (string)$key,
+                        'uri'   => null,
+                        'item'  => null,
                     );
                     break;
 
                 default:
-                    throw new \InvalidArgumentException(sprintf('Invalid value supplied for the key "%s". It should be an item, an array or a scalar', $key));
+                    throw new \InvalidArgumentException(
+                        sprintf(
+                            'Invalid value supplied for the key "%s". It should be an item, an array or a scalar',
+                            $key
+                        )
+                    );
             }
 
             $breadcrumbs[] = $value;
@@ -284,6 +293,11 @@ class MenuManipulator
         return $breadcrumbs;
     }
 
+    /**
+     * @param ItemInterface $item
+     *
+     * @return array
+     */
     private function buildBreadcrumbsArray(ItemInterface $item)
     {
         $breadcrumb = array();
@@ -295,12 +309,17 @@ class MenuManipulator
         return array_reverse($breadcrumb);
     }
 
+    /**
+     * @param ItemInterface $item
+     *
+     * @return array
+     */
     private function getBreadcrumbsItem(ItemInterface $item)
     {
         return array(
             'label' => $item->getLabel(),
-            'uri' => $item->getUri(),
-            'item' => $item,
+            'uri'   => $item->getUri(),
+            'item'  => $item,
         );
     }
 }

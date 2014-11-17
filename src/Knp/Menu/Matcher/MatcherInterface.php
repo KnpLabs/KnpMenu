@@ -6,6 +6,8 @@ use Knp\Menu\ItemInterface;
 
 /**
  * Interface implemented by the item matcher
+ *
+ * @package Knp\Menu\Matcher
  */
 interface MatcherInterface
 {

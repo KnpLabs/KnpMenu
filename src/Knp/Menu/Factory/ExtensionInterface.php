@@ -4,6 +4,11 @@ namespace Knp\Menu\Factory;
 
 use Knp\Menu\ItemInterface;
 
+/**
+ * Interface ExtensionInterface
+ *
+ * @package Knp\Menu\Factory
+ */
 interface ExtensionInterface
 {
     /**

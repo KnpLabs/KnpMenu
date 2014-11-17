@@ -4,8 +4,16 @@ namespace Knp\Menu\Twig;
 
 use Knp\Menu\ItemInterface;
 
+/**
+ * Class MenuExtension
+ *
+ * @package Knp\Menu\Twig
+ */
 class MenuExtension extends \Twig_Extension
 {
+    /**
+     * @var Helper
+     */
     private $helper;
 
     /**
@@ -16,10 +24,13 @@ class MenuExtension extends \Twig_Extension
         $this->helper = $helper;
     }
 
+    /**
+     * @return array
+     */
     public function getFunctions()
     {
         return array(
-            'knp_menu_get' => new \Twig_Function_Method($this, 'get'),
+            'knp_menu_get'    => new \Twig_Function_Method($this, 'get'),
             'knp_menu_render' => new \Twig_Function_Method($this, 'render', array('is_safe' => array('html'))),
         );
     }

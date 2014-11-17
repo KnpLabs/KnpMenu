@@ -7,6 +7,8 @@ use Knp\Menu\Factory\ExtensionInterface;
 
 /**
  * Factory to create a menu from a tree
+ *
+ * @package Knp\Menu
  */
 class MenuFactory implements FactoryInterface
 {
@@ -25,6 +27,12 @@ class MenuFactory implements FactoryInterface
         $this->addExtension(new CoreExtension(), -10);
     }
 
+    /**
+     * @param string $name
+     * @param array  $options
+     *
+     * @return MenuItem
+     */
     public function createItem($name, array $options = array())
     {
         foreach ($this->getExtensions() as $extension) {
@@ -49,7 +57,7 @@ class MenuFactory implements FactoryInterface
     public function addExtension(ExtensionInterface $extension, $priority = 0)
     {
         $this->extensions[$priority][] = $extension;
-        $this->sorted = null;
+        $this->sorted                  = null;
     }
 
     /**
@@ -61,7 +69,10 @@ class MenuFactory implements FactoryInterface
     {
         if (null === $this->sorted) {
             krsort($this->extensions);
-            $this->sorted = !empty($this->extensions) ? call_user_func_array('array_merge', $this->extensions) : array();
+            $this->sorted = !empty($this->extensions) ? call_user_func_array(
+                'array_merge',
+                $this->extensions
+            ) : array();
         }
 
         return $this->sorted;

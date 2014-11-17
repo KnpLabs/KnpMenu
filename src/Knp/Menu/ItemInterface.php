@@ -8,8 +8,10 @@ namespace Knp\Menu;
  * It roughly represents a single <li> tag and is what you should interact with
  * most of the time by default.
  * Originally taken from ioMenuPlugin (http://github.com/weaverryan/ioMenuPlugin)
+ *
+ * @package Knp\Menu
  */
-interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
+interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
 {
     /**
      * @param FactoryInterface $factory
@@ -25,10 +27,8 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * Renames the item.
-     *
      * This method must also update the key in the parent.
-     *
-     * Provides a fluent interface
+     * Provides a fluent interface.
      *
      * @param string $name
      *
@@ -46,9 +46,8 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     public function getUri();
 
     /**
-     * Set the uri for a menu item
-     *
-     * Provides a fluent interface
+     * Set the uri for a menu item.
+     * Provides a fluent interface.
      *
      * @param string $uri The uri to set on this menu item
      *

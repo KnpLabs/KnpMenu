@@ -6,8 +6,16 @@ if (!defined('ENT_SUBSTITUTE')) {
     define('ENT_SUBSTITUTE', 8);
 }
 
+/**
+ * Class Renderer
+ *
+ * @package Knp\Menu\Renderer
+ */
 abstract class Renderer
 {
+    /**
+     * @var string
+     */
     protected $charset = 'UTF-8';
 
     /**
@@ -16,7 +24,7 @@ abstract class Renderer
     public function __construct($charset = null)
     {
         if (null !== $charset) {
-            $this->charset = (string) $charset;
+            $this->charset = (string)$charset;
         }
     }
 
@@ -46,7 +54,10 @@ abstract class Renderer
      */
     protected function renderHtmlAttributes(array $attributes)
     {
-        return implode('', array_map(array($this, 'htmlAttributesCallback'), array_keys($attributes), array_values($attributes)));
+        return implode(
+            '',
+            array_map(array($this, 'htmlAttributesCallback'), array_keys($attributes), array_values($attributes))
+        );
     }
 
     /**
@@ -77,7 +88,7 @@ abstract class Renderer
      */
     protected function escape($value)
     {
-        return $this->fixDoubleEscape(htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, $this->charset));
+        return $this->fixDoubleEscape(htmlspecialchars((string)$value, ENT_QUOTES | ENT_SUBSTITUTE, $this->charset));
     }
 
     /**
@@ -109,6 +120,6 @@ abstract class Renderer
      */
     public function setCharset($charset)
     {
-        $this->charset = (string) $charset;
+        $this->charset = (string)$charset;
     }
 }

@@ -14,8 +14,16 @@ use Knp\Menu\Renderer\PimpleProvider as PimpleRendererProvider;
 use Knp\Menu\Twig\Helper;
 use Knp\Menu\Twig\MenuExtension;
 
+/**
+ * Class KnpMenuServiceProvider
+ *
+ * @package Knp\Menu\Integration\Silex
+ */
 class KnpMenuServiceProvider implements ServiceProviderInterface
 {
+    /**
+     * @param Application $app
+     */
     public function register(Application $app)
     {
         $app['knp_menu.factory'] = $app->share(function () use ($app) {
@@ -95,5 +103,10 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
         }
     }
 
-    public function boot(Application $app) {}
+    /**
+     * @param Application $app
+     */
+    public function boot(Application $app)
+    {
+    }
 }

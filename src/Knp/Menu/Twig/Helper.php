@@ -91,7 +91,7 @@ class Helper
                 $menu = array_shift($path);
             }
 
-            $menu = $this->get($menu, $path);
+            $menu = $this->get($menu, $path, $options);
         }
 
         return $this->rendererProvider->get($renderer)->render($menu, $options);

@@ -22,6 +22,11 @@ class RoutingExtension implements ExtensionInterface
     {
         if (!empty($options['route'])) {
             $params = isset($options['routeParameters']) ? $options['routeParameters'] : array();
+            array_walk($params, function(&$value, $key) {
+                if (is_bool($value)) {
+                    $value = ($value === true) ? 'true': 'false';
+                }
+            });
             $absolute = isset($options['routeAbsolute']) ? $options['routeAbsolute'] : false;
             $options['uri'] = $this->generator->generate($options['route'], $params, $absolute);
 

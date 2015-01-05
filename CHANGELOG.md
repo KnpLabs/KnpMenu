@@ -1,5 +1,6 @@
 ## 2.1.0
 
+* `Knp\Menu\Matcher\Voter\RouteVoter` is deprecated in favor of `Knp\Menu\Integration\Symfony\RouteVoter`
 * `Knp\Menu\Provider\PimpleProvider` is deprecated in favor of `Knp\Menu\Integration\Pimple\PimpleMenuProvider`
 * `Knp\Menu\Renderer\PimpleProvider` is deprecated in favor of `Knp\Menu\Integration\Pimple\PimpleRendererProvider`
 * `Knp\Menu\Twig\Helper` is deprecated in favor of `Knp\Menu\Templating\Helper`

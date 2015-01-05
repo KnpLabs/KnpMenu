@@ -249,4 +249,19 @@ class HelperTest extends \PHPUnit_Framework_TestCase
         $helper = new Helper($this->getMock('Knp\Menu\Renderer\RendererProviderInterface'));
         $helper->render(array());
     }
+
+    public function testBreadcrumbsArray()
+    {
+        $menu = $this->getMock('Knp\Menu\ItemInterface');
+
+        $manipulator = $this->getMock('Knp\Menu\Util\MenuManipulator');
+        $manipulator->expects($this->any())
+            ->method('getBreadcrumbsArray')
+            ->with($menu)
+            ->will($this->returnValue(array('A', 'B')));
+
+        $helper = new Helper($this->getMock('Knp\Menu\Renderer\RendererProviderInterface'), null, $manipulator);
+
+        $this->assertEquals(array('A', 'B'), $helper->getBreadcrumbsArray($menu));
+    }
 }

@@ -3,6 +3,7 @@
 namespace Knp\Menu\Twig;
 
 use Knp\Menu\ItemInterface;
+use Knp\Menu\Util\MenuManipulator;
 use Knp\Menu\Renderer\RendererProviderInterface;
 use Knp\Menu\Provider\MenuProviderInterface;
 
@@ -14,15 +15,17 @@ class Helper
 {
     private $rendererProvider;
     private $menuProvider;
+    private $menuManipulator;
 
     /**
      * @param RendererProviderInterface  $rendererProvider
      * @param MenuProviderInterface|null $menuProvider
      */
-    public function __construct(RendererProviderInterface $rendererProvider, MenuProviderInterface $menuProvider = null)
+    public function __construct(RendererProviderInterface $rendererProvider, MenuProviderInterface $menuProvider = null, MenuManipulator $menuManipulator = null)
     {
         $this->rendererProvider = $rendererProvider;
         $this->menuProvider = $menuProvider;
+        $this->menuManipulator = $menuManipulator;
     }
 
     /**
@@ -81,6 +84,49 @@ class Helper
      */
     public function render($menu, array $options = array(), $renderer =  null)
     {
+        $menu = $this->castMenu($menu);
+
+        return $this->rendererProvider->get($renderer)->render($menu, $options);
+    }
+
+    /**
+     * Renders an array ready to be used for breadcrumbs.
+     *
+     * Each element in the array will be an array with 3 keys:
+     * - `label` containing the label of the item
+     * - `url` containing the url of the item (may be `null`)
+     * - `item` containing the original item (may be `null` for the extra items)
+     *
+     * The subItem can be one of the following forms
+     *   * 'subItem'
+     *   * ItemInterface object
+     *   * array('subItem' => '@homepage')
+     *   * array('subItem1', 'subItem2')
+     *   * array(array('label' => 'subItem1', 'url' => '@homepage'), array('label' => 'subItem2'))
+     *
+     * @param mixed $item
+     * @param mixed $subItem A string or array to append onto the end of the array
+     *
+     * @return array
+     */
+    public function getBreadcrumbsArray($menu, $subItem = null)
+    {
+        if (null === $this->menuManipulator) {
+            throw new \BadMethodCallException('The menu manipulator must be set to get the breadcrumbs array');
+        }
+
+        $menu = $this->castMenu($menu);
+
+        return $this->menuManipulator->getBreadcrumbsArray($menu, $subItem);
+    }
+
+    /**
+     * @param ItemInterface|array|string $menu
+     *
+     * @return ItemInterface
+     */
+    private function castMenu($menu)
+    {
         if (!$menu instanceof ItemInterface) {
             $path = array();
             if (is_array($menu)) {
@@ -91,9 +137,9 @@ class Helper
                 $menu = array_shift($path);
             }
 
-            $menu = $this->get($menu, $path);
+            return $this->get($menu, $path);
         }
 
-        return $this->rendererProvider->get($renderer)->render($menu, $options);
+        return $menu;
     }
 }

@@ -13,6 +13,7 @@ use Knp\Menu\Provider\PimpleProvider as PimpleMenuProvider;
 use Knp\Menu\Renderer\PimpleProvider as PimpleRendererProvider;
 use Knp\Menu\Twig\Helper;
 use Knp\Menu\Twig\MenuExtension;
+use Knp\Menu\Util\MenuManipulator;
 
 class KnpMenuServiceProvider implements ServiceProviderInterface
 {
@@ -60,17 +61,21 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
             return new PimpleRendererProvider($app, $app['knp_menu.default_renderer'], $app['knp_menu.renderers']);
         });
 
+        $app['knp_menu.menu_manipulator'] = $app->share(function () use ($app) {
+            return new MenuManipulator();
+        });
+
         if (!isset($app['knp_menu.default_renderer'])) {
             $app['knp_menu.default_renderer'] = 'list';
         }
 
         $app['knp_menu.helper'] = $app->share(function () use ($app) {
-            return new Helper($app['knp_menu.renderer_provider'], $app['knp_menu.menu_provider']);
+            return new Helper($app['knp_menu.renderer_provider'], $app['knp_menu.menu_provider'], $app['knp_menu.menu_manipulator']);
         });
 
         if (isset($app['twig'])) {
             $app['knp_menu.twig_extension'] = $app->share(function () use ($app) {
-                return new MenuExtension($app['knp_menu.helper']);
+                return new MenuExtension($app['knp_menu.helper'], $app['knp_menu.matcher'], $app['knp_menu.menu_manipulator']);
             });
 
             $app['knp_menu.renderer.twig'] = $app->share(function () use ($app) {

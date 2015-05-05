@@ -13,9 +13,14 @@ class Matcher implements MatcherInterface
     private $cache;
 
     /**
+     * @var array[]
+     */
+    private $voters = [];
+
+    /**
      * @var VoterInterface[]
      */
-    private $voters = array();
+    private $sortedVoters = [];
 
     public function __construct()
     {
@@ -26,10 +31,13 @@ class Matcher implements MatcherInterface
      * Adds a voter in the matcher.
      *
      * @param VoterInterface $voter
+     * @param integer        $priority
      */
-    public function addVoter(VoterInterface $voter)
+    public function addVoter(VoterInterface $voter, $priority = 0)
     {
-        $this->voters[] = $voter;
+        $this->voters[$priority][] = $voter;
+        //reset sorted voters
+        $this->sortedVoters = null;
     }
 
     public function isCurrent(ItemInterface $item)
@@ -43,7 +51,7 @@ class Matcher implements MatcherInterface
             return $this->cache[$item];
         }
 
-        foreach ($this->voters as $voter) {
+        foreach ($this->getVoters() as $voter) {
             $current = $voter->matchItem($item);
             if (null !== $current) {
                 break;
@@ -75,5 +83,20 @@ class Matcher implements MatcherInterface
     public function clear()
     {
         $this->cache = new \SplObjectStorage();
+    }
+
+    /**
+     * Sorts the internal list of voters by priority.
+     *
+     * @return VoterInterface[]
+     */
+    private function getVoters()
+    {
+        if (null === $this->sortedVoters) {
+            krsort($this->voters);
+            $this->sortedVoters = ! empty($this->voters) ? call_user_func_array('array_merge', $this->voters) : [];
+        }
+
+        return $this->sortedVoters;
     }
 }

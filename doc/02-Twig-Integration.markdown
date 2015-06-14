@@ -22,7 +22,7 @@ to pass both the renderer and menu into a template:
 $twigLoader = new \Twig_Loader_Filesystem(array(
     // path to your templates
 ));
-$twig = new \Twig_Environment($twigLoader);
+$twig = new \Twig_Environment($twigLoader); // you can add the charset (i.e. ISO-8859-1) in the array of options if you need 
 
 $itemMatcher = new \Knp\Menu\Matcher\Matcher();
 // setup some renderer

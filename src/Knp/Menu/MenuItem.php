@@ -2,6 +2,8 @@
 
 namespace Knp\Menu;
 
+use Symfony\Component\Routing\RouterInterface;
+
 /**
  * Default implementation of the ItemInterface
  */
@@ -37,6 +39,17 @@ class MenuItem implements ItemInterface
      * @var string
      */
     protected $uri = null;
+
+    /**
+     * @var string
+     */
+    protected $route = null;
+
+    /**
+     * @var array
+     */
+    protected $routeParameters = array();
+
     /**
      * Attributes for the item
      * @var array
@@ -148,6 +161,33 @@ class MenuItem implements ItemInterface
         $this->uri = $uri;
 
         return $this;
+    }
+
+    public function setRoute($name, array $parameters = array(), $referenceType = RouterInterface::ABSOLUTE_URL)
+    {
+        $this->route = $name;
+        $this->routeParameters = $parameters;
+
+        // create temporary item to get generated URI
+        $child = $this->factory->createItem('', array(
+            'route' => $name,
+            'routeParameters' => $parameters,
+            'routeAbsolute' => $referenceType,
+        ));
+
+        $this->setUri($child->getUri());
+
+        unset($child);
+    }
+
+    public function getRoute()
+    {
+        return $this->route;
+    }
+
+    public function getRouteParameters()
+    {
+        return $this->routeParameters;
     }
 
     public function getLabel()

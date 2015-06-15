@@ -2,6 +2,8 @@
 
 namespace Knp\Menu;
 
+use Symfony\Component\Routing\RouterInterface;
+
 /**
  * Interface implemented by a menu item.
  *

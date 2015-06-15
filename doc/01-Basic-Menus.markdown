@@ -312,3 +312,10 @@ to create the menu easily (assuming `$node` is the root node of your structure):
 $factory = new \Knp\Menu\MenuFactory();
 $menu = $factory->createFromNode($node);
 ```
+
+Change the charset
+------------------
+
+```php
+$renderer = new ListRenderer(new Matcher(), [], 'ISO-8859-1');
+```

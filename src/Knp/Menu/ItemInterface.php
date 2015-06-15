@@ -55,6 +55,12 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * @return ItemInterface
      */
     public function setUri($uri);
+    
+    public function setRoute($name, array $parameters = array(), $referenceType = RouterInterface::ABSOLUTE_URL);
+
+    public function getRoute();
+
+    public function getRouteParameters();
 
     /**
      * Returns the label that will be used to render this menu item

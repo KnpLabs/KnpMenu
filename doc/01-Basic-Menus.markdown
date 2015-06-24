@@ -224,6 +224,21 @@ $renderer->render($menu);
 Using the above controls, you can specify exactly which part of your menu
 you need to render at any given time.
 
+### Rendering with sorting by weight
+
+The renderer with the option weight abides by the menu levels.
+
+The default weight is 0. Positive weight are prioritized over negative (i.e : 1, 0, -1 is the order)
+
+```php
+<?php
+// the first way
+$menu->addChild('Home', array('weight' => -10));
+
+// the second way
+$menu['Home']->setWeight(-10);
+```
+
 ### Other rendering options
 
 Most renderers also support several other options, which can be passed as

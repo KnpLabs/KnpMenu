@@ -451,4 +451,19 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * @return boolean
      */
     public function actsLikeLast();
+
+    /**
+     * Define the position of the element in the menu in function level in the tree
+     * It can be positive or negative
+     *
+     * @param int $weight
+     *
+     * @return ItemInterface
+     */
+    public function setWeight($weight);
+
+    /**
+     * @return int
+     */
+    public function getWeight();
 }

@@ -186,20 +186,7 @@ class MenuManipulatorTest extends TestCase
         $menu = $factory->createItem('test_menu');
 
         foreach (range(1, 2) as $i) {
-            $child = $this->getMock('Knp\Menu\ItemInterface');
-            $child->expects($this->any())
-                ->method('getName')
-                ->will($this->returnValue('Child '.$i))
-            ;
-            $child->expects($this->once())
-                ->method('setDisplay')
-                ->with(false)
-            ;
-            $child->expects($this->once())
-                ->method('getChildren')
-                ->will($this->returnValue(array()))
-            ;
-            $menu->addChild($child);
+            $menu->addChild('Child '.$i, array('display' => false));
         }
 
         $manipulator = new MenuManipulator();
@@ -236,6 +223,7 @@ class MenuManipulatorTest extends TestCase
                 'display' => true,
                 'displayChildren' => true,
                 'current' => null,
+                'weight' => 0,
                 'children' => array(
                     'jack' => array(
                         'name' => 'jack',
@@ -249,6 +237,7 @@ class MenuManipulatorTest extends TestCase
                         'display' => false,
                         'displayChildren' => true,
                         'current' => null,
+                        'weight' => 0,
                         'children' => array(
                             'john' => array(
                                 'name' => 'john',
@@ -263,6 +252,7 @@ class MenuManipulatorTest extends TestCase
                                 'displayChildren' => true,
                                 'children' => array(),
                                 'current' => true,
+                                'weight' => 0,
                             ),
                         ),
                     ),
@@ -279,6 +269,7 @@ class MenuManipulatorTest extends TestCase
                         'displayChildren' => false,
                         'children' => array(),
                         'current' => false,
+                        'weight' => 0,
                     ),
                 ),
             ),
@@ -309,6 +300,7 @@ class MenuManipulatorTest extends TestCase
                 'display' => true,
                 'displayChildren' => true,
                 'current' => null,
+                'weight' => 0,
                 'children' => array(
                     'jack' => array(
                         'name' => 'jack',
@@ -322,6 +314,7 @@ class MenuManipulatorTest extends TestCase
                         'display' => false,
                         'displayChildren' => true,
                         'current' => null,
+                        'weight' => 0,
                     ),
                     'joe' => array(
                         'name' => 'joe',
@@ -335,6 +328,7 @@ class MenuManipulatorTest extends TestCase
                         'display' => true,
                         'displayChildren' => false,
                         'current' => null,
+                        'weight' => 0,
                     ),
                 ),
             ),
@@ -363,6 +357,7 @@ class MenuManipulatorTest extends TestCase
                 'display' => true,
                 'displayChildren' => true,
                 'current' => null,
+                'weight' => 0,
             ),
             $manipulator->toArray($menu, 0)
         );
@@ -382,5 +377,37 @@ class MenuManipulatorTest extends TestCase
         $factory = new MenuFactory();
 
         return $factory->createItem($name, array('attributes' => $attributes, 'uri' => $uri));
+    }
+
+    public function testWeightOption()
+    {
+        // test stable sort with same weight
+        $menu = new MenuItem('root', new MenuFactory());
+        $menu->addChild('c1', array('weight' => 10));
+        $menu->addChild('c2', array('weight' => 10));
+        $menu->addChild('c3', array('weight' => 10));
+        $menu->addChild('c4', array('weight' => 10));
+        $menu->addChild('c5', array('weight' => 10));
+
+        $this->assertEquals(array('c1', 'c2', 'c3', 'c4', 'c5'), array_keys($menu->getChildren()));
+
+
+        // test juste one level
+        $menu = new MenuItem('root', new MenuFactory());
+        $c1 = $menu->addChild('c1', array('weight' => 50));
+        $menu->addChild('c2', array('weight' => 1));
+        $menu->addChild('c3', array('weight' => -10));
+        $menu->addChild('c4', array('weight' => 5));
+
+        $this->assertEquals(array('c1', 'c4', 'c2', 'c3'), array_keys($menu->getChildren()));
+
+        // test with add a second level in the menu
+        $c1->addChild('c11', array('weight' => -20));
+        $c1->addChild('c12', array('weight' => -5));
+        $c1->addChild('c13', array('weight' => 20));
+        $c1->addChild('c14', array('weight' => 1));
+
+        $this->assertEquals(array('c1', 'c4', 'c2', 'c3'), array_keys($menu->getChildren())); // must not change
+        $this->assertEquals(array('c13', 'c14', 'c12', 'c11'), array_keys($c1->getChildren()));
     }
 }

@@ -30,6 +30,7 @@ class CoreExtension implements ExtensionInterface
                 'current' => null,
                 'display' => true,
                 'displayChildren' => true,
+                'weight' => 0,
             ),
             $options
         );
@@ -53,6 +54,7 @@ class CoreExtension implements ExtensionInterface
             ->setCurrent($options['current'])
             ->setDisplay($options['display'])
             ->setDisplayChildren($options['displayChildren'])
+            ->setWeight($options['weight'])
         ;
 
         $this->buildExtras($item, $options);

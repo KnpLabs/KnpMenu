@@ -81,6 +81,11 @@ class MenuItem implements ItemInterface
     protected $factory;
 
     /**
+     * @var int
+     */
+    protected $weight = 0;
+
+    /**
      * Class constructor
      *
      * @param string           $name    The name of this menu, which is how its parent will
@@ -338,6 +343,8 @@ class MenuItem implements ItemInterface
 
         $this->children[$child->getName()] = $child;
 
+        $this->setChildren($this->applySortByWeight($this->children));
+
         return $child;
     }
 
@@ -592,5 +599,48 @@ class MenuItem implements ItemInterface
     public function offsetUnset($name)
     {
         $this->removeChild($name);
+    }
+
+    /**
+     * @param int $weight
+     *
+     * @return $this
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+
+        return $this;
+    }   
+
+    /**
+     * @return int
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+
+    /**
+     * @param array <ItemInterface> $children
+     *
+     * @return array <ItemInterface>
+     *
+     * @throws \RuntimeException
+     */
+    public function applySortByWeight(array $children)
+    {
+        if (!@suasort($children, function(ItemInterface $itemA, ItemInterface $itemB)
+        {
+            if ($itemA->getWeight() === $itemB->getWeight()) {
+                return 0;
+            }
+
+            return ($itemA->getWeight() > $itemB->getWeight()) ? -1 : 1;
+        })) {
+            throw new \RuntimeException('unable to sort those items by weight');
+        }
+
+        return $children;
     }
 }

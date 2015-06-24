@@ -185,6 +185,7 @@ class MenuManipulator
             'extras' => $item->getExtras(),
             'display' => $item->isDisplayed(),
             'displayChildren' => $item->getDisplayChildren(),
+            'weight' => $item->getWeight(),
             'current' => $item->isCurrent(),
         );
 

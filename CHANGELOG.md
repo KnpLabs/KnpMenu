@@ -1,3 +1,9 @@
+## 2.1.0 (2015-07-XX)
+
+* Added a new function to twig: knp_menu_get_breadcrumbs_array
+* Added a new filter to twig: knp_menu_as_string
+* Added 2 new tests to twig: knp_menu_current, knp_menu_ancestor
+
 ## 2.0.1 (2014-08-01)
 
 * Fixed voter conventions on RouteVoter

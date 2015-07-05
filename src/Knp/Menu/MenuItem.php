@@ -12,36 +12,43 @@ class MenuItem implements ItemInterface
      * @var string
      */
     protected $name = null;
+
     /**
      * Label to output, name is used by default
      * @var string
      */
     protected $label = null;
+
     /**
      * Attributes for the item link
      * @var array
      */
     protected $linkAttributes = array();
+
     /**
      * Attributes for the children list
      * @var array
      */
     protected $childrenAttributes = array();
+
     /**
      * Attributes for the item text
      * @var array
      */
     protected $labelAttributes = array();
+
     /**
      * Uri to use in the anchor tag
      * @var string
      */
     protected $uri = null;
+
     /**
      * Attributes for the item
      * @var array
      */
     protected $attributes = array();
+
     /**
      * Extra stuff associated to the item
      * @var array
@@ -53,6 +60,7 @@ class MenuItem implements ItemInterface
      * @var boolean
      */
     protected $display = true;
+
     /**
      * Whether the children of the item are displayed
      * @var boolean
@@ -64,11 +72,13 @@ class MenuItem implements ItemInterface
      * @var ItemInterface[]
      */
     protected $children = array();
+
     /**
      * Parent item
      * @var ItemInterface|null
      */
     protected $parent = null;
+
     /**
      * whether the item is current. null means unknown
      * @var boolean|null

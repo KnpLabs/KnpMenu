@@ -21,7 +21,7 @@
     ],
     "require":      {
         "php":  ">=5.3.0",
-        "vanderlee/php-stable-sort-functions": "1.0.1"
+        "vanderlee/php-stable-sort-functions": "~1.0"
     },
     "require-dev":  {
         "pimple/pimple": "1.0.*",

@@ -630,7 +630,7 @@ class MenuItem implements ItemInterface
      */
     public function applySortByWeight(array $children)
     {
-        if (!@suasort($children, function(ItemInterface $itemA, ItemInterface $itemB) {
+        if (!suasort($children, function(ItemInterface $itemA, ItemInterface $itemB) {
             if ($itemA->getWeight() === $itemB->getWeight()) {
                 return 0;
             }

@@ -15,7 +15,7 @@ matrix:
         - php: hhvm
 
 before_script:
-    - composer install --dev
+    - composer install
     
 script:
     - phpunit

@@ -12,16 +12,11 @@ but can now be used stand-alone.
 
 ## Installation
 
-KnpMenu uses Composer, please checkout the [composer website](http://getcomposer.org) for more information.
-
-The simple following command will install `knp-menu` into your project. It also add a new
-entry in your `composer.json` and update the `composer.lock` as well.
+Install with Composer (please checkout the [composer website](http://getcomposer.org) for more information):
 
 ```bash
 $ composer require 'knplabs/knp-menu:~2.0'
 ```
-
-> KnpMenu follows the PSR-0 convention names for its classes, which means you can easily integrate `knp-menu` classes loading in your own autoloader.
 
 ## Getting Started
 

@@ -12,7 +12,7 @@ but can now be used stand-alone.
 
 ## Installation
 
-Install with Composer (please checkout the [composer website](http://getcomposer.org) for more information):
+Install with Composer (please checkout the [composer website](https://getcomposer.org) for more information):
 
 ```bash
 $ composer require 'knplabs/knp-menu:~2.0'

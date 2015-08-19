@@ -352,7 +352,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Return the children as an array of ItemInterface objects
      *
-     * @return array
+     * @return ItemInterface[]
      */
     public function getChildren();
 

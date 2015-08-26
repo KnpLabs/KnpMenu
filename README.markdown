@@ -18,7 +18,7 @@ The simple following command will install `knp-menu` into your project. It also 
 entry in your `composer.json` and update the `composer.lock` as well.
 
 ```bash
-$ composer require 'knplabs/knp-menu:~2.0'
+$ composer require knplabs/knp-menu
 ```
 
 > KnpMenu follows the PSR-0 convention names for its classes, which means you can easily integrate `knp-menu` classes loading in your own autoloader.

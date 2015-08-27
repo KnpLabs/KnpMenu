@@ -3,7 +3,7 @@
 {% block list %}
 {% import 'knp_menu.html.twig' as macros %}
 
-{% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
+{% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
     <ol{{ macros.attributes(listAttributes) }}>
         {{ block('children') }}
     </ol>

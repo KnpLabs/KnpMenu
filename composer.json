@@ -24,8 +24,9 @@
     },
     "require-dev":  {
         "pimple/pimple": "1.0.*",
-        "silex/silex":  "1.0.*",
-        "twig/twig":    ">=1.2,<2.0-dev"
+        "symfony/phpunit-bridge": "~2.7",
+        "silex/silex":  "~1.0",
+        "twig/twig":    "~1.12|~2.0"
     },
     "suggest":      {
         "pimple/pimple": "for the built-in implementations of the menu provider and renderer provider",

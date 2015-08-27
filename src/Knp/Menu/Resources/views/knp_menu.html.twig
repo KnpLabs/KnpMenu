@@ -2,8 +2,8 @@
 
 {% macro attributes(attributes) %}
 {% for name, value in attributes %}
-    {%- if value is not none and value is not sameas(false) -%}
-        {{- ' %s="%s"'|format(name, value is sameas(true) ? name|e : value|e)|raw -}}
+    {%- if value is not none and value is not same as(false) -%}
+        {{- ' %s="%s"'|format(name, value is same as(true) ? name|e : value|e)|raw -}}
     {%- endif -%}
 {%- endfor -%}
 {% endmacro %}
@@ -20,7 +20,7 @@
 {% endblock %}
 
 {% block list %}
-{% if item.hasChildren and options.depth is not sameas(0) and item.displayChildren %}
+{% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
     {% import _self as knp_menu %}
     <ul{{ knp_menu.attributes(listAttributes) }}>
         {{ block('children') }}
@@ -65,7 +65,7 @@
     {%- endif %}
 
     {# Mark item as "leaf" (no children) or as "branch" (has children that are displayed) #}
-    {% if item.hasChildren and options.depth is not sameas(0) %}
+    {% if item.hasChildren and options.depth is not same as(0) %}
         {% if options.branch_class is not empty and item.displayChildren %}
             {%- set classes = classes|merge([options.branch_class]) %}
         {% endif %}

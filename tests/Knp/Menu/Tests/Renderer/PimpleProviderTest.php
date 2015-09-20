@@ -4,6 +4,9 @@ namespace Knp\Menu\Tests\Renderer;
 
 use Knp\Menu\Renderer\PimpleProvider;
 
+/**
+ * @group legacy
+ */
 class PimpleProviderTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
@@ -44,7 +47,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testGetNonExistentRenderer()
     {

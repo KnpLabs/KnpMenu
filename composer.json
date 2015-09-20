@@ -26,7 +26,7 @@
         "pimple/pimple": "1.0.*",
         "symfony/phpunit-bridge": "~2.7",
         "silex/silex":  "~1.0",
-        "twig/twig":    "~1.12|~2.0"
+        "twig/twig":    "~1.16|~2.0"
     },
     "suggest":      {
         "pimple/pimple": "for the built-in implementations of the menu provider and renderer provider",
@@ -36,10 +36,14 @@
     "autoload":     {
         "psr-4": { "Knp\\Menu\\": "src/Knp/Menu" }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Knp\\Menu\\Tests\\": "tests/Knp/Menu/Tests"
+        }
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "2.1-dev"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

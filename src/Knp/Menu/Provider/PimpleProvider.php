@@ -2,34 +2,17 @@
 
 namespace Knp\Menu\Provider;
 
-class PimpleProvider implements MenuProviderInterface
-{
-    private $pimple;
-    private $menuIds;
+@trigger_error('The '.__NAMESPACE__.'\PimpleProvider class is deprecated since version 2.1 and will be removed in 3.0. Use the '.__NAMESPACE__.'\ArrayAccessProvider class instead.', E_USER_DEPRECATED);
 
+/**
+ * Menu provider getting menus from a Pimple 1 container
+ *
+ * @deprecated use the ArrayAccessProvider instead.
+ */
+class PimpleProvider extends ArrayAccessProvider
+{
     public function __construct(\Pimple $pimple, array $menuIds = array())
     {
-        $this->pimple = $pimple;
-        $this->menuIds = $menuIds;
-    }
-
-    public function get($name, array $options = array())
-    {
-        if (!isset($this->menuIds[$name])) {
-            throw new \InvalidArgumentException(sprintf('The menu "%s" is not defined.', $name));
-        }
-
-        $menu = $this->pimple[$this->menuIds[$name]];
-
-        if ($menu instanceof \Closure) {
-            $menu = $menu($options, $this->pimple);
-        }
-
-        return $menu;
-    }
-
-    public function has($name, array $options = array())
-    {
-        return isset($this->menuIds[$name]);
+        parent::__construct($pimple, $menuIds);
     }
 }

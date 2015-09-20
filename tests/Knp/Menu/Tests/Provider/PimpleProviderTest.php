@@ -4,6 +4,9 @@ namespace Knp\Menu\Tests\Provider;
 
 use Knp\Menu\Provider\PimpleProvider;
 
+/**
+ * @group legacy
+ */
 class PimpleProviderTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()

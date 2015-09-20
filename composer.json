@@ -36,10 +36,14 @@
     "autoload":     {
         "psr-4": { "Knp\\Menu\\": "src/Knp/Menu" }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Knp\\Menu\\Tests\\": "tests/Knp/Menu/Tests"
+        }
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "2.1-dev"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }

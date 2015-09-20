@@ -1,8 +1,12 @@
-## 2.1.0 (2015-07-XX)
+## 2.1.0 (2015-09-20)
 
-* Added a new function to twig: knp_menu_get_breadcrumbs_array
-* Added a new filter to twig: knp_menu_as_string
-* Added 2 new tests to twig: knp_menu_current, knp_menu_ancestor
+* Added a new function to twig: `knp_menu_get_breadcrumbs_array`
+* Added a new filter to twig: `knp_menu_as_string`
+* Added 2 new tests to twig: `knp_menu_current`, `knp_menu_ancestor`
+* Made the templates compatible with Twig 2
+* Add menu and renderer providers supporting any ArrayAccess implementations. The
+  Pimple-based providers (supporting only Pimple 1) are dperecated in favor of these
+  new providers.
 
 ## 2.0.1 (2014-08-01)
 

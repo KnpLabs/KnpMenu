@@ -91,7 +91,7 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
                 array('baz'=>'bar'),
                 array(array('route' => 'foo', 'parameters' => array('baz'=>'bar', 'abc'=>'123'))),
                 array(),
-                false
+                null
             ),
             'single query param' => array(
                 'foo',

@@ -53,6 +53,57 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param string  $route
+     * @param array $routeParameters
+     * @param string|array$itemRoutes
+     * @param array $queryParameters
+     * @param boolean $expected
+     *
+     * @dataProvider provideQueryData
+     */
+    public function testQueryParameters($route, array $routeParameters, $itemRoutes, array $queryParameters, $expected)
+    {
+        $item = $this->getMock('Knp\Menu\ItemInterface');
+        $item->expects($this->any())
+            ->method('getExtra')
+            ->with($this->equalTo('routes'))
+            ->willReturn($itemRoutes)
+        ;
+
+        $request = new Request();
+        $request->attributes->set('_route', $route);
+        $request->attributes->set('_route_params', $routeParameters);
+
+        foreach ($queryParameters as $name => $value) {
+            $request->query->set($name, $value);
+        }
+
+        $voter = new RouteVoter($request);
+
+        $this->assertSame($expected, $voter->matchItem($item));
+    }
+
+    public function provideQueryData()
+    {
+        return array(
+            'no query param' => array(
+                'foo',
+                array('baz'=>'bar'),
+                array(array('route' => 'foo', 'parameters' => array('baz'=>'bar', 'abc'=>'123'))),
+                array(),
+                false
+            ),
+            'single query param' => array(
+                'foo',
+                array('baz'=>'bar'),
+                array(array('route' => 'foo', 'parameters' => array('baz'=>'bar', 'abc'=>'123'))),
+                array('abc'=>'123'),
+                true
+            )
+        );
+    }
+
+    /**
      * @param string       $route
      * @param array        $parameters
      * @param string|array $itemRoutes

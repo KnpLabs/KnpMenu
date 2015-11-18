@@ -3,13 +3,14 @@
 namespace Knp\Menu\Tests\Silex;
 
 use Knp\Menu\Integration\Symfony\RoutingExtension;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RoutingExtensionTest extends \PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
         if (!interface_exists('Symfony\Component\Routing\Generator\UrlGeneratorInterface')) {
-            $this->markTestSkipped('The Symfony2 Routing component is not available');
+            $this->markTestSkipped('The Symfony Routing component is not available');
         }
     }
 
@@ -18,7 +19,7 @@ class RoutingExtensionTest extends \PHPUnit_Framework_TestCase
         $generator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
         $generator->expects($this->once())
             ->method('generate')
-            ->with('homepage', array(), false)
+            ->with('homepage', array(), UrlGeneratorInterface::ABSOLUTE_PATH)
             ->will($this->returnValue('/foobar'))
         ;
 
@@ -35,7 +36,7 @@ class RoutingExtensionTest extends \PHPUnit_Framework_TestCase
         $generator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
         $generator->expects($this->once())
             ->method('generate')
-            ->with('homepage', array('id' => 12), false)
+            ->with('homepage', array('id' => 12), UrlGeneratorInterface::ABSOLUTE_PATH)
             ->will($this->returnValue('/foobar'))
         ;
 
@@ -51,7 +52,7 @@ class RoutingExtensionTest extends \PHPUnit_Framework_TestCase
         $generator = $this->getMock('Symfony\Component\Routing\Generator\UrlGeneratorInterface');
         $generator->expects($this->once())
             ->method('generate')
-            ->with('homepage', array(), true)
+            ->with('homepage', array(), UrlGeneratorInterface::ABSOLUTE_URL)
             ->will($this->returnValue('http://php.net'))
         ;
 

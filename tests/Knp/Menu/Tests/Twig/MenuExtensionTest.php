@@ -140,6 +140,25 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('not ancestor', $this->getTemplate('{{ menu is knp_menu_ancestor ? "ancestor" : "not ancestor" }}', $helper, $matcher)->render(array('menu' => $menu)));
     }
 
+    public function testGetCurrentItem()
+    {
+        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $helper = $this->getHelperMock(array('get'));
+        $helper->expects($this->once())
+            ->method('get')
+            ->with('default')
+            ->will($this->returnValue($menu))
+        ;
+        $matcher = $this->getMatcherMock();
+        $matcher->expects($this->any())
+            ->method('isCurrent')
+            ->with($menu)
+            ->will($this->returnValue(true))
+        ;
+
+        $this->assertEquals('current', $this->getTemplate('{{ knp_menu_get_current_item("default") is knp_menu_current ? "current" : "not current" }}', $helper, $matcher)->render(array()));
+    }
+
     private function getHelperMock(array $methods)
     {
         return $this->getMockBuilder('Knp\Menu\Twig\Helper')

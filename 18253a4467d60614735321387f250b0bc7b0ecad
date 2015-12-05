@@ -1,0 +1,55 @@
+---------------------------------------------------------------------------
+
+by stof at 2015-11-18T17:16:47Z
+
+please bump the ``symfony/routing`` min dependency as this constant does not exist in 2.1 (making 2.3 is fine)
+
+And please also fix the tests to use the constant when defining expectations of the mock (which is why tests are broken with dev deps currently as the constant value changes in 3.0)
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2015-11-22T14:45:10Z
+
+@WouterJ Any progress on that? Some tests still seem failing...
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-11-22T15:07:25Z
+
+Ready to be merged
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2015-11-29T12:30:13Z
+
+@WouterJ Have you had a chance to look into @stof's comment to get this merged in? It would be gread to get this merged and tagged to avoid the deprecation messages. Thanks!
+
+---------------------------------------------------------------------------
+
+by WouterJ at 2015-11-29T13:29:02Z
+
+Done, thanks for the ping!
+
+---------------------------------------------------------------------------
+
+by peterrehm at 2015-11-30T18:55:03Z
+
+@stof Can this be merged and a release tagged?
+
+---------------------------------------------------------------------------
+
+by macintoshplus at 2015-12-02T14:04:00Z
+
++1
+
+---------------------------------------------------------------------------
+
+by kristijanhusak at 2015-12-03T09:59:26Z
+
++1
+
+---------------------------------------------------------------------------
+
+by Garfield-fr at 2015-12-03T13:09:58Z
+
+:+1:

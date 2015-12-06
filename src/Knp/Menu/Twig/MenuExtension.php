@@ -97,13 +97,9 @@ class MenuExtension extends \Twig_Extension
      */
     public function getCurrentItem($menu)
     {
-        if (null === $this->matcher) {
-            throw new \BadMethodCallException('The matcher must be set to get the current item of a menu');
-        }
-
         $rootItem = $this->get($menu);
 
-        $currentItem = $this->retrieveCurrentItem($rootItem);
+        $currentItem = $this->helper->getCurrentItem($rootItem);
 
         if (null === $currentItem) {
             $currentItem = $rootItem;
@@ -170,31 +166,5 @@ class MenuExtension extends \Twig_Extension
     public function getName()
     {
         return 'knp_menu';
-    }
-
-    /**
-     * @param ItemInterface $item
-     *
-     * @return ItemInterface|null
-     */
-    private function retrieveCurrentItem(ItemInterface $item)
-    {
-        $currentItem = null;
-
-        if ($this->isCurrent($item)) {
-            return $item;
-        }
-
-        if ($this->isAncestor($item)) {
-            foreach ($item->getChildren() as $child) {
-                $currentItem = $this->retrieveCurrentItem($child);
-
-                if (null !== $currentItem) {
-                    break;
-                }
-            }
-        }
-
-        return $currentItem;
     }
 }

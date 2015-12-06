@@ -143,7 +143,7 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
     public function testGetCurrentItem()
     {
         $menu = $this->getMock('Knp\Menu\ItemInterface');
-        $helper = $this->getHelperMock(array('get'));
+        $helper = $this->getHelperMock(array('get', 'getCurrentItem'));
         $helper->expects($this->once())
             ->method('get')
             ->with('default')

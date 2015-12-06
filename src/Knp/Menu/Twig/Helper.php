@@ -3,6 +3,7 @@
 namespace Knp\Menu\Twig;
 
 use Knp\Menu\ItemInterface;
+use Knp\Menu\Matcher\MatcherInterface;
 use Knp\Menu\Util\MenuManipulator;
 use Knp\Menu\Renderer\RendererProviderInterface;
 use Knp\Menu\Provider\MenuProviderInterface;
@@ -16,16 +17,20 @@ class Helper
     private $rendererProvider;
     private $menuProvider;
     private $menuManipulator;
+    private $matcher;
 
     /**
      * @param RendererProviderInterface  $rendererProvider
      * @param MenuProviderInterface|null $menuProvider
+     * @param MenuManipulator|null       $menuManipulator
+     * @param MatcherInterface|null      $matcher
      */
-    public function __construct(RendererProviderInterface $rendererProvider, MenuProviderInterface $menuProvider = null, MenuManipulator $menuManipulator = null)
+    public function __construct(RendererProviderInterface $rendererProvider, MenuProviderInterface $menuProvider = null, MenuManipulator $menuManipulator = null, MatcherInterface $matcher = null)
     {
         $this->rendererProvider = $rendererProvider;
         $this->menuProvider = $menuProvider;
         $this->menuManipulator = $menuManipulator;
+        $this->matcher = $matcher;
     }
 
     /**
@@ -121,6 +126,24 @@ class Helper
     }
 
     /**
+     * Returns the current item of a menu.
+     *
+     * @param ItemInterface|array|string $menu
+     *
+     * @return ItemInterface|null
+     */
+    public function getCurrentItem($menu)
+    {
+        if (null === $this->matcher) {
+            throw new \BadMethodCallException('The matcher must be set to get the current item of a menu');
+        }
+
+        $menu = $this->castMenu($menu);
+
+        return $this->retrieveCurrentItem($menu);
+    }
+
+    /**
      * @param ItemInterface|array|string $menu
      *
      * @return ItemInterface
@@ -141,5 +164,31 @@ class Helper
         }
 
         return $menu;
+    }
+
+    /**
+     * @param ItemInterface $item
+     *
+     * @return ItemInterface|null
+     */
+    private function retrieveCurrentItem(ItemInterface $item)
+    {
+        $currentItem = null;
+
+        if ($this->matcher->isCurrent($item)) {
+            return $item;
+        }
+
+        if ($this->matcher->isAncestor($item)) {
+            foreach ($item->getChildren() as $child) {
+                $currentItem = $this->retrieveCurrentItem($child);
+
+                if (null !== $currentItem) {
+                    break;
+                }
+            }
+        }
+
+        return $currentItem;
     }
 }

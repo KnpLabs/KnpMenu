@@ -2,6 +2,9 @@
 
 namespace Knp\Menu\Tests\Twig;
 
+use Knp\Menu\Matcher\Matcher;
+use Knp\Menu\MenuFactory;
+use Knp\Menu\MenuItem;
 use Knp\Menu\Twig\Helper;
 
 class HelperTest extends \PHPUnit_Framework_TestCase
@@ -263,5 +266,33 @@ class HelperTest extends \PHPUnit_Framework_TestCase
         $helper = new Helper($this->getMock('Knp\Menu\Renderer\RendererProviderInterface'), null, $manipulator);
 
         $this->assertEquals(array('A', 'B'), $helper->getBreadcrumbsArray($menu));
+    }
+
+    /**
+     * @expectedException BadMethodCallException
+     */
+    public function testCurrentItemWithoutMatcher()
+    {
+        $helper = new Helper($this->getMock('Knp\Menu\Renderer\RendererProviderInterface'));
+        $helper->getCurrentItem('default');
+    }
+
+    public function testCurrentItem()
+    {
+        $matcher = new Matcher();
+
+        $menu = new MenuItem('root', new MenuFactory());
+        $menu->addChild('c1');
+        $menu['c1']->addChild('c1_1');
+        $menu->addChild('c2');
+        $menu['c2']->addChild('c2_1');
+        $menu['c2']->addChild('c2_2');
+        $menu['c2']['c2_2']->addChild('c2_2_1');
+        $menu['c2']['c2_2']->addChild('c2_2_2')->setCurrent(true);
+        $menu['c2']['c2_2']->addChild('c2_2_3');
+
+        $helper = new Helper($this->getMock('Knp\Menu\Renderer\RendererProviderInterface'), null, null, $matcher);
+
+        $this->assertSame('c2_2_2', $helper->getCurrentItem($menu)->getName());
     }
 }

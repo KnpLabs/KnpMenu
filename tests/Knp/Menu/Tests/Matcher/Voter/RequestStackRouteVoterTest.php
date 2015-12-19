@@ -15,6 +15,17 @@ class RequestStackRouteVoterTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testMatchingWithoutRequest()
+    {
+        $item = $this->getMock('Knp\Menu\ItemInterface');
+        $item->expects($this->never())
+            ->method('getExtra');
+
+        $voter = new RequestStackRouteVoter(new RequestStack());
+
+        $this->assertNull($voter->matchItem($item));
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      */

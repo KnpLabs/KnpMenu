@@ -1,3 +1,7 @@
+## 2.1.1 (2016-01-08)
+
+* Made compatible with Symfony 3
+
 ## 2.1.0 (2015-09-20)
 
 * Added a new function to twig: `knp_menu_get_breadcrumbs_array`

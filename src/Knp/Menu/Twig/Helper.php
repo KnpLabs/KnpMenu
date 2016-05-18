@@ -173,8 +173,6 @@ class Helper
      */
     private function retrieveCurrentItem(ItemInterface $item)
     {
-        $currentItem = null;
-
         if ($this->matcher->isCurrent($item)) {
             return $item;
         }
@@ -184,11 +182,11 @@ class Helper
                 $currentItem = $this->retrieveCurrentItem($child);
 
                 if (null !== $currentItem) {
-                    break;
+                    return $currentItem;
                 }
             }
         }
 
-        return $currentItem;
+        return null;
     }
 }

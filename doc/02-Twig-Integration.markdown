@@ -183,6 +183,8 @@ menu object in the other functions:
 {% set item = knp_menu_get('sidebar', ['First section']) %}
 
 {% set breadcrumbs_array = knp_menu_get_breadcrumbs_array('main') %}
+
+{% set current_item = knp_menu_get_current_item('main') %}
 ```
 
 In some cases, you may want to build the menu differently according to the
@@ -284,6 +286,7 @@ Twig integration reference
 * `knp_menu_get('menuName' [, ['Path', 'To', 'Item'], ['options']])`: retrieve an item of the menu
 * `knp_menu_render('menuName' [, ['options'], 'rendererName'])`: render a menu
 * `knp_menu_get_breadcrumbs_array('menuName' [, 'subItem'])`: get an array that represent the breadcrumbs of the current page (according to the menu)
+* `knp_menu_get_current_item('menuName')`: retrieve the current item (according to the menu)
 
 ### Filters
 

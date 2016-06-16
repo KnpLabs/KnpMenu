@@ -182,7 +182,7 @@ menu object in the other functions:
 
 {% set item = knp_menu_get('sidebar', ['First section']) %}
 
-{% set breacrumbs_array = knp_menu_get_breadcrumbs_array('main') %}
+{% set breadcrumbs_array = knp_menu_get_breadcrumbs_array('main') %}
 ```
 
 In some cases, you may want to build the menu differently according to the

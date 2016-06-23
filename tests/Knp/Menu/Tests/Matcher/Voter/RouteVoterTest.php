@@ -151,7 +151,7 @@ class RouteVoterTest extends TestCase
                 'foo',
                 array('bar' => 128),
                 array(array('route' => 'foo', 'parameters' => array('bar' => 128))),
-                null
+                true
             ),
             'no item route' => array(
                 'foo',

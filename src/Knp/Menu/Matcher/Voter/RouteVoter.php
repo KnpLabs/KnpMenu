@@ -112,7 +112,8 @@ class RouteVoter implements VoterInterface
         $routeParameters = $request->attributes->get('_route_params', array());
 
         foreach ($testedRoute['parameters'] as $name => $value) {
-            if (!isset($routeParameters[$name]) || $routeParameters[$name] !== (string) $value) {
+            // cast both to string so that we handle integer and other non-string parameters, but don't stumble on 0 == 'abc'.
+            if (!isset($routeParameters[$name]) || (string) $routeParameters[$name] !== (string) $value) {
                 return false;
             }
         }

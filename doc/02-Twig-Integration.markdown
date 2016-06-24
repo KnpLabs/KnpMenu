@@ -288,6 +288,21 @@ Twig integration reference
 * `knp_menu_get_breadcrumbs_array('menuName' [, 'subItem'])`: get an array that represent the breadcrumbs of the current page (according to the menu)
 * `knp_menu_get_current_item('menuName')`: retrieve the current item (according to the menu)
 
+You can easily generate a breadcrumb of the current page by combining the
+`knp_menu_get_breadcrumbs_array` and `knp_menu_get_current_item` functions:
+
+```jinja
+<ol class="breadcrumb">
+{% for breadcrumb_item in knp_menu_get_breadcrumbs_array(knp_menu_get_current_item('main')) %}
+    {% if not loop.last %}
+    <li><a href="{{ breadcrumb_item.uri }}">{{ breadcrumb_item.label }}</a></li>
+    {% else %}
+    <li class="active">{{ breadcrumb_item.label }}</li>
+    {% endif %}
+{% endfor %}
+</ol>
+```
+
 ### Filters
 
 * `knp_menu_as_string(menuNode [, $separator])`: generate a string representation of the menu item

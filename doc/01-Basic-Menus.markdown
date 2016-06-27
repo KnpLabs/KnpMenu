@@ -84,6 +84,10 @@ $renderer = new ListRenderer(new Matcher());
 echo $renderer->render($menu, array('compressed' => true));
 ```
 
+Note: You can customize the rendering by extending the `ListRenderer` and
+overwrite some of its methods. If you use the [TwigRenderer](02-Twig-Integration.markdown), you can overwrite
+templates. Or you can provide your own implementation of the `RendererInterface`.
+
 Working with your menu tree
 ---------------------------
 
@@ -232,7 +236,7 @@ the second argument to the `render()` method:
 * `depth`
 * `matchingDepth`: The depth of the scan to determine whether an item
   is an ancestor of the current item.
-* `currentAsLink` (default: `true`)
+* `currentAsLink` (default: `true`): Whether to render the "current" menu item as link or as span.
 * `currentClass` (default: `current`)
 * `ancestorClass` (default: `current_ancestor`)
 * `firstClass` (default: `first`)
@@ -256,6 +260,10 @@ If the menu item is matched as current, a `current` class will be added to
 the `li` around that item, as well as a `current_ancestor` around any of
 its parent `li` elements. This state can either be forced on the item by
 setting it explicitly or matched using several voters.
+
+By default, the current item is rendered as link too. You can make the current
+item not a link by setting the `currentAsLink` option to false. The ListRenderer
+then renders the item with a `<span>` tag instead of an `<a>`.
 
 ```php
 <?php

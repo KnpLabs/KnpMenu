@@ -74,6 +74,8 @@ the first and last items, submenus, ...
 Follow the tutorial in [`doc/01-Basic-Menus.markdown`][0] and [`doc/02-Twig-Integration.markdown`][1]
 to discover how KnpMenu will rock your world!
 
+Find all available documentation at [`doc/`][2].
+
 ## Credits
 
 This bundle was originally ported from [ioMenuPlugin](http://github.com/weaverryan/ioMenuPlugin),
@@ -82,3 +84,4 @@ the Symfony community.
 
 [0]: doc/01-Basic-Menus.markdown
 [1]: doc/02-Twig-Integration.markdown
+[2]: doc/

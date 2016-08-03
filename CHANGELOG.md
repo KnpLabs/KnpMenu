@@ -1,3 +1,7 @@
+## 2.2 (unreleased)
+
+* Added a new function to twig: `knp_menu_get_current_item`
+
 ## 2.1.1 (2016-01-08)
 
 * Made compatible with Symfony 3

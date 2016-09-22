@@ -1,4 +1,4 @@
-## 2.2 (unreleased)
+## 2.2 (2016-09-22)
 
 * Added a new function to twig: `knp_menu_get_current_item`
 

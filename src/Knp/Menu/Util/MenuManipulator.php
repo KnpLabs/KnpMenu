@@ -284,6 +284,37 @@ class MenuManipulator
         return $breadcrumbs;
     }
 
+    public function sort(ItemInterface $item)
+    {
+        $item->setChildren($this->sortChildren($item->getChildren()));
+    }
+
+    private function sortChildren(array $children)
+    {
+        if (empty($children)) {
+            return array();
+        }
+
+        $key  = 0;
+        $sort = array($this, 'sort');
+
+        $children = array_map(function (ItemInterface $item, $label) use(&$key, $sort) {
+            call_user_func($sort, $item);
+
+            return array($item->getExtra('weight', 0), $key++, $item, $label);
+        }, $children, array_keys($children));
+
+        array_multisort($children);
+
+        $sorted = array();
+
+        foreach ($children AS $child) {
+            $sorted[$child[3]] = $child[2];
+        }
+
+        return $sorted;
+    }
+
     private function buildBreadcrumbsArray(ItemInterface $item)
     {
         $breadcrumb = array();

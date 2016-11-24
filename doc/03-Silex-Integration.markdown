@@ -1,24 +1,11 @@
-Silex 1 Integration
-===================
+Silex Integration
+=================
 
 KnpMenu provides an extension for the [Silex](http://silex-project.org/)
-microframework version 1. **This extension is not compatible with Silex 2.** 
-If you use Silex version 2, please do a pull request to provide the necessary
-integration.
+microframework.
 
-RouterAwareFactory
-------------------
-
-The `Knp\Menu\Silex\RouterAwareFactory` extends the default factory to add
-the support of the url generator of the Symfony2 Routing component. You can
-then pass 3 new options to the factory:
-
-* `route`: The route name (the generator will be used if the name is not `null`)
-* `routeParameters`: The parameters to generate the url (if omitted, an empty array is used)
-* `routeAbsolute`: Whether the generated url should be absolute (default `false`)
-
->**NOTE**
->When you give both a route and an uri to the factory, the route will be used.
+For version 1 use `\Knp\Menu\Integration\Silex\KnpMenuServiceProvider.php`.
+For version 2 use `\Knp\Menu\Integration\Silex2\KnpMenuServiceProvider.php`.
 
 Using the KnpMenuExtension
 --------------------------
@@ -27,9 +14,6 @@ Using the KnpMenuExtension
 
 ```php
 <?php
-
-// registering the autoloader for the library.
-$app['autoloader']->registerNamespace('Knp\Menu', __DIR__.'/vendor/KnpMenu/src');
 
 // registering the extension
 $app->register(new \Knp\Menu\Integration\Silex\KnpMenuServiceProvider());

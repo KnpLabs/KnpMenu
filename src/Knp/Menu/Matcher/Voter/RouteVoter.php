@@ -75,7 +75,7 @@ class RouteVoter implements VoterInterface
             return true;
         }
 
-        $routeParameters = $this->request->attributes->get('_route_params', array());
+        $routeParameters = $this->request->attributes->get('_route_params', array()) + $this->request->query->all();
 
         foreach ($testedRoute['parameters'] as $name => $value) {
             if (!isset($routeParameters[$name]) || $routeParameters[$name] !== (string) $value) {

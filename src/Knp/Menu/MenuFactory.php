@@ -13,12 +13,12 @@ class MenuFactory implements FactoryInterface
     /**
      * @var array[]
      */
-    private $extensions = array();
+    protected $extensions = array();
 
     /**
      * @var ExtensionInterface[]
      */
-    private $sorted;
+    protected $sorted;
 
     public function __construct()
     {
@@ -57,7 +57,7 @@ class MenuFactory implements FactoryInterface
      *
      * @return ExtensionInterface[]
      */
-    private function getExtensions()
+    protected function getExtensions()
     {
         if (null === $this->sorted) {
             krsort($this->extensions);

@@ -28,9 +28,6 @@ Using the KnpMenuExtension
 ```php
 <?php
 
-// registering the autoloader for the library.
-$app['autoloader']->registerNamespace('Knp\Menu', __DIR__.'/vendor/KnpMenu/src');
-
 // registering the extension
 $app->register(new \Knp\Menu\Integration\Silex\KnpMenuServiceProvider());
 ```
@@ -77,3 +74,18 @@ $app['knp_menu.menus'] = array('main' => 'my_main_menu');
 
 Your menu is now available in the [menu provider](02-Twig-Integration.markdown#menu-provider)
 with the name `main`.
+
+### Render a menu
+
+Once you defined your menu, you may want to render your menu. And it's the same way as you do without Silex.
+
+```php
+<?php
+
+$app->get('/', function() use($app) {
+    $matcher = new \Knp\Menu\Matcher\Matcher();
+    $renderer = new ListRenderer($matcher);
+
+    return $renderer->render($app['knp_menu.menu_provider']->get('main'));
+});
+```

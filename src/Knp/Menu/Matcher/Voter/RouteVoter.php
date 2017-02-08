@@ -40,7 +40,7 @@ class RouteVoter implements VoterInterface
 
         foreach ($routes as $testedRoute) {
             if (is_string($testedRoute)) {
-                $testedRoute = array('route' => $testedRoute);
+                $testedRoute = array('route' => $testedRoute, 'parameters' => $parameters);
             }
 
             if (!is_array($testedRoute)) {

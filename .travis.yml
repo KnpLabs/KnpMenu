@@ -29,4 +29,4 @@ install:
     - composer update $COMPOSER_FLAGS
 
 script:
-    - php vendor/bin/phpunit
+    - php ./vendor/bin/simple-phpunit

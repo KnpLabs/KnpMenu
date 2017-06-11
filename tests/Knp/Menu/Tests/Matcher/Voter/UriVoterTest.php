@@ -3,8 +3,9 @@
 namespace Knp\Menu\Tests\Matcher\Voter;
 
 use Knp\Menu\Matcher\Voter\UriVoter;
+use PHPUnit\Framework\TestCase;
 
-class UriVoterTest extends \PHPUnit_Framework_TestCase
+class UriVoterTest extends TestCase
 {
     /**
      * @param string  $uri
@@ -15,7 +16,7 @@ class UriVoterTest extends \PHPUnit_Framework_TestCase
      */
     public function testMatching($uri, $itemUri, $expected)
     {
-        $item = $this->getMock('Knp\Menu\ItemInterface');
+        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->any())
             ->method('getUri')
             ->will($this->returnValue($itemUri));

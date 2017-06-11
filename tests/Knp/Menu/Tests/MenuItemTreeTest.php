@@ -6,7 +6,7 @@ use Knp\Menu\MenuItem;
 
 class TestMenuItem extends MenuItem {}
 
-class MenuItemTreeTest extends TestCase
+class MenuItemTreeTest extends MenuTestCase
 {
     public function testSampleTreeIntegrity()
     {
@@ -49,7 +49,7 @@ class MenuItemTreeTest extends TestCase
 
     public function testMoveSampleMenuToNewRoot()
     {
-        $newRoot = new TestMenuItem("newRoot", $this->getMock('Knp\Menu\FactoryInterface'));
+        $newRoot = new TestMenuItem("newRoot", $this->getMockBuilder('Knp\Menu\FactoryInterface')->getMock());
         $newRoot->addChild($this->menu);
 
         $this->assertEquals(1, $this->menu->getLevel());
@@ -165,7 +165,7 @@ class MenuItemTreeTest extends TestCase
 
     public function testAddChildDoesNotUSeTheFactoryIfItem()
     {
-        $factory = $this->getMock('Knp\Menu\FactoryInterface');
+        $factory = $this->getMockBuilder('Knp\Menu\FactoryInterface')->getMock();
         $factory->expects($this->never())
             ->method('createItem');
         $menu = new MenuItem('Root li', $factory);
@@ -177,7 +177,7 @@ class MenuItemTreeTest extends TestCase
      */
     public function testAddChildFailsIfInAnotherMenu()
     {
-        $factory = $this->getMock('Knp\Menu\FactoryInterface');
+        $factory = $this->getMockBuilder('Knp\Menu\FactoryInterface')->getMock();
         $menu = new MenuItem('Root li', $factory);
         $child = new MenuItem('Child 3', $factory);
         $menu->addChild($child);

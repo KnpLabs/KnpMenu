@@ -3,10 +3,11 @@
 namespace Knp\Menu\Tests\Twig;
 
 use Knp\Menu\Twig\MenuExtension;
+use PHPUnit\Framework\TestCase;
 
-class MenuExtensionTest extends \PHPUnit_Framework_TestCase
+class MenuExtensionTest extends TestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         if (!class_exists('Twig_Environment')) {
             $this->markTestSkipped('Twig is not available');
@@ -15,7 +16,7 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderMenu()
     {
-        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $helper = $this->getHelperMock(array('render'));
         $helper->expects($this->once())
             ->method('render')
@@ -28,7 +29,7 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderMenuWithOptions()
     {
-        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $helper = $this->getHelperMock(array('render'));
         $helper->expects($this->once())
             ->method('render')
@@ -41,7 +42,7 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testRenderMenuWithRenderer()
     {
-        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $helper = $this->getHelperMock(array('render'));
         $helper->expects($this->once())
             ->method('render')
@@ -66,7 +67,7 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testRetrieveMenuByName()
     {
-        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $helper = $this->getHelperMock(array('get', 'render'));
         $helper->expects($this->once())
             ->method('render')
@@ -96,7 +97,7 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testPathAsString()
     {
-        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $helper = $this->getHelperMock(array('get'));
         $manipulator = $this->getManipulatorMock(array('getPathAsString'));
         $helper->expects($this->any())
@@ -114,7 +115,7 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testIsCurrent()
     {
-        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $helper = $this->getHelperMock(array());
         $matcher = $this->getMatcherMock();
         $matcher->expects($this->any())
@@ -128,7 +129,7 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testIsAncestor()
     {
-        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $helper = $this->getHelperMock(array());
         $matcher = $this->getMatcherMock();
         $matcher->expects($this->any())
@@ -142,7 +143,7 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCurrentItem()
     {
-        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $helper = $this->getHelperMock(array('get', 'getCurrentItem'));
         $helper->expects($this->once())
             ->method('get')
@@ -179,7 +180,7 @@ class MenuExtensionTest extends \PHPUnit_Framework_TestCase
 
     private function getMatcherMock()
     {
-        return $this->getMock('Knp\Menu\Matcher\MatcherInterface');
+        return $this->getMockBuilder('Knp\Menu\Matcher\MatcherInterface')->getMock();
     }
 
     /**

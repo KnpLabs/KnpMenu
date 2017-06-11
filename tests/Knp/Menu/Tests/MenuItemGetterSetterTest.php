@@ -4,8 +4,9 @@ namespace Knp\Menu\Tests;
 
 use Knp\Menu\MenuItem;
 use Knp\Menu\MenuFactory;
+use PHPUnit\Framework\TestCase;
 
-class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
+class MenuItemGetterSetterTest extends TestCase
 {
     public function testCreateMenuItemWithEmptyParameter()
     {
@@ -185,7 +186,7 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
 
     public function testSetSameName()
     {
-        $parent = $this->getMock('Knp\Menu\ItemInterface');
+        $parent = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $parent->expects($this->never())
             ->method('offsetExists');
 
@@ -197,8 +198,8 @@ class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
 
     public function testFactory()
     {
-        $child1 = $this->getMock('Knp\Menu\ItemInterface');
-        $factory = $this->getMock('Knp\Menu\FactoryInterface');
+        $child1 = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $factory = $this->getMockBuilder('Knp\Menu\FactoryInterface')->getMock();
         $factory->expects($this->once())
             ->method('createItem')
             ->will($this->returnValue($child1));

@@ -1,16 +1,13 @@
 <?php
-/**
- * @author: bchoquet
- */
 
 namespace Knp\Menu\Tests\Factory;
-
 
 use Knp\Menu\Factory\CoreExtension;
 use Knp\Menu\MenuFactory;
 use Knp\Menu\MenuItem;
+use PHPUnit\Framework\TestCase;
 
-class CoreExtensionTest extends \PHPUnit_Framework_TestCase
+class CoreExtensionTest extends TestCase
 {
     public function testBuildOptions()
     {
@@ -90,4 +87,3 @@ class CoreExtensionTest extends \PHPUnit_Framework_TestCase
         return $item;
     }
 }
- 

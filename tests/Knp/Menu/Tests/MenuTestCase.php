@@ -4,8 +4,9 @@ namespace Knp\Menu\Tests;
 
 use Knp\Menu\MenuItem;
 use Knp\Menu\MenuFactory;
+use PHPUnit\Framework\TestCase;
 
-abstract class TestCase extends \PHPUnit_Framework_TestCase
+abstract class MenuTestCase extends TestCase
 {
     /**
      * @var \Knp\Menu\MenuItem

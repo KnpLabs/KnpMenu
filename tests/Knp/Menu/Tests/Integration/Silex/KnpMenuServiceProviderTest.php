@@ -5,14 +5,18 @@ namespace Knp\Menu\Tests\Integration\Silex;
 use Knp\Menu\Matcher\Matcher;
 use Knp\Menu\Integration\Silex\KnpMenuServiceProvider;
 use Knp\Menu\Matcher\Voter\RouteVoter;
+use PHPUnit\Framework\TestCase;
 use Silex\Application;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 
-class KnpMenuServiceProviderTest extends \PHPUnit_Framework_TestCase
+/**
+ * @group legacy
+ */
+class KnpMenuServiceProviderTest extends TestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         if (!class_exists('Silex\Application')) {
             $this->markTestSkipped('Silex is not available');
@@ -92,8 +96,13 @@ class KnpMenuServiceProviderTest extends \PHPUnit_Framework_TestCase
         };
 
         $app['test.voter'] = $app->share(function (Application $app) {
-            $voter = new RouteVoter();
-            $voter->setRequest($app['request']);
+            $requestStack = isset($app['request_stack']) ? $app['request_stack'] : null;
+
+            $voter = new RouteVoter($requestStack);
+
+            if (null === $requestStack) {
+                $voter->setRequest($app['request']);
+            }
 
             return $voter;
         });

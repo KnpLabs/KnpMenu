@@ -3,13 +3,14 @@
 namespace Knp\Menu\Tests\Provider;
 
 use Knp\Menu\Provider\PimpleProvider;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group legacy
  */
-class PimpleProviderTest extends \PHPUnit_Framework_TestCase
+class PimpleProviderTest extends TestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         if (!class_exists('Pimple')) {
             $this->markTestSkipped('Pimple is not available');
@@ -27,7 +28,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetExistentMenu()
     {
         $pimple = new \Pimple();
-        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $pimple['menu'] = function() use ($menu) {
             return $menu;
         };
@@ -38,7 +39,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetMenuAsClosure()
     {
         $pimple = new \Pimple();
-        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $pimple['menu'] = $pimple->protect(function($options, $c) use ($menu) {
             $c['options'] = $options;
 
@@ -51,7 +52,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testGetNonExistentMenu()
     {

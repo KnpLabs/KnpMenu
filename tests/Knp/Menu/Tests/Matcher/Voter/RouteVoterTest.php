@@ -16,7 +16,7 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
 
     public function testMatchingWithoutRequest()
     {
-        $item = $this->getMock('Knp\Menu\ItemInterface');
+        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->never())
             ->method('getExtra');
 
@@ -30,7 +30,7 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidRouteConfig()
     {
-        $item = $this->getMock('Knp\Menu\ItemInterface');
+        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->any())
             ->method('getExtra')
             ->with('routes')
@@ -56,7 +56,7 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
      */
     public function testMatching($route, array $parameters, $itemRoutes, $expected)
     {
-        $item = $this->getMock('Knp\Menu\ItemInterface');
+        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->any())
             ->method('getExtra')
             ->with('routes')

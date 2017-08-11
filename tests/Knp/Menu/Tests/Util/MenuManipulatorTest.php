@@ -128,7 +128,7 @@ class MenuManipulatorTest extends TestCase
             $manipulator->getBreadcrumbsArray($this->menu['child'], 'subitem1')
         );
 
-        $item = $this->getMock('Knp\Menu\ItemInterface');
+        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->any())
             ->method('getLabel')
             ->will($this->returnValue('mock'));
@@ -186,7 +186,7 @@ class MenuManipulatorTest extends TestCase
         $menu = $factory->createItem('test_menu');
 
         foreach (range(1, 2) as $i) {
-            $child = $this->getMock('Knp\Menu\ItemInterface');
+            $child = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
             $child->expects($this->any())
                 ->method('getName')
                 ->will($this->returnValue('Child '.$i))

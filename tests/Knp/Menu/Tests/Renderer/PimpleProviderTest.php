@@ -27,7 +27,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetExistentRenderer()
     {
         $pimple = new \Pimple();
-        $renderer = $this->getMock('Knp\Menu\Renderer\RendererInterface');
+        $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
         $pimple['renderer'] = function() use ($renderer) {
             return $renderer;
         };
@@ -38,7 +38,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetDefaultRenderer()
     {
         $pimple = new \Pimple();
-        $renderer = $this->getMock('Knp\Menu\Renderer\RendererInterface');
+        $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
         $pimple['renderer'] = function() use ($renderer) {
             return $renderer;
         };

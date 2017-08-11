@@ -20,7 +20,7 @@ class IteratorTest extends TestCase
     public function testRecursiveIterator()
     {
         // Adding an item which does not provide a RecursiveIterator to be sure it works properly.
-        $child = $this->getMock('Knp\Menu\ItemInterface');
+        $child = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $child->expects($this->any())
             ->method('getName')
             ->will($this->returnValue('Foo'));

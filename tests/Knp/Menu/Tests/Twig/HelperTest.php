@@ -121,7 +121,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException LogicException
+     * @expectedException \LogicException
      */
     public function testGetMenuWithBadReturnValue()
     {
@@ -138,7 +138,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException BadMethodCallException
+     * @expectedException \BadMethodCallException
      */
     public function testGetMenuWithoutProvider()
     {
@@ -186,7 +186,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testGetMenuByInvalidPath()
     {
@@ -244,7 +244,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage The array cannot be empty
      */
     public function testRenderByEmptyPath()
@@ -269,7 +269,7 @@ class HelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException BadMethodCallException
+     * @expectedException \BadMethodCallException
      */
     public function testCurrentItemWithoutMatcher()
     {

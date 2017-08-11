@@ -49,7 +49,6 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
      * @param string       $route
      * @param array        $parameters
      * @param string|array $itemRoutes
-     * @param array        $itemsRoutesParameters
      * @param boolean      $expected
      *
      * @dataProvider provideData

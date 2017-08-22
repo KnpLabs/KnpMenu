@@ -10,7 +10,7 @@ class MenuFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $factory = new MenuFactory();
 
-        $extension1 = $this->getMock('Knp\Menu\Factory\ExtensionInterface');
+        $extension1 = $this->getMockBuilder('Knp\Menu\Factory\ExtensionInterface')->getMock();
         $extension1->expects($this->once())
             ->method('buildOptions')
             ->with(array('foo' => 'bar'))
@@ -21,7 +21,7 @@ class MenuFactoryTest extends \PHPUnit_Framework_TestCase
 
         $factory->addExtension($extension1);
 
-        $extension2 = $this->getMock('Knp\Menu\Factory\ExtensionInterface');
+        $extension2 = $this->getMockBuilder('Knp\Menu\Factory\ExtensionInterface')->getMock();
         $extension2->expects($this->once())
             ->method('buildOptions')
             ->with(array('foo' => 'baz'))

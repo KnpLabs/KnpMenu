@@ -16,7 +16,7 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
 
     public function testMatchingWithoutRequest()
     {
-        $item = $this->getMock('Knp\Menu\ItemInterface');
+        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->never())
             ->method('getExtra');
 
@@ -30,7 +30,7 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidRouteConfig()
     {
-        $item = $this->getMock('Knp\Menu\ItemInterface');
+        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->any())
             ->method('getExtra')
             ->with('routes')
@@ -49,14 +49,13 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
      * @param string       $route
      * @param array        $parameters
      * @param string|array $itemRoutes
-     * @param array        $itemsRoutesParameters
      * @param boolean      $expected
      *
      * @dataProvider provideData
      */
     public function testMatching($route, array $parameters, $itemRoutes, $expected)
     {
-        $item = $this->getMock('Knp\Menu\ItemInterface');
+        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->any())
             ->method('getExtra')
             ->with('routes')
@@ -138,7 +137,7 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
             'same single route with additional parameters' => array(
                 'foo',
                 array('1' => 'bar'),
-                array(array('route' => 'foo', 'parameters' => array('1' => 'bar', '2' >+ 'baz'))),
+                array(array('route' => 'foo', 'parameters' => array('1' => 'bar', '2' => 'baz'))),
                 null
             ),
             'same single route with less parameters' => array(

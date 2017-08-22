@@ -17,7 +17,7 @@ class ArrayAccessProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetExistentMenu()
     {
         $registry = new \ArrayObject();
-        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $registry['menu'] = $menu;
         $provider = new ArrayAccessProvider($registry, array('default' => 'menu'));
         $this->assertSame($menu, $provider->get('default'));
@@ -26,7 +26,7 @@ class ArrayAccessProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetMenuAsClosure()
     {
         $registry = new \ArrayObject();
-        $menu = $this->getMock('Knp\Menu\ItemInterface');
+        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $registry['menu'] = function ($options, $c) use ($menu) {
             $c['options'] = $options;
 

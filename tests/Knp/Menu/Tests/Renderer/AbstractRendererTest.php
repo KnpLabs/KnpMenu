@@ -6,9 +6,9 @@ use Knp\Menu\MenuItem;
 use Knp\Menu\MenuFactory;
 use Knp\Menu\Matcher\MatcherInterface;
 use Knp\Menu\Matcher\Matcher;
-use Knp\Menu\Tests\TestCase;
+use Knp\Menu\Tests\MenuTestCase;
 
-abstract class AbstractRendererTest extends TestCase
+abstract class AbstractRendererTest extends MenuTestCase
 {
     /**
      * @var \Knp\Menu\Renderer\RendererInterface

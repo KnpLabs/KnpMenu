@@ -3,9 +3,10 @@
 namespace Knp\Menu\Tests\Matcher\Voter;
 
 use Knp\Menu\Matcher\Voter\RouteVoter;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-class RouteVoterTest extends \PHPUnit_Framework_TestCase
+class RouteVoterTest extends TestCase
 {
     protected function setUp()
     {

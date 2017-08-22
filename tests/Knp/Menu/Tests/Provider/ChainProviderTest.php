@@ -3,8 +3,9 @@
 namespace Knp\Menu\Tests\Provider;
 
 use Knp\Menu\Provider\ChainProvider;
+use PHPUnit\Framework\TestCase;
 
-class ChainProviderTest extends \PHPUnit_Framework_TestCase
+class ChainProviderTest extends TestCase
 {
     public function testHas()
     {

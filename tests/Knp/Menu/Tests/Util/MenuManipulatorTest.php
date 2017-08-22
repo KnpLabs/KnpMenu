@@ -4,10 +4,10 @@ namespace Knp\Menu\Tests\Util;
 
 use Knp\Menu\MenuFactory;
 use Knp\Menu\MenuItem;
-use Knp\Menu\Tests\TestCase;
+use Knp\Menu\Tests\MenuTestCase;
 use Knp\Menu\Util\MenuManipulator;
 
-class MenuManipulatorTest extends TestCase
+class MenuManipulatorTest extends MenuTestCase
 {
     public function testMoveToFirstPosition()
     {

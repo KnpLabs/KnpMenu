@@ -3,13 +3,14 @@
 namespace Knp\Menu\Tests\Renderer;
 
 use Knp\Menu\Renderer\PimpleProvider;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group legacy
  */
-class PimpleProviderTest extends \PHPUnit_Framework_TestCase
+class PimpleProviderTest extends TestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         if (!class_exists('Pimple')) {
             $this->markTestSkipped('Pimple is not available');

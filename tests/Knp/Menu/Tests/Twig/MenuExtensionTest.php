@@ -3,10 +3,11 @@
 namespace Knp\Menu\Tests\Twig;
 
 use Knp\Menu\Twig\MenuExtension;
+use PHPUnit\Framework\TestCase;
 
-class MenuExtensionTest extends \PHPUnit_Framework_TestCase
+class MenuExtensionTest extends TestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         if (!class_exists('Twig_Environment')) {
             $this->markTestSkipped('Twig is not available');

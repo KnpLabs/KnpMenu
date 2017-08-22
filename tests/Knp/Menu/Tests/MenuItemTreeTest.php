@@ -6,7 +6,7 @@ use Knp\Menu\MenuItem;
 
 class TestMenuItem extends MenuItem {}
 
-class MenuItemTreeTest extends TestCase
+class MenuItemTreeTest extends MenuTestCase
 {
     public function testSampleTreeIntegrity()
     {

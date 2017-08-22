@@ -3,11 +3,12 @@
 namespace Knp\Menu\Tests\Silex;
 
 use Knp\Menu\Integration\Symfony\RoutingExtension;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class RoutingExtensionTest extends \PHPUnit_Framework_TestCase
+class RoutingExtensionTest extends TestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         if (!interface_exists('Symfony\Component\Routing\Generator\UrlGeneratorInterface')) {
             $this->markTestSkipped('The Symfony Routing component is not available');

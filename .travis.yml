@@ -32,6 +32,8 @@ matrix:
 
 before_install:
     - if [ "$DEPENDENCIES" = "dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi;
+    # force the PHPUnit version for PHP 7.2, until https://github.com/symfony/symfony/issues/23943 is resolved
+    - if [ "$TRAVIS_PHP_VERSION" = "nightly" ]; then export SYMFONY_PHPUNIT_VERSION="6.3"; fi;
 
 install:
     - composer update $COMPOSER_FLAGS

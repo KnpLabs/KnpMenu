@@ -6,6 +6,7 @@ use Knp\Menu\Integration\Symfony\RoutingExtension;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Knp\Menu\Matcher\Matcher;
+use Knp\Menu\Matcher\Voter\RouteVoter;
 use Knp\Menu\MenuFactory;
 use Knp\Menu\Renderer\ListRenderer;
 use Knp\Menu\Renderer\TwigRenderer;
@@ -29,10 +30,17 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
             return $factory;
         });
 
+        $app['knp_menu.matcher.configure'] = $app->protect(function ($matcher) use ($app) {
+            $routeVoter = new RouteVoter();
+            $routeVoter->setRequest($app['request']);
+
+            $matcher->addVoter($routeVoter);
+        });
+
         $app['knp_menu.matcher'] = $app->share(function () use ($app) {
             $matcher = new Matcher();
 
-            if (isset($app['knp_menu.matcher.configure'])) {
+            if (is_callable($app['knp_menu.matcher.configure'])) {
                 $app['knp_menu.matcher.configure']($matcher);
             }
 

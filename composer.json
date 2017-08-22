@@ -24,7 +24,7 @@
     },
     "require-dev":  {
         "pimple/pimple": "~1.0",
-        "symfony/phpunit-bridge": "~2.7|~3.0",
+        "symfony/phpunit-bridge": "~3.3",
         "symfony/routing": "~2.3|~3.0",
         "silex/silex":     "~1.0",
         "twig/twig":       "~1.16|~2.0"

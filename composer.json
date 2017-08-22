@@ -3,12 +3,12 @@
     "type":         "library",
     "description":  "An object oriented menu library",
     "keywords":     ["menu", "tree"],
-    "homepage":     "http://knplabs.com",
+    "homepage":     "https://knplabs.com",
     "license":      "MIT",
     "authors":      [
         {
             "name":     "KnpLabs",
-            "homepage": "http://knplabs.com"
+            "homepage": "https://knplabs.com"
         },
         {
             "name":     "Christophe Coevoet",

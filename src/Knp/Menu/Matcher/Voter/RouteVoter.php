@@ -56,7 +56,7 @@ class RouteVoter implements VoterInterface
     public function matchItem(ItemInterface $item)
     {
         if (null !== $this->requestStack) {
-            $request = $this->requestStack->getCurrentRequest();
+            $request = $this->requestStack->getMasterRequest();
         } else {
             $request = $this->request;
         }

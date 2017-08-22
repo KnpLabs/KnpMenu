@@ -11,6 +11,9 @@ use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @group legacy
+ */
 class KnpMenuServiceProviderTest extends TestCase
 {
     protected function setUp()

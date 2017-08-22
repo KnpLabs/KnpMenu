@@ -93,8 +93,13 @@ class KnpMenuServiceProviderTest extends TestCase
         };
 
         $app['test.voter'] = $app->share(function (Application $app) {
-            $voter = new RouteVoter();
-            $voter->setRequest($app['request']);
+            $requestStack = isset($app['request_stack']) ? $app['request_stack'] : null;
+
+            $voter = new RouteVoter($requestStack);
+
+            if (null === $requestStack) {
+                $voter->setRequest($app['request']);
+            }
 
             return $voter;
         });

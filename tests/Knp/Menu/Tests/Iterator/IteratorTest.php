@@ -3,9 +3,9 @@
 namespace Knp\Menu\Tests\Iterator;
 
 use Knp\Menu\Iterator\RecursiveItemIterator;
-use Knp\Menu\Tests\TestCase;
+use Knp\Menu\Tests\MenuTestCase;
 
-class IteratorTest extends TestCase
+class IteratorTest extends MenuTestCase
 {
     public function testIterator()
     {

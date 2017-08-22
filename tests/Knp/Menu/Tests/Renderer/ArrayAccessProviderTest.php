@@ -3,8 +3,9 @@
 namespace Knp\Menu\Tests\Renderer;
 
 use Knp\Menu\Renderer\ArrayAccessProvider;
+use PHPUnit\Framework\TestCase;
 
-class ArrayAccessProviderTest extends \PHPUnit_Framework_TestCase
+class ArrayAccessProviderTest extends TestCase
 {
     public function testHas()
     {

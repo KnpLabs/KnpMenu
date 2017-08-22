@@ -4,8 +4,9 @@ namespace Knp\Menu\Tests;
 
 use Knp\Menu\MenuItem;
 use Knp\Menu\MenuFactory;
+use PHPUnit\Framework\TestCase;
 
-class MenuItemGetterSetterTest extends \PHPUnit_Framework_TestCase
+class MenuItemGetterSetterTest extends TestCase
 {
     public function testCreateMenuItemWithEmptyParameter()
     {

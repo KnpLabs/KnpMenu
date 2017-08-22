@@ -4,8 +4,9 @@ namespace Knp\Menu\Tests\Loader;
 
 use Knp\Menu\Loader\ArrayLoader;
 use Knp\Menu\MenuFactory;
+use PHPUnit\Framework\TestCase;
 
-class ArrayLoaderTest extends \PHPUnit_Framework_TestCase
+class ArrayLoaderTest extends TestCase
 {
     public function testLoadWithoutChildren()
     {

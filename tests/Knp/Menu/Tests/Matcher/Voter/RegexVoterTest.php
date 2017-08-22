@@ -3,8 +3,9 @@
 namespace Knp\Menu\Tests\Matcher\Voter;
 
 use Knp\Menu\Matcher\Voter\RegexVoter;
+use PHPUnit\Framework\TestCase;
 
-class RegexVoterTest extends \PHPUnit_Framework_TestCase
+class RegexVoterTest extends TestCase
 {
     /**
      * @param string  $exp

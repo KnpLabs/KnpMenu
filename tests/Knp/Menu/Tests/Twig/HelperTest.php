@@ -6,8 +6,9 @@ use Knp\Menu\Matcher\Matcher;
 use Knp\Menu\MenuFactory;
 use Knp\Menu\MenuItem;
 use Knp\Menu\Twig\Helper;
+use PHPUnit\Framework\TestCase;
 
-class HelperTest extends \PHPUnit_Framework_TestCase
+class HelperTest extends TestCase
 {
     public function testRenderMenu()
     {

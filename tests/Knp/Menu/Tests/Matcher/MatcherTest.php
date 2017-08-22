@@ -3,8 +3,9 @@
 namespace Knp\Menu\Tests\Matcher;
 
 use Knp\Menu\Matcher\Matcher;
+use PHPUnit\Framework\TestCase;
 
-class MatcherTest extends \PHPUnit_Framework_TestCase
+class MatcherTest extends TestCase
 {
     /**
      * @param boolean|null $flag

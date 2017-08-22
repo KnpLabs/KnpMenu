@@ -5,14 +5,15 @@ namespace Knp\Menu\Tests\Integration\Silex;
 use Knp\Menu\Matcher\Matcher;
 use Knp\Menu\Integration\Silex\KnpMenuServiceProvider;
 use Knp\Menu\Matcher\Voter\RouteVoter;
+use PHPUnit\Framework\TestCase;
 use Silex\Application;
 use Silex\Provider\TwigServiceProvider;
 use Silex\Provider\UrlGeneratorServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 
-class KnpMenuServiceProviderTest extends \PHPUnit_Framework_TestCase
+class KnpMenuServiceProviderTest extends TestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         if (!class_exists('Silex\Application')) {
             $this->markTestSkipped('Silex is not available');

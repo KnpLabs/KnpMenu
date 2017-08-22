@@ -23,12 +23,15 @@ class RoutingExtension implements ExtensionInterface
         if (!empty($options['route'])) {
             $params = isset($options['routeParameters']) ? $options['routeParameters'] : array();
             $absolute = (isset($options['routeAbsolute']) && $options['routeAbsolute']) ? UrlGeneratorInterface::ABSOLUTE_URL : UrlGeneratorInterface::ABSOLUTE_PATH;
+            $hash = (isset($options['hash']) && $options['hash'] && is_string($options['hash'])) ? $options['hash'] : null;
             $options['uri'] = $this->generator->generate($options['route'], $params, $absolute);
+            if ($hash) { $options['uri'] .= "#".$hash; }
 
             // adding the item route to the extras under the 'routes' key (for the Silex RouteVoter)
             $options['extras']['routes'][] = array(
                 'route' => $options['route'],
                 'parameters' => $params,
+                'hash' => $hash,
             );
         }
 

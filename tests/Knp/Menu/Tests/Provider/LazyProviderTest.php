@@ -3,10 +3,10 @@
 namespace Knp\Menu\Tests\Provider;
 
 use Knp\Menu\ItemInterface;
-use Knp\Menu\Provider\ArrayAccessProvider;
 use Knp\Menu\Provider\LazyProvider;
+use PHPUnit\Framework\TestCase;
 
-class LazyProviderTest extends \PHPUnit_Framework_TestCase
+class LazyProviderTest extends TestCase
 {
     public function testHas()
     {

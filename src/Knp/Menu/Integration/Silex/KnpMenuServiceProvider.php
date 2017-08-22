@@ -2,6 +2,8 @@
 
 namespace Knp\Menu\Integration\Silex;
 
+@trigger_error('The '.__NAMESPACE__.'\KnpMenuServiceProvider class is deprecated since version 2.3 and will be removed in 3.0. Use the provider available in the "knplabs/knp-menu-silex" package instead.', E_USER_DEPRECATED);
+
 use Knp\Menu\Integration\Symfony\RoutingExtension;
 use Silex\Application;
 use Silex\ServiceProviderInterface;

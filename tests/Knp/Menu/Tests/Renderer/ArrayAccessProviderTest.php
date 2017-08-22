@@ -17,7 +17,7 @@ class ArrayAccessProviderTest extends TestCase
 
     public function testGetExistentRenderer()
     {
-        $registry = new \Pimple();
+        $registry = new \ArrayObject();
         $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
         $registry['renderer'] = $renderer;
         $provider = new ArrayAccessProvider($registry, 'default',  array('default' => 'renderer'));

@@ -32,6 +32,8 @@ matrix:
           dist: precise
 
 before_install:
+    # Test the legacy Silex integration on the PHP 5.5 job. It is not tested on all jobs as it prevents testing with Symfony 3
+    - if [ "$TRAVIS_PHP_VERSION" = "5.5" ]; then composer require --no-update --dev silex/silex "^1.0"; fi;
     - if [ "$DEPENDENCIES" = "dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi;
     # force the PHPUnit version for PHP 7.2, until https://github.com/symfony/symfony/issues/23943 is resolved
     - if [ "$TRAVIS_PHP_VERSION" = "nightly" ]; then export SYMFONY_PHPUNIT_VERSION="6.3"; fi;

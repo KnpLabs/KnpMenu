@@ -157,7 +157,7 @@ class MenuExtension extends \Twig_Extension
             throw new \BadMethodCallException('The matcher must be set to get the breadcrumbs array');
         }
 
-        return $this->matcher->isAncestor($item);
+        return $this->matcher->isAncestor($item, $depth);
     }
 
     /**

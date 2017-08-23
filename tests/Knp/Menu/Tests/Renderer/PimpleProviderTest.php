@@ -3,13 +3,14 @@
 namespace Knp\Menu\Tests\Renderer;
 
 use Knp\Menu\Renderer\PimpleProvider;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group legacy
  */
-class PimpleProviderTest extends \PHPUnit_Framework_TestCase
+class PimpleProviderTest extends TestCase
 {
-    public function setUp()
+    protected function setUp()
     {
         if (!class_exists('Pimple')) {
             $this->markTestSkipped('Pimple is not available');
@@ -27,7 +28,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetExistentRenderer()
     {
         $pimple = new \Pimple();
-        $renderer = $this->getMock('Knp\Menu\Renderer\RendererInterface');
+        $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
         $pimple['renderer'] = function() use ($renderer) {
             return $renderer;
         };
@@ -38,7 +39,7 @@ class PimpleProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetDefaultRenderer()
     {
         $pimple = new \Pimple();
-        $renderer = $this->getMock('Knp\Menu\Renderer\RendererInterface');
+        $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
         $pimple['renderer'] = function() use ($renderer) {
             return $renderer;
         };

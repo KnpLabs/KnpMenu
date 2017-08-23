@@ -3,8 +3,9 @@
 namespace Knp\Menu\Tests\Matcher\Voter;
 
 use Knp\Menu\Matcher\Voter\RegexVoter;
+use PHPUnit\Framework\TestCase;
 
-class RegexVoterTest extends \PHPUnit_Framework_TestCase
+class RegexVoterTest extends TestCase
 {
     /**
      * @param string  $exp
@@ -15,7 +16,7 @@ class RegexVoterTest extends \PHPUnit_Framework_TestCase
      */
     public function testMatching($exp, $itemUri, $expected)
     {
-        $item = $this->getMock('Knp\Menu\ItemInterface');
+        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->any())
             ->method('getUri')
             ->will($this->returnValue($itemUri));

@@ -3,9 +3,11 @@
 namespace Knp\Menu\Tests\Matcher\Voter;
 
 use Knp\Menu\Matcher\Voter\RouteVoter;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
-class RouteVoterTest extends \PHPUnit_Framework_TestCase
+class RouteVoterTest extends TestCase
 {
     protected function setUp()
     {
@@ -14,13 +16,51 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testMatchingWithoutRequest()
+    /**
+     * @group legacy
+     */
+    public function testMatchingWithoutRequestAndStack()
     {
-        $item = $this->getMock('Knp\Menu\ItemInterface');
+        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->never())
             ->method('getExtra');
 
         $voter = new RouteVoter();
+
+        $this->assertNull($voter->matchItem($item));
+    }
+
+    public function testMatchingWithoutRequestInStack()
+    {
+        if (!class_exists('Symfony\Component\HttpFoundation\RequestStack')) {
+            $this->markTestSkipped('The RequestStack is not available in this version of HttpFoundation.');
+        }
+
+        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $item->expects($this->never())
+            ->method('getExtra');
+
+        $voter = new RouteVoter(new RequestStack());
+
+        $this->assertNull($voter->matchItem($item));
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testMatchingWithoutStackRequestButLegacyRequest()
+    {
+        if (!class_exists('Symfony\Component\HttpFoundation\RequestStack')) {
+            $this->markTestSkipped('The RequestStack is not available in this version of HttpFoundation.');
+        }
+
+        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $item->expects($this->never())
+            ->method('getExtra');
+
+        $voter = new RouteVoter(new RequestStack());
+        // the request set explicitly is ignored when a RequestStack is provided
+        $voter->setRequest(new Request());
 
         $this->assertNull($voter->matchItem($item));
     }
@@ -30,7 +70,7 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidRouteConfig()
     {
-        $item = $this->getMock('Knp\Menu\ItemInterface');
+        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->any())
             ->method('getExtra')
             ->with('routes')
@@ -40,7 +80,10 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
         $request->attributes->set('_route', 'foo');
         $request->attributes->set('_route_params', array());
 
-        $voter = new RouteVoter($request);
+        $requestStack = new RequestStack();
+        $requestStack->push($request);
+
+        $voter = new RouteVoter($requestStack);
 
         $voter->matchItem($item);
     }
@@ -49,14 +92,13 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
      * @param string       $route
      * @param array        $parameters
      * @param string|array $itemRoutes
-     * @param array        $itemsRoutesParameters
      * @param boolean      $expected
      *
      * @dataProvider provideData
      */
     public function testMatching($route, array $parameters, $itemRoutes, $expected)
     {
-        $item = $this->getMock('Knp\Menu\ItemInterface');
+        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->any())
             ->method('getExtra')
             ->with('routes')
@@ -67,9 +109,33 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
         $request->attributes->set('_route', $route);
         $request->attributes->set('_route_params', $parameters);
 
-        $voter = new RouteVoter($request);
+        $requestStack = new RequestStack();
+        $requestStack->push($request);
+
+        $voter = new RouteVoter($requestStack);
 
         $this->assertSame($expected, $voter->matchItem($item));
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testMatchingWithRequest()
+    {
+        if (!class_exists('Symfony\Component\HttpFoundation\RequestStack')) {
+            $this->markTestSkipped('The RequestStack is not available in this version of HttpFoundation.');
+        }
+
+        $item = $this->prophesize('Knp\Menu\ItemInterface');
+        $item->getExtra('routes', array())->willReturn(array('foo'));
+
+        $request = new Request();
+        $request->attributes->set('_route', 'foo');
+        $request->attributes->set('_route_params', array());
+
+        $voter = new RouteVoter($request);
+
+        $this->assertTrue($voter->matchItem($item->reveal()));
     }
 
     public function provideData()
@@ -138,7 +204,7 @@ class RouteVoterTest extends \PHPUnit_Framework_TestCase
             'same single route with additional parameters' => array(
                 'foo',
                 array('1' => 'bar'),
-                array(array('route' => 'foo', 'parameters' => array('1' => 'bar', '2' >+ 'baz'))),
+                array(array('route' => 'foo', 'parameters' => array('1' => 'bar', '2' => 'baz'))),
                 null
             ),
             'same single route with less parameters' => array(

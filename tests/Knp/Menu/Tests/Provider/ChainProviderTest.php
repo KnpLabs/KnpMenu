@@ -3,12 +3,13 @@
 namespace Knp\Menu\Tests\Provider;
 
 use Knp\Menu\Provider\ChainProvider;
+use PHPUnit\Framework\TestCase;
 
-class ChainProviderTest extends \PHPUnit_Framework_TestCase
+class ChainProviderTest extends TestCase
 {
     public function testHas()
     {
-        $innerProvider =  $this->getMock('Knp\Menu\Provider\MenuProviderInterface');
+        $innerProvider =  $this->getMockBuilder('Knp\Menu\Provider\MenuProviderInterface')->getMock();
         $innerProvider->expects($this->at(0))
             ->method('has')
             ->with('first')
@@ -32,8 +33,8 @@ class ChainProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetExistentMenu()
     {
-        $menu = $this->getMock('Knp\Menu\ItemInterface');
-        $innerProvider =  $this->getMock('Knp\Menu\Provider\MenuProviderInterface');
+        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $innerProvider =  $this->getMockBuilder('Knp\Menu\Provider\MenuProviderInterface')->getMock();
         $innerProvider->expects($this->any())
             ->method('has')
             ->with('default')
@@ -51,8 +52,8 @@ class ChainProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetWithOptions()
     {
-        $menu = $this->getMock('Knp\Menu\ItemInterface');
-        $innerProvider =  $this->getMock('Knp\Menu\Provider\MenuProviderInterface');
+        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $innerProvider =  $this->getMockBuilder('Knp\Menu\Provider\MenuProviderInterface')->getMock();
         $innerProvider->expects($this->any())
             ->method('has')
             ->with('default', array('foo' => 'bar'))
@@ -69,7 +70,7 @@ class ChainProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      */
     public function testGetNonExistentMenu()
     {

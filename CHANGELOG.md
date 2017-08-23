@@ -1,3 +1,7 @@
+## 2.3 (unreleased)
+
+* Deprecated the Silex 1 KnpMenuServiceProvider. Use the `knplabs/knp-menu-silex` package instead.
+
 ## 2.2 (2016-09-22)
 
 * Added a new function to twig: `knp_menu_get_current_item`

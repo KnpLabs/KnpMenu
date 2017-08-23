@@ -3,8 +3,9 @@
 namespace Knp\Menu\Tests\Renderer;
 
 use Knp\Menu\Renderer\ArrayAccessProvider;
+use PHPUnit\Framework\TestCase;
 
-class ArrayAccessProviderTest extends \PHPUnit_Framework_TestCase
+class ArrayAccessProviderTest extends TestCase
 {
     public function testHas()
     {
@@ -16,8 +17,8 @@ class ArrayAccessProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetExistentRenderer()
     {
-        $registry = new \Pimple();
-        $renderer = $this->getMock('Knp\Menu\Renderer\RendererInterface');
+        $registry = new \ArrayObject();
+        $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
         $registry['renderer'] = $renderer;
         $provider = new ArrayAccessProvider($registry, 'default',  array('default' => 'renderer'));
         $this->assertSame($renderer, $provider->get('default'));
@@ -26,7 +27,7 @@ class ArrayAccessProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetDefaultRenderer()
     {
         $registry = new \ArrayObject();
-        $renderer = $this->getMock('Knp\Menu\Renderer\RendererInterface');
+        $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
         $registry['renderer'] = $renderer;
         $provider = new ArrayAccessProvider($registry, 'default',  array('default' => 'renderer'));
         $this->assertSame($renderer, $provider->get());

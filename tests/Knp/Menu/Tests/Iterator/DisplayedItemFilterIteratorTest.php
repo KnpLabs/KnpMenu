@@ -4,9 +4,9 @@ namespace Knp\Menu\Tests\Iterator;
 
 use Knp\Menu\Iterator\DisplayedItemFilterIterator;
 use Knp\Menu\Iterator\RecursiveItemIterator;
-use Knp\Menu\Tests\TestCase;
+use Knp\Menu\Tests\MenuTestCase;
 
-class DisplayedItemFilterIteratorTest extends TestCase
+class DisplayedItemFilterIteratorTest extends MenuTestCase
 {
     public function testFiltering()
     {

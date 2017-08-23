@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by seferov at 2017-06-11T01:28:07Z
+
+if https://github.com/KnpLabs/KnpMenu/pull/260 is merged, tests on this PR will also pass
+
+---------------------------------------------------------------------------
+
+by stof at 2017-08-22T20:12:25Z
+
+Please rebase this PR so that it does not contain changes in the Travis config file (which are creating conflicts btw)
+
+---------------------------------------------------------------------------
+
+by seferov at 2017-08-23T06:24:38Z
+
+@stof done

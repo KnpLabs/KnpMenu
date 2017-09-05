@@ -77,4 +77,17 @@ class ChainProviderTest extends TestCase
         $provider = new ChainProvider(array());
         $provider->get('non-existent');
     }
+
+    public function testIterator()
+    {
+        $menu = $this->prophesize('Knp\Menu\ItemInterface');
+
+        $innerProvider = $this->prophesize('Knp\Menu\Provider\MenuProviderInterface');
+        $innerProvider->has('foo', array())->willReturn(true);
+        $innerProvider->get('foo', array())->willReturn($menu);
+
+        $provider = new ChainProvider(new \ArrayIterator(array($innerProvider->reveal())));
+        $this->assertTrue($provider->has('foo'));
+        $this->assertSame($menu->reveal(), $provider->get('foo'));
+    }
 }

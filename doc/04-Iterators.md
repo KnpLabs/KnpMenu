@@ -103,7 +103,7 @@ It is a filter iterator applied on another iterator.
 $root = /* get your root item from somewhere */;
 $menu = $root['B'];
 
-$itemMatcher = \Knp\Menu\Matcher\Matcher();
+$itemMatcher = new \Knp\Menu\Matcher\Matcher();
 
 // create the iterator
 $iterator = new \Knp\Menu\Iterator\CurrentItemFilterIterator($menu->getIterator(), $itemMatcher);
@@ -123,7 +123,7 @@ filter on the previous recursive iterator:
 
 $menu = /* get your root item from somewhere */;
 
-$itemMatcher = \Knp\Menu\Matcher\Matcher();
+$itemMatcher = new \Knp\Menu\Matcher\Matcher();
 
 $treeIterator = new \RecursiveIteratorIterator(
     new \Knp\Menu\Iterator\RecursiveItemIterator(

@@ -1,6 +1,7 @@
 ## 2.3 (unreleased)
 
 * Deprecated the Silex 1 KnpMenuServiceProvider. Use the `knplabs/knp-menu-silex` package instead.
+* Fixed RouteVoter to also match on non-string request arguments like integers as long as both string representations are identical. 
 
 ## 2.2 (2016-09-22)
 

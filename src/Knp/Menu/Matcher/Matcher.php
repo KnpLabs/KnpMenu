@@ -11,24 +11,35 @@ use Knp\Menu\Matcher\Voter\VoterInterface;
 class Matcher implements MatcherInterface
 {
     private $cache;
+    private $voters;
 
     /**
-     * @var VoterInterface[]
+     * @param VoterInterface[]|iterable $voters
      */
-    private $voters = array();
-
-    public function __construct()
+    public function __construct($voters = array())
     {
+        $this->voters = $voters;
         $this->cache = new \SplObjectStorage();
     }
 
     /**
      * Adds a voter in the matcher.
      *
+     * If an iterator was used to provide voters in the constructor, it will be
+     * converted to array when using this method, breaking any potential lazy-loading.
+     *
+     * @deprecated since 2.3. Pass voters in the constructor instead.
+     *
      * @param VoterInterface $voter
      */
     public function addVoter(VoterInterface $voter)
     {
+        @trigger_error(sprintf('The %s() method is deprecated since version 2.3 and will be removed in 3.0. Pass voters in the constructor instead.', __METHOD__), E_USER_DEPRECATED);
+
+        if ($this->voters instanceof \Traversable) {
+            $this->voters = iterator_to_array($this->voters);
+        }
+
         $this->voters[] = $voter;
     }
 

@@ -29,7 +29,6 @@
         "symfony/routing": "~2.3|~3.0|^4.0",
         "twig/twig":       "~1.16|~2.0"
     },
-    "minimum-stability": "beta",
     "suggest":      {
         "twig/twig":    "for the TwigRenderer and the integration with your templates"
     },

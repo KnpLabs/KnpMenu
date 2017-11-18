@@ -1,7 +1,9 @@
-## 2.3 (unreleased)
+
+## 2.3 (2017-11-18)
 
 * Deprecated the Silex 1 KnpMenuServiceProvider. Use the `knplabs/knp-menu-silex` package instead.
-* Fixed RouteVoter to also match on non-string request arguments like integers as long as both string representations are identical. 
+* Fixed RouteVoter to also match on non-string request arguments like integers as long as both string representations are identical.
+* Add Symfony 4 support
 
 ## 2.2 (2016-09-22)
 

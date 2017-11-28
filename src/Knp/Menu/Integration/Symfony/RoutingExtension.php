@@ -7,7 +7,7 @@ use Knp\Menu\ItemInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
- * Factory able to use the Symfony2 Routing component to build the url
+ * Factory able to use the Symfony Routing component to build the url
  */
 class RoutingExtension implements ExtensionInterface
 {

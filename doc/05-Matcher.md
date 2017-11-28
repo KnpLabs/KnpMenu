@@ -32,7 +32,7 @@ Available voters
 KnpMenu provides some voters for standard cases:
 
 * `RegexVoter`: checks if the request matches a regular expression you pass to the voter
-* `RouteVoter`: uses a Symfony2 request to check if the current route is same as the route of the menu item
+* `RouteVoter`: uses a Symfony request to check if the current route is same as the route of the menu item
 * `UriVoter`: compare the URI of the menu item with the URI passed to the voter
 
 Create your own voters

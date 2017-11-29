@@ -29,7 +29,7 @@ $factory = new MenuFactory();
 $menu = $factory->createItem('My menu');
 $menu->addChild('Home', array('uri' => '/'));
 $menu->addChild('Comments', array('uri' => '#comments'));
-$menu->addChild('Symfony2', array('uri' => 'http://symfony-reloaded.org/'));
+$menu->addChild('Symfony', array('uri' => 'http://symfony.com/'));
 
 $renderer = new ListRenderer(new Matcher());
 echo $renderer->render($menu);
@@ -46,7 +46,7 @@ The above would render the following html code:
     <a href="#comments">Comments</a>
   </li>
   <li class="last">
-    <a href="http://symfony-reloaded.org/">Symfony2</a>
+    <a href="http://symfony.com/">Symfony</a>
   </li>
 </ul>
 ```

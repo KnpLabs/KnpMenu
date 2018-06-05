@@ -27,7 +27,7 @@ class Builder
     {   
         $loader = new NodeLoader($this->factory);
         $rootNode = /* ... get an object implementing \Knp\Menu\NodeInterface */;
-        $menu = $loader->load($rooNode);
+        $menu = $loader->load($rootNode);
 
         return $menu;
     } 

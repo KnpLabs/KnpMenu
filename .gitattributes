@@ -2,6 +2,6 @@
 .gitignore       export-ignore
 .travis.yml      export-ignore
 phpunit.xml.dist export-ignore
-README.md        export-ignore
+README.markdown  export-ignore
 tests            export-ignore
-docs             export-ignore
+doc              export-ignore

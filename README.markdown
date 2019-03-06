@@ -21,7 +21,7 @@ entry in your `composer.json` and update the `composer.lock` as well.
 $ composer require knplabs/knp-menu
 ```
 
-> KnpMenu follows the PSR-0 convention names for its classes, which means you can easily integrate `knp-menu` classes loading in your own autoloader.
+> KnpMenu follows the PSR-4 convention names for its classes, which means you can easily integrate `knp-menu` classes loading in your own autoloader.
 
 ## Getting Started
 

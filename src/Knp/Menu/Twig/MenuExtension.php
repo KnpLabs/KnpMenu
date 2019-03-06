@@ -5,8 +5,12 @@ namespace Knp\Menu\Twig;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Util\MenuManipulator;
 use Knp\Menu\Matcher\MatcherInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
+use Twig\TwigTest;
 
-class MenuExtension extends \Twig_Extension
+class MenuExtension extends AbstractExtension
 {
     private $helper;
     private $matcher;
@@ -25,25 +29,25 @@ class MenuExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-             new \Twig_SimpleFunction('knp_menu_get', array($this, 'get')),
-             new \Twig_SimpleFunction('knp_menu_render', array($this, 'render'), array('is_safe' => array('html'))),
-             new \Twig_SimpleFunction('knp_menu_get_breadcrumbs_array', array($this, 'getBreadcrumbsArray')),
-             new \Twig_SimpleFunction('knp_menu_get_current_item', array($this, 'getCurrentItem')),
+             new TwigFunction('knp_menu_get', array($this, 'get')),
+             new TwigFunction('knp_menu_render', array($this, 'render'), array('is_safe' => array('html'))),
+             new TwigFunction('knp_menu_get_breadcrumbs_array', array($this, 'getBreadcrumbsArray')),
+             new TwigFunction('knp_menu_get_current_item', array($this, 'getCurrentItem')),
         );
     }
 
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('knp_menu_as_string', array($this, 'pathAsString')),
+            new TwigFilter('knp_menu_as_string', array($this, 'pathAsString')),
         );
     }
 
     public function getTests()
     {
         return array(
-            new \Twig_SimpleTest('knp_menu_current', array($this, 'isCurrent')),
-            new \Twig_SimpleTest('knp_menu_ancestor', array($this, 'isAncestor')),
+            new TwigTest('knp_menu_current', array($this, 'isCurrent')),
+            new TwigTest('knp_menu_ancestor', array($this, 'isAncestor')),
         );
     }
     

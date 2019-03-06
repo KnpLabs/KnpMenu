@@ -16,6 +16,8 @@ use Knp\Menu\Renderer\ArrayAccessProvider as PimpleRendererProvider;
 use Knp\Menu\Twig\Helper;
 use Knp\Menu\Twig\MenuExtension;
 use Knp\Menu\Util\MenuManipulator;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 class KnpMenuServiceProvider implements ServiceProviderInterface
 {
@@ -88,13 +90,13 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
                 $app['knp_menu.template'] = 'knp_menu.html.twig';
             }
 
-            $app['twig'] = $app->share($app->extend('twig', function (\Twig_Environment $twig) use ($app) {
+            $app['twig'] = $app->share($app->extend('twig', function (Environment $twig) use ($app) {
                 $twig->addExtension($app['knp_menu.twig_extension']);
 
                 return $twig;
             }));
 
-            $app['twig.loader.filesystem'] = $app->share($app->extend('twig.loader.filesystem', function (\Twig_Loader_Filesystem $loader) use ($app) {
+            $app['twig.loader.filesystem'] = $app->share($app->extend('twig.loader.filesystem', function (FilesystemLoader $loader) use ($app) {
                 $loader->addPath(__DIR__.'/../../Resources/views');
 
                 return $loader;

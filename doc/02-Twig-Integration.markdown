@@ -19,10 +19,10 @@ to pass both the renderer and menu into a template:
 <?php
 
 // bootstrap Twig
-$twigLoader = new \Twig_Loader_Filesystem(array(
+$twigLoader = new \Twig\Loader\FilesystemLoader(array(
     // path to your templates
 ));
-$twig = new \Twig_Environment($twigLoader); // you can add the charset (i.e. ISO-8859-1) in the array of options if you need 
+$twig = new \Twig\Environment($twigLoader); // you can add the charset (i.e. ISO-8859-1) in the array of options if you need 
 
 $itemMatcher = new \Knp\Menu\Matcher\Matcher();
 // setup some renderer
@@ -30,8 +30,7 @@ $renderer = new \Knp\Menu\Renderer\ListRenderer($itemMatcher);
 //$menuRenderer = new \Knp\Menu\Renderer\TwigRenderer($twig, 'knp_menu.html.twig', $itemMatcher);
 
 // render a template
-$template = $twig->loadTemplate('menu.twig');
-echo $template->display(array(
+$twig->display('menu.twig', array(
     'renderer' => $renderer,
     'menu' => $menu
 ));
@@ -226,12 +225,12 @@ when bootstrapping Twig.
 ```php
 <?php
 
-$twigLoader = new \Twig_Loader_Filesystem(array(
+$twigLoader = new \Twig\Loader\FilesystemLoader(array(
     __DIR__.'/vendor/KnpMenu/src/Knp/Menu/Resources/views',
     // your own paths
 ));
-$twig = new \Twig_Environment($twigLoader);
-$itemMatcher = \Knp\Menu\Matcher\Matcher();
+$twig = new \Twig\Environment($twigLoader);
+$itemMatcher = new \Knp\Menu\Matcher\Matcher();
 $menuRenderer = new \Knp\Menu\Renderer\TwigRenderer($twig, 'knp_menu.html.twig', $itemMatcher);
 ```
 

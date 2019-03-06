@@ -4,12 +4,15 @@ namespace Knp\Menu\Tests\Twig;
 
 use Knp\Menu\Twig\MenuExtension;
 use PHPUnit\Framework\TestCase;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
+use Twig\Template;
 
 class MenuExtensionTest extends TestCase
 {
     protected function setUp()
     {
-        if (!class_exists('Twig_Environment')) {
+        if (!class_exists(Environment::class)) {
             $this->markTestSkipped('Twig is not available');
         }
     }
@@ -187,12 +190,12 @@ class MenuExtensionTest extends TestCase
      * @param string                $template
      * @param \Knp\Menu\Twig\Helper $helper
      *
-     * @return \Twig_Template
+     * @return Template
      */
     private function getTemplate($template, $helper, $matcher = null, $menuManipulator = null)
     {
-        $loader = new \Twig_Loader_Array(array('index' => $template));
-        $twig = new \Twig_Environment($loader, array('debug' => true, 'cache' => false));
+        $loader = new ArrayLoader(array('index' => $template));
+        $twig = new Environment($loader, array('debug' => true, 'cache' => false));
         $twig->addExtension(new MenuExtension($helper, $matcher, $menuManipulator));
 
         return $twig->loadTemplate('index');

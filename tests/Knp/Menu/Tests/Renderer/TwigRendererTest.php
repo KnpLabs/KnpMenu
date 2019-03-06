@@ -6,16 +6,18 @@ use Knp\Menu\Renderer\TwigRenderer;
 use Knp\Menu\MenuItem;
 use Knp\Menu\MenuFactory;
 use Knp\Menu\Matcher\MatcherInterface;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 class TwigRendererTest extends AbstractRendererTest
 {
     public function createRenderer(MatcherInterface $matcher)
     {
-        if (!class_exists('Twig_Environment')) {
+        if (!class_exists(Environment::class)) {
             $this->markTestSkipped('Twig is not available');
         }
-        $loader = new \Twig_Loader_Filesystem(__DIR__.'/../../../../../src/Knp/Menu/Resources/views');
-        $environment = new \Twig_Environment($loader);
+        $loader = new FilesystemLoader(__DIR__.'/../../../../../src/Knp/Menu/Resources/views');
+        $environment = new Environment($loader);
         $renderer = new TwigRenderer($environment, 'knp_menu.html.twig', $matcher, array('compressed' => true));
 
         return $renderer;

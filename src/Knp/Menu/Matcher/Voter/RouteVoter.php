@@ -26,7 +26,7 @@ class RouteVoter implements VoterInterface
         if ($requestStack instanceof RequestStack) {
             $this->requestStack = $requestStack;
         } elseif ($requestStack instanceof Request) {
-            @trigger_error(sprintf('Passing a Request as the first argument for "%s" constructor is deprecated since version 2.3 and wwon\'t be possible in 3.0. Pass a RequestStack instead.', __CLASS__), E_USER_DEPRECATED);
+            @trigger_error(sprintf('Passing a Request as the first argument for "%s" constructor is deprecated since version 2.3 and won\'t be possible in 3.0. Pass a RequestStack instead.', __CLASS__), E_USER_DEPRECATED);
 
             // BC layer for the old API of the class
             $this->request = $requestStack;

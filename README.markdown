@@ -76,11 +76,19 @@ to discover how KnpMenu will rock your world!
 
 Find all available documentation at [`doc/`][2].
 
+## Maintainers
+
+This library is maintained by the following people (alphabetically sorted) :
+
+- @derrabus
+- @garak
+- @stof
+
 ## Credits
 
 This bundle was originally ported from [ioMenuPlugin](http://github.com/weaverryan/ioMenuPlugin),
 a menu plugin for symfony1. It has since been developed by [KnpLabs](http://www.knplabs.com) and
-the Symfony community.
+the [Symfony community](https://github.com/KnpLabs/KnpMenu/graphs/contributors).
 
 [0]: doc/01-Basic-Menus.markdown
 [1]: doc/02-Twig-Integration.markdown

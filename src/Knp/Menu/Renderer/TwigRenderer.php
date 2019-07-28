@@ -4,23 +4,24 @@ namespace Knp\Menu\Renderer;
 
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\MatcherInterface;
+use Twig\Environment;
 
 class TwigRenderer implements RendererInterface
 {
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     private $environment;
     private $matcher;
     private $defaultOptions;
 
     /**
-     * @param \Twig_Environment $environment
-     * @param string            $template
-     * @param MatcherInterface  $matcher
-     * @param array             $defaultOptions
+     * @param Environment      $environment
+     * @param string           $template
+     * @param MatcherInterface $matcher
+     * @param array            $defaultOptions
      */
-    public function __construct(\Twig_Environment $environment, $template, MatcherInterface $matcher, array $defaultOptions = array())
+    public function __construct(Environment $environment, $template, MatcherInterface $matcher, array $defaultOptions = array())
     {
         $this->environment = $environment;
         $this->matcher = $matcher;

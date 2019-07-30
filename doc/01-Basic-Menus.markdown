@@ -310,16 +310,7 @@ $routeVoter->setRequest($symfonyRequest);
 Creating a Menu from a Tree structure
 -------------------------------------
 
-You can create a menu easily from a Tree structure (a nested set for example) by
-making it implement `Knp\Menu\NodeInterface`. You will then be able
-to create the menu easily (assuming `$node` is the root node of your structure):
-
-```php
-<?php
-
-$factory = new \Knp\Menu\MenuFactory();
-$menu = $factory->createFromNode($node);
-```
+See [Advanced Menu documentation page](01a-Advanced-Menu.md)
 
 Change the charset
 ------------------

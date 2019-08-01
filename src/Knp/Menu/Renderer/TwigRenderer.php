@@ -6,14 +6,13 @@ use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\MatcherInterface;
 use Twig\Environment;
 
-class TwigRenderer implements RendererInterface
+class TwigRenderer extends BaseRenderer
 {
     /**
      * @var Environment
      */
     private $environment;
     private $matcher;
-    private $defaultOptions;
 
     /**
      * @param Environment      $environment
@@ -25,21 +24,12 @@ class TwigRenderer implements RendererInterface
     {
         $this->environment = $environment;
         $this->matcher = $matcher;
-        $this->defaultOptions = array_merge(array(
-            'depth' => null,
-            'matchingDepth' => null,
-            'currentAsLink' => true,
-            'currentClass' => 'current',
-            'ancestorClass' => 'current_ancestor',
-            'firstClass' => 'first',
-            'lastClass' => 'last',
-            'template' => $template,
-            'compressed' => false,
-            'allow_safe_labels' => false,
-            'clear_matcher' => true,
-            'leaf_class' => null,
-            'branch_class' => null,
+
+        $defaultOptions = array_merge(array(
+            'template' => $template
         ), $defaultOptions);
+
+        parent::__construct($defaultOptions);
     }
 
     public function render(ItemInterface $item, array $options = array())

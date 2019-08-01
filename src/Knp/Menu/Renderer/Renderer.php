@@ -6,18 +6,20 @@ if (!defined('ENT_SUBSTITUTE')) {
     define('ENT_SUBSTITUTE', 8);
 }
 
-abstract class Renderer
+abstract class Renderer extends BaseRenderer
 {
     protected $charset = 'UTF-8';
 
     /**
      * @param string $charset
      */
-    public function __construct($charset = null)
+    public function __construct($defaultOptions = array(), $charset = null)
     {
         if (null !== $charset) {
             $this->charset = (string) $charset;
         }
+
+        parent::__construct($defaultOptions);
     }
 
     /**

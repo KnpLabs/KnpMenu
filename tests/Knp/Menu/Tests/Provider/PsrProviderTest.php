@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class PsrProviderTest extends TestCase
 {
-    public function testHas()
+    public function testHas(): void
     {
         $container = $this->prophesize('Psr\Container\ContainerInterface');
         $container->has('first')->willReturn(true);
@@ -20,7 +20,7 @@ class PsrProviderTest extends TestCase
         $this->assertFalse($provider->has('third'));
     }
 
-    public function testGetExistentMenu()
+    public function testGetExistentMenu(): void
     {
         $menu = $this->prophesize('Knp\Menu\ItemInterface');
 
@@ -35,7 +35,7 @@ class PsrProviderTest extends TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testGetNonExistentMenu()
+    public function testGetNonExistentMenu(): void
     {
         $container = $this->prophesize('Psr\Container\ContainerInterface');
         $container->has('non-existent')->willReturn(false);

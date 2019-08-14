@@ -8,13 +8,13 @@ use PHPUnit\Framework\TestCase;
 class UriVoterTest extends TestCase
 {
     /**
-     * @param string  $uri
-     * @param string  $itemUri
-     * @param boolean $expected
+     * @param string $uri
+     * @param string $itemUri
+     * @param bool   $expected
      *
      * @dataProvider provideData
      */
-    public function testMatching($uri, $itemUri, $expected)
+    public function testMatching($uri, $itemUri, $expected): void
     {
         $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->any())

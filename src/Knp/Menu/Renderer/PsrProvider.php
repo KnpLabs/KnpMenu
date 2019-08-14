@@ -27,7 +27,7 @@ class PsrProvider implements RendererProviderInterface
         $this->defaultRenderer = $defaultRenderer;
     }
 
-    public function get($name = null)
+    public function get(?string $name = null): RendererInterface
     {
         if (null === $name) {
             $name = $this->defaultRenderer;
@@ -40,7 +40,7 @@ class PsrProvider implements RendererProviderInterface
         return $this->container->get($name);
     }
 
-    public function has($name)
+    public function has(string $name): bool
     {
         return $this->container->has($name);
     }

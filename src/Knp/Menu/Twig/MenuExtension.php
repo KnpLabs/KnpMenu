@@ -3,8 +3,8 @@
 namespace Knp\Menu\Twig;
 
 use Knp\Menu\ItemInterface;
-use Knp\Menu\Util\MenuManipulator;
 use Knp\Menu\Matcher\MatcherInterface;
+use Knp\Menu\Util\MenuManipulator;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;

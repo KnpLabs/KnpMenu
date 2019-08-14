@@ -9,7 +9,7 @@ class RecursiveItemIterator extends \IteratorIterator implements \RecursiveItera
 {
     public function hasChildren()
     {
-        return 0 < count($this->current());
+        return 0 < \count($this->current());
     }
 
     public function getChildren()

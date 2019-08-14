@@ -1,41 +1,42 @@
 {
-    "name":         "knplabs/knp-menu",
-    "type":         "library",
-    "description":  "An object oriented menu library",
-    "keywords":     ["menu", "tree"],
-    "homepage":     "https://knplabs.com",
-    "license":      "MIT",
-    "authors":      [
+    "name": "knplabs/knp-menu",
+    "type": "library",
+    "description": "An object oriented menu library",
+    "keywords": ["menu", "tree"],
+    "homepage": "https://knplabs.com",
+    "license": "MIT",
+    "authors": [
         {
-            "name":     "KnpLabs",
+            "name": "KnpLabs",
             "homepage": "https://knplabs.com"
         },
         {
-            "name":     "Christophe Coevoet",
-            "email":    "stof@notk.org"
+            "name": "Christophe Coevoet",
+            "email": "stof@notk.org"
         },
         {
-            "name":     "Symfony Community",
+            "name": "The Community",
             "homepage": "https://github.com/KnpLabs/KnpMenu/contributors"
         }
     ],
-    "require":      {
-        "php":  ">=5.6.0"
+    "require": {
+        "php": "^7.2"
     },
     "conflict": {
-        "twig/twig": "<1.40|>=2,<2.9"
+        "twig/twig": "<1.40 || >=2,<2.9"
     },
-    "require-dev":  {
+    "require-dev": {
+        "phpspec/prophecy": "^1.8",
         "psr/container": "^1.0",
-        "symfony/http-foundation": "~2.4|~3.0|^4.0",
-        "symfony/phpunit-bridge": "~3.3|^4.0",
-        "symfony/routing": "~2.3|~3.0|^4.0",
-        "twig/twig": "^1.40|^2.9"
+        "symfony/http-foundation": "^3.4 || ^4.0",
+        "symfony/phpunit-bridge": "^3.3 || ^4.0",
+        "symfony/routing": "^3.4 || ^4.0",
+        "twig/twig": "^1.40 || ^2.9"
     },
-    "suggest":      {
-        "twig/twig":    "for the TwigRenderer and the integration with your templates"
+    "suggest": {
+        "twig/twig": "for the TwigRenderer and the integration with your templates"
     },
-    "autoload":     {
+    "autoload": {
         "psr-4": { "Knp\\Menu\\": "src/Knp/Menu" }
     },
     "autoload-dev": {
@@ -45,7 +46,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "2.4-dev"
+            "dev-master": "3.0-dev"
         }
     }
 }

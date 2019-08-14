@@ -23,7 +23,7 @@ class ArrayAccessProvider implements RendererProviderInterface
         $this->defaultRenderer = $defaultRenderer;
     }
 
-    public function get($name = null)
+    public function get(string $name = null): RendererInterface
     {
         if (null === $name) {
             $name = $this->defaultRenderer;
@@ -36,7 +36,7 @@ class ArrayAccessProvider implements RendererProviderInterface
         return $this->registry[$this->rendererIds[$name]];
     }
 
-    public function has($name)
+    public function has($name): bool
     {
         return isset($this->rendererIds[$name]);
     }

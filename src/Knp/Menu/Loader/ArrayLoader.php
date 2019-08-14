@@ -19,7 +19,7 @@ class ArrayLoader implements LoaderInterface
         $this->factory = $factory;
     }
 
-    public function load($data)
+    public function load($data): ItemInterface
     {
         if (!$this->supports($data)) {
             throw new \InvalidArgumentException(sprintf('Unsupported data. Expected an array but got ', is_object($data) ? get_class($data) : gettype($data)));
@@ -28,7 +28,7 @@ class ArrayLoader implements LoaderInterface
         return $this->fromArray($data);
     }
 
-    public function supports($data)
+    public function supports($data): bool
     {
         return is_array($data);
     }
@@ -39,7 +39,7 @@ class ArrayLoader implements LoaderInterface
      *
      * @return ItemInterface
      */
-    private function fromArray(array $data, $name = null)
+    private function fromArray(array $data, ?string $name = null): ItemInterface
     {
         $name = isset($data['name']) ? $data['name'] : $name;
 

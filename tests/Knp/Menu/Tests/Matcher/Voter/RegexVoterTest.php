@@ -8,13 +8,13 @@ use PHPUnit\Framework\TestCase;
 class RegexVoterTest extends TestCase
 {
     /**
-     * @param string  $exp
-     * @param string  $itemUri
-     * @param boolean $expected
+     * @param string $exp
+     * @param string $itemUri
+     * @param bool   $expected
      *
      * @dataProvider provideData
      */
-    public function testMatching($exp, $itemUri, $expected)
+    public function testMatching($exp, $itemUri, $expected): void
     {
         $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->any())

@@ -2,6 +2,7 @@
 
 namespace Knp\Menu\Provider;
 
+use Knp\Menu\ItemInterface;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -19,7 +20,7 @@ class PsrProvider implements MenuProviderInterface
         $this->container = $container;
     }
 
-    public function get($name, array $options = [])
+    public function get(string $name, array $options = []): ItemInterface
     {
         if (!$this->container->has($name)) {
             throw new \InvalidArgumentException(sprintf('The menu "%s" is not defined.', $name));
@@ -28,7 +29,7 @@ class PsrProvider implements MenuProviderInterface
         return $this->container->get($name);
     }
 
-    public function has($name, array $options = [])
+    public function has($name, array $options = []): bool
     {
         return $this->container->has($name);
     }

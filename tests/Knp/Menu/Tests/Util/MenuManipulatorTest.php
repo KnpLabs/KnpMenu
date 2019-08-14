@@ -9,7 +9,7 @@ use Knp\Menu\Util\MenuManipulator;
 
 class MenuManipulatorTest extends MenuTestCase
 {
-    public function testMoveToFirstPosition()
+    public function testMoveToFirstPosition(): void
     {
         $menu = new MenuItem('root', new MenuFactory());
         $menu->addChild('c1');
@@ -22,7 +22,7 @@ class MenuManipulatorTest extends MenuTestCase
         $this->assertEquals(['c3', 'c1', 'c2', 'c4'], array_keys($menu->getChildren()));
     }
 
-    public function testMoveToLastPosition()
+    public function testMoveToLastPosition(): void
     {
         $menu = new MenuItem('root', new MenuFactory());
         $menu->addChild('c1');
@@ -35,7 +35,7 @@ class MenuManipulatorTest extends MenuTestCase
         $this->assertEquals(['c1', 'c3', 'c4', 'c2'], array_keys($menu->getChildren()));
     }
 
-    public function testMoveToPosition()
+    public function testMoveToPosition(): void
     {
         $menu = new MenuItem('root', new MenuFactory());
         $menu->addChild('c1');
@@ -51,7 +51,7 @@ class MenuManipulatorTest extends MenuTestCase
     /**
      * @dataProvider getSliceData
      */
-    public function testSlice($offset, $length, $count, $keys)
+    public function testSlice($offset, $length, $count, $keys): void
     {
         $manipulator = new MenuManipulator();
         $sliced = $manipulator->slice($this->pt1, $offset, $length);
@@ -76,7 +76,7 @@ class MenuManipulatorTest extends MenuTestCase
     /**
      * @dataProvider getSplitData
      */
-    public function testSplit($length, $count, $keys)
+    public function testSplit($length, $count, $keys): void
     {
         $manipulator = new MenuManipulator();
         $splitted = $manipulator->split($this->pt1, $length);
@@ -98,14 +98,14 @@ class MenuManipulatorTest extends MenuTestCase
         ];
     }
 
-    public function testPathAsString()
+    public function testPathAsString(): void
     {
         $manipulator = new MenuManipulator();
         $this->assertEquals('Root li > Parent 2 > Child 4', $manipulator->getPathAsString($this->ch4), 'Path with default separator');
         $this->assertEquals('Root li / Parent 1 / Child 2', $manipulator->getPathAsString($this->ch2, ' / '), 'Path with custom separator');
     }
 
-    public function testBreadcrumbsArray()
+    public function testBreadcrumbsArray(): void
     {
         $manipulator = new MenuManipulator();
         $this->menu->addChild('child', ['uri' => 'http://www.symfony-reloaded.org']);
@@ -173,13 +173,13 @@ class MenuManipulatorTest extends MenuTestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testBreadcrumbsArrayInvalidData()
+    public function testBreadcrumbsArrayInvalidData(): void
     {
         $manipulator = new MenuManipulator();
         $manipulator->getBreadcrumbsArray($this->pt1, [new \stdClass()]);
     }
 
-    public function testCallRecursively()
+    public function testCallRecursively(): void
     {
         $factory = new MenuFactory();
 
@@ -208,7 +208,7 @@ class MenuManipulatorTest extends MenuTestCase
         $this->assertFalse($menu->isDisplayed());
     }
 
-    public function testToArrayWithChildren()
+    public function testToArrayWithChildren(): void
     {
         $menu = $this->createMenu();
         $menu->addChild('jack', ['uri' => 'http://php.net', 'linkAttributes' => ['title' => 'php'], 'display' => false])
@@ -286,7 +286,7 @@ class MenuManipulatorTest extends MenuTestCase
         );
     }
 
-    public function testToArrayWithLimitedChildren()
+    public function testToArrayWithLimitedChildren(): void
     {
         $menu = $this->createMenu();
         $menu->addChild('jack', ['uri' => 'http://php.net', 'linkAttributes' => ['title' => 'php'], 'display' => false])
@@ -342,7 +342,7 @@ class MenuManipulatorTest extends MenuTestCase
         );
     }
 
-    public function testToArrayWithoutChildren()
+    public function testToArrayWithoutChildren(): void
     {
         $menu = $this->createMenu();
         $menu->addChild('jack', ['uri' => 'http://php.net', 'linkAttributes' => ['title' => 'php'], 'display' => false]);

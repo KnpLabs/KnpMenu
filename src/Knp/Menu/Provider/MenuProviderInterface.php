@@ -2,6 +2,8 @@
 
 namespace Knp\Menu\Provider;
 
+use Knp\Menu\ItemInterface;
+
 interface MenuProviderInterface
 {
     /**
@@ -10,10 +12,10 @@ interface MenuProviderInterface
      * @param string $name
      * @param array  $options
      *
-     * @return \Knp\Menu\ItemInterface
+     * @return ItemInterface
      * @throws \InvalidArgumentException if the menu does not exists
      */
-    public function get($name, array $options = []);
+    public function get(string $name, array $options = []): ItemInterface;
 
     /**
      * Checks whether a menu exists in this provider
@@ -23,5 +25,5 @@ interface MenuProviderInterface
      *
      * @return boolean
      */
-    public function has($name, array $options = []);
+    public function has(string $name, array $options = []): bool;
 }

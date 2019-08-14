@@ -13,7 +13,7 @@ interface LoaderInterface
      *
      * @return ItemInterface
      */
-    public function load($data);
+    public function load($data): ItemInterface;
 
     /**
      * Checks whether the loader can load these data
@@ -22,5 +22,5 @@ interface LoaderInterface
      *
      * @return boolean
      */
-    public function supports($data);
+    public function supports($data): bool;
 }

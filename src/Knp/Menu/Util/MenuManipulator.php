@@ -12,7 +12,7 @@ class MenuManipulator
      * @param ItemInterface $item
      * @param integer       $position Position to move child to.
      */
-    public function moveToPosition(ItemInterface $item, $position)
+    public function moveToPosition(ItemInterface $item, $position): void
     {
         $this->moveChildToPosition($item->getParent(), $item, $position);
     }
@@ -24,7 +24,7 @@ class MenuManipulator
      * @param ItemInterface $child    Child to move.
      * @param integer       $position Position to move child to.
      */
-    public function moveChildToPosition(ItemInterface $item, ItemInterface $child, $position)
+    public function moveChildToPosition(ItemInterface $item, ItemInterface $child, $position): void
     {
         $name = $child->getName();
         $order = array_keys($item->getChildren());
@@ -43,7 +43,7 @@ class MenuManipulator
      *
      * @param ItemInterface $item
      */
-    public function moveToFirstPosition(ItemInterface $item)
+    public function moveToFirstPosition(ItemInterface $item): void
     {
         $this->moveToPosition($item, 0);
     }
@@ -53,7 +53,7 @@ class MenuManipulator
      *
      * @param ItemInterface $item
      */
-    public function moveToLastPosition(ItemInterface $item)
+    public function moveToLastPosition(ItemInterface $item): void
     {
         $this->moveToPosition($item, $item->getParent()->count());
     }
@@ -135,7 +135,7 @@ class MenuManipulator
      * @param string        $method
      * @param array         $arguments
      */
-    public function callRecursively(ItemInterface $item, $method, $arguments = [])
+    public function callRecursively(ItemInterface $item, $method, $arguments = []): void
     {
         call_user_func_array([$item, $method], $arguments);
 

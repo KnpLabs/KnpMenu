@@ -4,9 +4,9 @@ namespace Knp\Menu\Twig;
 
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\MatcherInterface;
-use Knp\Menu\Util\MenuManipulator;
-use Knp\Menu\Renderer\RendererProviderInterface;
 use Knp\Menu\Provider\MenuProviderInterface;
+use Knp\Menu\Renderer\RendererProviderInterface;
+use Knp\Menu\Util\MenuManipulator;
 
 /**
  * Helper class containing logic to retrieve and render menus from templating engines

@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class LazyProviderTest extends TestCase
 {
-    public function testHas()
+    public function testHas(): void
     {
         $provider = new LazyProvider(['first' => function () {}, 'second' => function () {}]);
         $this->assertTrue($provider->has('first'));
@@ -16,7 +16,7 @@ class LazyProviderTest extends TestCase
         $this->assertFalse($provider->has('third'));
     }
 
-    public function testGetExistentMenu()
+    public function testGetExistentMenu(): void
     {
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $provider = new LazyProvider(['default' => function () use ($menu) {
@@ -25,7 +25,7 @@ class LazyProviderTest extends TestCase
         $this->assertSame($menu, $provider->get('default'));
     }
 
-    public function testGetMenuAsClosure()
+    public function testGetMenuAsClosure(): void
     {
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $provider = new LazyProvider(['default' => [function () use ($menu) {
@@ -38,7 +38,7 @@ class LazyProviderTest extends TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testGetNonExistentMenu()
+    public function testGetNonExistentMenu(): void
     {
         $provider = new LazyProvider([]);
         $provider->get('non-existent');
@@ -47,7 +47,7 @@ class LazyProviderTest extends TestCase
     /**
      * @expectedException \LogicException
      */
-    public function testGetWithBrokenBuilder()
+    public function testGetWithBrokenBuilder(): void
     {
         $provider = new LazyProvider(['broken' => new \stdClass()]);
         $provider->get('broken');
@@ -56,7 +56,7 @@ class LazyProviderTest extends TestCase
     /**
      * @expectedException \LogicException
      */
-    public function testGetWithBrokenLazyBuilder()
+    public function testGetWithBrokenLazyBuilder(): void
     {
         $provider = new LazyProvider(['broken' => [function () {return new \stdClass();}, 'nonExistentMethod']]);
         $provider->get('broken');
@@ -72,7 +72,7 @@ class FakeBuilder
         $this->menu = $menu;
     }
 
-    public function build(array $options)
+    public function build(array $options): ItemInterface
     {
         return $this->menu;
     }

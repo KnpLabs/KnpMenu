@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class ChainProviderTest extends TestCase
 {
-    public function testHas()
+    public function testHas(): void
     {
         $innerProvider =  $this->getMockBuilder('Knp\Menu\Provider\MenuProviderInterface')->getMock();
         $innerProvider->expects($this->at(0))
@@ -31,7 +31,7 @@ class ChainProviderTest extends TestCase
         $this->assertFalse($provider->has('third', ['foo' => 'bar']));
     }
 
-    public function testGetExistentMenu()
+    public function testGetExistentMenu(): void
     {
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $innerProvider =  $this->getMockBuilder('Knp\Menu\Provider\MenuProviderInterface')->getMock();
@@ -50,7 +50,7 @@ class ChainProviderTest extends TestCase
         $this->assertSame($menu, $provider->get('default'));
     }
 
-    public function testGetWithOptions()
+    public function testGetWithOptions(): void
     {
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $innerProvider =  $this->getMockBuilder('Knp\Menu\Provider\MenuProviderInterface')->getMock();
@@ -72,13 +72,13 @@ class ChainProviderTest extends TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testGetNonExistentMenu()
+    public function testGetNonExistentMenu(): void
     {
         $provider = new ChainProvider([]);
         $provider->get('non-existent');
     }
 
-    public function testIterator()
+    public function testIterator(): void
     {
         $menu = $this->prophesize('Knp\Menu\ItemInterface');
 

@@ -9,7 +9,7 @@ use Knp\Menu\Tests\MenuTestCase;
 
 class CurrentItemFilterIteratorTest extends MenuTestCase
 {
-    public function testSimpleFiltering()
+    public function testSimpleFiltering(): void
     {
         $this->pt1->setCurrent(true);
         $this->ch2->setCurrent(true);
@@ -26,7 +26,7 @@ class CurrentItemFilterIteratorTest extends MenuTestCase
         $this->assertEquals(['Parent 1'], $names);
     }
 
-    public function testFiltering()
+    public function testFiltering(): void
     {
         $this->pt1->setCurrent(true);
         $this->ch2->setCurrent(true);

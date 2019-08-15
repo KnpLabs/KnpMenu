@@ -18,10 +18,10 @@ class ListRenderer extends Renderer implements RendererInterface
      * @param array            $defaultOptions
      * @param string           $charset
      */
-    public function __construct(MatcherInterface $matcher, array $defaultOptions = array(), $charset = null)
+    public function __construct(MatcherInterface $matcher, array $defaultOptions = [], $charset = null)
     {
         $this->matcher = $matcher;
-        $this->defaultOptions = array_merge(array(
+        $this->defaultOptions = array_merge([
             'depth' => null,
             'matchingDepth' => null,
             'currentAsLink' => true,
@@ -34,12 +34,12 @@ class ListRenderer extends Renderer implements RendererInterface
             'clear_matcher' => true,
             'leaf_class' => null,
             'branch_class' => null,
-        ), $defaultOptions);
+        ], $defaultOptions);
 
         parent::__construct($charset);
     }
 
-    public function render(ItemInterface $item, array $options = array())
+    public function render(ItemInterface $item, array $options = [])
     {
         $options = array_merge($this->defaultOptions, $options);
 
@@ -186,7 +186,7 @@ class ListRenderer extends Renderer implements RendererInterface
      *
      * @return string
      */
-    protected function renderLink(ItemInterface $item, array $options = array())
+    protected function renderLink(ItemInterface $item, array $options = [])
     {
         if ($item->getUri() && (!$item->isCurrent() || $options['currentAsLink'])) {
             $text = $this->renderLinkElement($item, $options);

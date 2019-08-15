@@ -16,7 +16,7 @@ class HelperTest extends TestCase
         $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
         $renderer->expects($this->once())
             ->method('render')
-            ->with($menu, array())
+            ->with($menu, [])
             ->will($this->returnValue('<p>foobar</p>'))
         ;
 
@@ -38,7 +38,7 @@ class HelperTest extends TestCase
         $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
         $renderer->expects($this->once())
             ->method('render')
-            ->with($menu, array('firstClass' => 'test'))
+            ->with($menu, ['firstClass' => 'test'])
             ->will($this->returnValue('<p>foobar</p>'))
         ;
 
@@ -51,7 +51,7 @@ class HelperTest extends TestCase
 
         $helper = new Helper($rendererProvider);
 
-        $this->assertEquals('<p>foobar</p>', $helper->render($menu, array('firstClass' => 'test')));
+        $this->assertEquals('<p>foobar</p>', $helper->render($menu, ['firstClass' => 'test']));
     }
 
     public function testRenderMenuWithRenderer()
@@ -60,7 +60,7 @@ class HelperTest extends TestCase
         $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
         $renderer->expects($this->once())
             ->method('render')
-            ->with($menu, array())
+            ->with($menu, [])
             ->will($this->returnValue('<p>foobar</p>'))
         ;
 
@@ -73,7 +73,7 @@ class HelperTest extends TestCase
 
         $helper = new Helper($rendererProvider);
 
-        $this->assertEquals('<p>foobar</p>', $helper->render($menu, array(), 'custom'));
+        $this->assertEquals('<p>foobar</p>', $helper->render($menu, [], 'custom'));
     }
 
     public function testRenderMenuByName()
@@ -89,7 +89,7 @@ class HelperTest extends TestCase
         $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
         $renderer->expects($this->once())
             ->method('render')
-            ->with($menu, array())
+            ->with($menu, [])
             ->will($this->returnValue('<p>foobar</p>'))
         ;
 
@@ -155,13 +155,13 @@ class HelperTest extends TestCase
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $menuProvider->expects($this->once())
             ->method('get')
-            ->with('default', array('foo' => 'bar'))
+            ->with('default', ['foo' => 'bar'])
             ->will($this->returnValue($menu))
         ;
 
         $helper = new Helper($rendererProvider, $menuProvider);
 
-        $this->assertSame($menu, $helper->get('default', array(), array('foo' => 'bar')));
+        $this->assertSame($menu, $helper->get('default', [], ['foo' => 'bar']));
     }
 
     public function testGetMenuByPath()
@@ -183,7 +183,7 @@ class HelperTest extends TestCase
 
         $helper = new Helper($rendererProvider, $menuProvider);
 
-        $this->assertSame($child, $helper->get('default', array('child')));
+        $this->assertSame($child, $helper->get('default', ['child']));
     }
 
     /**
@@ -212,7 +212,7 @@ class HelperTest extends TestCase
 
         $helper = new Helper($rendererProvider, $menuProvider);
 
-        $this->assertSame($child, $helper->get('default', array('child', 'invalid')));
+        $this->assertSame($child, $helper->get('default', ['child', 'invalid']));
     }
 
     public function testRenderMenuByPath()
@@ -228,7 +228,7 @@ class HelperTest extends TestCase
         $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
         $renderer->expects($this->once())
             ->method('render')
-            ->with($child, array())
+            ->with($child, [])
             ->will($this->returnValue('<p>foobar</p>'))
         ;
 
@@ -241,7 +241,7 @@ class HelperTest extends TestCase
 
         $helper = new Helper($rendererProvider);
 
-        $this->assertEquals('<p>foobar</p>', $helper->render(array($menu, 'child')));
+        $this->assertEquals('<p>foobar</p>', $helper->render([$menu, 'child']));
     }
 
     /**
@@ -251,7 +251,7 @@ class HelperTest extends TestCase
     public function testRenderByEmptyPath()
     {
         $helper = new Helper($this->getMockBuilder('Knp\Menu\Renderer\RendererProviderInterface')->getMock());
-        $helper->render(array());
+        $helper->render([]);
     }
 
     public function testBreadcrumbsArray()
@@ -262,11 +262,11 @@ class HelperTest extends TestCase
         $manipulator->expects($this->any())
             ->method('getBreadcrumbsArray')
             ->with($menu)
-            ->will($this->returnValue(array('A', 'B')));
+            ->will($this->returnValue(['A', 'B']));
 
         $helper = new Helper($this->getMockBuilder('Knp\Menu\Renderer\RendererProviderInterface')->getMock(), null, $manipulator);
 
-        $this->assertEquals(array('A', 'B'), $helper->getBreadcrumbsArray($menu));
+        $this->assertEquals(['A', 'B'], $helper->getBreadcrumbsArray($menu));
     }
 
     /**

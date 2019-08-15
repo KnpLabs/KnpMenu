@@ -72,7 +72,7 @@ iterator by changing the iterator wrapped in the `RecursiveItemIterator`:
 $menu = /* get your root item from somewhere */;
 
 // create an iterator containing only the root item
-$rootIterator = new \ArrayIterator(array($menu));
+$rootIterator = new \ArrayIterator([$menu]);
 
 // create the item iterator
 $itemIterator = new \Knp\Menu\Iterator\RecursiveItemIterator($rootIterator);
@@ -127,7 +127,7 @@ $itemMatcher = new \Knp\Menu\Matcher\Matcher();
 
 $treeIterator = new \RecursiveIteratorIterator(
     new \Knp\Menu\Iterator\RecursiveItemIterator(
-        new \ArrayIterator(array($menu))
+        new \ArrayIterator([$menu])
     ),
     \RecursiveIteratorIterator::SELF_FIRST
 );
@@ -153,7 +153,7 @@ iterator, not on the flattened iterator.
 $menu = /* get your root item from somewhere */;
 
 // create an iterator containing only the root item
-$rootIterator = new \ArrayIterator(array($menu));
+$rootIterator = new \ArrayIterator([$menu]);
 
 // create the item iterator
 $itemIterator = new \Knp\Menu\Iterator\RecursiveItemIterator($rootIterator);

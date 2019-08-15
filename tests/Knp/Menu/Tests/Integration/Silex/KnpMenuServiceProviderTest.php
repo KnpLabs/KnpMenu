@@ -76,21 +76,21 @@ class KnpMenuServiceProviderTest extends TestCase
     {
         $app = new Application();
         $app['debug'] = true;
-        $app->register(new TwigServiceProvider(), array(
-            'twig.templates' => array('main' => '{{ knp_menu_render("my_menu", {"compressed": true}, renderer) }}'),
-        ));
-        $app->register(new KnpMenuServiceProvider(), array(
-            'knp_menu.menus' => array('my_menu' => 'test.menu.my'),
-        ));
+        $app->register(new TwigServiceProvider(), [
+            'twig.templates' => ['main' => '{{ knp_menu_render("my_menu", {"compressed": true}, renderer) }}'],
+        ]);
+        $app->register(new KnpMenuServiceProvider(), [
+            'knp_menu.menus' => ['my_menu' => 'test.menu.my'],
+        ]);
         $app->register(new UrlGeneratorServiceProvider());
 
         $app['test.menu.my'] = function (Application $app) {
             /** @var $factory \Knp\Menu\FactoryInterface */
             $factory = $app['knp_menu.factory'];
 
-            $root = $factory->createItem('root', array('childrenAttributes' => array('class' => 'nav')));
-            $root->addChild('home', array('route' => 'homepage', 'label' => 'Home'));
-            $root->addChild('KnpLabs', array('uri' => 'http://knplabs.com', 'extras' => array('routes' => 'other_route')));
+            $root = $factory->createItem('root', ['childrenAttributes' => ['class' => 'nav']]);
+            $root->addChild('home', ['route' => 'homepage', 'label' => 'Home']);
+            $root->addChild('KnpLabs', ['uri' => 'http://knplabs.com', 'extras' => ['routes' => 'other_route']]);
 
             return $root;
         };
@@ -112,15 +112,15 @@ class KnpMenuServiceProviderTest extends TestCase
         });
 
         $app->get('/twig', function (Application $app) {
-            return $app['twig']->render('main', array('renderer' => 'twig'));
+            return $app['twig']->render('main', ['renderer' => 'twig']);
         })->bind('homepage');
 
         $app->get('/other-twig', function (Application $app) {
-            return $app['twig']->render('main', array('renderer' => 'twig'));
+            return $app['twig']->render('main', ['renderer' => 'twig']);
         })->bind('other_route');
 
         $app->get('/list', function (Application $app) {
-            return $app['twig']->render('main', array('renderer' => 'list'));
+            return $app['twig']->render('main', ['renderer' => 'list']);
         })->bind('list');
 
         return $app;

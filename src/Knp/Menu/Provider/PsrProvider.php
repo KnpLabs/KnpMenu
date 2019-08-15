@@ -19,7 +19,7 @@ class PsrProvider implements MenuProviderInterface
         $this->container = $container;
     }
 
-    public function get($name, array $options = array())
+    public function get($name, array $options = [])
     {
         if (!$this->container->has($name)) {
             throw new \InvalidArgumentException(sprintf('The menu "%s" is not defined.', $name));
@@ -28,7 +28,7 @@ class PsrProvider implements MenuProviderInterface
         return $this->container->get($name);
     }
 
-    public function has($name, array $options = array())
+    public function has($name, array $options = [])
     {
         return $this->container->has($name);
     }

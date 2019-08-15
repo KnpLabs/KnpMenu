@@ -29,36 +29,36 @@ class IteratorTest extends MenuTestCase
             ->will($this->returnValue(new \EmptyIterator()));
         $this->menu->addChild($child);
 
-        $names = array();
+        $names = [];
         foreach (new \RecursiveIteratorIterator(new RecursiveItemIterator($this->menu), \RecursiveIteratorIterator::SELF_FIRST) as $value) {
             $names[] = $value->getName();
         }
 
-        $this->assertEquals(array('Parent 1', 'Child 1', 'Child 2', 'Child 3', 'Parent 2', 'Child 4', 'Grandchild 1', 'Foo'), $names);
+        $this->assertEquals(['Parent 1', 'Child 1', 'Child 2', 'Child 3', 'Parent 2', 'Child 4', 'Grandchild 1', 'Foo'], $names);
     }
 
     public function testRecursiveIteratorLeavesOnly()
     {
-        $names = array();
+        $names = [];
         foreach (new \RecursiveIteratorIterator(new RecursiveItemIterator($this->menu), \RecursiveIteratorIterator::LEAVES_ONLY) as $value) {
             $names[] = $value->getName();
         }
 
-        $this->assertEquals(array('Child 1', 'Child 2', 'Child 3', 'Grandchild 1'), $names);
+        $this->assertEquals(['Child 1', 'Child 2', 'Child 3', 'Grandchild 1'], $names);
     }
 
     public function testFullTreeIterator()
     {
         $fullTreeIterator = new \RecursiveIteratorIterator(
-            new RecursiveItemIterator(new \ArrayIterator(array($this->menu))), // recursive iterator containing the root item
+            new RecursiveItemIterator(new \ArrayIterator([$this->menu])), // recursive iterator containing the root item
             \RecursiveIteratorIterator::SELF_FIRST
         );
 
-        $names = array();
+        $names = [];
         foreach ($fullTreeIterator as $value) {
             $names[] = $value->getName();
         }
 
-        $this->assertEquals(array('Root li', 'Parent 1', 'Child 1', 'Child 2', 'Child 3', 'Parent 2', 'Child 4', 'Grandchild 1'), $names);
+        $this->assertEquals(['Root li', 'Parent 1', 'Child 1', 'Child 2', 'Child 3', 'Parent 2', 'Child 4', 'Grandchild 1'], $names);
     }
 }

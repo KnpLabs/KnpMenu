@@ -51,7 +51,7 @@ abstract class MenuTestCase extends TestCase
     protected function setUp()
     {
         $factory = new MenuFactory();
-        $this->menu = $factory->createItem('Root li', array('childrenAttributes' => array('class' => 'root')));
+        $this->menu = $factory->createItem('Root li', ['childrenAttributes' => ['class' => 'root']]);
         $this->pt1 = $this->menu->addChild('Parent 1');
         $this->ch1 = $this->pt1->addChild('Child 1');
         $this->ch2 = $this->pt1->addChild('Child 2');

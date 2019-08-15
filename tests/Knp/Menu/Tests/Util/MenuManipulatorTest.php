@@ -19,7 +19,7 @@ class MenuManipulatorTest extends MenuTestCase
 
         $manipulator = new MenuManipulator();
         $manipulator->moveToFirstPosition($menu['c3']);
-        $this->assertEquals(array('c3', 'c1', 'c2', 'c4'), array_keys($menu->getChildren()));
+        $this->assertEquals(['c3', 'c1', 'c2', 'c4'], array_keys($menu->getChildren()));
     }
 
     public function testMoveToLastPosition()
@@ -32,7 +32,7 @@ class MenuManipulatorTest extends MenuTestCase
 
         $manipulator = new MenuManipulator();
         $manipulator->moveToLastPosition($menu['c2']);
-        $this->assertEquals(array('c1', 'c3', 'c4', 'c2'), array_keys($menu->getChildren()));
+        $this->assertEquals(['c1', 'c3', 'c4', 'c2'], array_keys($menu->getChildren()));
     }
 
     public function testMoveToPosition()
@@ -45,7 +45,7 @@ class MenuManipulatorTest extends MenuTestCase
 
         $manipulator = new MenuManipulator();
         $manipulator->moveToPosition($menu['c1'], 2);
-        $this->assertEquals(array('c2', 'c3', 'c1', 'c4'), array_keys($menu->getChildren()));
+        $this->assertEquals(['c2', 'c3', 'c1', 'c4'], array_keys($menu->getChildren()));
     }
 
     /**
@@ -63,14 +63,14 @@ class MenuManipulatorTest extends MenuTestCase
     {
         $this->setUp();
 
-        return array(
-            'numeric offset and numeric length' => array(0, 2, 2, array($this->ch1->getName(), $this->ch2->getName())),
-            'numeric offset and no length' => array(0, null, 3, array($this->ch1->getName(), $this->ch2->getName(), $this->ch3->getName())),
-            'named offset and no length' => array('Child 2', null, 2, array($this->ch2->getName(), $this->ch3->getName())),
-            'child offset and no length' => array($this->ch3, null, 1, array($this->ch3->getName())),
-            'numeric offset and named length' => array(0, 'Child 3', 2, array($this->ch1->getName(), $this->ch2->getName())),
-            'numeric offset and child length' => array(0, $this->ch3, 2, array($this->ch1->getName(), $this->ch2->getName())),
-        );
+        return [
+            'numeric offset and numeric length' => [0, 2, 2, [$this->ch1->getName(), $this->ch2->getName()]],
+            'numeric offset and no length' => [0, null, 3, [$this->ch1->getName(), $this->ch2->getName(), $this->ch3->getName()]],
+            'named offset and no length' => ['Child 2', null, 2, [$this->ch2->getName(), $this->ch3->getName()]],
+            'child offset and no length' => [$this->ch3, null, 1, [$this->ch3->getName()]],
+            'numeric offset and named length' => [0, 'Child 3', 2, [$this->ch1->getName(), $this->ch2->getName()]],
+            'numeric offset and child length' => [0, $this->ch3, 2, [$this->ch1->getName(), $this->ch2->getName()]],
+        ];
     }
 
     /**
@@ -91,11 +91,11 @@ class MenuManipulatorTest extends MenuTestCase
     {
         $this->setUp();
 
-        return array(
-            'numeric length' => array(1, 1, array($this->ch1->getName())),
-            'named length' => array('Child 3', 2, array($this->ch1->getName(), $this->ch2->getName())),
-            'child length' => array($this->ch3, 2, array($this->ch1->getName(), $this->ch2->getName())),
-        );
+        return [
+            'numeric length' => [1, 1, [$this->ch1->getName()]],
+            'named length' => ['Child 3', 2, [$this->ch1->getName(), $this->ch2->getName()]],
+            'child length' => [$this->ch3, 2, [$this->ch1->getName(), $this->ch2->getName()]],
+        ];
     }
 
     public function testPathAsString()
@@ -108,23 +108,23 @@ class MenuManipulatorTest extends MenuTestCase
     public function testBreadcrumbsArray()
     {
         $manipulator = new MenuManipulator();
-        $this->menu->addChild('child', array('uri' => 'http://www.symfony-reloaded.org'));
-        $this->menu->addChild('123', array('uri' => 'http://www.symfony-reloaded.org'));
+        $this->menu->addChild('child', ['uri' => 'http://www.symfony-reloaded.org']);
+        $this->menu->addChild('123', ['uri' => 'http://www.symfony-reloaded.org']);
 
         $this->assertEquals(
-            array(array('label' => 'Root li', 'uri' => null, 'item' => $this->menu), array('label' => 'Parent 1', 'uri' => null, 'item' => $this->pt1)),
+            [['label' => 'Root li', 'uri' => null, 'item' => $this->menu], ['label' => 'Parent 1', 'uri' => null, 'item' => $this->pt1]],
             $manipulator->getBreadcrumbsArray($this->pt1)
         );
         $this->assertEquals(
-            array(array('label' => 'Root li', 'uri' => null, 'item' => $this->menu), array('label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child'])),
+            [['label' => 'Root li', 'uri' => null, 'item' => $this->menu], ['label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child']]],
             $manipulator->getBreadcrumbsArray($this->menu['child'])
         );
         $this->assertEquals(
-            array(
-                array('label' => 'Root li', 'uri' => null, 'item' => $this->menu),
-                array('label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child']),
-                array('label' => 'subitem1', 'uri' => null, 'item' => null),
-            ),
+            [
+                ['label' => 'Root li', 'uri' => null, 'item' => $this->menu],
+                ['label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child']],
+                ['label' => 'subitem1', 'uri' => null, 'item' => null],
+            ],
             $manipulator->getBreadcrumbsArray($this->menu['child'], 'subitem1')
         );
 
@@ -137,35 +137,35 @@ class MenuManipulatorTest extends MenuTestCase
             ->will($this->returnValue('foo'));
 
         $this->assertEquals(
-            array(
-                array('label' => 'Root li', 'uri' => null, 'item' => $this->menu),
-                array('label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child']),
-                array('label' => 'subitem1', 'uri' => null, 'item' => null),
-                array('label' => 'subitem2', 'uri' => null, 'item' => null),
-                array('label' => 'subitem3', 'uri' => 'http://php.net', 'item' => null),
-                array('label' => 'subitem4', 'uri' => null, 'item' => null),
-                array('label' => 'mock', 'uri' => 'foo', 'item' => $item),
-            ),
-            $manipulator->getBreadcrumbsArray($this->menu['child'], array(
+            [
+                ['label' => 'Root li', 'uri' => null, 'item' => $this->menu],
+                ['label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child']],
+                ['label' => 'subitem1', 'uri' => null, 'item' => null],
+                ['label' => 'subitem2', 'uri' => null, 'item' => null],
+                ['label' => 'subitem3', 'uri' => 'http://php.net', 'item' => null],
+                ['label' => 'subitem4', 'uri' => null, 'item' => null],
+                ['label' => 'mock', 'uri' => 'foo', 'item' => $item],
+            ],
+            $manipulator->getBreadcrumbsArray($this->menu['child'], [
                 'subitem1',
                 'subitem2' => null,
                 'subitem3' => 'http://php.net',
-                array('label' => 'subitem4', 'uri' => null, 'item' => null),
+                ['label' => 'subitem4', 'uri' => null, 'item' => null],
                 $item,
-            ))
+            ])
         );
 
         $this->assertEquals(
-            array(array('label' => 'Root li', 'uri' => null, 'item' => $this->menu), array('label' => '123', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['123'])),
+            [['label' => 'Root li', 'uri' => null, 'item' => $this->menu], ['label' => '123', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['123']]],
             $manipulator->getBreadcrumbsArray($this->menu['123'])
         );
 
         $this->assertEquals(
-            array(
-                array('label' => 'Root li', 'uri' => null, 'item' => $this->menu),
-                array('label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child']),
-                array('label' => 'mock', 'uri' => 'foo', 'item' => $item),
-            ),
+            [
+                ['label' => 'Root li', 'uri' => null, 'item' => $this->menu],
+                ['label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child']],
+                ['label' => 'mock', 'uri' => 'foo', 'item' => $item],
+            ],
             $manipulator->getBreadcrumbsArray($this->menu['child'], $item)
         );
     }
@@ -176,7 +176,7 @@ class MenuManipulatorTest extends MenuTestCase
     public function testBreadcrumbsArrayInvalidData()
     {
         $manipulator = new MenuManipulator();
-        $manipulator->getBreadcrumbsArray($this->pt1, array(new \stdClass()));
+        $manipulator->getBreadcrumbsArray($this->pt1, [new \stdClass()]);
     }
 
     public function testCallRecursively()
@@ -197,91 +197,91 @@ class MenuManipulatorTest extends MenuTestCase
             ;
             $child->expects($this->once())
                 ->method('getChildren')
-                ->will($this->returnValue(array()))
+                ->will($this->returnValue([]))
             ;
             $menu->addChild($child);
         }
 
         $manipulator = new MenuManipulator();
 
-        $manipulator->callRecursively($menu, 'setDisplay', array(false));
+        $manipulator->callRecursively($menu, 'setDisplay', [false]);
         $this->assertFalse($menu->isDisplayed());
     }
 
     public function testToArrayWithChildren()
     {
         $menu = $this->createMenu();
-        $menu->addChild('jack', array('uri' => 'http://php.net', 'linkAttributes' => array('title' => 'php'), 'display' => false))
-            ->addChild('john', array('current' => true))->setCurrent(true)
+        $menu->addChild('jack', ['uri' => 'http://php.net', 'linkAttributes' => ['title' => 'php'], 'display' => false])
+            ->addChild('john', ['current' => true])->setCurrent(true)
         ;
-        $menu->addChild('joe', array(
-            'attributes' => array('class' => 'leaf'),
+        $menu->addChild('joe', [
+            'attributes' => ['class' => 'leaf'],
             'label' => 'test',
-            'labelAttributes' => array('class' => 'center'),
+            'labelAttributes' => ['class' => 'center'],
             'displayChildren' => false,
-        ))->setCurrent(false);
+        ])->setCurrent(false);
 
         $manipulator = new MenuManipulator();
 
         $this->assertEquals(
-            array(
+            [
                 'name' => 'test_menu',
                 'label' => 'test_menu',
                 'uri' => 'homepage',
-                'attributes' => array(),
-                'labelAttributes' => array(),
-                'linkAttributes' => array(),
-                'childrenAttributes' => array(),
-                'extras' => array(),
+                'attributes' => [],
+                'labelAttributes' => [],
+                'linkAttributes' => [],
+                'childrenAttributes' => [],
+                'extras' => [],
                 'display' => true,
                 'displayChildren' => true,
                 'current' => null,
-                'children' => array(
-                    'jack' => array(
+                'children' => [
+                    'jack' => [
                         'name' => 'jack',
                         'label' => 'jack',
                         'uri' => 'http://php.net',
-                        'attributes' => array(),
-                        'labelAttributes' => array(),
-                        'linkAttributes' => array('title' => 'php'),
-                        'childrenAttributes' => array(),
-                        'extras' => array(),
+                        'attributes' => [],
+                        'labelAttributes' => [],
+                        'linkAttributes' => ['title' => 'php'],
+                        'childrenAttributes' => [],
+                        'extras' => [],
                         'display' => false,
                         'displayChildren' => true,
                         'current' => null,
-                        'children' => array(
-                            'john' => array(
+                        'children' => [
+                            'john' => [
                                 'name' => 'john',
                                 'label' => 'john',
                                 'uri' => null,
-                                'attributes' => array(),
-                                'labelAttributes' => array(),
-                                'linkAttributes' => array(),
-                                'childrenAttributes' => array(),
-                                'extras' => array(),
+                                'attributes' => [],
+                                'labelAttributes' => [],
+                                'linkAttributes' => [],
+                                'childrenAttributes' => [],
+                                'extras' => [],
                                 'display' => true,
                                 'displayChildren' => true,
-                                'children' => array(),
+                                'children' => [],
                                 'current' => true,
-                            ),
-                        ),
-                    ),
-                    'joe' => array(
+                            ],
+                        ],
+                    ],
+                    'joe' => [
                         'name' => 'joe',
                         'label' => 'test',
                         'uri' => null,
-                        'attributes' => array('class' => 'leaf'),
-                        'labelAttributes' => array('class' => 'center'),
-                        'linkAttributes' => array(),
-                        'childrenAttributes' => array(),
-                        'extras' => array(),
+                        'attributes' => ['class' => 'leaf'],
+                        'labelAttributes' => ['class' => 'center'],
+                        'linkAttributes' => [],
+                        'childrenAttributes' => [],
+                        'extras' => [],
                         'display' => true,
                         'displayChildren' => false,
-                        'children' => array(),
+                        'children' => [],
                         'current' => false,
-                    ),
-                ),
-            ),
+                    ],
+                ],
+            ],
             $manipulator->toArray($menu)
         );
     }
@@ -289,55 +289,55 @@ class MenuManipulatorTest extends MenuTestCase
     public function testToArrayWithLimitedChildren()
     {
         $menu = $this->createMenu();
-        $menu->addChild('jack', array('uri' => 'http://php.net', 'linkAttributes' => array('title' => 'php'), 'display' => false))
+        $menu->addChild('jack', ['uri' => 'http://php.net', 'linkAttributes' => ['title' => 'php'], 'display' => false])
             ->addChild('john')
         ;
-        $menu->addChild('joe', array('attributes' => array('class' => 'leaf'), 'label' => 'test', 'labelAttributes' => array('class' => 'center'), 'displayChildren' => false));
+        $menu->addChild('joe', ['attributes' => ['class' => 'leaf'], 'label' => 'test', 'labelAttributes' => ['class' => 'center'], 'displayChildren' => false]);
 
         $manipulator = new MenuManipulator();
 
         $this->assertEquals(
-            array(
+            [
                 'name' => 'test_menu',
                 'label' => 'test_menu',
                 'uri' => 'homepage',
-                'attributes' => array(),
-                'labelAttributes' => array(),
-                'linkAttributes' => array(),
-                'childrenAttributes' => array(),
-                'extras' => array(),
+                'attributes' => [],
+                'labelAttributes' => [],
+                'linkAttributes' => [],
+                'childrenAttributes' => [],
+                'extras' => [],
                 'display' => true,
                 'displayChildren' => true,
                 'current' => null,
-                'children' => array(
-                    'jack' => array(
+                'children' => [
+                    'jack' => [
                         'name' => 'jack',
                         'label' => 'jack',
                         'uri' => 'http://php.net',
-                        'attributes' => array(),
-                        'labelAttributes' => array(),
-                        'linkAttributes' => array('title' => 'php'),
-                        'childrenAttributes' => array(),
-                        'extras' => array(),
+                        'attributes' => [],
+                        'labelAttributes' => [],
+                        'linkAttributes' => ['title' => 'php'],
+                        'childrenAttributes' => [],
+                        'extras' => [],
                         'display' => false,
                         'displayChildren' => true,
                         'current' => null,
-                    ),
-                    'joe' => array(
+                    ],
+                    'joe' => [
                         'name' => 'joe',
                         'label' => 'test',
                         'uri' => null,
-                        'attributes' => array('class' => 'leaf'),
-                        'labelAttributes' => array('class' => 'center'),
-                        'linkAttributes' => array(),
-                        'childrenAttributes' => array(),
-                        'extras' => array(),
+                        'attributes' => ['class' => 'leaf'],
+                        'labelAttributes' => ['class' => 'center'],
+                        'linkAttributes' => [],
+                        'childrenAttributes' => [],
+                        'extras' => [],
                         'display' => true,
                         'displayChildren' => false,
                         'current' => null,
-                    ),
-                ),
-            ),
+                    ],
+                ],
+            ],
             $manipulator->toArray($menu, 1)
         );
     }
@@ -345,25 +345,25 @@ class MenuManipulatorTest extends MenuTestCase
     public function testToArrayWithoutChildren()
     {
         $menu = $this->createMenu();
-        $menu->addChild('jack', array('uri' => 'http://php.net', 'linkAttributes' => array('title' => 'php'), 'display' => false));
-        $menu->addChild('joe', array('attributes' => array('class' => 'leaf'), 'label' => 'test', 'labelAttributes' => array('class' => 'center'), 'displayChildren' => false));
+        $menu->addChild('jack', ['uri' => 'http://php.net', 'linkAttributes' => ['title' => 'php'], 'display' => false]);
+        $menu->addChild('joe', ['attributes' => ['class' => 'leaf'], 'label' => 'test', 'labelAttributes' => ['class' => 'center'], 'displayChildren' => false]);
 
         $manipulator = new MenuManipulator();
 
         $this->assertEquals(
-            array(
+            [
                 'name' => 'test_menu',
                 'label' => 'test_menu',
                 'uri' => 'homepage',
-                'attributes' => array(),
-                'labelAttributes' => array(),
-                'linkAttributes' => array(),
-                'childrenAttributes' => array(),
-                'extras' => array(),
+                'attributes' => [],
+                'labelAttributes' => [],
+                'linkAttributes' => [],
+                'childrenAttributes' => [],
+                'extras' => [],
                 'display' => true,
                 'displayChildren' => true,
                 'current' => null,
-            ),
+            ],
             $manipulator->toArray($menu, 0)
         );
     }
@@ -377,10 +377,10 @@ class MenuManipulatorTest extends MenuTestCase
      *
      * @return \Knp\Menu\MenuItem
      */
-    private function createMenu($name = 'test_menu', $uri = 'homepage', array $attributes = array())
+    private function createMenu($name = 'test_menu', $uri = 'homepage', array $attributes = [])
     {
         $factory = new MenuFactory();
 
-        return $factory->createItem($name, array('attributes' => $attributes, 'uri' => $uri));
+        return $factory->createItem($name, ['attributes' => $attributes, 'uri' => $uri]);
     }
 }

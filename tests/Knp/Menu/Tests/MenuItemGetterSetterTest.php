@@ -24,7 +24,7 @@ class MenuItemGetterSetterTest extends TestCase
     public function testCreateMenuWithTitle()
     {
         $title = 'This is a test item title';
-        $menu = $this->createMenu(null, null, array('title' => $title));
+        $menu = $this->createMenu(null, null, ['title' => $title]);
         $this->assertEquals($title, $menu->getAttribute('title'));
     }
 
@@ -59,7 +59,7 @@ class MenuItemGetterSetterTest extends TestCase
 
     public function testAttributes()
     {
-        $attributes = array('class' => 'test_class', 'title' => 'Test title');
+        $attributes = ['class' => 'test_class', 'title' => 'Test title'];
         $menu = $this->createMenu();
         $menu->setAttributes($attributes);
         $this->assertEquals($attributes, $menu->getAttributes());
@@ -67,14 +67,14 @@ class MenuItemGetterSetterTest extends TestCase
 
     public function testDefaultAttribute()
     {
-        $menu = $this->createMenu(null, null, array('id' => 'test_id'));
+        $menu = $this->createMenu(null, null, ['id' => 'test_id']);
         $this->assertEquals('test_id', $menu->getAttribute('id'));
         $this->assertEquals('default_value', $menu->getAttribute('unknown_attribute', 'default_value'));
     }
 
     public function testLinkAttributes()
     {
-        $attributes = array('class' => 'test_class', 'title' => 'Test title');
+        $attributes = ['class' => 'test_class', 'title' => 'Test title'];
         $menu = $this->createMenu();
         $menu->setLinkAttributes($attributes);
         $this->assertEquals($attributes, $menu->getLinkAttributes());
@@ -91,7 +91,7 @@ class MenuItemGetterSetterTest extends TestCase
 
     public function testChildrenAttributes()
     {
-        $attributes = array('class' => 'test_class', 'title' => 'Test title');
+        $attributes = ['class' => 'test_class', 'title' => 'Test title'];
         $menu = $this->createMenu();
         $menu->setChildrenAttributes($attributes);
         $this->assertEquals($attributes, $menu->getChildrenAttributes());
@@ -108,7 +108,7 @@ class MenuItemGetterSetterTest extends TestCase
 
     public function testLabelAttributes()
     {
-        $attributes = array('class' => 'test_class', 'title' => 'Test title');
+        $attributes = ['class' => 'test_class', 'title' => 'Test title'];
         $menu = $this->createMenu();
         $menu->setLabelAttributes($attributes);
         $this->assertEquals($attributes, $menu->getLabelAttributes());
@@ -125,7 +125,7 @@ class MenuItemGetterSetterTest extends TestCase
 
     public function testExtras()
     {
-        $extras = array('class' => 'test_class', 'title' => 'Test title');
+        $extras = ['class' => 'test_class', 'title' => 'Test title'];
         $menu = $this->createMenu();
         $menu->setExtras($extras);
         $this->assertEquals($extras, $menu->getExtras());
@@ -169,8 +169,8 @@ class MenuItemGetterSetterTest extends TestCase
     {
         $menu = $this->createMenu();
         $child = $this->createMenu('child_menu');
-        $menu->setChildren(array($child));
-        $this->assertEquals(array($child), $menu->getChildren());
+        $menu->setChildren([$child]);
+        $this->assertEquals([$child], $menu->getChildren());
     }
 
     /**
@@ -219,10 +219,10 @@ class MenuItemGetterSetterTest extends TestCase
      *
      * @return \Knp\Menu\MenuItem
      */
-    protected function createMenu($name = 'test_menu', $uri = 'homepage', array $attributes = array())
+    protected function createMenu($name = 'test_menu', $uri = 'homepage', array $attributes = [])
     {
         $factory = new MenuFactory();
 
-        return $factory->createItem($name, array('attributes' => $attributes, 'uri' => $uri));
+        return $factory->createItem($name, ['attributes' => $attributes, 'uri' => $uri]);
     }
 }

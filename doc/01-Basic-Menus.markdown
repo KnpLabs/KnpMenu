@@ -27,9 +27,9 @@ use Knp\Menu\Renderer\ListRenderer;
 
 $factory = new MenuFactory();
 $menu = $factory->createItem('My menu');
-$menu->addChild('Home', array('uri' => '/'));
-$menu->addChild('Comments', array('uri' => '#comments'));
-$menu->addChild('Symfony', array('uri' => 'http://symfony.com/'));
+$menu->addChild('Home', ['uri' => '/']);
+$menu->addChild('Comments', ['uri' => '#comments']);
+$menu->addChild('Symfony', ['uri' => 'http://symfony.com/']);
 
 $renderer = new ListRenderer(new Matcher());
 echo $renderer->render($menu);
@@ -68,7 +68,7 @@ be turned off by passing the `true` as the second argument to the renderer.
 
 // ...
 
-$renderer = new ListRenderer(new Matcher(), array('compressed' => true));
+$renderer = new ListRenderer(new Matcher(), ['compressed' => true]);
 echo $renderer->render($menu);
 ```
 
@@ -81,7 +81,7 @@ You can also compress (or not compress) on a menu-by-menu basis by using the
 // ...
 
 $renderer = new ListRenderer(new Matcher());
-echo $renderer->render($menu, array('compressed' => true));
+echo $renderer->render($menu, ['compressed' => true]);
 ```
 
 Note: You can customize the rendering by extending the `ListRenderer` and
@@ -101,12 +101,12 @@ use Knp\Menu\MenuFactory;
 
 $factory = new MenuFactory();
 $menu = $factory->createItem('My menu');
-$menu->addChild('Home', array('uri' => '/'));
+$menu->addChild('Home', ['uri' => '/']);
 $menu->addChild('Comments');
 
 // ArrayAccess
 $menu['Comments']->setUri('#comments');
-$menu['Comments']->addChild('My comments', array('uri' => '/my_comments'));
+$menu['Comments']->addChild('My comments', ['uri' => '/my_comments']);
 
 // Countable
 echo count($menu); // returns 2
@@ -137,7 +137,7 @@ change this without changing the name of your menu item by setting its label:
 ```php
 <?php
 // Setting the label when creating the item
-$menu->addChild('Home', array('uri' => '/', 'label' => 'Back to homepage'));
+$menu->addChild('Home', ['uri' => '/', 'label' => 'Back to homepage']);
 
 // Changing the label of an existing item
 $menu['Home']->setLabel('Back to homepage');
@@ -172,7 +172,7 @@ methods:
 
 ```php
 <?php
-$menu->addChild('Home', array('attributes' => array('id' => 'back_to_homepage')));
+$menu->addChild('Home', ['attributes' => ['id' => 'back_to_homepage']]);
 $menu['Home']->setAttribute('id', 'back_to_homepage');
 ```
 
@@ -188,7 +188,7 @@ children attributes (rendered on the `<ul>` containing the list of children):
 
 ```php
 <?php
-$menu->addChild('KnpLabs.com', array('uri' => 'http://knplabs.com'));
+$menu->addChild('KnpLabs.com', ['uri' => 'http://knplabs.com']);
 $menu['KnpLabs.com']->setLinkAttribute('class', 'external-link');
 
 $menu->addChild('Not a link');
@@ -214,7 +214,7 @@ you unlimited control to do so:
 ```php
 <?php
 // render only 2 levels deep (root, parents, children)
-$renderer->render($menu, array('depth' => 2));
+$renderer->render($menu, ['depth' => 2]);
 
 // rendering everything except for the children of the Home branch
 $menu['Home']->setDisplayChildren(false);

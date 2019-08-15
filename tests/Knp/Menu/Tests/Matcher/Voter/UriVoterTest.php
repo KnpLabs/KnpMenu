@@ -28,11 +28,11 @@ class UriVoterTest extends TestCase
 
     public function provideData()
     {
-        return array(
-            'no uri' => array(null, 'foo', null),
-            'no item uri' => array('foo', null, null),
-            'same uri' => array('foo', 'foo', true),
-            'different uri' => array('foo', 'bar', null),
-        );
+        return [
+            'no uri' => [null, 'foo', null],
+            'no item uri' => ['foo', null, null],
+            'same uri' => ['foo', 'foo', true],
+            'different uri' => ['foo', 'bar', null],
+        ];
     }
 }

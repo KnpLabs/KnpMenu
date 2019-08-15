@@ -9,7 +9,7 @@ class ArrayAccessProviderTest extends TestCase
 {
     public function testHas()
     {
-        $provider = new ArrayAccessProvider(new \ArrayObject(), 'first', array('first' => 'first', 'second' => 'dummy'));
+        $provider = new ArrayAccessProvider(new \ArrayObject(), 'first', ['first' => 'first', 'second' => 'dummy']);
         $this->assertTrue($provider->has('first'));
         $this->assertTrue($provider->has('second'));
         $this->assertFalse($provider->has('third'));
@@ -20,7 +20,7 @@ class ArrayAccessProviderTest extends TestCase
         $registry = new \ArrayObject();
         $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
         $registry['renderer'] = $renderer;
-        $provider = new ArrayAccessProvider($registry, 'default',  array('default' => 'renderer'));
+        $provider = new ArrayAccessProvider($registry, 'default',  ['default' => 'renderer']);
         $this->assertSame($renderer, $provider->get('default'));
     }
 
@@ -29,7 +29,7 @@ class ArrayAccessProviderTest extends TestCase
         $registry = new \ArrayObject();
         $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
         $registry['renderer'] = $renderer;
-        $provider = new ArrayAccessProvider($registry, 'default',  array('default' => 'renderer'));
+        $provider = new ArrayAccessProvider($registry, 'default',  ['default' => 'renderer']);
         $this->assertSame($renderer, $provider->get());
     }
 
@@ -38,7 +38,7 @@ class ArrayAccessProviderTest extends TestCase
      */
     public function testGetNonExistentRenderer()
     {
-        $provider = new ArrayAccessProvider(new \ArrayObject(), 'default', array());
+        $provider = new ArrayAccessProvider(new \ArrayObject(), 'default', []);
         $provider->get('non-existent');
     }
 }

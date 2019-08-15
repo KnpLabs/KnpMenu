@@ -19,9 +19,9 @@ to pass both the renderer and menu into a template:
 <?php
 
 // bootstrap Twig
-$twigLoader = new \Twig\Loader\FilesystemLoader(array(
+$twigLoader = new \Twig\Loader\FilesystemLoader([
     // path to your templates
-));
+]);
 $twig = new \Twig\Environment($twigLoader); // you can add the charset (i.e. ISO-8859-1) in the array of options if you need 
 
 $itemMatcher = new \Knp\Menu\Matcher\Matcher();
@@ -30,10 +30,10 @@ $renderer = new \Knp\Menu\Renderer\ListRenderer($itemMatcher);
 //$menuRenderer = new \Knp\Menu\Renderer\TwigRenderer($twig, 'knp_menu.html.twig', $itemMatcher);
 
 // render a template
-$twig->display('menu.twig', array(
+$twig->display('menu.twig', [
     'renderer' => $renderer,
-    'menu' => $menu
-));
+    'menu' => $menu,
+]);
 ```
 
 To render the menu, your template would look like this:
@@ -72,7 +72,7 @@ $rendererProvider = new \Knp\Menu\Renderer\PimpleProvider(
     // common name of the renderer used by default
     'main',
     // common name for the renderer => name of the renderer in pimple
-    array('main' => 'list_renderer')
+    ['main' => 'list_renderer']
 );
 $helper = new \Knp\Menu\Twig\Helper($rendererProvider);
 $menuExtension = new \Knp\Menu\Twig\MenuExtension($helper);
@@ -158,7 +158,7 @@ $pimple['menu_sidebar'] = ... //
 // $rendererProvider = ...
 $menuProvider = new \Knp\Menu\Provider\PimpleProvider(
     $pimple,
-    array('main' => 'menu_main', 'sidebar' => 'menu_sidebar')
+    ['main' => 'menu_main', 'sidebar' => 'menu_sidebar']
 );
 $helper = new \Knp\Menu\Twig\Helper($rendererProvider, $menuProvider);
 $menuExtension = new \Knp\Menu\Twig\MenuExtension($helper);
@@ -225,10 +225,10 @@ when bootstrapping Twig.
 ```php
 <?php
 
-$twigLoader = new \Twig\Loader\FilesystemLoader(array(
+$twigLoader = new \Twig\Loader\FilesystemLoader([
     __DIR__.'/vendor/KnpMenu/src/Knp/Menu/Resources/views',
     // your own paths
-));
+]);
 $twig = new \Twig\Environment($twigLoader);
 $itemMatcher = new \Knp\Menu\Matcher\Matcher();
 $menuRenderer = new \Knp\Menu\Renderer\TwigRenderer($twig, 'knp_menu.html.twig', $itemMatcher);
@@ -265,7 +265,7 @@ You can change the template used to render the menu in two different ways:
 
 ```php
 <?php
-echo $menuRenderer->render($menu, array('template' => 'my_menu.html.twig'));
+echo $menuRenderer->render($menu, ['template' => 'my_menu.html.twig']);
 ```
 
 The template needs to contain 2 blocks: `root` and `compressed_root` which

@@ -16,7 +16,7 @@ class Matcher implements MatcherInterface
     /**
      * @param VoterInterface[]|iterable $voters
      */
-    public function __construct($voters = array())
+    public function __construct($voters = [])
     {
         $this->voters = $voters;
         $this->cache = new \SplObjectStorage();

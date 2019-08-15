@@ -14,7 +14,7 @@ class DisplayedItemFilterIteratorTest extends MenuTestCase
         $this->ch2->setDisplay(false);
         $this->ch4->setDisplayChildren(false);
 
-        $names = array();
+        $names = [];
         $iterator = new \RecursiveIteratorIterator(
             new DisplayedItemFilterIterator(new RecursiveItemIterator($this->menu)),
             \RecursiveIteratorIterator::SELF_FIRST
@@ -23,6 +23,6 @@ class DisplayedItemFilterIteratorTest extends MenuTestCase
             $names[] = $value->getName();
         }
 
-        $this->assertEquals(array('Parent 1', 'Child 3', 'Parent 2', 'Child 4'), $names);
+        $this->assertEquals(['Parent 1', 'Child 3', 'Parent 2', 'Child 4'], $names);
     }
 }

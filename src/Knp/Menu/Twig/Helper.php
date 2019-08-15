@@ -46,7 +46,7 @@ class Helper
      * @throws \LogicException
      * @throws \InvalidArgumentException when the path is invalid
      */
-    public function get($menu, array $path = array(), array $options = array())
+    public function get($menu, array $path = [], array $options = [])
     {
         if (!$menu instanceof ItemInterface) {
             if (null === $this->menuProvider) {
@@ -87,7 +87,7 @@ class Helper
      *
      * @throws \InvalidArgumentException
      */
-    public function render($menu, array $options = array(), $renderer =  null)
+    public function render($menu, array $options = [], $renderer =  null)
     {
         $menu = $this->castMenu($menu);
 
@@ -105,9 +105,9 @@ class Helper
      * The subItem can be one of the following forms
      *   * 'subItem'
      *   * ItemInterface object
-     *   * array('subItem' => '@homepage')
-     *   * array('subItem1', 'subItem2')
-     *   * array(array('label' => 'subItem1', 'url' => '@homepage'), array('label' => 'subItem2'))
+     *   * ['subItem' => '@homepage']
+     *   * ['subItem1', 'subItem2']
+     *   * [['label' => 'subItem1', 'url' => '@homepage'], ['label' => 'subItem2']]
      *
      * @param mixed $item
      * @param mixed $subItem A string or array to append onto the end of the array
@@ -151,7 +151,7 @@ class Helper
     private function castMenu($menu)
     {
         if (!$menu instanceof ItemInterface) {
-            $path = array();
+            $path = [];
             if (is_array($menu)) {
                 if (empty($menu)) {
                     throw new \InvalidArgumentException('The array cannot be empty');

@@ -224,7 +224,7 @@ class MenuItemTreeTest extends MenuTestCase
     {
         $this->pt1->setName('Temp name');
         $this->assertSame($this->pt1, $this->menu->getChild('Temp name'));
-        $this->assertEquals(array('Temp name', 'Parent 2'), array_keys($this->menu->getChildren()));
+        $this->assertEquals(['Temp name', 'Parent 2'], array_keys($this->menu->getChildren()));
         $this->assertNull($this->menu->getChild('Parent 1'));
     }
 
@@ -245,6 +245,6 @@ class MenuItemTreeTest extends MenuTestCase
 
     protected function addChildWithExternalUrl()
     {
-        $this->menu->addChild('child', array('uri' => 'http://www.symfony-reloaded.org'));
+        $this->menu->addChild('child', ['uri' => 'http://www.symfony-reloaded.org']);
     }
 }

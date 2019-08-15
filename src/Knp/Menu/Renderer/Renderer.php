@@ -46,7 +46,7 @@ abstract class Renderer
      */
     protected function renderHtmlAttributes(array $attributes)
     {
-        return implode('', array_map(array($this, 'htmlAttributesCallback'), array_keys($attributes), array_values($attributes)));
+        return implode('', array_map([$this, 'htmlAttributesCallback'], array_keys($attributes), array_values($attributes)));
     }
 
     /**

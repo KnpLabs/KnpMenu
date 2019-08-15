@@ -28,11 +28,11 @@ class RegexVoterTest extends TestCase
 
     public function provideData()
     {
-        return array(
-            'no regexp' => array(null, 'foo', null),
-            'no item uri' => array('foo', null, null),
-            'matching uri' => array('/^foo/', 'foobar', true),
-            'not matching uri' => array('/^foo/', 'barfoo', null),
-        );
+        return [
+            'no regexp' => [null, 'foo', null],
+            'no item uri' => ['foo', null, null],
+            'matching uri' => ['/^foo/', 'foobar', true],
+            'not matching uri' => ['/^foo/', 'barfoo', null],
+        ];
     }
 }

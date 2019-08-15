@@ -22,13 +22,13 @@ class ChainProviderTest extends TestCase
         ;
         $innerProvider->expects($this->at(2))
             ->method('has')
-            ->with('third', array('foo' => 'bar'))
+            ->with('third', ['foo' => 'bar'])
             ->will($this->returnValue(false))
         ;
-        $provider = new ChainProvider(array($innerProvider));
+        $provider = new ChainProvider([$innerProvider]);
         $this->assertTrue($provider->has('first'));
         $this->assertFalse($provider->has('second'));
-        $this->assertFalse($provider->has('third', array('foo' => 'bar')));
+        $this->assertFalse($provider->has('third', ['foo' => 'bar']));
     }
 
     public function testGetExistentMenu()
@@ -46,7 +46,7 @@ class ChainProviderTest extends TestCase
             ->will($this->returnValue($menu))
         ;
 
-        $provider = new ChainProvider(array($innerProvider));
+        $provider = new ChainProvider([$innerProvider]);
         $this->assertSame($menu, $provider->get('default'));
     }
 
@@ -56,17 +56,17 @@ class ChainProviderTest extends TestCase
         $innerProvider =  $this->getMockBuilder('Knp\Menu\Provider\MenuProviderInterface')->getMock();
         $innerProvider->expects($this->any())
             ->method('has')
-            ->with('default', array('foo' => 'bar'))
+            ->with('default', ['foo' => 'bar'])
             ->will($this->returnValue(true))
         ;
         $innerProvider->expects($this->once())
             ->method('get')
-            ->with('default', array('foo' => 'bar'))
+            ->with('default', ['foo' => 'bar'])
             ->will($this->returnValue($menu))
         ;
 
-        $provider = new ChainProvider(array($innerProvider));
-        $this->assertSame($menu, $provider->get('default', array('foo' => 'bar')));
+        $provider = new ChainProvider([$innerProvider]);
+        $this->assertSame($menu, $provider->get('default', ['foo' => 'bar']));
     }
 
     /**
@@ -74,7 +74,7 @@ class ChainProviderTest extends TestCase
      */
     public function testGetNonExistentMenu()
     {
-        $provider = new ChainProvider(array());
+        $provider = new ChainProvider([]);
         $provider->get('non-existent');
     }
 
@@ -83,10 +83,10 @@ class ChainProviderTest extends TestCase
         $menu = $this->prophesize('Knp\Menu\ItemInterface');
 
         $innerProvider = $this->prophesize('Knp\Menu\Provider\MenuProviderInterface');
-        $innerProvider->has('foo', array())->willReturn(true);
-        $innerProvider->get('foo', array())->willReturn($menu);
+        $innerProvider->has('foo', [])->willReturn(true);
+        $innerProvider->get('foo', [])->willReturn($menu);
 
-        $provider = new ChainProvider(new \ArrayIterator(array($innerProvider->reveal())));
+        $provider = new ChainProvider(new \ArrayIterator([$innerProvider->reveal()]));
         $this->assertTrue($provider->has('foo'));
         $this->assertSame($menu->reveal(), $provider->get('foo'));
     }

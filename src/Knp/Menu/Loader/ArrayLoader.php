@@ -47,7 +47,7 @@ class ArrayLoader implements LoaderInterface
             $children = $data['children'];
             unset($data['children']);
         } else {
-            $children = array();
+            $children = [];
         }
 
         $item = $this->factory->createItem($name, $data);

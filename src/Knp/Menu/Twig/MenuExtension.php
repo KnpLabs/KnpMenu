@@ -28,27 +28,27 @@ class MenuExtension extends AbstractExtension
 
     public function getFunctions()
     {
-        return array(
-             new TwigFunction('knp_menu_get', array($this, 'get')),
-             new TwigFunction('knp_menu_render', array($this, 'render'), array('is_safe' => array('html'))),
-             new TwigFunction('knp_menu_get_breadcrumbs_array', array($this, 'getBreadcrumbsArray')),
-             new TwigFunction('knp_menu_get_current_item', array($this, 'getCurrentItem')),
-        );
+        return [
+             new TwigFunction('knp_menu_get', [$this, 'get']),
+             new TwigFunction('knp_menu_render', [$this, 'render'], ['is_safe' => ['html']]),
+             new TwigFunction('knp_menu_get_breadcrumbs_array', [$this, 'getBreadcrumbsArray']),
+             new TwigFunction('knp_menu_get_current_item', [$this, 'getCurrentItem']),
+        ];
     }
 
     public function getFilters()
     {
-        return array(
-            new TwigFilter('knp_menu_as_string', array($this, 'pathAsString')),
-        );
+        return [
+            new TwigFilter('knp_menu_as_string', [$this, 'pathAsString']),
+        ];
     }
 
     public function getTests()
     {
-        return array(
-            new TwigTest('knp_menu_current', array($this, 'isCurrent')),
-            new TwigTest('knp_menu_ancestor', array($this, 'isAncestor')),
-        );
+        return [
+            new TwigTest('knp_menu_current', [$this, 'isCurrent']),
+            new TwigTest('knp_menu_ancestor', [$this, 'isAncestor']),
+        ];
     }
     
     /**
@@ -60,7 +60,7 @@ class MenuExtension extends AbstractExtension
      *
      * @return ItemInterface
      */
-    public function get($menu, array $path = array(), array $options = array())
+    public function get($menu, array $path = [], array $options = [])
     {
         return $this->helper->get($menu, $path, $options);
     }
@@ -74,7 +74,7 @@ class MenuExtension extends AbstractExtension
      *
      * @return string
      */
-    public function render($menu, array $options = array(), $renderer = null)
+    public function render($menu, array $options = [], $renderer = null)
     {
         return $this->helper->render($menu, $options, $renderer);
     }

@@ -9,7 +9,7 @@ class ArrayAccessProviderTest extends TestCase
 {
     public function testHas()
     {
-        $provider = new ArrayAccessProvider(new \ArrayObject(), array('first' => 'first', 'second' => 'dummy'));
+        $provider = new ArrayAccessProvider(new \ArrayObject(), ['first' => 'first', 'second' => 'dummy']);
         $this->assertTrue($provider->has('first'));
         $this->assertTrue($provider->has('second'));
         $this->assertFalse($provider->has('third'));
@@ -20,7 +20,7 @@ class ArrayAccessProviderTest extends TestCase
         $registry = new \ArrayObject();
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $registry['menu'] = $menu;
-        $provider = new ArrayAccessProvider($registry, array('default' => 'menu'));
+        $provider = new ArrayAccessProvider($registry, ['default' => 'menu']);
         $this->assertSame($menu, $provider->get('default'));
     }
 
@@ -33,10 +33,10 @@ class ArrayAccessProviderTest extends TestCase
 
             return $menu;
         };
-        $provider = new ArrayAccessProvider($registry, array('default' => 'menu'));
+        $provider = new ArrayAccessProvider($registry, ['default' => 'menu']);
 
-        $this->assertSame($menu, $provider->get('default', array('foo' => 'bar')));
-        $this->assertEquals(array('foo' => 'bar'), $registry['options']);
+        $this->assertSame($menu, $provider->get('default', ['foo' => 'bar']));
+        $this->assertEquals(['foo' => 'bar'], $registry['options']);
     }
 
     /**

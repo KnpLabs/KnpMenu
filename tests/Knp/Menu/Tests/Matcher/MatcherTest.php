@@ -27,11 +27,11 @@ class MatcherTest extends TestCase
 
     public function provideItemFlag()
     {
-        return array(
-            array(true, true),
-            array(false, false),
-            array(null, false),
-        );
+        return [
+            [true, true],
+            [false, false],
+            [null, false],
+        ];
     }
 
     public function testFlagOverwritesCache()
@@ -63,7 +63,7 @@ class MatcherTest extends TestCase
         $voter->expects($this->never())
             ->method('matchItem');
 
-        $matcher = new Matcher(array($voter));
+        $matcher = new Matcher([$voter]);
 
         $this->assertSame($value, $matcher->isCurrent($item));
     }
@@ -90,7 +90,7 @@ class MatcherTest extends TestCase
         $voter2->expects($this->never())
             ->method('matchItem');
 
-        $matcher = new Matcher(array($voter1, $voter2));
+        $matcher = new Matcher([$voter1, $voter2]);
 
         $this->assertSame($value, $matcher->isCurrent($item));
     }
@@ -117,7 +117,7 @@ class MatcherTest extends TestCase
         $voter2->expects($this->never())
             ->method('matchItem');
 
-        $matcher = new Matcher(new \ArrayIterator(array($voter1, $voter2)));
+        $matcher = new Matcher(new \ArrayIterator([$voter1, $voter2]));
 
         $this->assertSame($value, $matcher->isCurrent($item));
     }
@@ -177,7 +177,7 @@ class MatcherTest extends TestCase
         $voter2->expects($this->never())
             ->method('matchItem');
 
-        $matcher = new Matcher(new \ArrayIterator(array($voter1)));
+        $matcher = new Matcher(new \ArrayIterator([$voter1]));
         $matcher->addVoter($voter2); // Added through the getter to ensure it works when using an iterator.
 
         $this->assertSame($value, $matcher->isCurrent($item));
@@ -185,9 +185,9 @@ class MatcherTest extends TestCase
 
     public function provideBoolean()
     {
-        return array(
-            array(true),
-            array(false),
-        );
+        return [
+            [true],
+            [false],
+        ];
     }
 }

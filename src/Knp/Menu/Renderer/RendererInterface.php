@@ -25,5 +25,5 @@ interface RendererInterface
      *
      * @return string
      */
-    public function render(ItemInterface $item, array $options = array());
+    public function render(ItemInterface $item, array $options = []);
 }

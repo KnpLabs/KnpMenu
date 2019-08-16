@@ -18,7 +18,7 @@ class TwigRendererTest extends AbstractRendererTest
         }
         $loader = new FilesystemLoader(__DIR__.'/../../../../../src/Knp/Menu/Resources/views');
         $environment = new Environment($loader);
-        $renderer = new TwigRenderer($environment, 'knp_menu.html.twig', $matcher, array('compressed' => true));
+        $renderer = new TwigRenderer($environment, 'knp_menu.html.twig', $matcher, ['compressed' => true]);
 
         return $renderer;
     }
@@ -29,6 +29,6 @@ class TwigRendererTest extends AbstractRendererTest
         $menu->addChild('About')->addChild('foobar');
 
         $rendered = '<ol><li class="first last"><span>About</span><ol class="menu_level_1"><li class="first last"><span>foobar</span></li></ol></li></ol>';
-        $this->assertEquals($rendered, $this->renderer->render($menu, array('template' => 'knp_menu_ordered.html.twig')));
+        $this->assertEquals($rendered, $this->renderer->render($menu, ['template' => 'knp_menu_ordered.html.twig']));
     }
 }

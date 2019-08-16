@@ -14,7 +14,7 @@ class CoreExtensionTest extends TestCase
         $extension = $this->getExtension();
         $item = $this->createItem( 'test' );
 
-        $options = $extension->buildOptions( array() );
+        $options = $extension->buildOptions( [] );
 
         $this->assertArrayHasKey( 'uri', $options );
         $this->assertArrayHasKey( 'label', $options );
@@ -34,12 +34,12 @@ class CoreExtensionTest extends TestCase
         $item->setExtra( 'test1', 'original value' );
         $extension = $this->getExtension();
         $options = $extension->buildOptions(
-            array(
-                'extras' => array(
+            [
+                'extras' => [
                     'test1' => 'options value 1',
                     'test2' => 'options value 2',
-                )
-            )
+                ]
+            ]
         );
 
         $extension->buildItem( $item, $options );
@@ -61,11 +61,11 @@ class CoreExtensionTest extends TestCase
         $item->setExtra( 'test1', 'original value' );
         $extension = $this->getExtension();
         $options = $extension->buildOptions(
-            array(
-                'extras' => array(
+            [
+                'extras' => [
                     'test2' => 'options value',
-                )
-            )
+                ]
+            ]
         );
 
         $extension->buildItem( $item, $options );

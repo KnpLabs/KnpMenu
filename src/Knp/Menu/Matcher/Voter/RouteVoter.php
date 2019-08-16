@@ -70,11 +70,11 @@ class RouteVoter implements VoterInterface
             return null;
         }
 
-        $routes = (array) $item->getExtra('routes', array());
+        $routes = (array) $item->getExtra('routes', []);
 
         foreach ($routes as $testedRoute) {
             if (is_string($testedRoute)) {
-                $testedRoute = array('route' => $testedRoute);
+                $testedRoute = ['route' => $testedRoute];
             }
 
             if (!is_array($testedRoute)) {
@@ -109,7 +109,7 @@ class RouteVoter implements VoterInterface
             return true;
         }
 
-        $routeParameters = $request->attributes->get('_route_params', array());
+        $routeParameters = $request->attributes->get('_route_params', []);
 
         foreach ($testedRoute['parameters'] as $name => $value) {
             // cast both to string so that we handle integer and other non-string parameters, but don't stumble on 0 == 'abc'.

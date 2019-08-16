@@ -23,19 +23,19 @@ class MenuItem implements ItemInterface
      * Attributes for the item link
      * @var array
      */
-    protected $linkAttributes = array();
+    protected $linkAttributes = [];
 
     /**
      * Attributes for the children list
      * @var array
      */
-    protected $childrenAttributes = array();
+    protected $childrenAttributes = [];
 
     /**
      * Attributes for the item text
      * @var array
      */
-    protected $labelAttributes = array();
+    protected $labelAttributes = [];
 
     /**
      * Uri to use in the anchor tag
@@ -47,13 +47,13 @@ class MenuItem implements ItemInterface
      * Attributes for the item
      * @var array
      */
-    protected $attributes = array();
+    protected $attributes = [];
 
     /**
      * Extra stuff associated to the item
      * @var array
      */
-    protected $extras = array();
+    protected $extras = [];
 
     /**
      * Whether the item is displayed
@@ -71,7 +71,7 @@ class MenuItem implements ItemInterface
      * Child items
      * @var ItemInterface[]
      */
-    protected $children = array();
+    protected $children = [];
 
     /**
      * Parent item
@@ -336,7 +336,7 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    public function addChild($child, array $options = array())
+    public function addChild($child, array $options = [])
     {
         if (!$child instanceof ItemInterface) {
             $child = $this->factory->createItem($child, $options);
@@ -362,7 +362,7 @@ class MenuItem implements ItemInterface
             throw new \InvalidArgumentException('Cannot reorder children, order does not contain all children.');
         }
 
-        $newChildren = array();
+        $newChildren = [];
 
         foreach ($order as $name) {
             if (!isset($this->children[$name])) {
@@ -381,7 +381,7 @@ class MenuItem implements ItemInterface
     public function copy()
     {
         $newMenu = clone $this;
-        $newMenu->setChildren(array());
+        $newMenu->setChildren([]);
         $newMenu->setParent(null);
         foreach ($this->getChildren() as $child) {
             $newMenu->addChild($child->copy());

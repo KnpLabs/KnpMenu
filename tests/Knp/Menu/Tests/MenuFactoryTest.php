@@ -14,8 +14,8 @@ class MenuFactoryTest extends TestCase
         $extension1 = $this->getMockBuilder('Knp\Menu\Factory\ExtensionInterface')->getMock();
         $extension1->expects($this->once())
             ->method('buildOptions')
-            ->with(array('foo' => 'bar'))
-            ->will($this->returnValue(array('uri' => 'foobar')));
+            ->with(['foo' => 'bar'])
+            ->will($this->returnValue(['uri' => 'foobar']));
         $extension1->expects($this->once())
             ->method('buildItem')
             ->with($this->isInstanceOf('Knp\Menu\ItemInterface'), $this->contains('foobar'));
@@ -25,15 +25,15 @@ class MenuFactoryTest extends TestCase
         $extension2 = $this->getMockBuilder('Knp\Menu\Factory\ExtensionInterface')->getMock();
         $extension2->expects($this->once())
             ->method('buildOptions')
-            ->with(array('foo' => 'baz'))
-            ->will($this->returnValue(array('foo' => 'bar')));
+            ->with(['foo' => 'baz'])
+            ->will($this->returnValue(['foo' => 'bar']));
         $extension1->expects($this->once())
             ->method('buildItem')
             ->with($this->isInstanceOf('Knp\Menu\ItemInterface'), $this->contains('foobar'));
 
         $factory->addExtension($extension2, 10);
 
-        $item = $factory->createItem('test', array('foo' => 'baz'));
+        $item = $factory->createItem('test', ['foo' => 'baz']);
         $this->assertEquals('foobar', $item->getUri());
     }
 
@@ -41,12 +41,12 @@ class MenuFactoryTest extends TestCase
     {
         $factory = new MenuFactory();
 
-        $item = $factory->createItem('test', array(
+        $item = $factory->createItem('test', [
             'uri' => 'http://example.com',
-            'linkAttributes' => array('class' => 'foo'),
+            'linkAttributes' => ['class' => 'foo'],
             'display' => false,
             'displayChildren' => false,
-        ));
+        ]);
 
         $this->assertInstanceOf('Knp\Menu\ItemInterface', $item);
         $this->assertEquals('test', $item->getName());

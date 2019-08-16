@@ -19,7 +19,7 @@ class PimpleProviderTest extends TestCase
 
     public function testHas()
     {
-        $provider = new PimpleProvider(new \Pimple(), array('first' => 'first', 'second' => 'dummy'));
+        $provider = new PimpleProvider(new \Pimple(), ['first' => 'first', 'second' => 'dummy']);
         $this->assertTrue($provider->has('first'));
         $this->assertTrue($provider->has('second'));
         $this->assertFalse($provider->has('third'));
@@ -32,7 +32,7 @@ class PimpleProviderTest extends TestCase
         $pimple['menu'] = function() use ($menu) {
             return $menu;
         };
-        $provider = new PimpleProvider($pimple, array('default' => 'menu'));
+        $provider = new PimpleProvider($pimple, ['default' => 'menu']);
         $this->assertSame($menu, $provider->get('default'));
     }
 
@@ -45,10 +45,10 @@ class PimpleProviderTest extends TestCase
 
             return $menu;
         });
-        $provider = new PimpleProvider($pimple, array('default' => 'menu'));
+        $provider = new PimpleProvider($pimple, ['default' => 'menu']);
 
-        $this->assertSame($menu, $provider->get('default', array('foo' => 'bar')));
-        $this->assertEquals(array('foo' => 'bar'), $pimple['options']);
+        $this->assertSame($menu, $provider->get('default', ['foo' => 'bar']));
+        $this->assertEquals(['foo' => 'bar'], $pimple['options']);
     }
 
     /**

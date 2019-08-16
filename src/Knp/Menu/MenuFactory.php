@@ -13,7 +13,7 @@ class MenuFactory implements FactoryInterface
     /**
      * @var array[]
      */
-    private $extensions = array();
+    private $extensions = [];
 
     /**
      * @var ExtensionInterface[]
@@ -25,7 +25,7 @@ class MenuFactory implements FactoryInterface
         $this->addExtension(new CoreExtension(), -10);
     }
 
-    public function createItem($name, array $options = array())
+    public function createItem($name, array $options = [])
     {
         foreach ($this->getExtensions() as $extension) {
             $options = $extension->buildOptions($options);
@@ -61,7 +61,7 @@ class MenuFactory implements FactoryInterface
     {
         if (null === $this->sorted) {
             krsort($this->extensions);
-            $this->sorted = !empty($this->extensions) ? call_user_func_array('array_merge', $this->extensions) : array();
+            $this->sorted = !empty($this->extensions) ? call_user_func_array('array_merge', $this->extensions) : [];
         }
 
         return $this->sorted;

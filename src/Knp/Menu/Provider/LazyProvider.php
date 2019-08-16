@@ -18,7 +18,7 @@ class LazyProvider implements MenuProviderInterface
         $this->builders = $builders;
     }
 
-    public function get($name, array $options = array())
+    public function get($name, array $options = [])
     {
         if (!isset($this->builders[$name])) {
             throw new \InvalidArgumentException(sprintf('The menu "%s" is not defined.', $name));
@@ -37,7 +37,7 @@ class LazyProvider implements MenuProviderInterface
         return call_user_func($builder, $options);
     }
 
-    public function has($name, array $options = array())
+    public function has($name, array $options = [])
     {
         return isset($this->builders[$name]);
     }

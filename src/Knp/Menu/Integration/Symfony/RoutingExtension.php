@@ -18,18 +18,18 @@ class RoutingExtension implements ExtensionInterface
         $this->generator = $generator;
     }
 
-    public function buildOptions(array $options = array())
+    public function buildOptions(array $options = [])
     {
         if (!empty($options['route'])) {
-            $params = isset($options['routeParameters']) ? $options['routeParameters'] : array();
+            $params = isset($options['routeParameters']) ? $options['routeParameters'] : [];
             $absolute = (isset($options['routeAbsolute']) && $options['routeAbsolute']) ? UrlGeneratorInterface::ABSOLUTE_URL : UrlGeneratorInterface::ABSOLUTE_PATH;
             $options['uri'] = $this->generator->generate($options['route'], $params, $absolute);
 
             // adding the item route to the extras under the 'routes' key (for the Silex RouteVoter)
-            $options['extras']['routes'][] = array(
+            $options['extras']['routes'][] = [
                 'route' => $options['route'],
                 'parameters' => $params,
-            );
+            ];
         }
 
         return $options;

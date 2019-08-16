@@ -9,7 +9,7 @@ class ListRendererTest extends AbstractRendererTest
 {
     protected function createRenderer(MatcherInterface $matcher)
     {
-        $renderer = new ListRenderer($matcher, array('compressed' => true));
+        $renderer = new ListRenderer($matcher, ['compressed' => true]);
 
         return $renderer;
     }
@@ -28,6 +28,6 @@ class ListRendererTest extends AbstractRendererTest
 
 HTML;
 
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, array('compressed' => false, 'depth' => 1)));
+        $this->assertEquals($rendered, $this->renderer->render($this->menu, ['compressed' => false, 'depth' => 1]));
     }
 }

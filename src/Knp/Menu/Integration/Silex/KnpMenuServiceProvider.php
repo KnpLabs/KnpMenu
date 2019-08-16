@@ -44,7 +44,7 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
         });
 
         $app['knp_menu.renderer.list'] = $app->share(function () use ($app) {
-            return new ListRenderer($app['knp_menu.matcher'], array(), $app['charset']);
+            return new ListRenderer($app['knp_menu.matcher'], [], $app['charset']);
         });
 
         $app['knp_menu.menu_provider'] = $app->share(function () use ($app) {
@@ -52,14 +52,14 @@ class KnpMenuServiceProvider implements ServiceProviderInterface
         });
 
         if (!isset($app['knp_menu.menus'])) {
-            $app['knp_menu.menus'] = array();
+            $app['knp_menu.menus'] = [];
         }
 
         $app['knp_menu.renderer_provider'] = $app->share(function () use ($app) {
             $app['knp_menu.renderers'] = array_merge(
-                array('list' => 'knp_menu.renderer.list'),
-                isset($app['knp_menu.renderer.twig']) ? array('twig' => 'knp_menu.renderer.twig') : array(),
-                isset($app['knp_menu.renderers']) ? $app['knp_menu.renderers'] : array()
+                ['list' => 'knp_menu.renderer.list'],
+                isset($app['knp_menu.renderer.twig']) ? ['twig' => 'knp_menu.renderer.twig'] : [],
+                isset($app['knp_menu.renderers']) ? $app['knp_menu.renderers'] : []
             );
 
             return new PimpleRendererProvider($app, $app['knp_menu.default_renderer'], $app['knp_menu.renderers']);

@@ -74,11 +74,11 @@ class RouteVoterTest extends TestCase
         $item->expects($this->any())
             ->method('getExtra')
             ->with('routes')
-            ->will($this->returnValue(array(array('invalid' => 'array'))));
+            ->will($this->returnValue([['invalid' => 'array']]));
 
         $request = new Request();
         $request->attributes->set('_route', 'foo');
-        $request->attributes->set('_route_params', array());
+        $request->attributes->set('_route_params', []);
 
         $requestStack = new RequestStack();
         $requestStack->push($request);
@@ -127,11 +127,11 @@ class RouteVoterTest extends TestCase
         }
 
         $item = $this->prophesize('Knp\Menu\ItemInterface');
-        $item->getExtra('routes', array())->willReturn(array('foo'));
+        $item->getExtra('routes', [])->willReturn(['foo']);
 
         $request = new Request();
         $request->attributes->set('_route', 'foo');
-        $request->attributes->set('_route_params', array());
+        $request->attributes->set('_route_params', []);
 
         $voter = new RouteVoter($request);
 
@@ -140,135 +140,135 @@ class RouteVoterTest extends TestCase
 
     public function provideData()
     {
-        return array(
-            'no request route' => array(
+        return [
+            'no request route' => [
                 null,
-                array(),
+                [],
                 'foo',
                 null
-            ),
-            'integer parameters' => array(
+            ],
+            'integer parameters' => [
                 'foo',
-                array('bar' => 128),
-                array(array('route' => 'foo', 'parameters' => array('bar' => 128))),
+                ['bar' => 128],
+                [['route' => 'foo', 'parameters' => ['bar' => 128]]],
                 true
-            ),
-            'no item route' => array(
+            ],
+            'no item route' => [
                 'foo',
-                array(),
+                [],
                 null,
                 null
-            ),
-            'same single route' => array(
+            ],
+            'same single route' => [
                 'foo',
-                array(),
+                [],
                 'foo',
                 true
-            ),
-            'different single route' => array(
+            ],
+            'different single route' => [
                 'foo',
-                array(),
+                [],
                 'bar',
                 null
-            ),
-            'matching multiple routes' => array(
+            ],
+            'matching multiple routes' => [
                 'foo',
-                array(),
-                array('foo', 'baz'),
+                [],
+                ['foo', 'baz'],
                 true
-            ),
-            'matching multiple routes 2' => array(
+            ],
+            'matching multiple routes 2' => [
                 'baz',
-                array(),
-                array('foo', 'baz'),
+                [],
+                ['foo', 'baz'],
                 true
-            ),
-            'different multiple routes' => array(
+            ],
+            'different multiple routes' => [
                 'foo',
-                array(),
-                array('bar', 'baz'),
+                [],
+                ['bar', 'baz'],
                 null
-            ),
-            'same single route with different parameters' => array(
+            ],
+            'same single route with different parameters' => [
                 'foo',
-                array('1' => 'bar'),
-                array(array('route' => 'foo', 'parameters' => array('1' => 'baz'))),
+                ['1' => 'bar'],
+                [['route' => 'foo', 'parameters' => ['1' => 'baz']]],
                 null
-            ),
-            'same single route with same parameters' => array(
+            ],
+            'same single route with same parameters' => [
                 'foo',
-                array('1' => 'bar'),
-                array(array('route' => 'foo', 'parameters' => array('1' => 'bar'))),
+                ['1' => 'bar'],
+                [['route' => 'foo', 'parameters' => ['1' => 'bar']]],
                 true
-            ),
-            'same single route with additional parameters' => array(
+            ],
+            'same single route with additional parameters' => [
                 'foo',
-                array('1' => 'bar'),
-                array(array('route' => 'foo', 'parameters' => array('1' => 'bar', '2' => 'baz'))),
+                ['1' => 'bar'],
+                [['route' => 'foo', 'parameters' => ['1' => 'bar', '2' => 'baz']]],
                 null
-            ),
-            'same single route with less parameters' => array(
+            ],
+            'same single route with less parameters' => [
                 'foo',
-                array('1' => 'bar', '2' => 'baz'),
-                array(array('route' => 'foo', 'parameters' => array('1' => 'bar'))),
+                ['1' => 'bar', '2' => 'baz'],
+                [['route' => 'foo', 'parameters' => ['1' => 'bar']]],
                 true
-            ),
-            'same single route with different type parameters' => array(
+            ],
+            'same single route with different type parameters' => [
                 'foo',
-                array('1' => '2'),
-                array(array('route' => 'foo', 'parameters' => array('1' => 2))),
+                ['1' => '2'],
+                [['route' => 'foo', 'parameters' => ['1' => 2]]],
                 true
-            ),
-            'same route with multiple route params' => array(
+            ],
+            'same route with multiple route params' => [
                 'foo',
-                array('1' => 'bar'),
-                array(
-                    array('route' => 'foo', 'parameters' => array('1' => 'baz')),
-                    array('route' => 'foo', 'parameters' => array('1' => 'bar')),
-                ),
+                ['1' => 'bar'],
+                [
+                    ['route' => 'foo', 'parameters' => ['1' => 'baz']],
+                    ['route' => 'foo', 'parameters' => ['1' => 'bar']],
+                ],
                 true
-            ),
-            'same route with and without route params' => array(
+            ],
+            'same route with and without route params' => [
                 'foo',
-                array('1' => 'bar'),
-                array(
-                    array('route' => 'foo', 'parameters' => array('1' => 'baz')),
-                    array('route' => 'foo'),
-                ),
+                ['1' => 'bar'],
+                [
+                    ['route' => 'foo', 'parameters' => ['1' => 'baz']],
+                    ['route' => 'foo'],
+                ],
                 true
-            ),
-            'same route with multiple different route params' => array(
+            ],
+            'same route with multiple different route params' => [
                 'foo',
-                array('1' => 'bar'),
-                array(
-                    array('route' => 'foo', 'parameters' => array('1' => 'baz')),
-                    array('route' => 'foo', 'parameters' => array('1' => 'foo')),
-                ),
+                ['1' => 'bar'],
+                [
+                    ['route' => 'foo', 'parameters' => ['1' => 'baz']],
+                    ['route' => 'foo', 'parameters' => ['1' => 'foo']],
+                ],
                 null
-            ),
-            'matching pattern without parameters' => array(
+            ],
+            'matching pattern without parameters' => [
                 'foo',
-                array('1' => 'bar'),
-                array(array('pattern' => '/fo/')),
+                ['1' => 'bar'],
+                [['pattern' => '/fo/']],
                 true
-            ),
-            'non matching pattern without parameters' => array(
+            ],
+            'non matching pattern without parameters' => [
                 'foo',
-                array('1' => 'bar'),
-                array(array('pattern' => '/bar/')),
+                ['1' => 'bar'],
+                [['pattern' => '/bar/']],
                 null
-            ),
-            'matching pattern with parameters' => array(
+            ],
+            'matching pattern with parameters' => [
                 'foo',
-                array('1' => 'bar'),
-                array(array('pattern' => '/fo/', 'parameters' => array('1' => 'bar'))),
+                ['1' => 'bar'],
+                [['pattern' => '/fo/', 'parameters' => ['1' => 'bar']]],
                 true
-            ),
-            'matching pattern with different parameters' => array(
-                'foo', array('1' => 'bar'),
-                array(array('pattern' => '/fo/', 'parameters' => array('1' => 'baz'))),
+            ],
+            'matching pattern with different parameters' => [
+                'foo', ['1' => 'bar'],
+                [['pattern' => '/fo/', 'parameters' => ['1' => 'baz']]],
                 null
-            ),
-        );
+            ],
+        ];
     }
 }

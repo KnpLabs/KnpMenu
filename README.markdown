@@ -1,7 +1,7 @@
 KnpMenu
 =======
 
-The KnpMenu library provides object oriented menus for PHP 5.3.
+The KnpMenu library provides object oriented menus for PHP 5.6+.
 It is used by the [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) for Symfony
 but can now be used stand-alone.
 
@@ -36,9 +36,9 @@ use Knp\Menu\Renderer\ListRenderer;
 
 $factory = new MenuFactory();
 $menu = $factory->createItem('My menu');
-$menu->addChild('Home', array('uri' => '/'));
-$menu->addChild('Comments', array('uri' => '#comments'));
-$menu->addChild('Symfony', array('uri' => 'http://symfony.com/'));
+$menu->addChild('Home', ['uri' => '/']);
+$menu->addChild('Comments', ['uri' => '#comments']);
+$menu->addChild('Symfony', ['uri' => 'http://symfony.com/']);
 $menu->addChild('Happy Awesome Developers');
 
 $renderer = new ListRenderer(new \Knp\Menu\Matcher\Matcher());

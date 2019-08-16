@@ -10,11 +10,11 @@ class ArrayLoaderTest extends TestCase
 {
     public function testLoadWithoutChildren()
     {
-        $array = array(
+        $array = [
             'name' => 'joe',
             'uri' => '/foobar',
             'display' => false,
-        );
+        ];
 
         $loader = new ArrayLoader(new MenuFactory());
         $item = $loader->load($array);
@@ -28,18 +28,18 @@ class ArrayLoaderTest extends TestCase
 
     public function testLoadWithChildren()
     {
-        $array = array(
+        $array = [
             'name' => 'joe',
-            'children' => array(
-                'jack' => array(
+            'children' => [
+                'jack' => [
                     'name' => 'jack',
                     'label' => 'Jack',
-                ),
-                array(
+                ],
+                [
                     'name' => 'john'
-                )
-            ),
-        );
+                ]
+            ],
+        ];
 
         $loader = new ArrayLoader(new MenuFactory());
         $item = $loader->load($array);
@@ -52,17 +52,17 @@ class ArrayLoaderTest extends TestCase
 
     public function testLoadWithChildrenOmittingName()
     {
-        $array = array(
+        $array = [
             'name' => 'joe',
-            'children' => array(
-                'jack' => array(
+            'children' => [
+                'jack' => [
                     'label' => 'Jack',
-                ),
-                'john' => array(
+                ],
+                'john' => [
                     'label' => 'John'
-                )
-            ),
-        );
+                ]
+            ],
+        ];
 
         $loader = new ArrayLoader(new MenuFactory());
         $item = $loader->load($array);
@@ -96,13 +96,13 @@ class ArrayLoaderTest extends TestCase
 
     public function provideSupportingData()
     {
-        return array(
-            array(array(), true),
-            array(null, false),
-            array('foobar', false),
-            array(new \stdClass(), false),
-            array(53, false),
-            array(true, false),
-        );
+        return [
+            [[], true],
+            [null, false],
+            ['foobar', false],
+            [new \stdClass(), false],
+            [53, false],
+            [true, false],
+        ];
     }
 }

@@ -11,7 +11,7 @@ namespace Knp\Menu\Provider;
  */
 class PimpleProvider extends ArrayAccessProvider
 {
-    public function __construct(\Pimple $pimple, array $menuIds = array())
+    public function __construct(\Pimple $pimple, array $menuIds = [])
     {
         parent::__construct($pimple, $menuIds);
     }

@@ -119,10 +119,10 @@ class MenuManipulator
      */
     public function split(ItemInterface $item, $length)
     {
-        return array(
+        return [
             'primary' => $this->slice($item, 0, $length),
             'secondary' => $this->slice($item, $length),
-        );
+        ];
     }
 
     /**
@@ -135,9 +135,9 @@ class MenuManipulator
      * @param string        $method
      * @param array         $arguments
      */
-    public function callRecursively(ItemInterface $item, $method, $arguments = array())
+    public function callRecursively(ItemInterface $item, $method, $arguments = [])
     {
-        call_user_func_array(array($item, $method), $arguments);
+        call_user_func_array([$item, $method], $arguments);
 
         foreach ($item->getChildren() as $child) {
             $this->callRecursively($child, $method, $arguments);
@@ -156,7 +156,7 @@ class MenuManipulator
      */
     public function getPathAsString(ItemInterface $item, $separator = ' > ')
     {
-        $children = array();
+        $children = [];
         $obj = $item;
 
         do {
@@ -174,7 +174,7 @@ class MenuManipulator
      */
     public function toArray(ItemInterface $item, $depth = null)
     {
-        $array = array(
+        $array = [
             'name' => $item->getName(),
             'label' => $item->getLabel(),
             'uri' => $item->getUri(),
@@ -186,12 +186,12 @@ class MenuManipulator
             'display' => $item->isDisplayed(),
             'displayChildren' => $item->getDisplayChildren(),
             'current' => $item->isCurrent(),
-        );
+        ];
 
         // export the children as well, unless explicitly disabled
         if (0 !== $depth) {
             $childDepth = null === $depth ? null : $depth - 1;
-            $array['children'] = array();
+            $array['children'] = [];
             foreach ($item->getChildren() as $key => $child) {
                 $array['children'][$key] = $this->toArray($child, $childDepth);
             }
@@ -237,7 +237,7 @@ class MenuManipulator
         }
 
         if (!is_array($subItem) && !$subItem instanceof \Traversable) {
-            $subItem = array($subItem);
+            $subItem = [$subItem];
         }
 
         foreach ($subItem as $key => $value) {
@@ -251,27 +251,27 @@ class MenuManipulator
                     break;
 
                 case is_integer($key) && is_string($value):
-                    $value = array(
+                    $value = [
                         'label' => (string) $value,
                         'uri' => null,
                         'item' => null,
-                    );
+                    ];
                     break;
 
                 case is_scalar($value):
-                    $value = array(
+                    $value = [
                         'label' => (string) $key,
                         'uri' => (string) $value,
                         'item' => null,
-                    );
+                    ];
                     break;
 
                 case null === $value:
-                    $value = array(
+                    $value = [
                         'label' => (string) $key,
                         'uri' => null,
                         'item' => null,
-                    );
+                    ];
                     break;
 
                 default:
@@ -286,7 +286,7 @@ class MenuManipulator
 
     private function buildBreadcrumbsArray(ItemInterface $item)
     {
-        $breadcrumb = array();
+        $breadcrumb = [];
 
         do {
             $breadcrumb[] = $this->getBreadcrumbsItem($item);
@@ -297,10 +297,10 @@ class MenuManipulator
 
     private function getBreadcrumbsItem(ItemInterface $item)
     {
-        return array(
+        return [
             'label' => $item->getLabel(),
             'uri' => $item->getUri(),
             'item' => $item,
-        );
+        ];
     }
 }

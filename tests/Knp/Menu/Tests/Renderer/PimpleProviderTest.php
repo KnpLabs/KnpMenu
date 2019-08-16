@@ -19,7 +19,7 @@ class PimpleProviderTest extends TestCase
 
     public function testHas()
     {
-        $provider = new PimpleProvider(new \Pimple(), 'first', array('first' => 'first', 'second' => 'dummy'));
+        $provider = new PimpleProvider(new \Pimple(), 'first', ['first' => 'first', 'second' => 'dummy']);
         $this->assertTrue($provider->has('first'));
         $this->assertTrue($provider->has('second'));
         $this->assertFalse($provider->has('third'));
@@ -32,7 +32,7 @@ class PimpleProviderTest extends TestCase
         $pimple['renderer'] = function() use ($renderer) {
             return $renderer;
         };
-        $provider = new PimpleProvider($pimple, 'default',  array('default' => 'renderer'));
+        $provider = new PimpleProvider($pimple, 'default',  ['default' => 'renderer']);
         $this->assertSame($renderer, $provider->get('default'));
     }
 
@@ -43,7 +43,7 @@ class PimpleProviderTest extends TestCase
         $pimple['renderer'] = function() use ($renderer) {
             return $renderer;
         };
-        $provider = new PimpleProvider($pimple, 'default',  array('default' => 'renderer'));
+        $provider = new PimpleProvider($pimple, 'default',  ['default' => 'renderer']);
         $this->assertSame($renderer, $provider->get());
     }
 
@@ -52,7 +52,7 @@ class PimpleProviderTest extends TestCase
      */
     public function testGetNonExistentRenderer()
     {
-        $provider = new PimpleProvider(new \Pimple(), 'default', array());
+        $provider = new PimpleProvider(new \Pimple(), 'default', []);
         $provider->get('non-existent');
     }
 }

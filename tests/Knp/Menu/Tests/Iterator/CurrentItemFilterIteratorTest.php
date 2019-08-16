@@ -15,7 +15,7 @@ class CurrentItemFilterIteratorTest extends MenuTestCase
         $this->ch2->setCurrent(true);
         $this->gc1->setCurrent(true);
 
-        $names = array();
+        $names = [];
         // FilterIterator expects an Iterator implementation explicitly, not an IteratorAggregate.
         $iterator = new CurrentItemFilterIterator($this->menu->getIterator(), new Matcher());
 
@@ -23,7 +23,7 @@ class CurrentItemFilterIteratorTest extends MenuTestCase
             $names[] = $value->getName();
         }
 
-        $this->assertEquals(array('Parent 1'), $names);
+        $this->assertEquals(['Parent 1'], $names);
     }
 
     public function testFiltering()
@@ -32,7 +32,7 @@ class CurrentItemFilterIteratorTest extends MenuTestCase
         $this->ch2->setCurrent(true);
         $this->gc1->setCurrent(true);
 
-        $names = array();
+        $names = [];
         $iterator = new CurrentItemFilterIterator(
             new \RecursiveIteratorIterator(new RecursiveItemIterator($this->menu), \RecursiveIteratorIterator::SELF_FIRST),
             new Matcher()
@@ -42,6 +42,6 @@ class CurrentItemFilterIteratorTest extends MenuTestCase
             $names[] = $value->getName();
         }
 
-        $this->assertEquals(array('Parent 1', 'Child 2', 'Grandchild 1'), $names);
+        $this->assertEquals(['Parent 1', 'Child 2', 'Grandchild 1'], $names);
     }
 }

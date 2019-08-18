@@ -9,15 +9,15 @@ class MenuItem implements ItemInterface
 {
     /**
      * Name of this menu item (used for id by parent menu)
-     * @var string|null
+     * @var string
      */
-    protected $name = null;
+    protected $name;
 
     /**
      * Label to output, name is used by default
      * @var string|null
      */
-    protected $label = null;
+    protected $label;
 
     /**
      * Attributes for the item link
@@ -41,7 +41,7 @@ class MenuItem implements ItemInterface
      * Uri to use in the anchor tag
      * @var string|null
      */
-    protected $uri = null;
+    protected $uri;
 
     /**
      * Attributes for the item
@@ -77,13 +77,13 @@ class MenuItem implements ItemInterface
      * Parent item
      * @var ItemInterface|null
      */
-    protected $parent = null;
+    protected $parent;
 
     /**
      * whether the item is current. null means unknown
      * @var bool|null
      */
-    protected $isCurrent = null;
+    protected $isCurrent;
 
     /**
      * @var FactoryInterface
@@ -93,11 +93,11 @@ class MenuItem implements ItemInterface
     /**
      * Class constructor
      *
-     * @param string|null      $name    The name of this menu, which is how its parent will
+     * @param string           $name    The name of this menu, which is how its parent will
      *                                  reference it. Also used as label if label not specified
      * @param FactoryInterface $factory
      */
-    public function __construct(?string $name, FactoryInterface $factory)
+    public function __construct(string $name, FactoryInterface $factory)
     {
         $this->name = $name;
         $this->factory = $factory;
@@ -124,7 +124,7 @@ class MenuItem implements ItemInterface
 
     public function setName(string $name): ItemInterface
     {
-        if ($this->name == $name) {
+        if ($this->name === $name) {
             return $this;
         }
 
@@ -161,7 +161,7 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    public function getLabel(): ?string
+    public function getLabel(): string
     {
         return ($this->label !== null) ? $this->label : $this->name;
     }
@@ -572,7 +572,7 @@ class MenuItem implements ItemInterface
     /**
      * Implements IteratorAggregate
      */
-    public function getIterator(): \ArrayIterator
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->children);
     }

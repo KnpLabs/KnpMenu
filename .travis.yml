@@ -8,11 +8,9 @@ cache:
         - $HOME/symfony-bridge/.phpunit
 
 php:
-    - 5.6
-    - 7.0
-    - 7.1
     - 7.2
     - 7.3
+    - 7.4snapshot
     - nightly
 
 env:
@@ -22,19 +20,18 @@ env:
 
 matrix:
     include:
-        - php: 5.6
+        - php: 7.2
           env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' SYMFONY_DEPRECATIONS_HELPER=weak
         - php: 7.3
           env: DEPENDENCIES=dev
     allow_failures:
         - php: 7.3
+        # 7.4 will fail for deprecations until https://github.com/symfony/symfony/issues/32844 is solved
+        - php: 7.4snapshot
+        - php: nightly
 
 before_install:
-    # Test the legacy Silex integration on the PHP 7.0 job. It is not tested on all jobs as it prevents testing with Symfony 3
-    - if [ "$TRAVIS_PHP_VERSION" = "7.0" ]; then composer require --no-update --dev silex/silex "^1.0"; fi;
     - if [ "$DEPENDENCIES" = "dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi;
-    # force the PHPUnit version for PHP 7.2, until https://github.com/symfony/symfony/issues/23943 is resolved
-    - if [ "$TRAVIS_PHP_VERSION" = "nightly" ]; then export SYMFONY_PHPUNIT_VERSION="6.3"; fi;
 
 install:
     - composer update $COMPOSER_FLAGS

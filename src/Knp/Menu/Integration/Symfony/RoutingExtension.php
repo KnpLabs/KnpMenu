@@ -18,7 +18,7 @@ class RoutingExtension implements ExtensionInterface
         $this->generator = $generator;
     }
 
-    public function buildOptions(array $options = [])
+    public function buildOptions(array $options = []): array
     {
         if (!empty($options['route'])) {
             $params = isset($options['routeParameters']) ? $options['routeParameters'] : [];
@@ -35,7 +35,7 @@ class RoutingExtension implements ExtensionInterface
         return $options;
     }
 
-    public function buildItem(ItemInterface $item, array $options)
+    public function buildItem(ItemInterface $item, array $options): void
     {
     }
 }

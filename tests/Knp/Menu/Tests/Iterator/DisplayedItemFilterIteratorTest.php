@@ -8,7 +8,7 @@ use Knp\Menu\Tests\MenuTestCase;
 
 class DisplayedItemFilterIteratorTest extends MenuTestCase
 {
-    public function testFiltering()
+    public function testFiltering(): void
     {
         $this->ch1->setDisplay(false);
         $this->ch2->setDisplay(false);

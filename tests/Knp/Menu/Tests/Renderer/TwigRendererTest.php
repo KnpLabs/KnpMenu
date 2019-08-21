@@ -11,7 +11,7 @@ use Twig\Loader\FilesystemLoader;
 
 class TwigRendererTest extends AbstractRendererTest
 {
-    public function createRenderer(MatcherInterface $matcher)
+    public function createRenderer(MatcherInterface $matcher): TwigRenderer
     {
         if (!class_exists(Environment::class)) {
             $this->markTestSkipped('Twig is not available');
@@ -23,7 +23,7 @@ class TwigRendererTest extends AbstractRendererTest
         return $renderer;
     }
 
-    public function testRenderOrderedList()
+    public function testRenderOrderedList(): void
     {
         $menu = new MenuItem('test', new MenuFactory());
         $menu->addChild('About')->addChild('foobar');

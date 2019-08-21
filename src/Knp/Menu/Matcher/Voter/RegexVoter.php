@@ -11,25 +11,25 @@ use Knp\Menu\ItemInterface;
 class RegexVoter implements VoterInterface
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $regexp;
 
     /**
-     * @param string $regexp
+     * @param string|null $regexp
      */
-    public function __construct($regexp)
+    public function __construct(?string $regexp)
     {
         $this->regexp = $regexp;
     }
 
-    public function matchItem(ItemInterface $item)
+    public function matchItem(ItemInterface $item): ?bool
     {
         if (null === $this->regexp || null === $item->getUri()) {
             return null;
         }
 
-        if (preg_match($this->regexp, $item->getUri())) {
+        if (\preg_match($this->regexp, $item->getUri())) {
             return true;
         }
 

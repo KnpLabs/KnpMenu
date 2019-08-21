@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class HelperTest extends TestCase
 {
-    public function testRenderMenu()
+    public function testRenderMenu(): void
     {
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
@@ -32,7 +32,7 @@ class HelperTest extends TestCase
         $this->assertEquals('<p>foobar</p>', $helper->render($menu));
     }
 
-    public function testRenderMenuWithOptions()
+    public function testRenderMenuWithOptions(): void
     {
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
@@ -54,7 +54,7 @@ class HelperTest extends TestCase
         $this->assertEquals('<p>foobar</p>', $helper->render($menu, ['firstClass' => 'test']));
     }
 
-    public function testRenderMenuWithRenderer()
+    public function testRenderMenuWithRenderer(): void
     {
         $menu = $this->getMockBuilder(  'Knp\Menu\ItemInterface')->getMock();
         $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
@@ -76,7 +76,7 @@ class HelperTest extends TestCase
         $this->assertEquals('<p>foobar</p>', $helper->render($menu, [], 'custom'));
     }
 
-    public function testRenderMenuByName()
+    public function testRenderMenuByName(): void
     {
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $menuProvider = $this->getMockBuilder('Knp\Menu\Provider\MenuProviderInterface')->getMock();
@@ -105,7 +105,7 @@ class HelperTest extends TestCase
         $this->assertEquals('<p>foobar</p>', $helper->render('default'));
     }
 
-    public function testGetMenu()
+    public function testGetMenu(): void
     {
         $rendererProvider = $this->getMockBuilder('Knp\Menu\Renderer\RendererProviderInterface')->getMock();
         $menuProvider = $this->getMockBuilder('Knp\Menu\Provider\MenuProviderInterface')->getMock();
@@ -122,33 +122,16 @@ class HelperTest extends TestCase
     }
 
     /**
-     * @expectedException \LogicException
-     */
-    public function testGetMenuWithBadReturnValue()
-    {
-        $rendererProvider = $this->getMockBuilder('Knp\Menu\Renderer\RendererProviderInterface')->getMock();
-        $menuProvider = $this->getMockBuilder('Knp\Menu\Provider\MenuProviderInterface')->getMock();
-        $menuProvider->expects($this->once())
-            ->method('get')
-            ->with('default')
-            ->will($this->returnValue(new \stdClass()))
-        ;
-
-        $helper = new Helper($rendererProvider, $menuProvider);
-        $helper->get('default');
-    }
-
-    /**
      * @expectedException \BadMethodCallException
      */
-    public function testGetMenuWithoutProvider()
+    public function testGetMenuWithoutProvider(): void
     {
         $rendererProvider = $this->getMockBuilder('Knp\Menu\Renderer\RendererProviderInterface')->getMock();
         $helper = new Helper($rendererProvider);
         $helper->get('default');
     }
 
-    public function testGetMenuWithOptions()
+    public function testGetMenuWithOptions(): void
     {
         $rendererProvider = $this->getMockBuilder('Knp\Menu\Renderer\RendererProviderInterface')->getMock();
         $menuProvider = $this->getMockBuilder('Knp\Menu\Provider\MenuProviderInterface')->getMock();
@@ -164,7 +147,7 @@ class HelperTest extends TestCase
         $this->assertSame($menu, $helper->get('default', [], ['foo' => 'bar']));
     }
 
-    public function testGetMenuByPath()
+    public function testGetMenuByPath(): void
     {
         $rendererProvider = $this->getMockBuilder('Knp\Menu\Renderer\RendererProviderInterface')->getMock();
         $menuProvider = $this->getMockBuilder('Knp\Menu\Provider\MenuProviderInterface')->getMock();
@@ -189,7 +172,7 @@ class HelperTest extends TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testGetMenuByInvalidPath()
+    public function testGetMenuByInvalidPath(): void
     {
         $rendererProvider = $this->getMockBuilder('Knp\Menu\Renderer\RendererProviderInterface')->getMock();
         $menuProvider = $this->getMockBuilder('Knp\Menu\Provider\MenuProviderInterface')->getMock();
@@ -215,7 +198,7 @@ class HelperTest extends TestCase
         $this->assertSame($child, $helper->get('default', ['child', 'invalid']));
     }
 
-    public function testRenderMenuByPath()
+    public function testRenderMenuByPath(): void
     {
         $child = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
@@ -248,13 +231,13 @@ class HelperTest extends TestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage The array cannot be empty
      */
-    public function testRenderByEmptyPath()
+    public function testRenderByEmptyPath(): void
     {
         $helper = new Helper($this->getMockBuilder('Knp\Menu\Renderer\RendererProviderInterface')->getMock());
         $helper->render([]);
     }
 
-    public function testBreadcrumbsArray()
+    public function testBreadcrumbsArray(): void
     {
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
 
@@ -272,13 +255,13 @@ class HelperTest extends TestCase
     /**
      * @expectedException \BadMethodCallException
      */
-    public function testCurrentItemWithoutMatcher()
+    public function testCurrentItemWithoutMatcher(): void
     {
         $helper = new Helper($this->getMockBuilder('Knp\Menu\Renderer\RendererProviderInterface')->getMock());
         $helper->getCurrentItem('default');
     }
 
-    public function testCurrentItem()
+    public function testCurrentItem(): void
     {
         $matcher = new Matcher();
 

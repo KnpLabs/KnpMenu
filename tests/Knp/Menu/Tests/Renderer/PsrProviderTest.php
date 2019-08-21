@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class PsrProviderTest extends TestCase
 {
-    public function testHas()
+    public function testHas(): void
     {
         $container = $this->prophesize('Psr\Container\ContainerInterface');
         $container->has('first')->willReturn(true);
@@ -20,7 +20,7 @@ class PsrProviderTest extends TestCase
         $this->assertFalse($provider->has('third'));
     }
 
-    public function testGetExistentRenderer()
+    public function testGetExistentRenderer(): void
     {
         $renderer = $this->prophesize('Knp\Menu\Renderer\RendererInterface');
 
@@ -32,7 +32,7 @@ class PsrProviderTest extends TestCase
         $this->assertSame($renderer->reveal(), $provider->get('renderer'));
     }
 
-    public function testGetDefaultRenderer()
+    public function testGetDefaultRenderer(): void
     {
         $renderer = $this->prophesize('Knp\Menu\Renderer\RendererInterface');
 
@@ -47,7 +47,7 @@ class PsrProviderTest extends TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testGetNonExistentRenderer()
+    public function testGetNonExistentRenderer(): void
     {
         $container = $this->prophesize('Psr\Container\ContainerInterface');
         $container->has('non-existent')->willReturn(false);

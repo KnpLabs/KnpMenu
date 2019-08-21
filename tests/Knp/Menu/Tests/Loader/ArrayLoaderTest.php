@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class ArrayLoaderTest extends TestCase
 {
-    public function testLoadWithoutChildren()
+    public function testLoadWithoutChildren(): void
     {
         $array = [
             'name' => 'joe',
@@ -26,7 +26,7 @@ class ArrayLoaderTest extends TestCase
         $this->assertEmpty($item->getChildren());
     }
 
-    public function testLoadWithChildren()
+    public function testLoadWithChildren(): void
     {
         $array = [
             'name' => 'joe',
@@ -50,7 +50,7 @@ class ArrayLoaderTest extends TestCase
         $this->assertTrue(isset($item['john']));
     }
 
-    public function testLoadWithChildrenOmittingName()
+    public function testLoadWithChildrenOmittingName(): void
     {
         $array = [
             'name' => 'joe',
@@ -87,7 +87,7 @@ class ArrayLoaderTest extends TestCase
     /**
      * @dataProvider provideSupportingData
      */
-    public function testSupports($data, $expected)
+    public function testSupports($data, $expected): void
     {
         $loader = new ArrayLoader(new MenuFactory());
 

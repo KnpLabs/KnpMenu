@@ -42,7 +42,7 @@ class TwigRenderer implements RendererInterface
         ], $defaultOptions);
     }
 
-    public function render(ItemInterface $item, array $options = [])
+    public function render(ItemInterface $item, array $options = []): string
     {
         $options = array_merge($this->defaultOptions, $options);
 

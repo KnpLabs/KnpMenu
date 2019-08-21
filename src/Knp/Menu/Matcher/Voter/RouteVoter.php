@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class RouteVoter implements VoterInterface
 {
     /**
-     * @var RequestStack|null
+     * @var RequestStack
      */
     private $requestStack;
 
@@ -21,45 +21,14 @@ class RouteVoter implements VoterInterface
      */
     private $request;
 
-    public function __construct($requestStack = null)
+    public function __construct(RequestStack $requestStack)
     {
-        if ($requestStack instanceof RequestStack) {
-            $this->requestStack = $requestStack;
-        } elseif ($requestStack instanceof Request) {
-            @trigger_error(sprintf('Passing a Request as the first argument for "%s" constructor is deprecated since version 2.3 and won\'t be possible in 3.0. Pass a RequestStack instead.', __CLASS__), E_USER_DEPRECATED);
-
-            // BC layer for the old API of the class
-            $this->request = $requestStack;
-        } elseif (null !== $requestStack) {
-            throw new \InvalidArgumentException('The first argument of %s must be null, a RequestStack or a Request. %s given', __CLASS__, is_object($requestStack) ? get_class($requestStack) :  gettype($requestStack));
-        } else {
-            @trigger_error(sprintf('Not passing a RequestStack as the first argument for "%s" constructor is deprecated since version 2.3 and won\'t be possible in 3.0.', __CLASS__), E_USER_DEPRECATED);
-        }
+        $this->requestStack = $requestStack;
     }
 
-    /**
-     * Sets the request against which the menu should be matched.
-     *
-     * This Request is ignored in case a RequestStack is passed in the constructor.
-     *
-     * @deprecated since version 2.3. Pass a RequestStack to the constructor instead.
-     *
-     * @param Request $request
-     */
-    public function setRequest(Request $request)
+    public function matchItem(ItemInterface $item): ?bool
     {
-        @trigger_error(sprintf('The %s() method is deprecated since version 2.3 and will be removed in 3.0. Pass a RequestStack in the constructor instead.', __METHOD__), E_USER_DEPRECATED);
-
-        $this->request = $request;
-    }
-
-    public function matchItem(ItemInterface $item)
-    {
-        if (null !== $this->requestStack) {
-            $request = $this->requestStack->getMasterRequest();
-        } else {
-            $request = $this->request;
-        }
+        $request = $this->requestStack->getMasterRequest();
 
         if (null === $request) {
             return null;
@@ -89,7 +58,7 @@ class RouteVoter implements VoterInterface
         return null;
     }
 
-    private function isMatchingRoute(Request $request, array $testedRoute)
+    private function isMatchingRoute(Request $request, array $testedRoute): bool
     {
         $route = $request->attributes->get('_route');
 

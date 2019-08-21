@@ -7,14 +7,14 @@ use Knp\Menu\Matcher\MatcherInterface;
 
 class ListRendererTest extends AbstractRendererTest
 {
-    protected function createRenderer(MatcherInterface $matcher)
+    protected function createRenderer(MatcherInterface $matcher): ListRenderer
     {
         $renderer = new ListRenderer($matcher, ['compressed' => true]);
 
         return $renderer;
     }
 
-    public function testPrettyRendering()
+    public function testPrettyRendering(): void
     {
         $rendered = <<<HTML
 <ul class="root">

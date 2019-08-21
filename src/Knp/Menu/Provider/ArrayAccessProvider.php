@@ -2,6 +2,8 @@
 
 namespace Knp\Menu\Provider;
 
+use Knp\Menu\ItemInterface;
+
 /**
  * A menu provider getting the menus from a class implementing ArrayAccess.
  *
@@ -24,7 +26,7 @@ class ArrayAccessProvider implements MenuProviderInterface
         $this->menuIds = $menuIds;
     }
 
-    public function get($name, array $options = [])
+    public function get(string $name, array $options = []): ItemInterface
     {
         if (!isset($this->menuIds[$name])) {
             throw new \InvalidArgumentException(sprintf('The menu "%s" is not defined.', $name));
@@ -39,7 +41,7 @@ class ArrayAccessProvider implements MenuProviderInterface
         return $menu;
     }
 
-    public function has($name, array $options = [])
+    public function has($name, array $options = []): bool
     {
         return isset($this->menuIds[$name]);
     }

@@ -1,3 +1,15 @@
+## 3.0 (to be released)
+
+* Raised PHP requirements
+* [BC break] MenuFactory and MenuItem are not accepting a `null` name anymore
+* [BC break] Enforced strong types on all interfaces and classes
+* [BC break] Removed deprecated features
+
+## 2.4 (2019-07-29)
+
+* Fixed Twig deprecations
+* Switched to namespaced Twig
+* Fixed sprtinf use
 
 ## 2.3 (2017-11-18)
 

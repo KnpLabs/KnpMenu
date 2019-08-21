@@ -7,7 +7,7 @@ use Knp\Menu\Tests\MenuTestCase;
 
 class IteratorTest extends MenuTestCase
 {
-    public function testIterator()
+    public function testIterator(): void
     {
         $count = 0;
         foreach ($this->pt1 as $key => $value) {
@@ -17,7 +17,7 @@ class IteratorTest extends MenuTestCase
         }
     }
 
-    public function testRecursiveIterator()
+    public function testRecursiveIterator(): void
     {
         // Adding an item which does not provide a RecursiveIterator to be sure it works properly.
         $child = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
@@ -37,7 +37,7 @@ class IteratorTest extends MenuTestCase
         $this->assertEquals(['Parent 1', 'Child 1', 'Child 2', 'Child 3', 'Parent 2', 'Child 4', 'Grandchild 1', 'Foo'], $names);
     }
 
-    public function testRecursiveIteratorLeavesOnly()
+    public function testRecursiveIteratorLeavesOnly(): void
     {
         $names = [];
         foreach (new \RecursiveIteratorIterator(new RecursiveItemIterator($this->menu), \RecursiveIteratorIterator::LEAVES_ONLY) as $value) {
@@ -47,7 +47,7 @@ class IteratorTest extends MenuTestCase
         $this->assertEquals(['Child 1', 'Child 2', 'Child 3', 'Grandchild 1'], $names);
     }
 
-    public function testFullTreeIterator()
+    public function testFullTreeIterator(): void
     {
         $fullTreeIterator = new \RecursiveIteratorIterator(
             new RecursiveItemIterator(new \ArrayIterator([$this->menu])), // recursive iterator containing the root item

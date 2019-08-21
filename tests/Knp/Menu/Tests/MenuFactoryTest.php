@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class MenuFactoryTest extends TestCase
 {
-    public function testExtensions()
+    public function testExtensions(): void
     {
         $factory = new MenuFactory();
 
@@ -37,7 +37,7 @@ class MenuFactoryTest extends TestCase
         $this->assertEquals('foobar', $item->getUri());
     }
 
-    public function testCreateItem()
+    public function testCreateItem(): void
     {
         $factory = new MenuFactory();
 

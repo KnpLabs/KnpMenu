@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class ArrayAccessProviderTest extends TestCase
 {
-    public function testHas()
+    public function testHas(): void
     {
         $provider = new ArrayAccessProvider(new \ArrayObject(), ['first' => 'first', 'second' => 'dummy']);
         $this->assertTrue($provider->has('first'));
@@ -15,7 +15,7 @@ class ArrayAccessProviderTest extends TestCase
         $this->assertFalse($provider->has('third'));
     }
 
-    public function testGetExistentMenu()
+    public function testGetExistentMenu(): void
     {
         $registry = new \ArrayObject();
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
@@ -24,7 +24,7 @@ class ArrayAccessProviderTest extends TestCase
         $this->assertSame($menu, $provider->get('default'));
     }
 
-    public function testGetMenuAsClosure()
+    public function testGetMenuAsClosure(): void
     {
         $registry = new \ArrayObject();
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
@@ -42,7 +42,7 @@ class ArrayAccessProviderTest extends TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
-    public function testGetNonExistentMenu()
+    public function testGetNonExistentMenu(): void
     {
         $provider = new ArrayAccessProvider(new \ArrayObject());
         $provider->get('non-existent');

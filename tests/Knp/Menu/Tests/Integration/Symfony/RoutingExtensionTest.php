@@ -8,14 +8,14 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RoutingExtensionTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!interface_exists('Symfony\Component\Routing\Generator\UrlGeneratorInterface')) {
             $this->markTestSkipped('The Symfony Routing component is not available');
         }
     }
 
-    public function testCreateItemWithRoute()
+    public function testCreateItemWithRoute(): void
     {
         $generator = $this->getMockBuilder('Symfony\Component\Routing\Generator\UrlGeneratorInterface')->getMock();
         $generator->expects($this->once())
@@ -32,7 +32,7 @@ class RoutingExtensionTest extends TestCase
         $this->assertEquals('foo', $processedOptions['label']);
     }
 
-    public function testCreateItemWithRouteAndParameters()
+    public function testCreateItemWithRouteAndParameters(): void
     {
         $generator = $this->getMockBuilder('Symfony\Component\Routing\Generator\UrlGeneratorInterface')->getMock();
         $generator->expects($this->once())
@@ -48,7 +48,7 @@ class RoutingExtensionTest extends TestCase
         $this->assertEquals('/foobar', $processedOptions['uri']);
     }
 
-    public function testCreateItemWithAbsoluteRoute()
+    public function testCreateItemWithAbsoluteRoute(): void
     {
         $generator = $this->getMockBuilder('Symfony\Component\Routing\Generator\UrlGeneratorInterface')->getMock();
         $generator->expects($this->once())
@@ -64,7 +64,7 @@ class RoutingExtensionTest extends TestCase
         $this->assertEquals('http://php.net', $processedOptions['uri']);
     }
 
-    public function testCreateItemAppendsRouteUnderExtras()
+    public function testCreateItemAppendsRouteUnderExtras(): void
     {
         $generator = $this->getMockBuilder('Symfony\Component\Routing\Generator\UrlGeneratorInterface')->getMock();
 

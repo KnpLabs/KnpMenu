@@ -2,7 +2,10 @@
 
 namespace Knp\Menu\Tests\Twig;
 
+use Knp\Menu\Matcher\MatcherInterface;
+use Knp\Menu\Twig\Helper;
 use Knp\Menu\Twig\MenuExtension;
+use Knp\Menu\Util\MenuManipulator;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
@@ -10,14 +13,14 @@ use Twig\Template;
 
 class MenuExtensionTest extends TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!class_exists(Environment::class)) {
             $this->markTestSkipped('Twig is not available');
         }
     }
 
-    public function testRenderMenu()
+    public function testRenderMenu(): void
     {
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $helper = $this->getHelperMock(['render']);
@@ -30,7 +33,7 @@ class MenuExtensionTest extends TestCase
         $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(menu) }}', $helper)->render(['menu' => $menu]));
     }
 
-    public function testRenderMenuWithOptions()
+    public function testRenderMenuWithOptions(): void
     {
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $helper = $this->getHelperMock(['render']);
@@ -43,7 +46,7 @@ class MenuExtensionTest extends TestCase
         $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(menu, {"firstClass": "test"}) }}', $helper)->render(['menu' => $menu]));
     }
 
-    public function testRenderMenuWithRenderer()
+    public function testRenderMenuWithRenderer(): void
     {
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $helper = $this->getHelperMock(['render']);
@@ -56,7 +59,7 @@ class MenuExtensionTest extends TestCase
         $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(menu, {}, "custom") }}', $helper)->render(['menu' => $menu]));
     }
 
-    public function testRenderMenuByName()
+    public function testRenderMenuByName(): void
     {
         $helper = $this->getHelperMock(['render']);
         $helper->expects($this->once())
@@ -68,7 +71,7 @@ class MenuExtensionTest extends TestCase
         $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(menu) }}', $helper)->render(['menu' => 'default']));
     }
 
-    public function testRetrieveMenuByName()
+    public function testRetrieveMenuByName(): void
     {
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $helper = $this->getHelperMock(['get', 'render']);
@@ -86,7 +89,7 @@ class MenuExtensionTest extends TestCase
         $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(knp_menu_get("default")) }}', $helper)->render([]));
     }
 
-    public function testGetBreadcrumbsArray()
+    public function testGetBreadcrumbsArray(): void
     {
         $helper = $this->getHelperMock(['getBreadcrumbsArray']);
         $helper->expects($this->any())
@@ -98,7 +101,7 @@ class MenuExtensionTest extends TestCase
         $this->assertEquals('A, B', $this->getTemplate('{{ knp_menu_get_breadcrumbs_array("default")|join(", ") }}', $helper)->render([]));
     }
 
-    public function testPathAsString()
+    public function testPathAsString(): void
     {
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $helper = $this->getHelperMock(['get']);
@@ -116,7 +119,7 @@ class MenuExtensionTest extends TestCase
         $this->assertEquals('A &gt; B', $this->getTemplate('{{ knp_menu_get("default")|knp_menu_as_string }}', $helper, null, $manipulator)->render([]));
     }
 
-    public function testIsCurrent()
+    public function testIsCurrent(): void
     {
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $helper = $this->getHelperMock([]);
@@ -130,7 +133,7 @@ class MenuExtensionTest extends TestCase
         $this->assertEquals('current', $this->getTemplate('{{ menu is knp_menu_current ? "current" : "not current" }}', $helper, $matcher)->render(['menu' => $menu]));
     }
 
-    public function testIsAncestor()
+    public function testIsAncestor(): void
     {
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $helper = $this->getHelperMock([]);
@@ -144,7 +147,7 @@ class MenuExtensionTest extends TestCase
         $this->assertEquals('not ancestor', $this->getTemplate('{{ menu is knp_menu_ancestor ? "ancestor" : "not ancestor" }}', $helper, $matcher)->render(['menu' => $menu]));
     }
 
-    public function testGetCurrentItem()
+    public function testGetCurrentItem(): void
     {
         $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $helper = $this->getHelperMock(['get', 'getCurrentItem']);
@@ -186,14 +189,12 @@ class MenuExtensionTest extends TestCase
         return $this->getMockBuilder('Knp\Menu\Matcher\MatcherInterface')->getMock();
     }
 
-    /**
-     * @param string                $template
-     * @param \Knp\Menu\Twig\Helper $helper
-     *
-     * @return Template
-     */
-    private function getTemplate($template, $helper, $matcher = null, $menuManipulator = null)
-    {
+    private function getTemplate(
+        string $template,
+        Helper $helper,
+        ?MatcherInterface $matcher = null,
+        ?MenuManipulator $menuManipulator = null
+    ): Template {
         $loader = new ArrayLoader(['index' => $template]);
         $twig = new Environment($loader, ['debug' => true, 'cache' => false]);
         $twig->addExtension(new MenuExtension($helper, $matcher, $menuManipulator));

@@ -39,7 +39,7 @@ class ListRenderer extends Renderer implements RendererInterface
         parent::__construct($charset);
     }
 
-    public function render(ItemInterface $item, array $options = [])
+    public function render(ItemInterface $item, array $options = []): string
     {
         $options = array_merge($this->defaultOptions, $options);
 
@@ -245,6 +245,6 @@ class ListRenderer extends Renderer implements RendererInterface
                 break;
         }
 
-        return str_repeat(' ', $spacing).$html."\n";
+        return \str_repeat(' ', $spacing).$html."\n";
     }
 }

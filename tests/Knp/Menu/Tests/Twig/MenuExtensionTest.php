@@ -2,8 +2,10 @@
 
 namespace Knp\Menu\Tests\Twig;
 
+use Knp\Menu\Matcher\MatcherInterface;
 use Knp\Menu\Twig\Helper;
 use Knp\Menu\Twig\MenuExtension;
+use Knp\Menu\Util\MenuManipulator;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
@@ -187,14 +189,12 @@ class MenuExtensionTest extends TestCase
         return $this->getMockBuilder('Knp\Menu\Matcher\MatcherInterface')->getMock();
     }
 
-    /**
-     * @param string                $template
-     * @param \Knp\Menu\Twig\Helper $helper
-     *
-     * @return Template
-     */
-    private function getTemplate(string $template, Helper $helper, $matcher = null, $menuManipulator = null)
-    {
+    private function getTemplate(
+        string $template,
+        Helper $helper,
+        ?MatcherInterface $matcher = null,
+        ?MenuManipulator $menuManipulator = null
+    ): Template {
         $loader = new ArrayLoader(['index' => $template]);
         $twig = new Environment($loader, ['debug' => true, 'cache' => false]);
         $twig->addExtension(new MenuExtension($helper, $matcher, $menuManipulator));

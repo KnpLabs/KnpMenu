@@ -1,6 +1,7 @@
 ## 3.0 (to be released)
 
 * Raised PHP requirements
+* [BC break] MenuFactory and MenuItem are not accepting a `null` name anymore
 * [BC break] Enforced strong types on all interfaces and classes
 * [BC break] Removed deprecated features
 

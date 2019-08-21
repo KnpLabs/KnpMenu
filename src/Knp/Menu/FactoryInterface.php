@@ -15,5 +15,5 @@ interface FactoryInterface
      *
      * @return ItemInterface
      */
-    public function createItem($name, array $options = []);
+    public function createItem(string $name, array $options = []): ItemInterface;
 }

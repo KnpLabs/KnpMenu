@@ -22,11 +22,9 @@ matrix:
     include:
         - php: 7.2
           env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' SYMFONY_DEPRECATIONS_HELPER=weak
-        - php: 7.3
+        - php: 7.4snapshot
           env: DEPENDENCIES=dev
     allow_failures:
-        - php: 7.3
-        # 7.4 will fail for deprecations until https://github.com/symfony/symfony/issues/32844 is solved
         - php: 7.4snapshot
         - php: nightly
 

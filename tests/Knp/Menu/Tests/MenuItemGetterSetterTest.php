@@ -24,7 +24,7 @@ class MenuItemGetterSetterTest extends TestCase
     public function testCreateMenuWithTitle()
     {
         $title = 'This is a test item title';
-        $menu = $this->createMenu(null, null, ['title' => $title]);
+        $menu = $this->createMenu('', null, ['title' => $title]);
         $this->assertEquals($title, $menu->getAttribute('title'));
     }
 
@@ -67,7 +67,7 @@ class MenuItemGetterSetterTest extends TestCase
 
     public function testDefaultAttribute()
     {
-        $menu = $this->createMenu(null, null, ['id' => 'test_id']);
+        $menu = $this->createMenu('', null, ['id' => 'test_id']);
         $this->assertEquals('test_id', $menu->getAttribute('id'));
         $this->assertEquals('default_value', $menu->getAttribute('unknown_attribute', 'default_value'));
     }

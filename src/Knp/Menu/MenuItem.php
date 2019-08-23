@@ -99,6 +99,9 @@ class MenuItem implements ItemInterface
      */
     public function __construct($name, FactoryInterface $factory)
     {
+        if (null === $name) {
+            @trigger_error('Passing a null name is deprecated since version 2.5 and will be removed in 3.0.', E_USER_DEPRECATED);
+        }
         $this->name = (string) $name;
         $this->factory = $factory;
     }

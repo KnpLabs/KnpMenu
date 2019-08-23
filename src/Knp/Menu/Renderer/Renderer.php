@@ -2,10 +2,6 @@
 
 namespace Knp\Menu\Renderer;
 
-if (!defined('ENT_SUBSTITUTE')) {
-    define('ENT_SUBSTITUTE', 8);
-}
-
 abstract class Renderer
 {
     protected $charset = 'UTF-8';

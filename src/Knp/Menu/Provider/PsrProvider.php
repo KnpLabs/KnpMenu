@@ -23,7 +23,7 @@ class PsrProvider implements MenuProviderInterface
     public function get(string $name, array $options = []): ItemInterface
     {
         if (!$this->container->has($name)) {
-            throw new \InvalidArgumentException(sprintf('The menu "%s" is not defined.', $name));
+            throw new \InvalidArgumentException(\sprintf('The menu "%s" is not defined.', $name));
         }
 
         return $this->container->get($name);

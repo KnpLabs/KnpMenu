@@ -10,7 +10,7 @@ class MenuManipulator
      * Moves item to specified position. Rearrange siblings accordingly.
      *
      * @param ItemInterface $item
-     * @param integer       $position Position to move child to.
+     * @param int           $position Position to move child to.
      */
     public function moveToPosition(ItemInterface $item, $position): void
     {
@@ -21,20 +21,20 @@ class MenuManipulator
      * Moves child to specified position. Rearrange other children accordingly.
      *
      * @param ItemInterface $item
-     * @param ItemInterface $child    Child to move.
-     * @param integer       $position Position to move child to.
+     * @param ItemInterface $child    Child to move
+     * @param int           $position Position to move child to
      */
     public function moveChildToPosition(ItemInterface $item, ItemInterface $child, $position): void
     {
         $name = $child->getName();
-        $order = array_keys($item->getChildren());
+        $order = \array_keys($item->getChildren());
 
-        $oldPosition = array_search($name, $order);
+        $oldPosition = \array_search($name, $order);
         unset($order[$oldPosition]);
 
-        $order = array_values($order);
+        $order = \array_values($order);
 
-        array_splice($order, $position, 0, $name);
+        \array_splice($order, $position, 0, $name);
         $item->reorderChildren($order);
     }
 
@@ -84,26 +84,26 @@ class MenuManipulator
      */
     public function slice(ItemInterface $item, $offset, $length = null)
     {
-        $names = array_keys($item->getChildren());
+        $names = \array_keys($item->getChildren());
         if ($offset instanceof ItemInterface) {
             $offset = $offset->getName();
         }
-        if (!is_numeric($offset)) {
-            $offset = array_search($offset, $names);
+        if (!\is_numeric($offset)) {
+            $offset = \array_search($offset, $names);
         }
 
         if (null !== $length) {
             if ($length instanceof ItemInterface) {
                 $length = $length->getName();
             }
-            if (!is_numeric($length)) {
-                $index = array_search($length, $names);
+            if (!\is_numeric($length)) {
+                $index = \array_search($length, $names);
                 $length = ($index < $offset) ? 0 : $index - $offset;
             }
         }
 
         $slicedItem = $item->copy();
-        $children = array_slice($slicedItem->getChildren(), $offset, $length);
+        $children = \array_slice($slicedItem->getChildren(), $offset, $length);
         $slicedItem->setChildren($children);
 
         return $slicedItem;
@@ -137,7 +137,7 @@ class MenuManipulator
      */
     public function callRecursively(ItemInterface $item, $method, $arguments = []): void
     {
-        call_user_func_array([$item, $method], $arguments);
+        \call_user_func_array([$item, $method], $arguments);
 
         foreach ($item->getChildren() as $child) {
             $this->callRecursively($child, $method, $arguments);
@@ -163,12 +163,12 @@ class MenuManipulator
             $children[] = $obj->getLabel();
         } while ($obj = $obj->getParent());
 
-        return implode($separator, array_reverse($children));
+        return \implode($separator, \array_reverse($children));
     }
 
     /**
      * @param ItemInterface $item
-     * @param integer|null  $depth the depth until which children should be exported (null means unlimited)
+     * @param int|null      $depth the depth until which children should be exported (null means unlimited)
      *
      * @return array
      */
@@ -236,7 +236,7 @@ class MenuManipulator
             return $breadcrumbs;
         }
 
-        if (!is_array($subItem) && !$subItem instanceof \Traversable) {
+        if (!\is_array($subItem) && !$subItem instanceof \Traversable) {
             $subItem = [$subItem];
         }
 
@@ -246,11 +246,11 @@ class MenuManipulator
                     $value = $this->getBreadcrumbsItem($value);
                     break;
 
-                case is_array($value):
+                case \is_array($value):
                     // Assume we already have the appropriate array format for the element
                     break;
 
-                case is_integer($key) && is_string($value):
+                case \is_int($key) && \is_string($value):
                     $value = [
                         'label' => (string) $value,
                         'uri' => null,
@@ -258,7 +258,7 @@ class MenuManipulator
                     ];
                     break;
 
-                case is_scalar($value):
+                case \is_scalar($value):
                     $value = [
                         'label' => (string) $key,
                         'uri' => (string) $value,
@@ -275,7 +275,7 @@ class MenuManipulator
                     break;
 
                 default:
-                    throw new \InvalidArgumentException(sprintf('Invalid value supplied for the key "%s". It should be an item, an array or a scalar', $key));
+                    throw new \InvalidArgumentException(\sprintf('Invalid value supplied for the key "%s". It should be an item, an array or a scalar', $key));
             }
 
             $breadcrumbs[] = $value;
@@ -292,7 +292,7 @@ class MenuManipulator
             $breadcrumb[] = $this->getBreadcrumbsItem($item);
         } while ($item = $item->getParent());
 
-        return array_reverse($breadcrumb);
+        return \array_reverse($breadcrumb);
     }
 
     private function getBreadcrumbsItem(ItemInterface $item)

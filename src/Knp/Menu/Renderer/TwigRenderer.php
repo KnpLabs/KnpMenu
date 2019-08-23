@@ -25,7 +25,7 @@ class TwigRenderer implements RendererInterface
     {
         $this->environment = $environment;
         $this->matcher = $matcher;
-        $this->defaultOptions = array_merge([
+        $this->defaultOptions = \array_merge([
             'depth' => null,
             'matchingDepth' => null,
             'currentAsLink' => true,
@@ -44,7 +44,7 @@ class TwigRenderer implements RendererInterface
 
     public function render(ItemInterface $item, array $options = []): string
     {
-        $options = array_merge($this->defaultOptions, $options);
+        $options = \array_merge($this->defaultOptions, $options);
 
         $html = $this->environment->render($options['template'], ['item' => $item, 'options' => $options, 'matcher' => $this->matcher]);
 

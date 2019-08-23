@@ -40,7 +40,7 @@ class Matcher implements MatcherInterface
             }
         }
 
-        $current = (boolean) $current;
+        $current = (bool) $current;
         $this->cache[$item] = $current;
 
         return $current;

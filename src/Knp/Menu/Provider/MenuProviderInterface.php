@@ -13,6 +13,7 @@ interface MenuProviderInterface
      * @param array  $options
      *
      * @return ItemInterface
+     *
      * @throws \InvalidArgumentException if the menu does not exists
      */
     public function get(string $name, array $options = []): ItemInterface;
@@ -23,7 +24,7 @@ interface MenuProviderInterface
      * @param string $name
      * @param array  $options
      *
-     * @return boolean
+     * @return bool
      */
     public function has(string $name, array $options = []): bool;
 }

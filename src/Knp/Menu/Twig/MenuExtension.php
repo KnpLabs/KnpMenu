@@ -16,9 +16,6 @@ class MenuExtension extends AbstractExtension
     private $matcher;
     private $menuManipulator;
 
-    /**
-     * @param Helper $helper
-     */
     public function __construct(Helper $helper, MatcherInterface $matcher = null, MenuManipulator $menuManipulator = null)
     {
         $this->helper = $helper;
@@ -26,7 +23,7 @@ class MenuExtension extends AbstractExtension
         $this->menuManipulator = $menuManipulator;
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
              new TwigFunction('knp_menu_get', [$this, 'get']),
@@ -36,21 +33,21 @@ class MenuExtension extends AbstractExtension
         ];
     }
 
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('knp_menu_as_string', [$this, 'pathAsString']),
         ];
     }
 
-    public function getTests()
+    public function getTests(): array
     {
         return [
             new TwigTest('knp_menu_current', [$this, 'isCurrent']),
             new TwigTest('knp_menu_ancestor', [$this, 'isAncestor']),
         ];
     }
-    
+
     /**
      * Retrieves an item following a path in the tree.
      *
@@ -60,7 +57,7 @@ class MenuExtension extends AbstractExtension
      *
      * @return ItemInterface
      */
-    public function get($menu, array $path = [], array $options = [])
+    public function get($menu, array $path = [], array $options = []): ItemInterface
     {
         return $this->helper->get($menu, $path, $options);
     }
@@ -74,7 +71,7 @@ class MenuExtension extends AbstractExtension
      *
      * @return string
      */
-    public function render($menu, array $options = [], $renderer = null)
+    public function render($menu, array $options = [], $renderer = null): string
     {
         return $this->helper->render($menu, $options, $renderer);
     }
@@ -82,12 +79,12 @@ class MenuExtension extends AbstractExtension
     /**
      * Returns an array ready to be used for breadcrumbs.
      *
-     * @param ItemInterface|array|string $item
+     * @param ItemInterface|array|string $menu
      * @param string|array|null          $subItem
      *
      * @return array
      */
-    public function getBreadcrumbsArray($menu, $subItem = null)
+    public function getBreadcrumbsArray($menu, $subItem = null): array
     {
         return $this->helper->getBreadcrumbsArray($menu, $subItem);
     }
@@ -99,7 +96,7 @@ class MenuExtension extends AbstractExtension
      *
      * @return ItemInterface
      */
-    public function getCurrentItem($menu)
+    public function getCurrentItem($menu): ItemInterface
     {
         $rootItem = $this->get($menu);
 
@@ -117,12 +114,12 @@ class MenuExtension extends AbstractExtension
      *
      * e.g. Top Level > Second Level > This menu
      *
-     * @param ItemInterface $item
+     * @param ItemInterface $menu
      * @param string        $separator
      *
      * @return string
      */
-    public function pathAsString(ItemInterface $menu, $separator = ' > ')
+    public function pathAsString(ItemInterface $menu, $separator = ' > '): string
     {
         if (null === $this->menuManipulator) {
             throw new \BadMethodCallException('The menu manipulator must be set to get the breadcrumbs array');
@@ -136,9 +133,9 @@ class MenuExtension extends AbstractExtension
      *
      * @param ItemInterface $item
      *
-     * @return boolean
+     * @return bool
      */
-    public function isCurrent(ItemInterface $item)
+    public function isCurrent(ItemInterface $item): bool
     {
         if (null === $this->matcher) {
             throw new \BadMethodCallException('The matcher must be set to get the breadcrumbs array');
@@ -151,24 +148,16 @@ class MenuExtension extends AbstractExtension
      * Checks whether an item is the ancestor of a current item.
      *
      * @param ItemInterface $item
-     * @param integer       $depth The max depth to look for the item
+     * @param int|null      $depth The max depth to look for the item
      *
-     * @return boolean
+     * @return bool
      */
-    public function isAncestor(ItemInterface $item, $depth = null)
+    public function isAncestor(ItemInterface $item, ?int $depth = null): bool
     {
         if (null === $this->matcher) {
             throw new \BadMethodCallException('The matcher must be set to get the breadcrumbs array');
         }
 
         return $this->matcher->isAncestor($item, $depth);
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'knp_menu';
     }
 }

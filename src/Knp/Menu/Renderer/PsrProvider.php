@@ -34,7 +34,7 @@ class PsrProvider implements RendererProviderInterface
         }
 
         if (!$this->container->has($name)) {
-            throw new \InvalidArgumentException(sprintf('The renderer "%s" is not defined.', $name));
+            throw new \InvalidArgumentException(\sprintf('The renderer "%s" is not defined.', $name));
         }
 
         return $this->container->get($name);

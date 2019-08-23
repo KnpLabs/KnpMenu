@@ -12,6 +12,7 @@ interface RendererProviderInterface
      * @param string|null $name
      *
      * @return RendererInterface
+     *
      * @throws \InvalidArgumentException if the renderer does not exists
      */
     public function get(?string $name = null): RendererInterface;
@@ -21,7 +22,7 @@ interface RendererProviderInterface
      *
      * @param string $name
      *
-     * @return boolean
+     * @return bool
      */
     public function has(string $name): bool;
 }

@@ -14,7 +14,7 @@ interface MatcherInterface
      *
      * @param ItemInterface $item
      *
-     * @return boolean
+     * @return bool
      */
     public function isCurrent(ItemInterface $item): bool;
 

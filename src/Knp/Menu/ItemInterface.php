@@ -176,6 +176,7 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * @param array                $options If creating a new item, the options passed to the factory for the item
      *
      * @return ItemInterface
+     *
      * @throws \InvalidArgumentException if the item is already in a tree
      */
     public function addChild(self $child, array $options = []): self;

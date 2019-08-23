@@ -42,11 +42,11 @@ class RouteVoter implements VoterInterface
         $routes = (array) $item->getExtra('routes', []);
 
         foreach ($routes as $testedRoute) {
-            if (is_string($testedRoute)) {
+            if (\is_string($testedRoute)) {
                 $testedRoute = ['route' => $testedRoute];
             }
 
-            if (!is_array($testedRoute)) {
+            if (!\is_array($testedRoute)) {
                 throw new \InvalidArgumentException('Routes extra items must be strings or arrays.');
             }
 
@@ -67,7 +67,7 @@ class RouteVoter implements VoterInterface
                 return false;
             }
         } elseif (!empty($testedRoute['pattern'])) {
-            if (!preg_match($testedRoute['pattern'], $route)) {
+            if (!\preg_match($testedRoute['pattern'], $route)) {
                 return false;
             }
         } else {

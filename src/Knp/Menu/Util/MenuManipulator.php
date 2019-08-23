@@ -137,7 +137,7 @@ class MenuManipulator
      */
     public function callRecursively(ItemInterface $item, $method, $arguments = []): void
     {
-        \call_user_func_array([$item, $method], $arguments);
+        $item->$method(...$arguments);
 
         foreach ($item->getChildren() as $child) {
             $this->callRecursively($child, $method, $arguments);

@@ -36,7 +36,7 @@ class LazyProvider implements MenuProviderInterface
             throw new \LogicException(\sprintf('Invalid menu builder for "%s". A callable or a factory for an object callable are expected.', $name));
         }
 
-        return \call_user_func($builder, $options);
+        return $builder($options);
     }
 
     public function has($name, array $options = []): bool

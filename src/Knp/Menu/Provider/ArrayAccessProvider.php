@@ -29,13 +29,13 @@ class ArrayAccessProvider implements MenuProviderInterface
     public function get(string $name, array $options = []): ItemInterface
     {
         if (!isset($this->menuIds[$name])) {
-            throw new \InvalidArgumentException(sprintf('The menu "%s" is not defined.', $name));
+            throw new \InvalidArgumentException(\sprintf('The menu "%s" is not defined.', $name));
         }
 
         $menu = $this->registry[$this->menuIds[$name]];
 
-        if (is_callable($menu)) {
-            $menu = call_user_func($menu, $options, $this->registry);
+        if (\is_callable($menu)) {
+            $menu = \call_user_func($menu, $options, $this->registry);
         }
 
         return $menu;

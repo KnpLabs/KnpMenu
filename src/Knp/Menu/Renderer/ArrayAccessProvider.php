@@ -30,7 +30,7 @@ class ArrayAccessProvider implements RendererProviderInterface
         }
 
         if (!isset($this->rendererIds[$name])) {
-            throw new \InvalidArgumentException(sprintf('The renderer "%s" is not defined.', $name));
+            throw new \InvalidArgumentException(\sprintf('The renderer "%s" is not defined.', $name));
         }
 
         return $this->registry[$this->rendererIds[$name]];

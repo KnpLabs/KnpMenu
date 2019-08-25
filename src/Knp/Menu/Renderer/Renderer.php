@@ -27,10 +27,10 @@ abstract class Renderer
     protected function renderHtmlAttribute(string $name, $value): string
     {
         if (true === $value) {
-            return sprintf('%s="%s"', $name, $this->escape($name));
+            return \sprintf('%s="%s"', $name, $this->escape($name));
         }
 
-        return sprintf('%s="%s"', $name, $this->escape($value));
+        return \sprintf('%s="%s"', $name, $this->escape($value));
     }
 
     /**
@@ -42,7 +42,7 @@ abstract class Renderer
      */
     protected function renderHtmlAttributes(array $attributes): string
     {
-        return implode('', array_map([$this, 'htmlAttributesCallback'], array_keys($attributes), array_values($attributes)));
+        return \implode('', \array_map([$this, 'htmlAttributesCallback'], \array_keys($attributes), \array_values($attributes)));
     }
 
     /**
@@ -73,7 +73,7 @@ abstract class Renderer
      */
     protected function escape(string $value): string
     {
-        return $this->fixDoubleEscape(htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, $this->charset));
+        return $this->fixDoubleEscape(\htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, $this->charset));
     }
 
     /**
@@ -85,7 +85,7 @@ abstract class Renderer
      */
     protected function fixDoubleEscape(string $escaped): string
     {
-        return preg_replace('/&amp;([a-z]+|(#\d+)|(#x[\da-f]+));/i', '&$1;', $escaped);
+        return \preg_replace('/&amp;([a-z]+|(#\d+)|(#x[\da-f]+));/i', '&$1;', $escaped);
     }
 
     /**

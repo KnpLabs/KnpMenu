@@ -3,6 +3,7 @@
 namespace Knp\Menu\Loader;
 
 use Knp\Menu\FactoryInterface;
+use Knp\Menu\ItemInterface;
 use Knp\Menu\NodeInterface;
 
 class NodeLoader implements LoaderInterface
@@ -14,10 +15,10 @@ class NodeLoader implements LoaderInterface
         $this->factory = $factory;
     }
 
-    public function load($data)
+    public function load($data): ItemInterface
     {
         if (!$data instanceof NodeInterface) {
-            throw new \InvalidArgumentException(sprintf('Unsupported data. Expected Knp\Menu\NodeInterface but got %s', is_object($data) ? get_class($data) : gettype($data)));
+            throw new \InvalidArgumentException(\sprintf('Unsupported data. Expected Knp\Menu\NodeInterface but got %s', \is_object($data) ? \get_class($data) : \gettype($data)));
         }
 
         $item = $this->factory->createItem($data->getName(), $data->getOptions());
@@ -29,7 +30,7 @@ class NodeLoader implements LoaderInterface
         return $item;
     }
 
-    public function supports($data)
+    public function supports($data): bool
     {
         return $data instanceof NodeInterface;
     }

@@ -5,7 +5,7 @@ namespace Knp\Menu\Tests\Provider;
 use Knp\Menu\Provider\ArrayAccessProvider;
 use PHPUnit\Framework\TestCase;
 
-class ArrayAccessProviderTest extends TestCase
+final class ArrayAccessProviderTest extends TestCase
 {
     public function testHas(): void
     {
@@ -39,11 +39,10 @@ class ArrayAccessProviderTest extends TestCase
         $this->assertEquals(['foo' => 'bar'], $registry['options']);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testGetNonExistentMenu(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $provider = new ArrayAccessProvider(new \ArrayObject());
         $provider->get('non-existent');
     }

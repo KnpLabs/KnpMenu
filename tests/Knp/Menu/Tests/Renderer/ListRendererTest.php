@@ -2,10 +2,10 @@
 
 namespace Knp\Menu\Tests\Renderer;
 
-use Knp\Menu\Renderer\ListRenderer;
 use Knp\Menu\Matcher\MatcherInterface;
+use Knp\Menu\Renderer\ListRenderer;
 
-class ListRendererTest extends AbstractRendererTest
+final class ListRendererTest extends AbstractRendererTest
 {
     protected function createRenderer(MatcherInterface $matcher): ListRenderer
     {

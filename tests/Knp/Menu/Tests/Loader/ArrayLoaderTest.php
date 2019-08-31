@@ -6,7 +6,7 @@ use Knp\Menu\Loader\ArrayLoader;
 use Knp\Menu\MenuFactory;
 use PHPUnit\Framework\TestCase;
 
-class ArrayLoaderTest extends TestCase
+final class ArrayLoaderTest extends TestCase
 {
     public function testLoadWithoutChildren(): void
     {
@@ -36,8 +36,8 @@ class ArrayLoaderTest extends TestCase
                     'label' => 'Jack',
                 ],
                 [
-                    'name' => 'john'
-                ]
+                    'name' => 'john',
+                ],
             ],
         ];
 
@@ -59,8 +59,8 @@ class ArrayLoaderTest extends TestCase
                     'label' => 'Jack',
                 ],
                 'john' => [
-                    'label' => 'John'
-                ]
+                    'label' => 'John',
+                ],
             ],
         ];
 
@@ -74,11 +74,10 @@ class ArrayLoaderTest extends TestCase
         $this->assertTrue(isset($item['jack']));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testLoadInvalidData()
+    public function testLoadInvalidData(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $loader = new ArrayLoader(new MenuFactory());
 
         $loader->load(new \stdClass());

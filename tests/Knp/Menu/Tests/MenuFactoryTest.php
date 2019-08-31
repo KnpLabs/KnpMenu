@@ -5,7 +5,7 @@ namespace Knp\Menu\Tests;
 use Knp\Menu\MenuFactory;
 use PHPUnit\Framework\TestCase;
 
-class MenuFactoryTest extends TestCase
+final class MenuFactoryTest extends TestCase
 {
     public function testExtensions(): void
     {
@@ -15,7 +15,7 @@ class MenuFactoryTest extends TestCase
         $extension1->expects($this->once())
             ->method('buildOptions')
             ->with(['foo' => 'bar'])
-            ->will($this->returnValue(['uri' => 'foobar']));
+            ->willReturn(['uri' => 'foobar']);
         $extension1->expects($this->once())
             ->method('buildItem')
             ->with($this->isInstanceOf('Knp\Menu\ItemInterface'), $this->contains('foobar'));
@@ -26,7 +26,7 @@ class MenuFactoryTest extends TestCase
         $extension2->expects($this->once())
             ->method('buildOptions')
             ->with(['foo' => 'baz'])
-            ->will($this->returnValue(['foo' => 'bar']));
+            ->willReturn(['foo' => 'bar']);
         $extension1->expects($this->once())
             ->method('buildItem')
             ->with($this->isInstanceOf('Knp\Menu\ItemInterface'), $this->contains('foobar'));

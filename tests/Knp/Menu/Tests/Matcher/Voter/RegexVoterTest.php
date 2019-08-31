@@ -5,7 +5,7 @@ namespace Knp\Menu\Tests\Matcher\Voter;
 use Knp\Menu\Matcher\Voter\RegexVoter;
 use PHPUnit\Framework\TestCase;
 
-class RegexVoterTest extends TestCase
+final class RegexVoterTest extends TestCase
 {
     /**
      * @param string $exp
@@ -19,7 +19,7 @@ class RegexVoterTest extends TestCase
         $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->any())
             ->method('getUri')
-            ->will($this->returnValue($itemUri));
+            ->willReturn($itemUri);
 
         $voter = new RegexVoter($exp);
 

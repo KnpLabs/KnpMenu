@@ -6,11 +6,11 @@ use Knp\Menu\Integration\Symfony\RoutingExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-class RoutingExtensionTest extends TestCase
+final class RoutingExtensionTest extends TestCase
 {
     protected function setUp(): void
     {
-        if (!interface_exists('Symfony\Component\Routing\Generator\UrlGeneratorInterface')) {
+        if (!\interface_exists('Symfony\Component\Routing\Generator\UrlGeneratorInterface')) {
             $this->markTestSkipped('The Symfony Routing component is not available');
         }
     }
@@ -21,7 +21,7 @@ class RoutingExtensionTest extends TestCase
         $generator->expects($this->once())
             ->method('generate')
             ->with('homepage', [], UrlGeneratorInterface::ABSOLUTE_PATH)
-            ->will($this->returnValue('/foobar'))
+            ->willReturn('/foobar')
         ;
 
         $extension = new RoutingExtension($generator);
@@ -38,7 +38,7 @@ class RoutingExtensionTest extends TestCase
         $generator->expects($this->once())
             ->method('generate')
             ->with('homepage', ['id' => 12], UrlGeneratorInterface::ABSOLUTE_PATH)
-            ->will($this->returnValue('/foobar'))
+            ->willReturn('/foobar')
         ;
 
         $extension = new RoutingExtension($generator);
@@ -54,7 +54,7 @@ class RoutingExtensionTest extends TestCase
         $generator->expects($this->once())
             ->method('generate')
             ->with('homepage', [], UrlGeneratorInterface::ABSOLUTE_URL)
-            ->will($this->returnValue('http://php.net'))
+            ->willReturn('http://php.net')
         ;
 
         $extension = new RoutingExtension($generator);
@@ -70,13 +70,13 @@ class RoutingExtensionTest extends TestCase
 
         $extension = new RoutingExtension($generator);
 
-        $processedOptions = $extension->buildOptions( ['route' => 'homepage']);
+        $processedOptions = $extension->buildOptions(['route' => 'homepage']);
         $this->assertEquals([['route' => 'homepage', 'parameters' => []]], $processedOptions['extras']['routes']);
 
-        $processedOptions = $extension->buildOptions( ['route' => 'homepage', 'routeParameters' => ['bar' => 'baz']]);
+        $processedOptions = $extension->buildOptions(['route' => 'homepage', 'routeParameters' => ['bar' => 'baz']]);
         $this->assertEquals([['route' => 'homepage', 'parameters' => ['bar' => 'baz']]], $processedOptions['extras']['routes']);
 
-        $processedOptions = $extension->buildOptions( ['route' => 'homepage', 'extras' => ['routes' => ['other_page']]]);
+        $processedOptions = $extension->buildOptions(['route' => 'homepage', 'extras' => ['routes' => ['other_page']]]);
         $this->assertContains(['route' => 'homepage', 'parameters' => []], $processedOptions['extras']['routes']);
         $this->assertContains('other_page', $processedOptions['extras']['routes']);
     }

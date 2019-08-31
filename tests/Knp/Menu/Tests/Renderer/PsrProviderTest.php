@@ -5,7 +5,7 @@ namespace Knp\Menu\Tests\Renderer;
 use Knp\Menu\Renderer\PsrProvider;
 use PHPUnit\Framework\TestCase;
 
-class PsrProviderTest extends TestCase
+final class PsrProviderTest extends TestCase
 {
     public function testHas(): void
     {
@@ -44,11 +44,10 @@ class PsrProviderTest extends TestCase
         $this->assertSame($renderer->reveal(), $provider->get());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testGetNonExistentRenderer(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $container = $this->prophesize('Psr\Container\ContainerInterface');
         $container->has('non-existent')->willReturn(false);
 

@@ -4,9 +4,11 @@ namespace Knp\Menu\Tests;
 
 use Knp\Menu\MenuItem;
 
-class TestMenuItem extends MenuItem {}
+final class TestMenuItem extends MenuItem
+{
+}
 
-class MenuItemTreeTest extends MenuTestCase
+final class MenuItemTreeTest extends MenuTestCase
 {
     public function testSampleTreeIntegrity(): void
     {
@@ -49,7 +51,7 @@ class MenuItemTreeTest extends MenuTestCase
 
     public function testMoveSampleMenuToNewRoot(): void
     {
-        $newRoot = new TestMenuItem("newRoot", $this->getMockBuilder('Knp\Menu\FactoryInterface')->getMock());
+        $newRoot = new TestMenuItem('newRoot', $this->getMockBuilder('Knp\Menu\FactoryInterface')->getMock());
         $newRoot->addChild($this->menu);
 
         $this->assertEquals(1, $this->menu->getLevel());
@@ -121,7 +123,7 @@ class MenuItemTreeTest extends MenuTestCase
         $this->assertNull($this->menu['Fake']);
 
         $this->menu['New Child'] = 'New Label';
-        $this->assertEquals('Knp\Menu\MenuItem', get_class($this->menu['New Child']));
+        $this->assertEquals('Knp\Menu\MenuItem', \get_class($this->menu['New Child']));
         $this->assertEquals('New Child', $this->menu['New Child']->getName());
         $this->assertEquals('New Label', $this->menu['New Child']->getLabel());
 
@@ -172,11 +174,10 @@ class MenuItemTreeTest extends MenuTestCase
         $menu->addChild(new MenuItem('Child 3', $factory));
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testAddChildFailsIfInAnotherMenu(): void
     {
+        $this->expectException(\LogicException::class);
+
         $factory = $this->getMockBuilder('Knp\Menu\FactoryInterface')->getMock();
         $menu = new MenuItem('Root li', $factory);
         $child = new MenuItem('Child 3', $factory);
@@ -224,15 +225,14 @@ class MenuItemTreeTest extends MenuTestCase
     {
         $this->pt1->setName('Temp name');
         $this->assertSame($this->pt1, $this->menu->getChild('Temp name'));
-        $this->assertEquals(['Temp name', 'Parent 2'], array_keys($this->menu->getChildren()));
+        $this->assertEquals(['Temp name', 'Parent 2'], \array_keys($this->menu->getChildren()));
         $this->assertNull($this->menu->getChild('Parent 1'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testRenameToExistingSiblingNameThrowAnException(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $this->pt1->setName('Parent 2');
     }
 

@@ -2,11 +2,11 @@
 
 namespace Knp\Menu\Tests;
 
-use Knp\Menu\MenuItem;
 use Knp\Menu\MenuFactory;
+use Knp\Menu\MenuItem;
 use PHPUnit\Framework\TestCase;
 
-class MenuItemReorderTest extends TestCase
+final class MenuItemReorderTest extends TestCase
 {
     public function testReordering(): void
     {
@@ -18,26 +18,24 @@ class MenuItemReorderTest extends TestCase
         $menu->addChild('c4');
 
         $menu->reorderChildren(['c4', 'c3', 'c2', 'c1']);
-        $arr = array_keys($menu->getChildren());
+        $arr = \array_keys($menu->getChildren());
         $this->assertEquals(['c4', 'c3', 'c2', 'c1'], $arr);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testReorderingWithTooManyItemNames(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $factory = new MenuFactory();
         $menu = new MenuItem('root', $factory);
         $menu->addChild('c1');
         $menu->reorderChildren(['c1', 'c3']);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testReorderingWithWrongItemNames(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $factory = new MenuFactory();
         $menu = new MenuItem('root', $factory);
         $menu->addChild('c1');

@@ -2,11 +2,11 @@
 
 namespace Knp\Menu\Tests;
 
-use Knp\Menu\MenuItem;
 use Knp\Menu\MenuFactory;
+use Knp\Menu\MenuItem;
 use PHPUnit\Framework\TestCase;
 
-class MenuItemGetterSetterTest extends TestCase
+final class MenuItemGetterSetterTest extends TestCase
 {
     public function testCreateMenuItemWithEmptyParameter(): void
     {
@@ -143,17 +143,17 @@ class MenuItemGetterSetterTest extends TestCase
     public function testDisplay(): void
     {
         $menu = $this->createMenu();
-        $this->assertEquals(true, $menu->isDisplayed());
+        $this->assertTrue($menu->isDisplayed());
         $menu->setDisplay(false);
-        $this->assertEquals(false, $menu->isDisplayed());
+        $this->assertFalse($menu->isDisplayed());
     }
 
     public function testShowChildren(): void
     {
         $menu = $this->createMenu();
-        $this->assertEquals(true, $menu->getDisplayChildren());
+        $this->assertTrue($menu->getDisplayChildren());
         $menu->setDisplayChildren(false);
-        $this->assertEquals(false, $menu->getDisplayChildren());
+        $this->assertFalse($menu->getDisplayChildren());
     }
 
     public function testParent(): void
@@ -173,11 +173,10 @@ class MenuItemGetterSetterTest extends TestCase
         $this->assertEquals([$child], $menu->getChildren());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
-    public function testSetExistingNameThrowsAnException()
+    public function testSetExistingNameThrowsAnException(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $menu = $this->createMenu();
         $menu->addChild('jack');
         $menu->addChild('joe');
@@ -202,7 +201,7 @@ class MenuItemGetterSetterTest extends TestCase
         $factory = $this->getMockBuilder('Knp\Menu\FactoryInterface')->getMock();
         $factory->expects($this->once())
             ->method('createItem')
-            ->will($this->returnValue($child1));
+            ->willReturn($child1);
 
         $menu = $this->createMenu();
         $menu->setFactory($factory);

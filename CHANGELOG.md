@@ -1,9 +1,8 @@
-## 3.0 (to be released)
+## 3.0 (2019-09-02)
 
 * Raised PHP requirements
-* [BC break] MenuFactory and MenuItem are not accepting a `null` name anymore
 * [BC break] Enforced strong types on all interfaces and classes
-* [BC break] Removed deprecated features
+* [BC break] Removed deprecated features. Spefically, MenuFactory and MenuItem are not accepting a `null` name anymore
 
 ## 2.4 (2019-07-29)
 

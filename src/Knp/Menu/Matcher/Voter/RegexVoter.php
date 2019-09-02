@@ -11,12 +11,12 @@ use Knp\Menu\ItemInterface;
 class RegexVoter implements VoterInterface
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $regexp;
 
     /**
-     * @param string $regexp
+     * @param string|null $regexp
      */
     public function __construct($regexp)
     {
@@ -29,7 +29,7 @@ class RegexVoter implements VoterInterface
             return null;
         }
 
-        if (preg_match($this->regexp, $item->getUri())) {
+        if (\preg_match($this->regexp, $item->getUri())) {
             return true;
         }
 

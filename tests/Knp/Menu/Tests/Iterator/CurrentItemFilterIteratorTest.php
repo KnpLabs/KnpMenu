@@ -7,7 +7,7 @@ use Knp\Menu\Iterator\RecursiveItemIterator;
 use Knp\Menu\Matcher\Matcher;
 use Knp\Menu\Tests\MenuTestCase;
 
-class CurrentItemFilterIteratorTest extends MenuTestCase
+final class CurrentItemFilterIteratorTest extends MenuTestCase
 {
     public function testSimpleFiltering()
     {

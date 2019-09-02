@@ -18,7 +18,7 @@ class CoreExtension implements ExtensionInterface
      */
     public function buildOptions(array $options)
     {
-        return array_merge(
+        return \array_merge(
             [
                 'uri' => null,
                 'label' => null,

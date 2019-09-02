@@ -5,7 +5,7 @@ namespace Knp\Menu\Tests\Provider;
 use Knp\Menu\Provider\PsrProvider;
 use PHPUnit\Framework\TestCase;
 
-class PsrProviderTest extends TestCase
+final class PsrProviderTest extends TestCase
 {
     public function testHas()
     {

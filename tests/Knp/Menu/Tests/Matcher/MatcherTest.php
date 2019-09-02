@@ -5,11 +5,11 @@ namespace Knp\Menu\Tests\Matcher;
 use Knp\Menu\Matcher\Matcher;
 use PHPUnit\Framework\TestCase;
 
-class MatcherTest extends TestCase
+final class MatcherTest extends TestCase
 {
     /**
-     * @param boolean|null $flag
-     * @param boolean      $expected
+     * @param bool|null $flag
+     * @param bool      $expected
      *
      * @dataProvider provideItemFlag
      */
@@ -48,7 +48,7 @@ class MatcherTest extends TestCase
     }
 
     /**
-     * @param boolean $value
+     * @param bool $value
      *
      * @dataProvider provideBoolean
      */
@@ -69,7 +69,7 @@ class MatcherTest extends TestCase
     }
 
     /**
-     * @param boolean $value
+     * @param bool $value
      *
      * @dataProvider provideBoolean
      */
@@ -96,7 +96,7 @@ class MatcherTest extends TestCase
     }
 
     /**
-     * @param boolean $value
+     * @param bool $value
      *
      * @dataProvider provideBoolean
      */
@@ -154,7 +154,7 @@ class MatcherTest extends TestCase
     }
 
     /**
-     * @param boolean $value
+     * @param bool $value
      *
      * @group legacy
      *

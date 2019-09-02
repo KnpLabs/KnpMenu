@@ -3,8 +3,8 @@
 namespace Knp\Menu\Twig;
 
 use Knp\Menu\ItemInterface;
-use Knp\Menu\Util\MenuManipulator;
 use Knp\Menu\Matcher\MatcherInterface;
+use Knp\Menu\Util\MenuManipulator;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -16,9 +16,6 @@ class MenuExtension extends AbstractExtension
     private $matcher;
     private $menuManipulator;
 
-    /**
-     * @param Helper $helper
-     */
     public function __construct(Helper $helper, MatcherInterface $matcher = null, MenuManipulator $menuManipulator = null)
     {
         $this->helper = $helper;
@@ -50,7 +47,7 @@ class MenuExtension extends AbstractExtension
             new TwigTest('knp_menu_ancestor', [$this, 'isAncestor']),
         ];
     }
-    
+
     /**
      * Retrieves an item following a path in the tree.
      *
@@ -82,7 +79,7 @@ class MenuExtension extends AbstractExtension
     /**
      * Returns an array ready to be used for breadcrumbs.
      *
-     * @param ItemInterface|array|string $item
+     * @param ItemInterface|array|string $menu
      * @param string|array|null          $subItem
      *
      * @return array
@@ -117,7 +114,7 @@ class MenuExtension extends AbstractExtension
      *
      * e.g. Top Level > Second Level > This menu
      *
-     * @param ItemInterface $item
+     * @param ItemInterface $menu
      * @param string        $separator
      *
      * @return string
@@ -136,7 +133,7 @@ class MenuExtension extends AbstractExtension
      *
      * @param ItemInterface $item
      *
-     * @return boolean
+     * @return bool
      */
     public function isCurrent(ItemInterface $item)
     {
@@ -151,9 +148,9 @@ class MenuExtension extends AbstractExtension
      * Checks whether an item is the ancestor of a current item.
      *
      * @param ItemInterface $item
-     * @param integer       $depth The max depth to look for the item
+     * @param int|null      $depth The max depth to look for the item
      *
-     * @return boolean
+     * @return bool
      */
     public function isAncestor(ItemInterface $item, $depth = null)
     {

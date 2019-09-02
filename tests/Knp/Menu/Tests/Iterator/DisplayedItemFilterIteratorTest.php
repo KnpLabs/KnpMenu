@@ -6,7 +6,7 @@ use Knp\Menu\Iterator\DisplayedItemFilterIterator;
 use Knp\Menu\Iterator\RecursiveItemIterator;
 use Knp\Menu\Tests\MenuTestCase;
 
-class DisplayedItemFilterIteratorTest extends MenuTestCase
+final class DisplayedItemFilterIteratorTest extends MenuTestCase
 {
     public function testFiltering()
     {

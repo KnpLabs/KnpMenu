@@ -9,7 +9,7 @@ namespace Knp\Menu;
  * most of the time by default.
  * Originally taken from ioMenuPlugin (http://github.com/weaverryan/ioMenuPlugin)
  */
-interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
+interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
 {
     /**
      * @param FactoryInterface $factory
@@ -61,14 +61,14 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Defaults to the name of no label was specified
      *
-     * @return string
+     * @return string|null
      */
     public function getLabel();
 
     /**
      * Provides a fluent interface
      *
-     * @param string $label The text to use when rendering this menu item
+     * @param string|null $label The text to use when rendering this menu item
      *
      * @return ItemInterface
      */
@@ -246,7 +246,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Provides a fluent interface
      *
-     * @param boolean $bool
+     * @param bool $bool
      *
      * @return ItemInterface
      */
@@ -255,7 +255,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Whether or not to display this menu item
      *
-     * @return boolean
+     * @return bool
      */
     public function isDisplayed();
 
@@ -264,7 +264,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Provides a fluent interface
      *
-     * @param boolean $bool
+     * @param bool $bool
      *
      * @return ItemInterface
      */
@@ -279,6 +279,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * @param array                $options If creating a new item, the options passed to the factory for the item
      *
      * @return ItemInterface
+     *
      * @throws \InvalidArgumentException if the item is already in a tree
      */
     public function addChild($child, array $options = []);
@@ -315,7 +316,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * The root menu item is 0, followed by 1, 2, etc
      *
-     * @return integer
+     * @return int
      */
     public function getLevel();
 
@@ -329,7 +330,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Returns whether or not this menu item is the root menu item
      *
-     * @return boolean
+     * @return bool
      */
     public function isRoot();
 
@@ -392,7 +393,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * This menu MAY have children, but this will return false if the current
      * user does not have access to view any of those items
      *
-     * @return boolean
+     * @return bool
      */
     public function hasChildren();
 
@@ -403,7 +404,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Provides a fluent interface
      *
-     * @param boolean|null $bool Specify that this menu item is current
+     * @param bool|null $bool Specify that this menu item is current
      *
      * @return ItemInterface
      */
@@ -412,21 +413,21 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Gets whether or not this menu item is "current".
      *
-     * @return boolean|null
+     * @return bool|null
      */
     public function isCurrent();
 
     /**
      * Whether this menu item is last in its parent
      *
-     * @return boolean
+     * @return bool
      */
     public function isLast();
 
     /**
      * Whether this menu item is first in its parent
      *
-     * @return boolean
+     * @return bool
      */
     public function isFirst();
 
@@ -437,7 +438,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * This returns true if this is the first child that would be rendered
      * for the current user
      *
-     * @return boolean
+     * @return bool
      */
     public function actsLikeFirst();
 
@@ -448,7 +449,7 @@ interface ItemInterface extends  \ArrayAccess, \Countable, \IteratorAggregate
      * This returns true if this is the last child that would be rendered
      * for the current user
      *
-     * @return boolean
+     * @return bool
      */
     public function actsLikeLast();
 }

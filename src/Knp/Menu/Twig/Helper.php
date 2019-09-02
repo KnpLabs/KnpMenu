@@ -4,13 +4,12 @@ namespace Knp\Menu\Twig;
 
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\MatcherInterface;
-use Knp\Menu\Util\MenuManipulator;
-use Knp\Menu\Renderer\RendererProviderInterface;
 use Knp\Menu\Provider\MenuProviderInterface;
+use Knp\Menu\Renderer\RendererProviderInterface;
+use Knp\Menu\Util\MenuManipulator;
 
 /**
  * Helper class containing logic to retrieve and render menus from templating engines
- *
  */
 class Helper
 {
@@ -57,14 +56,14 @@ class Helper
             $menu = $this->menuProvider->get($menuName, $options);
 
             if (!$menu instanceof ItemInterface) {
-                throw new \LogicException(sprintf('The menu "%s" exists, but is not a valid menu item object. Check where you created the menu to be sure it returns an ItemInterface object.', $menuName));
+                throw new \LogicException(\sprintf('The menu "%s" exists, but is not a valid menu item object. Check where you created the menu to be sure it returns an ItemInterface object.', $menuName));
             }
         }
 
         foreach ($path as $child) {
             $menu = $menu->getChild($child);
             if (null === $menu) {
-                throw new \InvalidArgumentException(sprintf('The menu has no child named "%s"', $child));
+                throw new \InvalidArgumentException(\sprintf('The menu has no child named "%s"', $child));
             }
         }
 
@@ -87,7 +86,7 @@ class Helper
      *
      * @throws \InvalidArgumentException
      */
-    public function render($menu, array $options = [], $renderer =  null)
+    public function render($menu, array $options = [], $renderer = null)
     {
         $menu = $this->castMenu($menu);
 
@@ -109,7 +108,7 @@ class Helper
      *   * ['subItem1', 'subItem2']
      *   * [['label' => 'subItem1', 'url' => '@homepage'], ['label' => 'subItem2']]
      *
-     * @param mixed $item
+     * @param mixed $menu
      * @param mixed $subItem A string or array to append onto the end of the array
      *
      * @return array
@@ -152,12 +151,12 @@ class Helper
     {
         if (!$menu instanceof ItemInterface) {
             $path = [];
-            if (is_array($menu)) {
+            if (\is_array($menu)) {
                 if (empty($menu)) {
                     throw new \InvalidArgumentException('The array cannot be empty');
                 }
                 $path = $menu;
-                $menu = array_shift($path);
+                $menu = \array_shift($path);
             }
 
             return $this->get($menu, $path);

@@ -8,7 +8,7 @@ use Knp\Menu\MenuItem;
 use Knp\Menu\Twig\Helper;
 use PHPUnit\Framework\TestCase;
 
-class HelperTest extends TestCase
+final class HelperTest extends TestCase
 {
     public function testRenderMenu()
     {
@@ -56,7 +56,7 @@ class HelperTest extends TestCase
 
     public function testRenderMenuWithRenderer()
     {
-        $menu = $this->getMockBuilder(  'Knp\Menu\ItemInterface')->getMock();
+        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
         $renderer->expects($this->once())
             ->method('render')

@@ -2,10 +2,10 @@
 
 namespace Knp\Menu\Tests\Renderer;
 
-use Knp\Menu\MenuItem;
-use Knp\Menu\MenuFactory;
-use Knp\Menu\Matcher\MatcherInterface;
 use Knp\Menu\Matcher\Matcher;
+use Knp\Menu\Matcher\MatcherInterface;
+use Knp\Menu\MenuFactory;
+use Knp\Menu\MenuItem;
 use Knp\Menu\Tests\MenuTestCase;
 
 abstract class AbstractRendererTest extends MenuTestCase
@@ -296,21 +296,21 @@ abstract class AbstractRendererTest extends MenuTestCase
     {
         $this->menu['Parent 1']['Child 1']->setCurrent(true);
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, ['depth' => 1,'matchingDepth' => 1]));
+        $this->assertEquals($rendered, $this->renderer->render($this->menu, ['depth' => 1, 'matchingDepth' => 1]));
     }
 
     public function testMatchingDepth1()
     {
         $this->menu['Parent 1']['Child 1']->setCurrent(true);
         $rendered = '<ul class="root"><li class="current_ancestor first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, ['depth' => 1,'matchingDepth' => 2]));
+        $this->assertEquals($rendered, $this->renderer->render($this->menu, ['depth' => 1, 'matchingDepth' => 2]));
     }
 
     public function testMatchingDepth2()
     {
         $this->menu['Parent 1']['Child 1']->setCurrent(true);
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, ['depth' => 1,'matchingDepth' => 0]));
+        $this->assertEquals($rendered, $this->renderer->render($this->menu, ['depth' => 1, 'matchingDepth' => 0]));
     }
 
     public function testLeafAndBranchRendering()

@@ -34,10 +34,10 @@ class Matcher implements MatcherInterface
      */
     public function addVoter(VoterInterface $voter)
     {
-        @trigger_error(sprintf('The %s() method is deprecated since version 2.3 and will be removed in 3.0. Pass voters in the constructor instead.', __METHOD__), E_USER_DEPRECATED);
+        @trigger_error(\sprintf('The %s() method is deprecated since version 2.3 and will be removed in 3.0. Pass voters in the constructor instead.', __METHOD__), E_USER_DEPRECATED);
 
         if ($this->voters instanceof \Traversable) {
-            $this->voters = iterator_to_array($this->voters);
+            $this->voters = \iterator_to_array($this->voters);
         }
 
         $this->voters[] = $voter;
@@ -61,7 +61,7 @@ class Matcher implements MatcherInterface
             }
         }
 
-        $current = (boolean) $current;
+        $current = (bool) $current;
         $this->cache[$item] = $current;
 
         return $current;

@@ -7,11 +7,11 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class RouteVoterTest extends TestCase
+final class RouteVoterTest extends TestCase
 {
     protected function setUp()
     {
-        if (!class_exists('Symfony\Component\HttpFoundation\Request')) {
+        if (!\class_exists('Symfony\Component\HttpFoundation\Request')) {
             $this->markTestSkipped('The Symfony HttpFoundation component is not available.');
         }
     }
@@ -92,7 +92,7 @@ class RouteVoterTest extends TestCase
      * @param string       $route
      * @param array        $parameters
      * @param string|array $itemRoutes
-     * @param boolean      $expected
+     * @param bool         $expected
      *
      * @dataProvider provideData
      */
@@ -145,79 +145,79 @@ class RouteVoterTest extends TestCase
                 null,
                 [],
                 'foo',
-                null
+                null,
             ],
             'integer parameters' => [
                 'foo',
                 ['bar' => 128],
                 [['route' => 'foo', 'parameters' => ['bar' => 128]]],
-                true
+                true,
             ],
             'no item route' => [
                 'foo',
                 [],
                 null,
-                null
+                null,
             ],
             'same single route' => [
                 'foo',
                 [],
                 'foo',
-                true
+                true,
             ],
             'different single route' => [
                 'foo',
                 [],
                 'bar',
-                null
+                null,
             ],
             'matching multiple routes' => [
                 'foo',
                 [],
                 ['foo', 'baz'],
-                true
+                true,
             ],
             'matching multiple routes 2' => [
                 'baz',
                 [],
                 ['foo', 'baz'],
-                true
+                true,
             ],
             'different multiple routes' => [
                 'foo',
                 [],
                 ['bar', 'baz'],
-                null
+                null,
             ],
             'same single route with different parameters' => [
                 'foo',
                 ['1' => 'bar'],
                 [['route' => 'foo', 'parameters' => ['1' => 'baz']]],
-                null
+                null,
             ],
             'same single route with same parameters' => [
                 'foo',
                 ['1' => 'bar'],
                 [['route' => 'foo', 'parameters' => ['1' => 'bar']]],
-                true
+                true,
             ],
             'same single route with additional parameters' => [
                 'foo',
                 ['1' => 'bar'],
                 [['route' => 'foo', 'parameters' => ['1' => 'bar', '2' => 'baz']]],
-                null
+                null,
             ],
             'same single route with less parameters' => [
                 'foo',
                 ['1' => 'bar', '2' => 'baz'],
                 [['route' => 'foo', 'parameters' => ['1' => 'bar']]],
-                true
+                true,
             ],
             'same single route with different type parameters' => [
                 'foo',
                 ['1' => '2'],
                 [['route' => 'foo', 'parameters' => ['1' => 2]]],
-                true
+                true,
             ],
             'same route with multiple route params' => [
                 'foo',
@@ -226,7 +226,7 @@ class RouteVoterTest extends TestCase
                     ['route' => 'foo', 'parameters' => ['1' => 'baz']],
                     ['route' => 'foo', 'parameters' => ['1' => 'bar']],
                 ],
-                true
+                true,
             ],
             'same route with and without route params' => [
                 'foo',
@@ -235,7 +235,7 @@ class RouteVoterTest extends TestCase
                     ['route' => 'foo', 'parameters' => ['1' => 'baz']],
                     ['route' => 'foo'],
                 ],
-                true
+                true,
             ],
             'same route with multiple different route params' => [
                 'foo',
@@ -244,30 +244,30 @@ class RouteVoterTest extends TestCase
                     ['route' => 'foo', 'parameters' => ['1' => 'baz']],
                     ['route' => 'foo', 'parameters' => ['1' => 'foo']],
                 ],
-                null
+                null,
             ],
             'matching pattern without parameters' => [
                 'foo',
                 ['1' => 'bar'],
                 [['pattern' => '/fo/']],
-                true
+                true,
             ],
             'non matching pattern without parameters' => [
                 'foo',
                 ['1' => 'bar'],
                 [['pattern' => '/bar/']],
-                null
+                null,
             ],
             'matching pattern with parameters' => [
                 'foo',
                 ['1' => 'bar'],
                 [['pattern' => '/fo/', 'parameters' => ['1' => 'bar']]],
-                true
+                true,
             ],
             'matching pattern with different parameters' => [
                 'foo', ['1' => 'bar'],
                 [['pattern' => '/fo/', 'parameters' => ['1' => 'baz']]],
-                null
+                null,
             ],
         ];
     }

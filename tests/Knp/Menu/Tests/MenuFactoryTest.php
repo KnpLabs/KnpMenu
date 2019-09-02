@@ -5,7 +5,7 @@ namespace Knp\Menu\Tests;
 use Knp\Menu\MenuFactory;
 use PHPUnit\Framework\TestCase;
 
-class MenuFactoryTest extends TestCase
+final class MenuFactoryTest extends TestCase
 {
     public function testExtensions()
     {

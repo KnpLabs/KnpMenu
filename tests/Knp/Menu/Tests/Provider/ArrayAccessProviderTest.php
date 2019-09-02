@@ -5,7 +5,7 @@ namespace Knp\Menu\Tests\Provider;
 use Knp\Menu\Provider\ArrayAccessProvider;
 use PHPUnit\Framework\TestCase;
 
-class ArrayAccessProviderTest extends TestCase
+final class ArrayAccessProviderTest extends TestCase
 {
     public function testHas()
     {

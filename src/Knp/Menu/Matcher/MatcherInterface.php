@@ -14,7 +14,7 @@ interface MatcherInterface
      *
      * @param ItemInterface $item
      *
-     * @return boolean
+     * @return bool
      */
     public function isCurrent(ItemInterface $item);
 
@@ -22,9 +22,9 @@ interface MatcherInterface
      * Checks whether an item is the ancestor of a current item.
      *
      * @param ItemInterface $item
-     * @param integer       $depth The max depth to look for the item
+     * @param int|null      $depth The max depth to look for the item
      *
-     * @return boolean
+     * @return bool
      */
     public function isAncestor(ItemInterface $item, $depth = null);
 

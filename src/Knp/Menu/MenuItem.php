@@ -9,81 +9,94 @@ class MenuItem implements ItemInterface
 {
     /**
      * Name of this menu item (used for id by parent menu)
+     *
      * @var string
      */
-    protected $name = null;
+    protected $name;
 
     /**
      * Label to output, name is used by default
-     * @var string
+     *
+     * @var string|null
      */
-    protected $label = null;
+    protected $label;
 
     /**
      * Attributes for the item link
+     *
      * @var array
      */
     protected $linkAttributes = [];
 
     /**
      * Attributes for the children list
+     *
      * @var array
      */
     protected $childrenAttributes = [];
 
     /**
      * Attributes for the item text
+     *
      * @var array
      */
     protected $labelAttributes = [];
 
     /**
      * Uri to use in the anchor tag
-     * @var string
+     *
+     * @var string|null
      */
-    protected $uri = null;
+    protected $uri;
 
     /**
      * Attributes for the item
+     *
      * @var array
      */
     protected $attributes = [];
 
     /**
      * Extra stuff associated to the item
+     *
      * @var array
      */
     protected $extras = [];
 
     /**
      * Whether the item is displayed
-     * @var boolean
+     *
+     * @var bool
      */
     protected $display = true;
 
     /**
      * Whether the children of the item are displayed
-     * @var boolean
+     *
+     * @var bool
      */
     protected $displayChildren = true;
 
     /**
      * Child items
+     *
      * @var ItemInterface[]
      */
     protected $children = [];
 
     /**
      * Parent item
+     *
      * @var ItemInterface|null
      */
-    protected $parent = null;
+    protected $parent;
 
     /**
      * whether the item is current. null means unknown
-     * @var boolean|null
+     *
+     * @var bool|null
      */
-    protected $isCurrent = null;
+    protected $isCurrent;
 
     /**
      * @var FactoryInterface
@@ -110,7 +123,8 @@ class MenuItem implements ItemInterface
      * setFactory
      *
      * @param FactoryInterface $factory
-     * @return self
+     *
+     * @return ItemInterface
      */
     public function setFactory(FactoryInterface $factory)
     {
@@ -126,7 +140,7 @@ class MenuItem implements ItemInterface
 
     public function setName($name)
     {
-        if ($this->name == $name) {
+        if ($this->name === $name) {
             return $this;
         }
 
@@ -139,13 +153,13 @@ class MenuItem implements ItemInterface
         $this->name = $name;
 
         if (null !== $parent) {
-            $names = array_keys($parent->getChildren());
-            $items = array_values($parent->getChildren());
+            $names = \array_keys($parent->getChildren());
+            $items = \array_values($parent->getChildren());
 
-            $offset = array_search($oldName, $names);
+            $offset = \array_search($oldName, $names);
             $names[$offset] = $name;
 
-            $parent->setChildren(array_combine($names, $items));
+            $parent->setChildren(\array_combine($names, $items));
         }
 
         return $this;
@@ -165,7 +179,7 @@ class MenuItem implements ItemInterface
 
     public function getLabel()
     {
-        return ($this->label !== null) ? $this->label : $this->name;
+        return (null !== $this->label) ? $this->label : $this->name;
     }
 
     public function setLabel($label)
@@ -456,12 +470,12 @@ class MenuItem implements ItemInterface
 
     public function getFirstChild()
     {
-        return reset($this->children);
+        return \reset($this->children);
     }
 
     public function getLastChild()
     {
-        return end($this->children);
+        return \end($this->children);
     }
 
     public function hasChildren()
@@ -552,7 +566,7 @@ class MenuItem implements ItemInterface
             return true;
         }
 
-        $children = array_reverse($this->getParent()->getChildren());
+        $children = \array_reverse($this->getParent()->getChildren());
         foreach ($children as $child) {
             // loop until we find a visible menu. If its this menu, we're first
             if ($child->isDisplayed()) {
@@ -568,7 +582,7 @@ class MenuItem implements ItemInterface
      */
     public function count()
     {
-        return count($this->children);
+        return \count($this->children);
     }
 
     /**

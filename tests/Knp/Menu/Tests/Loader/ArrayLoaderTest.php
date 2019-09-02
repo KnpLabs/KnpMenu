@@ -6,7 +6,7 @@ use Knp\Menu\Loader\ArrayLoader;
 use Knp\Menu\MenuFactory;
 use PHPUnit\Framework\TestCase;
 
-class ArrayLoaderTest extends TestCase
+final class ArrayLoaderTest extends TestCase
 {
     public function testLoadWithoutChildren()
     {
@@ -36,8 +36,8 @@ class ArrayLoaderTest extends TestCase
                     'label' => 'Jack',
                 ],
                 [
-                    'name' => 'john'
-                ]
+                    'name' => 'john',
+                ],
             ],
         ];
 
@@ -59,8 +59,8 @@ class ArrayLoaderTest extends TestCase
                     'label' => 'Jack',
                 ],
                 'john' => [
-                    'label' => 'John'
-                ]
+                    'label' => 'John',
+                ],
             ],
         ];
 

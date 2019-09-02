@@ -5,7 +5,7 @@ namespace Knp\Menu\Tests\Renderer;
 use Knp\Menu\Renderer\ArrayAccessProvider;
 use PHPUnit\Framework\TestCase;
 
-class ArrayAccessProviderTest extends TestCase
+final class ArrayAccessProviderTest extends TestCase
 {
     public function testHas()
     {
@@ -20,7 +20,7 @@ class ArrayAccessProviderTest extends TestCase
         $registry = new \ArrayObject();
         $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
         $registry['renderer'] = $renderer;
-        $provider = new ArrayAccessProvider($registry, 'default',  ['default' => 'renderer']);
+        $provider = new ArrayAccessProvider($registry, 'default', ['default' => 'renderer']);
         $this->assertSame($renderer, $provider->get('default'));
     }
 
@@ -29,7 +29,7 @@ class ArrayAccessProviderTest extends TestCase
         $registry = new \ArrayObject();
         $renderer = $this->getMockBuilder('Knp\Menu\Renderer\RendererInterface')->getMock();
         $registry['renderer'] = $renderer;
-        $provider = new ArrayAccessProvider($registry, 'default',  ['default' => 'renderer']);
+        $provider = new ArrayAccessProvider($registry, 'default', ['default' => 'renderer']);
         $this->assertSame($renderer, $provider->get());
     }
 

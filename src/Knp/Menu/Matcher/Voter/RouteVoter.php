@@ -48,7 +48,7 @@ class RouteVoter implements VoterInterface
      */
     public function setRequest(Request $request)
     {
-        @trigger_error(sprintf('The %s() method is deprecated since version 2.3 and will be removed in 3.0. Pass a RequestStack in the constructor instead.', __METHOD__), E_USER_DEPRECATED);
+        @trigger_error(\sprintf('The %s() method is deprecated since version 2.3 and will be removed in 3.0. Pass a RequestStack in the constructor instead.', __METHOD__), E_USER_DEPRECATED);
 
         $this->request = $request;
     }
@@ -73,11 +73,11 @@ class RouteVoter implements VoterInterface
         $routes = (array) $item->getExtra('routes', []);
 
         foreach ($routes as $testedRoute) {
-            if (is_string($testedRoute)) {
+            if (\is_string($testedRoute)) {
                 $testedRoute = ['route' => $testedRoute];
             }
 
-            if (!is_array($testedRoute)) {
+            if (!\is_array($testedRoute)) {
                 throw new \InvalidArgumentException('Routes extra items must be strings or arrays.');
             }
 
@@ -98,7 +98,7 @@ class RouteVoter implements VoterInterface
                 return false;
             }
         } elseif (!empty($testedRoute['pattern'])) {
-            if (!preg_match($testedRoute['pattern'], $route)) {
+            if (!\preg_match($testedRoute['pattern'], $route)) {
                 return false;
             }
         } else {

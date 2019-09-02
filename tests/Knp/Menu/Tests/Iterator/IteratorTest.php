@@ -5,13 +5,13 @@ namespace Knp\Menu\Tests\Iterator;
 use Knp\Menu\Iterator\RecursiveItemIterator;
 use Knp\Menu\Tests\MenuTestCase;
 
-class IteratorTest extends MenuTestCase
+final class IteratorTest extends MenuTestCase
 {
     public function testIterator()
     {
         $count = 0;
         foreach ($this->pt1 as $key => $value) {
-            $count++;
+            ++$count;
             $this->assertEquals('Child '.$count, $key);
             $this->assertEquals('Child '.$count, $value->getLabel());
         }

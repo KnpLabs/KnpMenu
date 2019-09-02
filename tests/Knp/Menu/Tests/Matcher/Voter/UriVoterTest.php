@@ -5,12 +5,12 @@ namespace Knp\Menu\Tests\Matcher\Voter;
 use Knp\Menu\Matcher\Voter\UriVoter;
 use PHPUnit\Framework\TestCase;
 
-class UriVoterTest extends TestCase
+final class UriVoterTest extends TestCase
 {
     /**
-     * @param string  $uri
-     * @param string  $itemUri
-     * @param boolean $expected
+     * @param string $uri
+     * @param string $itemUri
+     * @param bool   $expected
      *
      * @dataProvider provideData
      */

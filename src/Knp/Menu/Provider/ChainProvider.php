@@ -22,7 +22,7 @@ class ChainProvider implements MenuProviderInterface
             }
         }
 
-        throw new \InvalidArgumentException(sprintf('The menu "%s" is not defined.', $name));
+        throw new \InvalidArgumentException(\sprintf('The menu "%s" is not defined.', $name));
     }
 
     public function has($name, array $options = [])

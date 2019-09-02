@@ -2,8 +2,8 @@
 
 namespace Knp\Menu\Tests;
 
-use Knp\Menu\MenuItem;
 use Knp\Menu\MenuFactory;
+use Knp\Menu\MenuItem;
 use PHPUnit\Framework\TestCase;
 
 abstract class MenuTestCase extends TestCase
@@ -80,13 +80,13 @@ abstract class MenuTestCase extends TestCase
     // prints a visual representation of our basic testing tree
     protected function printTestTree()
     {
-        print('      Menu Structure   '."\n");
-        print('               rt      '."\n");
-        print('             /    \    '."\n");
-        print('          pt1      pt2 '."\n");
-        print('        /  | \      |  '."\n");
-        print('      ch1 ch2 ch3  ch4 '."\n");
-        print('                    |  '."\n");
-        print('                   gc1 '."\n");
+        echo '      Menu Structure   '."\n";
+        echo '               rt      '."\n";
+        echo '             /    \    '."\n";
+        echo '          pt1      pt2 '."\n";
+        echo '        /  | \      |  '."\n";
+        echo '      ch1 ch2 ch3  ch4 '."\n";
+        echo '                    |  '."\n";
+        echo '                   gc1 '."\n";
     }
 }

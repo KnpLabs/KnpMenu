@@ -2,11 +2,11 @@
 
 namespace Knp\Menu\Tests;
 
-use Knp\Menu\MenuItem;
 use Knp\Menu\MenuFactory;
+use Knp\Menu\MenuItem;
 use PHPUnit\Framework\TestCase;
 
-class MenuItemGetterSetterTest extends TestCase
+final class MenuItemGetterSetterTest extends TestCase
 {
     public function testCreateMenuItemWithEmptyParameter()
     {
@@ -151,9 +151,9 @@ class MenuItemGetterSetterTest extends TestCase
     public function testShowChildren()
     {
         $menu = $this->createMenu();
-        $this->assertEquals(true, $menu->getDisplayChildren());
+        $this->assertTrue($menu->getDisplayChildren());
         $menu->setDisplayChildren(false);
-        $this->assertEquals(false, $menu->getDisplayChildren());
+        $this->assertFalse($menu->getDisplayChildren());
     }
 
     public function testParent()
@@ -213,9 +213,9 @@ class MenuItemGetterSetterTest extends TestCase
     /**
      * Create a new MenuItem
      *
-     * @param string $name
-     * @param string $uri
-     * @param array  $attributes
+     * @param string|null $name
+     * @param string|null $uri
+     * @param array       $attributes
      *
      * @return \Knp\Menu\MenuItem
      */

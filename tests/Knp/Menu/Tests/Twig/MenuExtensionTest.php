@@ -8,11 +8,11 @@ use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 use Twig\Template;
 
-class MenuExtensionTest extends TestCase
+final class MenuExtensionTest extends TestCase
 {
     protected function setUp()
     {
-        if (!class_exists(Environment::class)) {
+        if (!\class_exists(Environment::class)) {
             $this->markTestSkipped('Twig is not available');
         }
     }
@@ -187,8 +187,10 @@ class MenuExtensionTest extends TestCase
     }
 
     /**
-     * @param string                $template
-     * @param \Knp\Menu\Twig\Helper $helper
+     * @param string                                  $template
+     * @param \Knp\Menu\Twig\Helper                   $helper
+     * @param \Knp\Menu\Matcher\MatcherInterface|null $matcher
+     * @param \Knp\Menu\Util\MenuManipulator|null     $menuManipulator
      *
      * @return Template
      */

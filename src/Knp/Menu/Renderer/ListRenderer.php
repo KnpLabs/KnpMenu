@@ -16,12 +16,12 @@ class ListRenderer extends Renderer implements RendererInterface
     /**
      * @param MatcherInterface $matcher
      * @param array            $defaultOptions
-     * @param string           $charset
+     * @param string|null      $charset
      */
     public function __construct(MatcherInterface $matcher, array $defaultOptions = [], $charset = null)
     {
         $this->matcher = $matcher;
-        $this->defaultOptions = array_merge([
+        $this->defaultOptions = \array_merge([
             'depth' => null,
             'matchingDepth' => null,
             'currentAsLink' => true,
@@ -41,7 +41,7 @@ class ListRenderer extends Renderer implements RendererInterface
 
     public function render(ItemInterface $item, array $options = [])
     {
-        $options = array_merge($this->defaultOptions, $options);
+        $options = \array_merge($this->defaultOptions, $options);
 
         $html = $this->renderList($item, $item->getChildrenAttributes(), $options);
 
@@ -137,7 +137,7 @@ class ListRenderer extends Renderer implements RendererInterface
             $class[] = $options['lastClass'];
         }
 
-        if ($item->hasChildren() && $options['depth'] !== 0) {
+        if ($item->hasChildren() && 0 !== $options['depth']) {
             if (null !== $options['branch_class'] && $item->getDisplayChildren()) {
                 $class[] = $options['branch_class'];
             }
@@ -148,7 +148,7 @@ class ListRenderer extends Renderer implements RendererInterface
         // retrieve the attributes and put the final class string back on it
         $attributes = $item->getAttributes();
         if (!empty($class)) {
-            $attributes['class'] = implode(' ', $class);
+            $attributes['class'] = \implode(' ', $class);
         }
 
         // opening li tag
@@ -163,7 +163,7 @@ class ListRenderer extends Renderer implements RendererInterface
         $childrenClass[] = 'menu_level_'.$item->getLevel();
 
         $childrenAttributes = $item->getChildrenAttributes();
-        $childrenAttributes['class'] = implode(' ', $childrenClass);
+        $childrenAttributes['class'] = \implode(' ', $childrenClass);
 
         $html .= $this->renderList($item, $childrenAttributes, $options);
 
@@ -199,12 +199,12 @@ class ListRenderer extends Renderer implements RendererInterface
 
     protected function renderLinkElement(ItemInterface $item, array $options)
     {
-        return sprintf('<a href="%s"%s>%s</a>', $this->escape($item->getUri()), $this->renderHtmlAttributes($item->getLinkAttributes()), $this->renderLabel($item, $options));
+        return \sprintf('<a href="%s"%s>%s</a>', $this->escape($item->getUri()), $this->renderHtmlAttributes($item->getLinkAttributes()), $this->renderLabel($item, $options));
     }
 
     protected function renderSpanElement(ItemInterface $item, array $options)
     {
-        return sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $this->renderLabel($item, $options));
+        return \sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $this->renderLabel($item, $options));
     }
 
     protected function renderLabel(ItemInterface $item, array $options)
@@ -221,10 +221,10 @@ class ListRenderer extends Renderer implements RendererInterface
      * spacing and line-breaking so that the particular thing being rendered
      * makes up its part in a fully-rendered and spaced menu.
      *
-     * @param string  $html    The html to render in an (un)formatted way
-     * @param string  $type    The type [ul,link,li] of thing being rendered
-     * @param integer $level
-     * @param array   $options
+     * @param string $html    The html to render in an (un)formatted way
+     * @param string $type    The type [ul,link,li] of thing being rendered
+     * @param int    $level
+     * @param array  $options
      *
      * @return string
      */
@@ -245,6 +245,6 @@ class ListRenderer extends Renderer implements RendererInterface
                 break;
         }
 
-        return str_repeat(' ', $spacing).$html."\n";
+        return \str_repeat(' ', $spacing).$html."\n";
     }
 }

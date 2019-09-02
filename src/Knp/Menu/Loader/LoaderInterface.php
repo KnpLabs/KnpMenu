@@ -20,7 +20,7 @@ interface LoaderInterface
      *
      * @param mixed $data
      *
-     * @return boolean
+     * @return bool
      */
     public function supports($data);
 }

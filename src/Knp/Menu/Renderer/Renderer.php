@@ -7,7 +7,7 @@ abstract class Renderer
     protected $charset = 'UTF-8';
 
     /**
-     * @param string $charset
+     * @param string|null $charset
      */
     public function __construct($charset = null)
     {
@@ -19,18 +19,18 @@ abstract class Renderer
     /**
      * Renders a HTML attribute
      *
-     * @param string $name
-     * @param string $value
+     * @param string      $name
+     * @param string|bool $value
      *
      * @return string
      */
     protected function renderHtmlAttribute($name, $value)
     {
         if (true === $value) {
-            return sprintf('%s="%s"', $name, $this->escape($name));
+            return \sprintf('%s="%s"', $name, $this->escape($name));
         }
 
-        return sprintf('%s="%s"', $name, $this->escape($value));
+        return \sprintf('%s="%s"', $name, $this->escape($value));
     }
 
     /**
@@ -42,7 +42,7 @@ abstract class Renderer
      */
     protected function renderHtmlAttributes(array $attributes)
     {
-        return implode('', array_map([$this, 'htmlAttributesCallback'], array_keys($attributes), array_values($attributes)));
+        return \implode('', \array_map([$this, 'htmlAttributesCallback'], \array_keys($attributes), \array_values($attributes)));
     }
 
     /**
@@ -50,8 +50,8 @@ abstract class Renderer
      *
      * It removes empty attributes.
      *
-     * @param string $name  The attribute name
-     * @param string $value The attribute value
+     * @param string           $name  The attribute name
+     * @param string|bool|null $value The attribute value
      *
      * @return string The HTML representation of the HTML key attribute pair.
      */
@@ -73,7 +73,7 @@ abstract class Renderer
      */
     protected function escape($value)
     {
-        return $this->fixDoubleEscape(htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, $this->charset));
+        return $this->fixDoubleEscape(\htmlspecialchars((string) $value, ENT_QUOTES | ENT_SUBSTITUTE, $this->charset));
     }
 
     /**
@@ -85,7 +85,7 @@ abstract class Renderer
      */
     protected function fixDoubleEscape($escaped)
     {
-        return preg_replace('/&amp;([a-z]+|(#\d+)|(#x[\da-f]+));/i', '&$1;', $escaped);
+        return \preg_replace('/&amp;([a-z]+|(#\d+)|(#x[\da-f]+));/i', '&$1;', $escaped);
     }
 
     /**

@@ -6,7 +6,7 @@ use Knp\Menu\ItemInterface;
 use Knp\Menu\Provider\LazyProvider;
 use PHPUnit\Framework\TestCase;
 
-class LazyProviderTest extends TestCase
+final class LazyProviderTest extends TestCase
 {
     public function testHas()
     {
@@ -63,7 +63,7 @@ class LazyProviderTest extends TestCase
     }
 }
 
-class FakeBuilder
+final class FakeBuilder
 {
     private $menu;
 

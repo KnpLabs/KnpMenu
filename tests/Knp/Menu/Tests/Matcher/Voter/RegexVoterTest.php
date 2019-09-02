@@ -5,12 +5,12 @@ namespace Knp\Menu\Tests\Matcher\Voter;
 use Knp\Menu\Matcher\Voter\RegexVoter;
 use PHPUnit\Framework\TestCase;
 
-class RegexVoterTest extends TestCase
+final class RegexVoterTest extends TestCase
 {
     /**
-     * @param string  $exp
-     * @param string  $itemUri
-     * @param boolean $expected
+     * @param string $exp
+     * @param string $itemUri
+     * @param bool   $expected
      *
      * @dataProvider provideData
      */

@@ -7,7 +7,7 @@ use Knp\Menu\MenuItem;
 use Knp\Menu\Tests\MenuTestCase;
 use Knp\Menu\Util\MenuManipulator;
 
-class MenuManipulatorTest extends MenuTestCase
+final class MenuManipulatorTest extends MenuTestCase
 {
     public function testMoveToFirstPosition()
     {
@@ -19,7 +19,7 @@ class MenuManipulatorTest extends MenuTestCase
 
         $manipulator = new MenuManipulator();
         $manipulator->moveToFirstPosition($menu['c3']);
-        $this->assertEquals(['c3', 'c1', 'c2', 'c4'], array_keys($menu->getChildren()));
+        $this->assertEquals(['c3', 'c1', 'c2', 'c4'], \array_keys($menu->getChildren()));
     }
 
     public function testMoveToLastPosition()
@@ -32,7 +32,7 @@ class MenuManipulatorTest extends MenuTestCase
 
         $manipulator = new MenuManipulator();
         $manipulator->moveToLastPosition($menu['c2']);
-        $this->assertEquals(['c1', 'c3', 'c4', 'c2'], array_keys($menu->getChildren()));
+        $this->assertEquals(['c1', 'c3', 'c4', 'c2'], \array_keys($menu->getChildren()));
     }
 
     public function testMoveToPosition()
@@ -45,7 +45,7 @@ class MenuManipulatorTest extends MenuTestCase
 
         $manipulator = new MenuManipulator();
         $manipulator->moveToPosition($menu['c1'], 2);
-        $this->assertEquals(['c2', 'c3', 'c1', 'c4'], array_keys($menu->getChildren()));
+        $this->assertEquals(['c2', 'c3', 'c1', 'c4'], \array_keys($menu->getChildren()));
     }
 
     /**
@@ -56,7 +56,7 @@ class MenuManipulatorTest extends MenuTestCase
         $manipulator = new MenuManipulator();
         $sliced = $manipulator->slice($this->pt1, $offset, $length);
         $this->assertCount($count, $sliced);
-        $this->assertEquals($keys, array_keys($sliced->getChildren()));
+        $this->assertEquals($keys, \array_keys($sliced->getChildren()));
     }
 
     public function getSliceData()
@@ -84,7 +84,7 @@ class MenuManipulatorTest extends MenuTestCase
         $this->assertArrayHasKey('secondary', $splitted);
         $this->assertCount($count, $splitted['primary']);
         $this->assertCount(3 - $count, $splitted['secondary']);
-        $this->assertEquals($keys, array_keys($splitted['primary']->getChildren()));
+        $this->assertEquals($keys, \array_keys($splitted['primary']->getChildren()));
     }
 
     public function getSplitData()

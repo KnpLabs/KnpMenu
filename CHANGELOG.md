@@ -2,7 +2,7 @@
 
 * Raised PHP requirements
 * [BC break] Enforced strong types on all interfaces and classes
-* [BC break] Removed deprecated features. Spefically, MenuFactory and MenuItem are not accepting a `null` name anymore
+* [BC break] Removed deprecated features. Specifically, MenuFactory and MenuItem are not accepting a `null` name anymore
 
 ## 2.4 (2019-07-29)
 

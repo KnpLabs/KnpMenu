@@ -5,7 +5,7 @@ namespace Knp\Menu\Tests\Matcher\Voter;
 use Knp\Menu\Matcher\Voter\UriVoter;
 use PHPUnit\Framework\TestCase;
 
-class UriVoterTest extends TestCase
+final class UriVoterTest extends TestCase
 {
     /**
      * @param string $uri
@@ -19,7 +19,7 @@ class UriVoterTest extends TestCase
         $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->any())
             ->method('getUri')
-            ->will($this->returnValue($itemUri));
+            ->willReturn($itemUri);
 
         $voter = new UriVoter($uri);
 

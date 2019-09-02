@@ -5,13 +5,13 @@ namespace Knp\Menu\Tests\Iterator;
 use Knp\Menu\Iterator\RecursiveItemIterator;
 use Knp\Menu\Tests\MenuTestCase;
 
-class IteratorTest extends MenuTestCase
+final class IteratorTest extends MenuTestCase
 {
     public function testIterator(): void
     {
         $count = 0;
         foreach ($this->pt1 as $key => $value) {
-            $count++;
+            ++$count;
             $this->assertEquals('Child '.$count, $key);
             $this->assertEquals('Child '.$count, $value->getLabel());
         }
@@ -23,10 +23,10 @@ class IteratorTest extends MenuTestCase
         $child = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $child->expects($this->any())
             ->method('getName')
-            ->will($this->returnValue('Foo'));
+            ->willReturn('Foo');
         $child->expects($this->any())
             ->method('getIterator')
-            ->will($this->returnValue(new \EmptyIterator()));
+            ->willReturn(new \EmptyIterator());
         $this->menu->addChild($child);
 
         $names = [];

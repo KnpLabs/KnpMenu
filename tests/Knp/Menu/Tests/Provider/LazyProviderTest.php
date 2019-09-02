@@ -6,11 +6,11 @@ use Knp\Menu\ItemInterface;
 use Knp\Menu\Provider\LazyProvider;
 use PHPUnit\Framework\TestCase;
 
-class LazyProviderTest extends TestCase
+final class LazyProviderTest extends TestCase
 {
     public function testHas(): void
     {
-        $provider = new LazyProvider(['first' => function () {}, 'second' => function () {}]);
+        $provider = new LazyProvider(['first' => function (): void {}, 'second' => function (): void {}]);
         $this->assertTrue($provider->has('first'));
         $this->assertTrue($provider->has('second'));
         $this->assertFalse($provider->has('third'));
@@ -35,35 +35,32 @@ class LazyProviderTest extends TestCase
         $this->assertSame($menu, $provider->get('default', ['foo' => 'bar']));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testGetNonExistentMenu(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $provider = new LazyProvider([]);
         $provider->get('non-existent');
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testGetWithBrokenBuilder(): void
     {
+        $this->expectException(\LogicException::class);
+
         $provider = new LazyProvider(['broken' => new \stdClass()]);
         $provider->get('broken');
     }
 
-    /**
-     * @expectedException \LogicException
-     */
     public function testGetWithBrokenLazyBuilder(): void
     {
-        $provider = new LazyProvider(['broken' => [function () {return new \stdClass();}, 'nonExistentMethod']]);
+        $this->expectException(\LogicException::class);
+
+        $provider = new LazyProvider(['broken' => [function () {return new \stdClass(); }, 'nonExistentMethod']]);
         $provider->get('broken');
     }
 }
 
-class FakeBuilder
+final class FakeBuilder
 {
     private $menu;
 

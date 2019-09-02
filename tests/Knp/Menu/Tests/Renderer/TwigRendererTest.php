@@ -2,18 +2,18 @@
 
 namespace Knp\Menu\Tests\Renderer;
 
-use Knp\Menu\Renderer\TwigRenderer;
-use Knp\Menu\MenuItem;
-use Knp\Menu\MenuFactory;
 use Knp\Menu\Matcher\MatcherInterface;
+use Knp\Menu\MenuFactory;
+use Knp\Menu\MenuItem;
+use Knp\Menu\Renderer\TwigRenderer;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-class TwigRendererTest extends AbstractRendererTest
+final class TwigRendererTest extends AbstractRendererTest
 {
     public function createRenderer(MatcherInterface $matcher): TwigRenderer
     {
-        if (!class_exists(Environment::class)) {
+        if (!\class_exists(Environment::class)) {
             $this->markTestSkipped('Twig is not available');
         }
         $loader = new FilesystemLoader(__DIR__.'/../../../../../src/Knp/Menu/Resources/views');

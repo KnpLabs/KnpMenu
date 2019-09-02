@@ -5,7 +5,7 @@ namespace Knp\Menu\Tests\Matcher;
 use Knp\Menu\Matcher\Matcher;
 use PHPUnit\Framework\TestCase;
 
-class MatcherTest extends TestCase
+final class MatcherTest extends TestCase
 {
     /**
      * @param bool|null $flag
@@ -18,7 +18,7 @@ class MatcherTest extends TestCase
         $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->any())
             ->method('isCurrent')
-            ->will($this->returnValue($flag));
+            ->willReturn($flag);
 
         $matcher = new Matcher();
 
@@ -57,7 +57,7 @@ class MatcherTest extends TestCase
         $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->any())
             ->method('isCurrent')
-            ->will($this->returnValue($value));
+            ->willReturn($value);
 
         $voter = $this->getMockBuilder('Knp\Menu\Matcher\Voter\VoterInterface')->getMock();
         $voter->expects($this->never())
@@ -78,13 +78,13 @@ class MatcherTest extends TestCase
         $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->any())
             ->method('isCurrent')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $voter1 = $this->getMockBuilder('Knp\Menu\Matcher\Voter\VoterInterface')->getMock();
         $voter1->expects($this->once())
             ->method('matchItem')
             ->with($this->equalTo($item))
-            ->will($this->returnValue($value));
+            ->willReturn($value);
 
         $voter2 = $this->getMockBuilder('Knp\Menu\Matcher\Voter\VoterInterface')->getMock();
         $voter2->expects($this->never())
@@ -105,13 +105,13 @@ class MatcherTest extends TestCase
         $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
         $item->expects($this->any())
             ->method('isCurrent')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $voter1 = $this->getMockBuilder('Knp\Menu\Matcher\Voter\VoterInterface')->getMock();
         $voter1->expects($this->once())
             ->method('matchItem')
             ->with($this->equalTo($item))
-            ->will($this->returnValue($value));
+            ->willReturn($value);
 
         $voter2 = $this->getMockBuilder('Knp\Menu\Matcher\Voter\VoterInterface')->getMock();
         $voter2->expects($this->never())

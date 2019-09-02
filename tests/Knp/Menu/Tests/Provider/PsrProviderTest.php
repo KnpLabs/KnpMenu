@@ -5,7 +5,7 @@ namespace Knp\Menu\Tests\Provider;
 use Knp\Menu\Provider\PsrProvider;
 use PHPUnit\Framework\TestCase;
 
-class PsrProviderTest extends TestCase
+final class PsrProviderTest extends TestCase
 {
     public function testHas(): void
     {
@@ -32,11 +32,10 @@ class PsrProviderTest extends TestCase
         $this->assertSame($menu->reveal(), $provider->get('menu'));
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testGetNonExistentMenu(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $container = $this->prophesize('Psr\Container\ContainerInterface');
         $container->has('non-existent')->willReturn(false);
 

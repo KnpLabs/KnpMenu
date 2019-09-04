@@ -8,7 +8,7 @@
 
 * Fixed Twig deprecations
 * Switched to namespaced Twig
-* Fixed sprtinf use
+* Fixed sprintf use
 
 ## 2.3 (2017-11-18)
 

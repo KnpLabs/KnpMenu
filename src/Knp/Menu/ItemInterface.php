@@ -179,7 +179,7 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @throws \InvalidArgumentException if the item is already in a tree
      */
-    public function addChild(self $child, array $options = []): self;
+    public function addChild($child, array $options = []): self;
 
     /**
      * Returns the child menu identified by the given name

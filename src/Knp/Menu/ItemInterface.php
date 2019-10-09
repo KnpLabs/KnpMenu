@@ -106,7 +106,7 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function getChildrenAttribute(string $name, $default = null);
 
-    public function setChildrenAttribute(string $name, string $value);
+    public function setChildrenAttribute(string $name, $value);
 
     public function getLabelAttributes(): array;
 

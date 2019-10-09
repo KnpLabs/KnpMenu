@@ -263,7 +263,7 @@ class MenuItem implements ItemInterface
         return $default;
     }
 
-    public function setChildrenAttribute(string $name, string $value): ItemInterface
+    public function setChildrenAttribute(string $name, $value): ItemInterface
     {
         $this->childrenAttributes[$name] = $value;
 

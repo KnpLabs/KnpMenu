@@ -120,7 +120,7 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function getLabelAttribute(string $name, $default = null);
 
-    public function setLabelAttribute(string $name, string $value): self;
+    public function setLabelAttribute(string $name, $value): self;
 
     public function getExtras(): array;
 

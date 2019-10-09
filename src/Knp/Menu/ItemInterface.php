@@ -92,7 +92,7 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function getLinkAttribute(string $name, $default = null);
 
-    public function setLinkAttribute(string $name, string $value): self;
+    public function setLinkAttribute(string $name, $value): self;
 
     public function getChildrenAttributes(): array;
 

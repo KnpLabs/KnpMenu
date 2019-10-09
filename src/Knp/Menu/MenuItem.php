@@ -226,7 +226,7 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
-    public function getLinkAttribute($name, $default = null)
+    public function getLinkAttribute(string $name, $default = null)
     {
         if (isset($this->linkAttributes[$name])) {
             return $this->linkAttributes[$name];
@@ -263,7 +263,7 @@ class MenuItem implements ItemInterface
         return $default;
     }
 
-    public function setChildrenAttribute(string $name, $value): ItemInterface
+    public function setChildrenAttribute(string $name, string $value): ItemInterface
     {
         $this->childrenAttributes[$name] = $value;
 

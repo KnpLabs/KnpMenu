@@ -71,7 +71,7 @@ the first and last items, submenus, ...
 
 ## What now?
 
-Follow the tutorial in [`doc/01-Basic-Menus.markdown`][0] and [`doc/02-Twig-Integration.markdown`][1]
+Follow the tutorial in [`doc/01-Basic-Menus.md`][0] and [`doc/02-Twig-Integration.md`][1]
 to discover how KnpMenu will rock your world!
 
 Find all available documentation at [`doc/`][2].
@@ -90,6 +90,6 @@ This bundle was originally ported from [ioMenuPlugin](http://github.com/weaverry
 a menu plugin for symfony1. It has since been developed by [KnpLabs](http://www.knplabs.com) and
 the [Symfony community](https://github.com/KnpLabs/KnpMenu/graphs/contributors).
 
-[0]: doc/01-Basic-Menus.markdown
-[1]: doc/02-Twig-Integration.markdown
+[0]: doc/01-Basic-Menus.md
+[1]: doc/02-Twig-Integration.md
 [2]: doc/

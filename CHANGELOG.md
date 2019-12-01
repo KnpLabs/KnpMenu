@@ -1,3 +1,9 @@
+## 3.1 (2019-12-01)
+
+* Allowed Symfony 5 components
+* Removed support for unsupported Symfony versions (4.0 and 4.1)
+* Allowed Twig 3
+
 ## 3.0 (2019-09-02)
 
 * Raised PHP requirements

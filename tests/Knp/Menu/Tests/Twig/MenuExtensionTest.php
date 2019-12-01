@@ -9,7 +9,7 @@ use Knp\Menu\Util\MenuManipulator;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
-use Twig\Template;
+use Twig\TemplateWrapper;
 
 final class MenuExtensionTest extends TestCase
 {
@@ -194,11 +194,11 @@ final class MenuExtensionTest extends TestCase
         Helper $helper,
         ?MatcherInterface $matcher = null,
         ?MenuManipulator $menuManipulator = null
-    ): Template {
+    ): TemplateWrapper {
         $loader = new ArrayLoader(['index' => $template]);
         $twig = new Environment($loader, ['debug' => true, 'cache' => false]);
         $twig->addExtension(new MenuExtension($helper, $matcher, $menuManipulator));
 
-        return $twig->loadTemplate('index');
+        return $twig->load('index');
     }
 }

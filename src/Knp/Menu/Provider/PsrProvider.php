@@ -29,7 +29,7 @@ class PsrProvider implements MenuProviderInterface
         return $this->container->get($name);
     }
 
-    public function has($name, array $options = []): bool
+    public function has(string $name, array $options = []): bool
     {
         return $this->container->has($name);
     }

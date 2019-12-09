@@ -41,7 +41,7 @@ class ArrayAccessProvider implements MenuProviderInterface
         return $menu;
     }
 
-    public function has($name, array $options = []): bool
+    public function has(string $name, array $options = []): bool
     {
         return isset($this->menuIds[$name]);
     }

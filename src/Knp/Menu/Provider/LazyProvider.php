@@ -39,7 +39,7 @@ class LazyProvider implements MenuProviderInterface
         return $builder($options);
     }
 
-    public function has($name, array $options = []): bool
+    public function has(string $name, array $options = []): bool
     {
         return isset($this->builders[$name]);
     }

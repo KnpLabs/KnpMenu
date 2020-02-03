@@ -188,7 +188,7 @@ class ListRenderer extends Renderer implements RendererInterface
      */
     protected function renderLink(ItemInterface $item, array $options = []): string
     {
-        if ($item->getUri() && (!$item->isCurrent() || $options['currentAsLink'])) {
+        if ($item->getUri() && ((!$item->isCurrent() && !$this->matcher->isCurrent($item)) || $options['currentAsLink'])) {
             $text = $this->renderLinkElement($item, $options);
         } else {
             $text = $this->renderSpanElement($item, $options);

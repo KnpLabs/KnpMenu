@@ -4,6 +4,7 @@ namespace Knp\Menu\Tests\Renderer;
 
 use Knp\Menu\Matcher\Matcher;
 use Knp\Menu\Matcher\MatcherInterface;
+use Knp\Menu\Matcher\Voter\UriVoter;
 use Knp\Menu\MenuFactory;
 use Knp\Menu\MenuItem;
 use Knp\Menu\Tests\MenuTestCase;
@@ -223,11 +224,35 @@ abstract class AbstractRendererTest extends MenuTestCase
         $this->assertEquals($rendered, $this->renderer->render($menu));
     }
 
+    public function testRenderWithCurrentItemAsLinkUsingMatcherWithVoters(): void
+    {
+        $matcher = new Matcher([new UriVoter('/about')]);
+        $this->renderer = $this->createRenderer($matcher);
+
+        $menu = new MenuItem('test', new MenuFactory());
+        $menu->addChild('About', ['uri' => '/about']);
+
+        $rendered = '<ul><li class="current first last"><a href="/about">About</a></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($menu));
+    }
+
     public function testRenderWithCurrentItemNotAsLink(): void
     {
         $menu = new MenuItem('test', new MenuFactory());
         $about = $menu->addChild('About', ['uri' => '/about']);
         $about->setCurrent(true);
+
+        $rendered = '<ul><li class="current first last"><span>About</span></li></ul>';
+        $this->assertEquals($rendered, $this->renderer->render($menu, ['currentAsLink' => false]));
+    }
+
+    public function testRenderWithCurrentItemNotAsLinkUsingMatcherWithVoters(): void
+    {
+        $matcher = new Matcher([new UriVoter('/about')]);
+        $this->renderer = $this->createRenderer($matcher);
+
+        $menu = new MenuItem('test', new MenuFactory());
+        $menu->addChild('About', ['uri' => '/about']);
 
         $rendered = '<ul><li class="current first last"><span>About</span></li></ul>';
         $this->assertEquals($rendered, $this->renderer->render($menu, ['currentAsLink' => false]));

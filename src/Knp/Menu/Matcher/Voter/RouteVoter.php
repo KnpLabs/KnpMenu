@@ -41,9 +41,10 @@ class RouteVoter implements VoterInterface
 
         $routes = (array) $item->getExtra('routes', []);
 
-        foreach ($routes as $testedRoute) {
+        foreach ($routes as $itemKey => $testedRoute) {
             if (\is_string($testedRoute)) {
-                $testedRoute = ['route' => $testedRoute];
+                $itemKey = $itemKey === 'pattern' ? $itemKey : 'route';
+                $testedRoute = [$itemKey => $testedRoute];
             }
 
             if (!\is_array($testedRoute)) {

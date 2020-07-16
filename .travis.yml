@@ -33,8 +33,10 @@ before_install:
 
 install:
     - composer update $COMPOSER_FLAGS
-    - ./vendor/bin/simple-phpunit install
+    - if [[ $TRAVIS_PHP_VERSION != 'nightly' ]]; then ./vendor/bin/simple-phpunit install; fi;
+    - if [[ $TRAVIS_PHP_VERSION == 'nightly' ]]; then ./vendor/bin/phpunit; fi;
 
 script:
     - composer validate --strict --no-check-lock
-    - php ./vendor/bin/simple-phpunit
+    - if [[ $TRAVIS_PHP_VERSION != 'nightly' ]]; then php ./vendor/bin/simple-phpunit; fi;
+    - if [[ $TRAVIS_PHP_VERSION == 'nightly' ]]; then ./vendor/bin/phpunit; fi;

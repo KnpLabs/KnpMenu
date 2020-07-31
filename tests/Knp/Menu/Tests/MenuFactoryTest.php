@@ -18,7 +18,7 @@ final class MenuFactoryTest extends TestCase
             ->willReturn(['uri' => 'foobar']);
         $extension1->expects($this->once())
             ->method('buildItem')
-            ->with($this->isInstanceOf('Knp\Menu\ItemInterface'), $this->containsEqual('foobar'));
+            ->with($this->isInstanceOf('Knp\Menu\ItemInterface'), $this->containsCustom('foobar'));
 
         $factory->addExtension($extension1);
 
@@ -29,7 +29,7 @@ final class MenuFactoryTest extends TestCase
             ->willReturn(['foo' => 'bar']);
         $extension1->expects($this->once())
             ->method('buildItem')
-            ->with($this->isInstanceOf('Knp\Menu\ItemInterface'), $this->containsEqual('foobar'));
+            ->with($this->isInstanceOf('Knp\Menu\ItemInterface'), $this->containsCustom('foobar'));
 
         $factory->addExtension($extension2, 10);
 
@@ -53,5 +53,15 @@ final class MenuFactoryTest extends TestCase
         $this->assertFalse($item->isDisplayed());
         $this->assertFalse($item->getDisplayChildren());
         $this->assertEquals('foo', $item->getLinkAttribute('class'));
+    }
+
+    private function containsCustom($value) {
+        if(method_exists($this, 'contains')) {
+            return $this->contains($value);
+        }
+
+        if(method_exists($this, 'containsEqual')) {
+            return $this->containsEqual($value);
+        }
     }
 }

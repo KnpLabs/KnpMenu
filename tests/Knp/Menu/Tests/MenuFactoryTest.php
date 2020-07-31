@@ -18,7 +18,7 @@ final class MenuFactoryTest extends TestCase
             ->willReturn(['uri' => 'foobar']);
         $extension1->expects($this->once())
             ->method('buildItem')
-            ->with($this->isInstanceOf('Knp\Menu\ItemInterface'), $this->contains('foobar'));
+            ->with($this->isInstanceOf('Knp\Menu\ItemInterface'), $this->containsEqual('foobar'));
 
         $factory->addExtension($extension1);
 
@@ -29,7 +29,7 @@ final class MenuFactoryTest extends TestCase
             ->willReturn(['foo' => 'bar']);
         $extension1->expects($this->once())
             ->method('buildItem')
-            ->with($this->isInstanceOf('Knp\Menu\ItemInterface'), $this->contains('foobar'));
+            ->with($this->isInstanceOf('Knp\Menu\ItemInterface'), $this->containsEqual('foobar'));
 
         $factory->addExtension($extension2, 10);
 

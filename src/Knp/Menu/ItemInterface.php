@@ -195,7 +195,7 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Provides a fluent interface
      *
-     * @param array $order New order of children.
+     * @param array $order new order of children
      *
      * @return ItemInterface
      */

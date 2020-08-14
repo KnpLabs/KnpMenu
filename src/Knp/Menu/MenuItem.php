@@ -380,7 +380,7 @@ class MenuItem implements ItemInterface
 
         foreach ($order as $name) {
             if (!isset($this->children[$name])) {
-                throw new \InvalidArgumentException('Cannot find children named ' . $name);
+                throw new \InvalidArgumentException('Cannot find children named '.$name);
             }
 
             $child = $this->children[$name];

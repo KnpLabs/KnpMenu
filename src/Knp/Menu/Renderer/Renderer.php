@@ -53,7 +53,7 @@ abstract class Renderer
      * @param string           $name  The attribute name
      * @param string|bool|null $value The attribute value
      *
-     * @return string The HTML representation of the HTML key attribute pair.
+     * @return string the HTML representation of the HTML key attribute pair
      */
     private function htmlAttributesCallback(string $name, $value): string
     {

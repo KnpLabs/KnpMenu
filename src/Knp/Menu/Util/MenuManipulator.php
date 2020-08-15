@@ -10,7 +10,7 @@ class MenuManipulator
      * Moves item to specified position. Rearrange siblings accordingly.
      *
      * @param ItemInterface $item
-     * @param int           $position Position to move child to.
+     * @param int           $position position to move child to
      */
     public function moveToPosition(ItemInterface $item, $position): void
     {
@@ -77,8 +77,8 @@ class MenuManipulator
      * the slice is done before this menu.
      *
      * @param ItemInterface $item
-     * @param mixed         $offset Name of child, child object, or numeric offset.
-     * @param mixed         $length Name of child, child object, or numeric length.
+     * @param mixed         $offset name of child, child object, or numeric offset
+     * @param mixed         $length name of child, child object, or numeric length
      *
      * @return ItemInterface
      */
@@ -113,7 +113,7 @@ class MenuManipulator
      * Split menu into two distinct menus.
      *
      * @param ItemInterface $item
-     * @param mixed         $length Name of child, child object, or numeric length.
+     * @param mixed         $length name of child, child object, or numeric length
      *
      * @return array Array with two menus, with "primary" and "secondary" key
      */

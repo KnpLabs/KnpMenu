@@ -54,7 +54,7 @@ class ListRenderer extends Renderer implements RendererInterface
 
     protected function renderList(ItemInterface $item, array $attributes, array $options): string
     {
-        /**
+        /*
          * Return an empty string if any of the following are true:
          *   a) The menu has no children eligible to be displayed
          *   b) The depth is 0
@@ -80,7 +80,7 @@ class ListRenderer extends Renderer implements RendererInterface
      * This method updates the depth for the children.
      *
      * @param ItemInterface $item
-     * @param array         $options The options to render the item.
+     * @param array         $options the options to render the item
      *
      * @return string
      */

@@ -88,7 +88,7 @@ class Helper
      */
     public function render($menu, array $options = [], $renderer = null)
     {
-        $menu = $this->castMenu($menu);
+        $menu = $this->castMenu($menu, $options);
 
         return $this->rendererProvider->get($renderer)->render($menu, $options);
     }
@@ -144,10 +144,11 @@ class Helper
 
     /**
      * @param ItemInterface|array|string $menu
+     * @param array                      $options
      *
      * @return ItemInterface
      */
-    private function castMenu($menu)
+    private function castMenu($menu, $options = [])
     {
         if (!$menu instanceof ItemInterface) {
             $path = [];
@@ -159,7 +160,7 @@ class Helper
                 $menu = \array_shift($path);
             }
 
-            return $this->get($menu, $path);
+            return $this->get($menu, $path, $options);
         }
 
         return $menu;

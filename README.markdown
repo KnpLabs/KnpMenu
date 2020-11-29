@@ -1,7 +1,7 @@
 KnpMenu
 =======
 
-The KnpMenu library provides object oriented menus for PHP 7.
+The KnpMenu library provides object oriented menus for PHP.
 It is used by the [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) for Symfony
 but can now be used stand-alone.
 

@@ -2,21 +2,18 @@
 
 namespace Knp\Menu\Tests\Matcher\Voter;
 
+use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\Voter\RegexVoter;
 use PHPUnit\Framework\TestCase;
 
 final class RegexVoterTest extends TestCase
 {
     /**
-     * @param string $exp
-     * @param string $itemUri
-     * @param bool   $expected
-     *
      * @dataProvider provideData
      */
-    public function testMatching($exp, $itemUri, $expected): void
+    public function testMatching(?string $exp, ?string $itemUri, ?bool $expected): void
     {
-        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $item = $this->getMockBuilder(ItemInterface::class)->getMock();
         $item->expects($this->any())
             ->method('getUri')
             ->willReturn($itemUri);
@@ -26,7 +23,7 @@ final class RegexVoterTest extends TestCase
         $this->assertSame($expected, $voter->matchItem($item));
     }
 
-    public function provideData()
+    public function provideData(): array
     {
         return [
             'no regexp' => [null, 'foo', null],

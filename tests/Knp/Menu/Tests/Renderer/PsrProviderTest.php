@@ -3,13 +3,15 @@
 namespace Knp\Menu\Tests\Renderer;
 
 use Knp\Menu\Renderer\PsrProvider;
+use Knp\Menu\Renderer\RendererInterface;
 use PHPUnit\Framework\TestCase;
+use Psr\Container\ContainerInterface;
 
 final class PsrProviderTest extends TestCase
 {
     public function testHas(): void
     {
-        $container = $this->prophesize('Psr\Container\ContainerInterface');
+        $container = $this->prophesize(ContainerInterface::class);
         $container->has('first')->willReturn(true);
         $container->has('second')->willReturn(true);
         $container->has('third')->willReturn(false);
@@ -22,9 +24,9 @@ final class PsrProviderTest extends TestCase
 
     public function testGetExistentRenderer(): void
     {
-        $renderer = $this->prophesize('Knp\Menu\Renderer\RendererInterface');
+        $renderer = $this->prophesize(RendererInterface::class);
 
-        $container = $this->prophesize('Psr\Container\ContainerInterface');
+        $container = $this->prophesize(ContainerInterface::class);
         $container->has('renderer')->willReturn(true);
         $container->get('renderer')->willReturn($renderer);
 
@@ -34,9 +36,9 @@ final class PsrProviderTest extends TestCase
 
     public function testGetDefaultRenderer(): void
     {
-        $renderer = $this->prophesize('Knp\Menu\Renderer\RendererInterface');
+        $renderer = $this->prophesize(RendererInterface::class);
 
-        $container = $this->prophesize('Psr\Container\ContainerInterface');
+        $container = $this->prophesize(ContainerInterface::class);
         $container->has('default')->willReturn(true);
         $container->get('default')->willReturn($renderer);
 
@@ -48,7 +50,7 @@ final class PsrProviderTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $container = $this->prophesize('Psr\Container\ContainerInterface');
+        $container = $this->prophesize(ContainerInterface::class);
         $container->has('non-existent')->willReturn(false);
 
         $provider = new PsrProvider($container->reveal(), 'default');

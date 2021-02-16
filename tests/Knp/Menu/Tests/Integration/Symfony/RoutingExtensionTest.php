@@ -8,16 +8,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class RoutingExtensionTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        if (!\interface_exists('Symfony\Component\Routing\Generator\UrlGeneratorInterface')) {
-            $this->markTestSkipped('The Symfony Routing component is not available');
-        }
-    }
-
     public function testCreateItemWithRoute(): void
     {
-        $generator = $this->getMockBuilder('Symfony\Component\Routing\Generator\UrlGeneratorInterface')->getMock();
+        $generator = $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
         $generator->expects($this->once())
             ->method('generate')
             ->with('homepage', [], UrlGeneratorInterface::ABSOLUTE_PATH)
@@ -34,7 +27,7 @@ final class RoutingExtensionTest extends TestCase
 
     public function testCreateItemWithRouteAndParameters(): void
     {
-        $generator = $this->getMockBuilder('Symfony\Component\Routing\Generator\UrlGeneratorInterface')->getMock();
+        $generator = $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
         $generator->expects($this->once())
             ->method('generate')
             ->with('homepage', ['id' => 12], UrlGeneratorInterface::ABSOLUTE_PATH)
@@ -50,7 +43,7 @@ final class RoutingExtensionTest extends TestCase
 
     public function testCreateItemWithAbsoluteRoute(): void
     {
-        $generator = $this->getMockBuilder('Symfony\Component\Routing\Generator\UrlGeneratorInterface')->getMock();
+        $generator = $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
         $generator->expects($this->once())
             ->method('generate')
             ->with('homepage', [], UrlGeneratorInterface::ABSOLUTE_URL)
@@ -66,7 +59,7 @@ final class RoutingExtensionTest extends TestCase
 
     public function testCreateItemAppendsRouteUnderExtras(): void
     {
-        $generator = $this->getMockBuilder('Symfony\Component\Routing\Generator\UrlGeneratorInterface')->getMock();
+        $generator = $this->getMockBuilder(UrlGeneratorInterface::class)->getMock();
 
         $extension = new RoutingExtension($generator);
 

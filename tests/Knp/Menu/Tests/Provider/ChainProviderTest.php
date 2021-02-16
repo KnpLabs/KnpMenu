@@ -2,14 +2,16 @@
 
 namespace Knp\Menu\Tests\Provider;
 
+use Knp\Menu\ItemInterface;
 use Knp\Menu\Provider\ChainProvider;
+use Knp\Menu\Provider\MenuProviderInterface;
 use PHPUnit\Framework\TestCase;
 
 final class ChainProviderTest extends TestCase
 {
     public function testHas(): void
     {
-        $innerProvider = $this->getMockBuilder('Knp\Menu\Provider\MenuProviderInterface')->getMock();
+        $innerProvider = $this->getMockBuilder(MenuProviderInterface::class)->getMock();
         $innerProvider->expects($this->at(0))
             ->method('has')
             ->with('first')
@@ -33,8 +35,8 @@ final class ChainProviderTest extends TestCase
 
     public function testGetExistentMenu(): void
     {
-        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
-        $innerProvider = $this->getMockBuilder('Knp\Menu\Provider\MenuProviderInterface')->getMock();
+        $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
+        $innerProvider = $this->getMockBuilder(MenuProviderInterface::class)->getMock();
         $innerProvider->expects($this->any())
             ->method('has')
             ->with('default')
@@ -52,8 +54,8 @@ final class ChainProviderTest extends TestCase
 
     public function testGetWithOptions(): void
     {
-        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
-        $innerProvider = $this->getMockBuilder('Knp\Menu\Provider\MenuProviderInterface')->getMock();
+        $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
+        $innerProvider = $this->getMockBuilder(MenuProviderInterface::class)->getMock();
         $innerProvider->expects($this->any())
             ->method('has')
             ->with('default', ['foo' => 'bar'])
@@ -79,9 +81,9 @@ final class ChainProviderTest extends TestCase
 
     public function testIterator(): void
     {
-        $menu = $this->prophesize('Knp\Menu\ItemInterface');
+        $menu = $this->prophesize(ItemInterface::class);
 
-        $innerProvider = $this->prophesize('Knp\Menu\Provider\MenuProviderInterface');
+        $innerProvider = $this->prophesize(MenuProviderInterface::class);
         $innerProvider->has('foo', [])->willReturn(true);
         $innerProvider->get('foo', [])->willReturn($menu);
 

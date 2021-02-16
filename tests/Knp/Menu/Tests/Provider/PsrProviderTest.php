@@ -2,14 +2,16 @@
 
 namespace Knp\Menu\Tests\Provider;
 
+use Knp\Menu\ItemInterface;
 use Knp\Menu\Provider\PsrProvider;
 use PHPUnit\Framework\TestCase;
+use Psr\Container\ContainerInterface;
 
 final class PsrProviderTest extends TestCase
 {
     public function testHas(): void
     {
-        $container = $this->prophesize('Psr\Container\ContainerInterface');
+        $container = $this->prophesize(ContainerInterface::class);
         $container->has('first')->willReturn(true);
         $container->has('second')->willReturn(true);
         $container->has('third')->willReturn(false);
@@ -22,9 +24,9 @@ final class PsrProviderTest extends TestCase
 
     public function testGetExistentMenu(): void
     {
-        $menu = $this->prophesize('Knp\Menu\ItemInterface');
+        $menu = $this->prophesize(ItemInterface::class);
 
-        $container = $this->prophesize('Psr\Container\ContainerInterface');
+        $container = $this->prophesize(ContainerInterface::class);
         $container->has('menu')->willReturn(true);
         $container->get('menu')->willReturn($menu);
 
@@ -36,7 +38,7 @@ final class PsrProviderTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $container = $this->prophesize('Psr\Container\ContainerInterface');
+        $container = $this->prophesize(ContainerInterface::class);
         $container->has('non-existent')->willReturn(false);
 
         $provider = new PsrProvider($container->reveal());

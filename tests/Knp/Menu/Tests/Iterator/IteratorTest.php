@@ -2,6 +2,7 @@
 
 namespace Knp\Menu\Tests\Iterator;
 
+use Knp\Menu\ItemInterface;
 use Knp\Menu\Iterator\RecursiveItemIterator;
 use Knp\Menu\Tests\MenuTestCase;
 
@@ -20,7 +21,7 @@ final class IteratorTest extends MenuTestCase
     public function testRecursiveIterator(): void
     {
         // Adding an item which does not provide a RecursiveIterator to be sure it works properly.
-        $child = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $child = $this->getMockBuilder(ItemInterface::class)->getMock();
         $child->expects($this->any())
             ->method('getName')
             ->willReturn('Foo');

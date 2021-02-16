@@ -73,7 +73,7 @@ abstract class Renderer
      */
     protected function escape(string $value): string
     {
-        return $this->fixDoubleEscape(\htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, $this->charset));
+        return $this->fixDoubleEscape(\htmlspecialchars($value, \ENT_QUOTES | \ENT_SUBSTITUTE, $this->charset));
     }
 
     /**

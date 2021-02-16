@@ -2,6 +2,7 @@
 
 namespace Knp\Menu\Tests\Twig;
 
+use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\MatcherInterface;
 use Knp\Menu\Twig\Helper;
 use Knp\Menu\Twig\MenuExtension;
@@ -13,16 +14,9 @@ use Twig\TemplateWrapper;
 
 final class MenuExtensionTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        if (!\class_exists(Environment::class)) {
-            $this->markTestSkipped('Twig is not available');
-        }
-    }
-
     public function testRenderMenu(): void
     {
-        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
         $helper = $this->getHelperMock(['render']);
         $helper->expects($this->once())
             ->method('render')
@@ -35,7 +29,7 @@ final class MenuExtensionTest extends TestCase
 
     public function testRenderMenuWithOptions(): void
     {
-        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
         $helper = $this->getHelperMock(['render']);
         $helper->expects($this->once())
             ->method('render')
@@ -48,7 +42,7 @@ final class MenuExtensionTest extends TestCase
 
     public function testRenderMenuWithRenderer(): void
     {
-        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
         $helper = $this->getHelperMock(['render']);
         $helper->expects($this->once())
             ->method('render')
@@ -73,7 +67,7 @@ final class MenuExtensionTest extends TestCase
 
     public function testRetrieveMenuByName(): void
     {
-        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
         $helper = $this->getHelperMock(['get', 'render']);
         $helper->expects($this->once())
             ->method('render')
@@ -103,7 +97,7 @@ final class MenuExtensionTest extends TestCase
 
     public function testPathAsString(): void
     {
-        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
         $helper = $this->getHelperMock(['get']);
         $manipulator = $this->getManipulatorMock(['getPathAsString']);
         $helper->expects($this->any())
@@ -121,7 +115,7 @@ final class MenuExtensionTest extends TestCase
 
     public function testIsCurrent(): void
     {
-        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
         $helper = $this->getHelperMock([]);
         $matcher = $this->getMatcherMock();
         $matcher->expects($this->any())
@@ -135,7 +129,7 @@ final class MenuExtensionTest extends TestCase
 
     public function testIsAncestor(): void
     {
-        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
         $helper = $this->getHelperMock([]);
         $matcher = $this->getMatcherMock();
         $matcher->expects($this->any())
@@ -149,7 +143,7 @@ final class MenuExtensionTest extends TestCase
 
     public function testGetCurrentItem(): void
     {
-        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
         $helper = $this->getHelperMock(['get', 'getCurrentItem']);
         $helper->expects($this->once())
             ->method('get')
@@ -168,7 +162,7 @@ final class MenuExtensionTest extends TestCase
 
     private function getHelperMock(array $methods)
     {
-        return $this->getMockBuilder('Knp\Menu\Twig\Helper')
+        return $this->getMockBuilder(Helper::class)
             ->disableOriginalConstructor()
             ->setMethods($methods)
             ->getMock()
@@ -177,7 +171,7 @@ final class MenuExtensionTest extends TestCase
 
     private function getManipulatorMock(array $methods)
     {
-        return $this->getMockBuilder('Knp\Menu\Util\MenuManipulator')
+        return $this->getMockBuilder(MenuManipulator::class)
             ->disableOriginalConstructor()
             ->setMethods($methods)
             ->getMock()
@@ -186,7 +180,7 @@ final class MenuExtensionTest extends TestCase
 
     private function getMatcherMock()
     {
-        return $this->getMockBuilder('Knp\Menu\Matcher\MatcherInterface')->getMock();
+        return $this->getMockBuilder(MatcherInterface::class)->getMock();
     }
 
     private function getTemplate(

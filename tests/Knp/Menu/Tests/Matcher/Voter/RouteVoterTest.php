@@ -2,6 +2,7 @@
 
 namespace Knp\Menu\Tests\Matcher\Voter;
 
+use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\Voter\RouteVoter;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -9,20 +10,9 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 final class RouteVoterTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        if (!\class_exists('Symfony\Component\HttpFoundation\Request')) {
-            $this->markTestSkipped('The Symfony HttpFoundation component is not available.');
-        }
-    }
-
     public function testMatchingWithoutRequestInStack(): void
     {
-        if (!\class_exists('Symfony\Component\HttpFoundation\RequestStack')) {
-            $this->markTestSkipped('The RequestStack is not available in this version of HttpFoundation.');
-        }
-
-        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $item = $this->getMockBuilder(ItemInterface::class)->getMock();
         $item->expects($this->never())
             ->method('getExtra');
 
@@ -35,7 +25,7 @@ final class RouteVoterTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $item = $this->getMockBuilder(ItemInterface::class)->getMock();
         $item->expects($this->any())
             ->method('getExtra')
             ->with('routes')
@@ -54,16 +44,13 @@ final class RouteVoterTest extends TestCase
     }
 
     /**
-     * @param string       $route
-     * @param array        $parameters
      * @param string|array $itemRoutes
-     * @param bool         $expected
      *
      * @dataProvider provideData
      */
     public function testMatching(?string $route, array $parameters, $itemRoutes, ?bool $expected): void
     {
-        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $item = $this->getMockBuilder(ItemInterface::class)->getMock();
         $item->expects($this->any())
             ->method('getExtra')
             ->with('routes')

@@ -84,16 +84,18 @@ final class ArrayLoaderTest extends TestCase
     }
 
     /**
+     * @param string|array $data
+     *
      * @dataProvider provideSupportingData
      */
-    public function testSupports($data, $expected): void
+    public function testSupports($data, bool $expected): void
     {
         $loader = new ArrayLoader(new MenuFactory());
 
         $this->assertSame($expected, $loader->supports($data));
     }
 
-    public function provideSupportingData()
+    public function provideSupportingData(): array
     {
         return [
             [[], true],

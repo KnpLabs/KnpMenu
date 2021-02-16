@@ -2,6 +2,7 @@
 
 namespace Knp\Menu\Tests\Provider;
 
+use Knp\Menu\ItemInterface;
 use Knp\Menu\Provider\ArrayAccessProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -18,7 +19,7 @@ final class ArrayAccessProviderTest extends TestCase
     public function testGetExistentMenu(): void
     {
         $registry = new \ArrayObject();
-        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
         $registry['menu'] = $menu;
         $provider = new ArrayAccessProvider($registry, ['default' => 'menu']);
         $this->assertSame($menu, $provider->get('default'));
@@ -27,8 +28,8 @@ final class ArrayAccessProviderTest extends TestCase
     public function testGetMenuAsClosure(): void
     {
         $registry = new \ArrayObject();
-        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
-        $registry['menu'] = function ($options, $c) use ($menu) {
+        $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
+        $registry['menu'] = static function (array $options, object $c) use ($menu) {
             $c['options'] = $options;
 
             return $menu;

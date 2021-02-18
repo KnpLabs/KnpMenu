@@ -9,7 +9,7 @@ namespace Knp\Menu;
  * most of the time by default.
  * Originally taken from ioMenuPlugin (http://github.com/weaverryan/ioMenuPlugin)
  *
- * @extends \IteratorAggregate<self>
+ * @extends \IteratorAggregate<string, self>
  */
 interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
 {

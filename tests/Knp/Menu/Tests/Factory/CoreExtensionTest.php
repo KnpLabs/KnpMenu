@@ -74,16 +74,15 @@ final class CoreExtensionTest extends TestCase
         $this->assertEquals('original value', $item->getExtra('test1'));
     }
 
-    private function getExtension()
+    private function getExtension(): CoreExtension
     {
         return new CoreExtension();
     }
 
-    private function createItem($name)
+    private function createItem($name): MenuItem
     {
         $factory = new MenuFactory();
-        $item = new MenuItem($name, $factory);
 
-        return $item;
+        return new MenuItem($name, $factory);
     }
 }

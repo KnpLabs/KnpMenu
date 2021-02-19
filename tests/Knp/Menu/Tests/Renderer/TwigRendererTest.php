@@ -13,14 +13,10 @@ final class TwigRendererTest extends AbstractRendererTest
 {
     public function createRenderer(MatcherInterface $matcher): TwigRenderer
     {
-        if (!\class_exists(Environment::class)) {
-            $this->markTestSkipped('Twig is not available');
-        }
         $loader = new FilesystemLoader(__DIR__.'/../../../../../src/Knp/Menu/Resources/views');
         $environment = new Environment($loader);
-        $renderer = new TwigRenderer($environment, 'knp_menu.html.twig', $matcher, ['compressed' => true]);
 
-        return $renderer;
+        return new TwigRenderer($environment, 'knp_menu.html.twig', $matcher, ['compressed' => true]);
     }
 
     public function testRenderOrderedList(): void

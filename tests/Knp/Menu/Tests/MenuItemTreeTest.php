@@ -2,6 +2,7 @@
 
 namespace Knp\Menu\Tests;
 
+use Knp\Menu\FactoryInterface;
 use Knp\Menu\MenuItem;
 
 final class TestMenuItem extends MenuItem
@@ -51,7 +52,7 @@ final class MenuItemTreeTest extends MenuTestCase
 
     public function testMoveSampleMenuToNewRoot(): void
     {
-        $newRoot = new TestMenuItem('newRoot', $this->getMockBuilder('Knp\Menu\FactoryInterface')->getMock());
+        $newRoot = new TestMenuItem('newRoot', $this->getMockBuilder(FactoryInterface::class)->getMock());
         $newRoot->addChild($this->menu);
 
         $this->assertEquals(1, $this->menu->getLevel());
@@ -123,7 +124,7 @@ final class MenuItemTreeTest extends MenuTestCase
         $this->assertNull($this->menu['Fake']);
 
         $this->menu['New Child'] = 'New Label';
-        $this->assertEquals('Knp\Menu\MenuItem', \get_class($this->menu['New Child']));
+        $this->assertEquals(MenuItem::class, \get_class($this->menu['New Child']));
         $this->assertEquals('New Child', $this->menu['New Child']->getName());
         $this->assertEquals('New Label', $this->menu['New Child']->getLabel());
 
@@ -167,7 +168,7 @@ final class MenuItemTreeTest extends MenuTestCase
 
     public function testAddChildDoesNotUSeTheFactoryIfItem(): void
     {
-        $factory = $this->getMockBuilder('Knp\Menu\FactoryInterface')->getMock();
+        $factory = $this->getMockBuilder(FactoryInterface::class)->getMock();
         $factory->expects($this->never())
             ->method('createItem');
         $menu = new MenuItem('Root li', $factory);
@@ -178,7 +179,7 @@ final class MenuItemTreeTest extends MenuTestCase
     {
         $this->expectException(\LogicException::class);
 
-        $factory = $this->getMockBuilder('Knp\Menu\FactoryInterface')->getMock();
+        $factory = $this->getMockBuilder(FactoryInterface::class)->getMock();
         $menu = new MenuItem('Root li', $factory);
         $child = new MenuItem('Child 3', $factory);
         $menu->addChild($child);

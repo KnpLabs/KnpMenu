@@ -10,7 +10,7 @@ final class LazyProviderTest extends TestCase
 {
     public function testHas(): void
     {
-        $provider = new LazyProvider(['first' => function (): void {}, 'second' => function (): void {}]);
+        $provider = new LazyProvider(['first' => static function (): void {}, 'second' => static function (): void {}]);
         $this->assertTrue($provider->has('first'));
         $this->assertTrue($provider->has('second'));
         $this->assertFalse($provider->has('third'));
@@ -18,7 +18,7 @@ final class LazyProviderTest extends TestCase
 
     public function testGetExistentMenu(): void
     {
-        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
         $provider = new LazyProvider(['default' => function () use ($menu) {
             return $menu;
         }]);
@@ -27,7 +27,7 @@ final class LazyProviderTest extends TestCase
 
     public function testGetMenuAsClosure(): void
     {
-        $menu = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+        $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
         $provider = new LazyProvider(['default' => [function () use ($menu) {
             return new FakeBuilder($menu);
         }, 'build']]);

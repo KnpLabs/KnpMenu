@@ -2,6 +2,7 @@
 
 namespace Knp\Menu\Tests\Util;
 
+use Knp\Menu\ItemInterface;
 use Knp\Menu\MenuFactory;
 use Knp\Menu\MenuItem;
 use Knp\Menu\Tests\MenuTestCase;
@@ -49,9 +50,12 @@ final class MenuManipulatorTest extends MenuTestCase
     }
 
     /**
+     * @param int|string      $offset
+     * @param int|string|null $length
+     *
      * @dataProvider getSliceData
      */
-    public function testSlice($offset, $length, $count, $keys): void
+    public function testSlice($offset, $length, int $count, array $keys): void
     {
         $manipulator = new MenuManipulator();
         $sliced = $manipulator->slice($this->pt1, $offset, $length);
@@ -59,7 +63,7 @@ final class MenuManipulatorTest extends MenuTestCase
         $this->assertEquals($keys, \array_keys($sliced->getChildren()));
     }
 
-    public function getSliceData()
+    public function getSliceData(): array
     {
         $this->setUp();
 
@@ -74,20 +78,22 @@ final class MenuManipulatorTest extends MenuTestCase
     }
 
     /**
+     * @param int|string $length
+     *
      * @dataProvider getSplitData
      */
-    public function testSplit($length, $count, $keys): void
+    public function testSplit($length, int $count, array $keys): void
     {
         $manipulator = new MenuManipulator();
-        $splitted = $manipulator->split($this->pt1, $length);
-        $this->assertArrayHasKey('primary', $splitted);
-        $this->assertArrayHasKey('secondary', $splitted);
-        $this->assertCount($count, $splitted['primary']);
-        $this->assertCount(3 - $count, $splitted['secondary']);
-        $this->assertEquals($keys, \array_keys($splitted['primary']->getChildren()));
+        $split = $manipulator->split($this->pt1, $length);
+        $this->assertArrayHasKey('primary', $split);
+        $this->assertArrayHasKey('secondary', $split);
+        $this->assertCount($count, $split['primary']);
+        $this->assertCount(3 - $count, $split['secondary']);
+        $this->assertEquals($keys, \array_keys($split['primary']->getChildren()));
     }
 
-    public function getSplitData()
+    public function getSplitData(): array
     {
         $this->setUp();
 
@@ -128,13 +134,9 @@ final class MenuManipulatorTest extends MenuTestCase
             $manipulator->getBreadcrumbsArray($this->menu['child'], 'subitem1')
         );
 
-        $item = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
-        $item->expects($this->any())
-            ->method('getLabel')
-            ->willReturn('mock');
-        $item->expects($this->any())
-            ->method('getUri')
-            ->willReturn('foo');
+        $item = $this->getMockBuilder(ItemInterface::class)->getMock();
+        $item->method('getLabel')->willReturn('mock');
+        $item->method('getUri')->willReturn('foo');
 
         $this->assertEquals(
             [
@@ -185,7 +187,7 @@ final class MenuManipulatorTest extends MenuTestCase
         $menu = $factory->createItem('test_menu');
 
         foreach (\range(1, 2) as $i) {
-            $child = $this->getMockBuilder('Knp\Menu\ItemInterface')->getMock();
+            $child = $this->getMockBuilder(ItemInterface::class)->getMock();
             $child->expects($this->any())
                 ->method('getName')
                 ->willReturn('Child '.$i)
@@ -368,15 +370,9 @@ final class MenuManipulatorTest extends MenuTestCase
     }
 
     /**
-     * Create a new MenuItem
-     *
-     * @param string $name
-     * @param string $uri
-     * @param array  $attributes
-     *
-     * @return MenuItem
+     * Create a new MenuItem.
      */
-    private function createMenu(string $name = 'test_menu', string $uri = 'homepage', array $attributes = []): MenuItem
+    private function createMenu(string $name = 'test_menu', string $uri = 'homepage', array $attributes = []): ItemInterface
     {
         $factory = new MenuFactory();
 

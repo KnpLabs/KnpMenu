@@ -8,6 +8,8 @@ namespace Knp\Menu;
  * It roughly represents a single <li> tag and is what you should interact with
  * most of the time by default.
  * Originally taken from ioMenuPlugin (http://github.com/weaverryan/ioMenuPlugin)
+ *
+ * @extends \IteratorAggregate<string, self>
  */
 interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
 {

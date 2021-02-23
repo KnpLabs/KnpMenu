@@ -4,11 +4,11 @@ namespace Knp\Menu\Renderer;
 
 abstract class Renderer
 {
+    /**
+     * @var string
+     */
     protected $charset = 'UTF-8';
 
-    /**
-     * @param string|null $charset
-     */
     public function __construct(?string $charset = null)
     {
         if (null !== $charset) {
@@ -19,10 +19,7 @@ abstract class Renderer
     /**
      * Renders a HTML attribute
      *
-     * @param string      $name
      * @param string|bool $value
-     *
-     * @return string
      */
     protected function renderHtmlAttribute(string $name, $value): string
     {
@@ -37,8 +34,6 @@ abstract class Renderer
      * Renders HTML attributes
      *
      * @param array $attributes
-     *
-     * @return string
      */
     protected function renderHtmlAttributes(array $attributes): string
     {
@@ -66,10 +61,6 @@ abstract class Renderer
 
     /**
      * Escapes an HTML value
-     *
-     * @param string $value
-     *
-     * @return string
      */
     protected function escape(string $value): string
     {
@@ -90,8 +81,6 @@ abstract class Renderer
 
     /**
      * Get the HTML charset
-     *
-     * @return string
      */
     public function getCharset(): string
     {
@@ -100,8 +89,6 @@ abstract class Renderer
 
     /**
      * Set the HTML charset
-     *
-     * @param string $charset
      */
     public function setCharset(string $charset): void
     {

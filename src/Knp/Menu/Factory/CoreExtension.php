@@ -38,8 +38,7 @@ class CoreExtension implements ExtensionInterface
     /**
      * Configures the newly created item with the passed options
      *
-     * @param ItemInterface $item
-     * @param array         $options
+     * @param array $options
      */
     public function buildItem(ItemInterface $item, array $options): void
     {
@@ -62,8 +61,7 @@ class CoreExtension implements ExtensionInterface
      * Configures the newly created item's extras
      * Extras are processed one by one in order not to reset values set by other extensions
      *
-     * @param ItemInterface $item
-     * @param array         $options
+     * @param array $options
      */
     private function buildExtras(ItemInterface $item, array $options): void
     {

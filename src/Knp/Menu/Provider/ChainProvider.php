@@ -6,6 +6,9 @@ use Knp\Menu\ItemInterface;
 
 class ChainProvider implements MenuProviderInterface
 {
+    /**
+     * @var iterable|MenuProviderInterface[]
+     */
     private $providers;
 
     /**

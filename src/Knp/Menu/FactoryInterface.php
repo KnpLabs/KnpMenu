@@ -10,10 +10,7 @@ interface FactoryInterface
     /**
      * Creates a menu item
      *
-     * @param string $name
-     * @param array  $options
-     *
-     * @return ItemInterface
+     * @param array $options
      */
     public function createItem(string $name, array $options = []): ItemInterface;
 }

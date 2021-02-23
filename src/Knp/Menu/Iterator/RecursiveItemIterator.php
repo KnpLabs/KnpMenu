@@ -7,7 +7,7 @@ namespace Knp\Menu\Iterator;
  */
 class RecursiveItemIterator extends \IteratorIterator implements \RecursiveIterator
 {
-    public function hasChildren()
+    public function hasChildren(): bool
     {
         return 0 < \count($this->current());
     }

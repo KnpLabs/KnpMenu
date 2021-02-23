@@ -10,13 +10,18 @@ use Knp\Menu\Matcher\MatcherInterface;
  */
 class ListRenderer extends Renderer implements RendererInterface
 {
+    /**
+     * @var MatcherInterface
+     */
     protected $matcher;
+
+    /**
+     * @var array
+     */
     protected $defaultOptions;
 
     /**
-     * @param MatcherInterface $matcher
-     * @param array            $defaultOptions
-     * @param string|null      $charset
+     * @param array $defaultOptions
      */
     public function __construct(MatcherInterface $matcher, array $defaultOptions = [], ?string $charset = null)
     {
@@ -60,7 +65,7 @@ class ListRenderer extends Renderer implements RendererInterface
          *   b) The depth is 0
          *   c) This menu item has been explicitly set to hide its children
          */
-        if (!$item->hasChildren() || 0 === $options['depth'] || !$item->getDisplayChildren()) {
+        if (0 === $options['depth'] || !$item->hasChildren() || !$item->getDisplayChildren()) {
             return '';
         }
 
@@ -79,20 +84,17 @@ class ListRenderer extends Renderer implements RendererInterface
      * has children).
      * This method updates the depth for the children.
      *
-     * @param ItemInterface $item
-     * @param array         $options the options to render the item
-     *
-     * @return string
+     * @param array $options the options to render the item
      */
     protected function renderChildren(ItemInterface $item, array $options): string
     {
         // render children with a depth - 1
         if (null !== $options['depth']) {
-            $options['depth'] = $options['depth'] - 1;
+            --$options['depth'];
         }
 
         if (null !== $options['matchingDepth'] && $options['matchingDepth'] > 0) {
-            $options['matchingDepth'] = $options['matchingDepth'] - 1;
+            --$options['matchingDepth'];
         }
 
         $html = '';
@@ -109,10 +111,7 @@ class ListRenderer extends Renderer implements RendererInterface
      * This renders the li tag to fit into the parent ul as well as its
      * own nested ul tag if this menu item has children
      *
-     * @param ItemInterface $item
-     * @param array         $options The options to render the item
-     *
-     * @return string
+     * @param array $options The options to render the item
      */
     protected function renderItem(ItemInterface $item, array $options): string
     {
@@ -137,7 +136,7 @@ class ListRenderer extends Renderer implements RendererInterface
             $class[] = $options['lastClass'];
         }
 
-        if ($item->hasChildren() && 0 !== $options['depth']) {
+        if (0 !== $options['depth'] && $item->hasChildren()) {
             if (null !== $options['branch_class'] && $item->getDisplayChildren()) {
                 $class[] = $options['branch_class'];
             }
@@ -183,8 +182,6 @@ class ListRenderer extends Renderer implements RendererInterface
      *
      * @param ItemInterface $item    The item to render the link or label for
      * @param array         $options The options to render the item
-     *
-     * @return string
      */
     protected function renderLink(ItemInterface $item, array $options = []): string
     {
@@ -221,18 +218,16 @@ class ListRenderer extends Renderer implements RendererInterface
      * spacing and line-breaking so that the particular thing being rendered
      * makes up its part in a fully-rendered and spaced menu.
      *
-     * @param string $html    The html to render in an (un)formatted way
-     * @param string $type    The type [ul,link,li] of thing being rendered
-     * @param int    $level
-     * @param array  $options
-     *
-     * @return string
+     * @param string $html The html to render in an (un)formatted way
+     * @param string $type The type [ul,link,li] of thing being rendered
      */
     protected function format(string $html, string $type, int $level, array $options): string
     {
         if ($options['compressed']) {
             return $html;
         }
+
+        $spacing = '';
 
         switch ($type) {
             case 'ul':
@@ -242,9 +237,8 @@ class ListRenderer extends Renderer implements RendererInterface
 
             case 'li':
                 $spacing = $level * 4 - 2;
-                break;
         }
 
-        return \str_repeat(' ', $spacing).$html."\n";
+        return \str_repeat(' ', $spacing).$html.\PHP_EOL;
     }
 }

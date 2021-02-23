@@ -22,8 +22,6 @@ interface RendererInterface
      *
      * @param ItemInterface $item    Menu item
      * @param array         $options some rendering options
-     *
-     * @return string
      */
     public function render(ItemInterface $item, array $options = []): string;
 }

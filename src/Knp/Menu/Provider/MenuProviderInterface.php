@@ -9,10 +9,7 @@ interface MenuProviderInterface
     /**
      * Retrieves a menu by its name
      *
-     * @param string $name
-     * @param array  $options
-     *
-     * @return ItemInterface
+     * @param array $options
      *
      * @throws \InvalidArgumentException if the menu does not exists
      */
@@ -21,10 +18,7 @@ interface MenuProviderInterface
     /**
      * Checks whether a menu exists in this provider
      *
-     * @param string $name
-     * @param array  $options
-     *
-     * @return bool
+     * @param array $options
      */
     public function has(string $name, array $options = []): bool;
 }

@@ -8,6 +8,9 @@ use Knp\Menu\NodeInterface;
 
 class NodeLoader implements LoaderInterface
 {
+    /**
+     * @var FactoryInterface
+     */
     private $factory;
 
     public function __construct(FactoryInterface $factory)

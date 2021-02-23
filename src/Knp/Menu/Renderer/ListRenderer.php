@@ -220,6 +220,7 @@ class ListRenderer extends Renderer implements RendererInterface
      *
      * @param string $html The html to render in an (un)formatted way
      * @param string $type The type [ul,link,li] of thing being rendered
+     * @param array  $options
      */
     protected function format(string $html, string $type, int $level, array $options): string
     {
@@ -239,6 +240,6 @@ class ListRenderer extends Renderer implements RendererInterface
                 $spacing = $level * 4 - 2;
         }
 
-        return \str_repeat(' ', $spacing).$html.\PHP_EOL;
+        return \str_repeat(' ', $spacing).$html."\n";
     }
 }

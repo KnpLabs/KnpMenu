@@ -11,7 +11,7 @@ php:
     - 7.2
     - 7.3
     - 7.4
-    - nightly
+    - 8.0
 
 env:
     global:
@@ -22,21 +22,18 @@ matrix:
     include:
         - php: 7.2
           env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' SYMFONY_DEPRECATIONS_HELPER=weak
-        - php: 7.4
+        - php: 8.0
           env: DEPENDENCIES=dev
         - php: nightly
           env: DEPENDENCIES='dev'
 
 before_install:
     - if [ "$DEPENDENCIES" = "dev" ]; then perl -pi -e 's/^}$/,"minimum-stability":"dev"}/' composer.json; fi;
-    - if [[ $TRAVIS_PHP_VERSION == 'nightly' ]]; then composer config platform.php 7.4.99; composer config minimum-stability dev; composer remove symfony/phpunit-bridge; composer require phpunit/php-code-coverage:^9.0; composer require phpunit/phpunit:^9.3; fi;
 
 install:
     - composer update $COMPOSER_FLAGS
-    - if [[ $TRAVIS_PHP_VERSION != 'nightly' ]]; then ./vendor/bin/simple-phpunit install; fi;
-    - if [[ $TRAVIS_PHP_VERSION == 'nightly' ]]; then ./vendor/bin/phpunit; fi;
+    - ./vendor/bin/simple-phpunit install
 
 script:
     - composer validate --strict --no-check-lock
-    - if [[ $TRAVIS_PHP_VERSION != 'nightly' ]]; then php ./vendor/bin/simple-phpunit; fi;
-    - if [[ $TRAVIS_PHP_VERSION == 'nightly' ]]; then ./vendor/bin/phpunit; fi;
+    - ./vendor/bin/simple-phpunit

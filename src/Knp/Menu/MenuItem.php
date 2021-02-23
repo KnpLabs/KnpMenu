@@ -434,7 +434,7 @@ class MenuItem implements ItemInterface
 
         if (isset($this->children[$name])) {
             // unset the child and reset it so it looks independent
-            $this->children[$name]->setParent();
+            $this->children[$name]->setParent(null);
             unset($this->children[$name]);
         }
 

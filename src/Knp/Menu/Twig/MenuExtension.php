@@ -16,11 +16,8 @@ class MenuExtension extends AbstractExtension
     private $matcher;
     private $menuManipulator;
 
-    public function __construct(
-        Helper $helper,
-        ?MatcherInterface $matcher = null,
-        ?MenuManipulator $menuManipulator = null
-    ) {
+    public function __construct(Helper $helper, ?MatcherInterface $matcher = null, ?MenuManipulator $menuManipulator = null)
+    {
         $this->helper = $helper;
         $this->matcher = $matcher;
         $this->menuManipulator = $menuManipulator;

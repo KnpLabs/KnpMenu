@@ -10,7 +10,14 @@ use Knp\Menu\Matcher\Voter\VoterInterface;
  */
 class Matcher implements MatcherInterface
 {
+    /**
+     * @var \SplObjectStorage
+     */
     private $cache;
+
+    /**
+     * @var iterable|VoterInterface[]
+     */
     private $voters;
 
     /**

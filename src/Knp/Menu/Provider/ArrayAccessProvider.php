@@ -13,7 +13,14 @@ use Knp\Menu\ItemInterface;
  */
 class ArrayAccessProvider implements MenuProviderInterface
 {
+    /**
+     * @var \ArrayAccess
+     */
     private $registry;
+
+    /**
+     * @var array
+     */
     private $menuIds;
 
     /**
@@ -35,7 +42,7 @@ class ArrayAccessProvider implements MenuProviderInterface
         $menu = $this->registry[$this->menuIds[$name]];
 
         if (\is_callable($menu)) {
-            $menu = \call_user_func($menu, $options, $this->registry);
+            $menu = $menu($options, $this->registry);
         }
 
         return $menu;

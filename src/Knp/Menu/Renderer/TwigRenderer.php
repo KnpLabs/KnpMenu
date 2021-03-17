@@ -12,17 +12,26 @@ class TwigRenderer implements RendererInterface
      * @var Environment
      */
     private $environment;
+
+    /**
+     * @var MatcherInterface
+     */
     private $matcher;
+
+    /**
+     * @var array
+     */
     private $defaultOptions;
 
     /**
-     * @param Environment      $environment
-     * @param string           $template
-     * @param MatcherInterface $matcher
-     * @param array            $defaultOptions
+     * @param array $defaultOptions
      */
-    public function __construct(Environment $environment, $template, MatcherInterface $matcher, array $defaultOptions = [])
-    {
+    public function __construct(
+        Environment $environment,
+        string $template,
+        MatcherInterface $matcher,
+        array $defaultOptions = []
+    ) {
         $this->environment = $environment;
         $this->matcher = $matcher;
         $this->defaultOptions = \array_merge([

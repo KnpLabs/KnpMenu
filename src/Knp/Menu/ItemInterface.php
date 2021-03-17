@@ -24,18 +24,12 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Provides a fluent interface
      *
-     * @param string $name
-     *
-     * @return ItemInterface
-     *
      * @throws \InvalidArgumentException if the name is already used by a sibling
      */
     public function setName(string $name): self;
 
     /**
      * Get the uri for a menu item
-     *
-     * @return string|null
      */
     public function getUri(): ?string;
 
@@ -45,8 +39,6 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * Provides a fluent interface
      *
      * @param string|null $uri The uri to set on this menu item
-     *
-     * @return ItemInterface
      */
     public function setUri(?string $uri): self;
 
@@ -54,8 +46,6 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * Returns the label that will be used to render this menu item
      *
      * Defaults to the name of no label was specified
-     *
-     * @return string|null
      */
     public function getLabel(): ?string;
 
@@ -63,8 +53,6 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * Provides a fluent interface
      *
      * @param string|null $label The text to use when rendering this menu item
-     *
-     * @return ItemInterface
      */
     public function setLabel(?string $label): self;
 
@@ -144,17 +132,11 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * Set whether or not this menu item should show its children
      *
      * Provides a fluent interface
-     *
-     * @param bool $bool
-     *
-     * @return ItemInterface
      */
     public function setDisplayChildren(bool $bool): self;
 
     /**
      * Whether or not to display this menu item
-     *
-     * @return bool
      */
     public function isDisplayed(): bool;
 
@@ -162,8 +144,6 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * Set whether or not this menu should be displayed
      *
      * Provides a fluent interface
-     *
-     * @param bool $bool
      *
      * @return ItemInterface
      */
@@ -177,8 +157,6 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * @param ItemInterface|string $child   An ItemInterface instance or the name of a new item to create
      * @param array                $options If creating a new item, the options passed to the factory for the item
      *
-     * @return ItemInterface
-     *
      * @throws \InvalidArgumentException if the item is already in a tree
      */
     public function addChild($child, array $options = []): self;
@@ -187,8 +165,6 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * Returns the child menu identified by the given name
      *
      * @param string $name Then name of the child menu to return
-     *
-     * @return ItemInterface|null
      */
     public function getChild(string $name): ?self;
 
@@ -198,15 +174,11 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * Provides a fluent interface
      *
      * @param array $order new order of children
-     *
-     * @return ItemInterface
      */
     public function reorderChildren(array $order): self;
 
     /**
      * Makes a deep copy of menu tree. Every item is copied as another object.
-     *
-     * @return ItemInterface
      */
     public function copy(): self;
 
@@ -214,38 +186,25 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * Returns the level of this menu item
      *
      * The root menu item is 0, followed by 1, 2, etc
-     *
-     * @return int
      */
     public function getLevel(): int;
 
     /**
      * Returns the root ItemInterface of this menu tree
-     *
-     * @return ItemInterface
      */
     public function getRoot(): self;
 
     /**
      * Returns whether or not this menu item is the root menu item
-     *
-     * @return bool
      */
     public function isRoot(): bool;
 
-    /**
-     * @return ItemInterface|null
-     */
     public function getParent(): ?self;
 
     /**
      * Used internally when adding and removing children
      *
      * Provides a fluent interface
-     *
-     * @param ItemInterface|null $parent
-     *
-     * @return ItemInterface
      */
     public function setParent(?self $parent = null): self;
 
@@ -260,8 +219,6 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * Provides a fluent interface
      *
      * @param array $children An array of ItemInterface objects
-     *
-     * @return ItemInterface
      */
     public function setChildren(array $children): self;
 
@@ -271,19 +228,11 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * Provides a fluent interface
      *
      * @param ItemInterface|string $name The name of ItemInterface instance or the ItemInterface to remove
-     *
-     * @return ItemInterface
      */
     public function removeChild($name): self;
 
-    /**
-     * @return ItemInterface
-     */
     public function getFirstChild(): self;
 
-    /**
-     * @return ItemInterface
-     */
     public function getLastChild(): self;
 
     /**
@@ -291,8 +240,6 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      *
      * This menu MAY have children, but this will return false if the current
      * user does not have access to view any of those items
-     *
-     * @return bool
      */
     public function hasChildren(): bool;
 
@@ -304,29 +251,21 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * Provides a fluent interface
      *
      * @param bool|null $bool Specify that this menu item is current
-     *
-     * @return ItemInterface
      */
     public function setCurrent(?bool $bool): self;
 
     /**
      * Gets whether or not this menu item is "current".
-     *
-     * @return bool|null
      */
     public function isCurrent(): ?bool;
 
     /**
      * Whether this menu item is last in its parent
-     *
-     * @return bool
      */
     public function isLast(): bool;
 
     /**
      * Whether this menu item is first in its parent
-     *
-     * @return bool
      */
     public function isFirst(): bool;
 
@@ -336,8 +275,6 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      *
      * This returns true if this is the first child that would be rendered
      * for the current user
-     *
-     * @return bool
      */
     public function actsLikeFirst(): bool;
 
@@ -347,8 +284,6 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      *
      * This returns true if this is the last child that would be rendered
      * for the current user
-     *
-     * @return bool
      */
     public function actsLikeLast(): bool;
 }

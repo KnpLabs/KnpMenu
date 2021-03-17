@@ -16,11 +16,6 @@ class RouteVoter implements VoterInterface
      */
     private $requestStack;
 
-    /**
-     * @var Request|null
-     */
-    private $request;
-
     public function __construct(RequestStack $requestStack)
     {
         $this->requestStack = $requestStack;

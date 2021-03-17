@@ -8,11 +8,14 @@ use Knp\Menu\ItemInterface;
  * A menu provider building menus lazily thanks to builder callables.
  *
  * Builders can either be callables or a factory for an object callable
- * represented as array(Closure, method), where the Closure gets called
+ * represented as [Closure, method], where the Closure gets called
  * to instantiate the object.
  */
 class LazyProvider implements MenuProviderInterface
 {
+    /**
+     * @var array
+     */
     private $builders;
 
     public function __construct(array $builders)

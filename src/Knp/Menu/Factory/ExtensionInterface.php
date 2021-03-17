@@ -18,8 +18,7 @@ interface ExtensionInterface
     /**
      * Configures the item with the passed options
      *
-     * @param ItemInterface $item
-     * @param array         $options
+     * @param array $options
      */
     public function buildItem(ItemInterface $item, array $options): void;
 }

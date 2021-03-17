@@ -11,6 +11,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class RoutingExtension implements ExtensionInterface
 {
+    /**
+     * @var UrlGeneratorInterface
+     */
     private $generator;
 
     public function __construct(UrlGeneratorInterface $generator)
@@ -21,7 +24,7 @@ class RoutingExtension implements ExtensionInterface
     public function buildOptions(array $options = []): array
     {
         if (!empty($options['route'])) {
-            $params = isset($options['routeParameters']) ? $options['routeParameters'] : [];
+            $params = $options['routeParameters'] ?? [];
             $absolute = (isset($options['routeAbsolute']) && $options['routeAbsolute']) ? UrlGeneratorInterface::ABSOLUTE_URL : UrlGeneratorInterface::ABSOLUTE_PATH;
             $options['uri'] = $this->generator->generate($options['route'], $params, $absolute);
 

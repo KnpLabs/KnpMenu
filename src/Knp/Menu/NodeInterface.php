@@ -11,8 +11,6 @@ interface NodeInterface
      * Get the name of the node
      *
      * Each child of a node must have a unique name
-     *
-     * @return string
      */
     public function getName(): string;
 

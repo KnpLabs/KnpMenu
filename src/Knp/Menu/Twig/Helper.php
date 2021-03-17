@@ -18,14 +18,12 @@ class Helper
     private $menuManipulator;
     private $matcher;
 
-    /**
-     * @param RendererProviderInterface  $rendererProvider
-     * @param MenuProviderInterface|null $menuProvider
-     * @param MenuManipulator|null       $menuManipulator
-     * @param MatcherInterface|null      $matcher
-     */
-    public function __construct(RendererProviderInterface $rendererProvider, MenuProviderInterface $menuProvider = null, MenuManipulator $menuManipulator = null, MatcherInterface $matcher = null)
-    {
+    public function __construct(
+        RendererProviderInterface $rendererProvider,
+        ?MenuProviderInterface $menuProvider = null,
+        ?MenuManipulator $menuManipulator = null,
+        ?MatcherInterface $matcher = null
+    ) {
         $this->rendererProvider = $rendererProvider;
         $this->menuProvider = $menuProvider;
         $this->menuManipulator = $menuManipulator;
@@ -39,13 +37,11 @@ class Helper
      * @param array                $path
      * @param array                $options
      *
-     * @return ItemInterface
-     *
      * @throws \BadMethodCallException   when there is no menu provider and the menu is given by name
      * @throws \LogicException
      * @throws \InvalidArgumentException when the path is invalid
      */
-    public function get($menu, array $path = [], array $options = [])
+    public function get($menu, array $path = [], array $options = []): ItemInterface
     {
         if (!$menu instanceof ItemInterface) {
             if (null === $this->menuProvider) {
@@ -80,13 +76,10 @@ class Helper
      *
      * @param ItemInterface|string|array $menu
      * @param array                      $options
-     * @param string                     $renderer
-     *
-     * @return string
      *
      * @throws \InvalidArgumentException
      */
-    public function render($menu, array $options = [], $renderer = null)
+    public function render($menu, array $options = [], ?string $renderer = null): string
     {
         $menu = $this->castMenu($menu);
 
@@ -113,7 +106,7 @@ class Helper
      *
      * @return array
      */
-    public function getBreadcrumbsArray($menu, $subItem = null)
+    public function getBreadcrumbsArray($menu, $subItem = null): array
     {
         if (null === $this->menuManipulator) {
             throw new \BadMethodCallException('The menu manipulator must be set to get the breadcrumbs array');
@@ -128,10 +121,8 @@ class Helper
      * Returns the current item of a menu.
      *
      * @param ItemInterface|array|string $menu
-     *
-     * @return ItemInterface|null
      */
-    public function getCurrentItem($menu)
+    public function getCurrentItem($menu): ?ItemInterface
     {
         if (null === $this->matcher) {
             throw new \BadMethodCallException('The matcher must be set to get the current item of a menu');
@@ -144,10 +135,8 @@ class Helper
 
     /**
      * @param ItemInterface|array|string $menu
-     *
-     * @return ItemInterface
      */
-    private function castMenu($menu)
+    private function castMenu($menu): ItemInterface
     {
         if (!$menu instanceof ItemInterface) {
             $path = [];
@@ -165,12 +154,7 @@ class Helper
         return $menu;
     }
 
-    /**
-     * @param ItemInterface $item
-     *
-     * @return ItemInterface|null
-     */
-    private function retrieveCurrentItem(ItemInterface $item)
+    private function retrieveCurrentItem(ItemInterface $item): ?ItemInterface
     {
         if ($this->matcher->isCurrent($item)) {
             return $item;

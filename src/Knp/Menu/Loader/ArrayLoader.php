@@ -12,6 +12,9 @@ use Knp\Menu\ItemInterface;
  */
 class ArrayLoader implements LoaderInterface
 {
+    /**
+     * @var FactoryInterface
+     */
     private $factory;
 
     public function __construct(FactoryInterface $factory)
@@ -36,12 +39,10 @@ class ArrayLoader implements LoaderInterface
     /**
      * @param array       $data
      * @param string|null $name (the name of the item, used only if there is no name in the data themselves)
-     *
-     * @return ItemInterface
      */
     private function fromArray(array $data, ?string $name = null): ItemInterface
     {
-        $name = isset($data['name']) ? $data['name'] : $name;
+        $name = $data['name'] ?? $name;
 
         if (isset($data['children'])) {
             $children = $data['children'];
@@ -52,8 +53,8 @@ class ArrayLoader implements LoaderInterface
 
         $item = $this->factory->createItem($name, $data);
 
-        foreach ($children as $name => $child) {
-            $item->addChild($this->fromArray($child, $name));
+        foreach ($children as $childName => $child) {
+            $item->addChild($this->fromArray($child, $childName));
         }
 
         return $item;

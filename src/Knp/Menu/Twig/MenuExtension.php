@@ -16,7 +16,7 @@ class MenuExtension extends AbstractExtension
     private $matcher;
     private $menuManipulator;
 
-    public function __construct(Helper $helper, MatcherInterface $matcher = null, MenuManipulator $menuManipulator = null)
+    public function __construct(Helper $helper, ?MatcherInterface $matcher = null, ?MenuManipulator $menuManipulator = null)
     {
         $this->helper = $helper;
         $this->matcher = $matcher;
@@ -52,10 +52,6 @@ class MenuExtension extends AbstractExtension
      * Retrieves an item following a path in the tree.
      *
      * @param ItemInterface|string $menu
-     * @param array                $path
-     * @param array                $options
-     *
-     * @return ItemInterface
      */
     public function get($menu, array $path = [], array $options = []): ItemInterface
     {
@@ -67,11 +63,8 @@ class MenuExtension extends AbstractExtension
      *
      * @param ItemInterface|string|array $menu
      * @param array                      $options
-     * @param string                     $renderer
-     *
-     * @return string
      */
-    public function render($menu, array $options = [], $renderer = null): string
+    public function render($menu, array $options = [], ?string $renderer = null): string
     {
         return $this->helper->render($menu, $options, $renderer);
     }
@@ -93,8 +86,6 @@ class MenuExtension extends AbstractExtension
      * Returns the current item of a menu.
      *
      * @param ItemInterface|string $menu
-     *
-     * @return ItemInterface
      */
     public function getCurrentItem($menu): ItemInterface
     {
@@ -113,13 +104,8 @@ class MenuExtension extends AbstractExtension
      * A string representation of this menu item
      *
      * e.g. Top Level > Second Level > This menu
-     *
-     * @param ItemInterface $menu
-     * @param string        $separator
-     *
-     * @return string
      */
-    public function pathAsString(ItemInterface $menu, $separator = ' > '): string
+    public function pathAsString(ItemInterface $menu, string $separator = ' > '): string
     {
         if (null === $this->menuManipulator) {
             throw new \BadMethodCallException('The menu manipulator must be set to get the breadcrumbs array');
@@ -130,10 +116,6 @@ class MenuExtension extends AbstractExtension
 
     /**
      * Checks whether an item is current.
-     *
-     * @param ItemInterface $item
-     *
-     * @return bool
      */
     public function isCurrent(ItemInterface $item): bool
     {
@@ -147,10 +129,7 @@ class MenuExtension extends AbstractExtension
     /**
      * Checks whether an item is the ancestor of a current item.
      *
-     * @param ItemInterface $item
-     * @param int|null      $depth The max depth to look for the item
-     *
-     * @return bool
+     * @param int|null $depth The max depth to look for the item
      */
     public function isAncestor(ItemInterface $item, ?int $depth = null): bool
     {

@@ -9,10 +9,9 @@ class MenuManipulator
     /**
      * Moves item to specified position. Rearrange siblings accordingly.
      *
-     * @param ItemInterface $item
-     * @param int           $position position to move child to
+     * @param int $position position to move child to
      */
-    public function moveToPosition(ItemInterface $item, $position): void
+    public function moveToPosition(ItemInterface $item, int $position): void
     {
         $this->moveChildToPosition($item->getParent(), $item, $position);
     }
@@ -20,11 +19,10 @@ class MenuManipulator
     /**
      * Moves child to specified position. Rearrange other children accordingly.
      *
-     * @param ItemInterface $item
      * @param ItemInterface $child    Child to move
      * @param int           $position Position to move child to
      */
-    public function moveChildToPosition(ItemInterface $item, ItemInterface $child, $position): void
+    public function moveChildToPosition(ItemInterface $item, ItemInterface $child, int $position): void
     {
         $name = $child->getName();
         $order = \array_keys($item->getChildren());
@@ -40,8 +38,6 @@ class MenuManipulator
 
     /**
      * Moves item to first position. Rearrange siblings accordingly.
-     *
-     * @param ItemInterface $item
      */
     public function moveToFirstPosition(ItemInterface $item): void
     {
@@ -50,8 +46,6 @@ class MenuManipulator
 
     /**
      * Moves item to last position. Rearrange siblings accordingly.
-     *
-     * @param ItemInterface $item
      */
     public function moveToLastPosition(ItemInterface $item): void
     {
@@ -76,13 +70,10 @@ class MenuManipulator
      * Note: when using a child as limit, it will not be included in the returned menu.
      * the slice is done before this menu.
      *
-     * @param ItemInterface $item
-     * @param mixed         $offset name of child, child object, or numeric offset
-     * @param mixed         $length name of child, child object, or numeric length
-     *
-     * @return ItemInterface
+     * @param mixed $offset name of child, child object, or numeric offset
+     * @param mixed $length name of child, child object, or numeric length
      */
-    public function slice(ItemInterface $item, $offset, $length = null)
+    public function slice(ItemInterface $item, $offset, $length = null): ItemInterface
     {
         $names = \array_keys($item->getChildren());
         if ($offset instanceof ItemInterface) {
@@ -112,12 +103,11 @@ class MenuManipulator
     /**
      * Split menu into two distinct menus.
      *
-     * @param ItemInterface $item
-     * @param mixed         $length name of child, child object, or numeric length
+     * @param mixed $length name of child, child object, or numeric length
      *
      * @return array Array with two menus, with "primary" and "secondary" key
      */
-    public function split(ItemInterface $item, $length)
+    public function split(ItemInterface $item, $length): array
     {
         return [
             'primary' => $this->slice($item, 0, $length),
@@ -129,13 +119,11 @@ class MenuManipulator
      * Calls a method recursively on all of the children of this item
      *
      * @example
-     * $menu->callRecursively('setShowChildren', array(false));
+     * $menu->callRecursively('setShowChildren', [false]);
      *
-     * @param ItemInterface $item
-     * @param string        $method
-     * @param array         $arguments
+     * @param array $arguments
      */
-    public function callRecursively(ItemInterface $item, $method, $arguments = []): void
+    public function callRecursively(ItemInterface $item, string $method, array $arguments = []): void
     {
         $item->$method(...$arguments);
 
@@ -148,13 +136,8 @@ class MenuManipulator
      * A string representation of this menu item
      *
      * e.g. Top Level > Second Level > This menu
-     *
-     * @param ItemInterface $item
-     * @param string        $separator
-     *
-     * @return string
      */
-    public function getPathAsString(ItemInterface $item, $separator = ' > ')
+    public function getPathAsString(ItemInterface $item, string $separator = ' > '): string
     {
         $children = [];
         $obj = $item;
@@ -167,12 +150,11 @@ class MenuManipulator
     }
 
     /**
-     * @param ItemInterface $item
-     * @param int|null      $depth the depth until which children should be exported (null means unlimited)
+     * @param int|null $depth the depth until which children should be exported (null means unlimited)
      *
      * @return array
      */
-    public function toArray(ItemInterface $item, $depth = null)
+    public function toArray(ItemInterface $item, ?int $depth = null): array
     {
         $array = [
             'name' => $item->getName(),
@@ -211,18 +193,17 @@ class MenuManipulator
      * The subItem can be one of the following forms
      *   * 'subItem'
      *   * ItemInterface object
-     *   * array('subItem' => '@homepage')
-     *   * array('subItem1', 'subItem2')
-     *   * array(array('label' => 'subItem1', 'url' => '@homepage'), array('label' => 'subItem2'))
+     *   * ['subItem' => '@homepage']
+     *   * ['subItem1', 'subItem2']
+     *   * [['label' => 'subItem1', 'url' => '@homepage'], ['label' => 'subItem2']]
      *
-     * @param ItemInterface $item
-     * @param mixed         $subItem A string or array to append onto the end of the array
+     * @param mixed $subItem A string or array to append onto the end of the array
      *
      * @return array
      *
      * @throws \InvalidArgumentException if an element of the subItem is invalid
      */
-    public function getBreadcrumbsArray(ItemInterface $item, $subItem = null)
+    public function getBreadcrumbsArray(ItemInterface $item, $subItem = null): array
     {
         $breadcrumbs = $this->buildBreadcrumbsArray($item);
 
@@ -284,7 +265,7 @@ class MenuManipulator
         return $breadcrumbs;
     }
 
-    private function buildBreadcrumbsArray(ItemInterface $item)
+    private function buildBreadcrumbsArray(ItemInterface $item): array
     {
         $breadcrumb = [];
 
@@ -295,7 +276,7 @@ class MenuManipulator
         return \array_reverse($breadcrumb);
     }
 
-    private function getBreadcrumbsItem(ItemInterface $item)
+    private function getBreadcrumbsItem(ItemInterface $item): array
     {
         return [
             'label' => $item->getLabel(),

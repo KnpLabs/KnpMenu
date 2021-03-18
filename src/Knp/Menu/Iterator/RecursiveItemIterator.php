@@ -9,6 +9,14 @@ namespace Knp\Menu\Iterator;
  */
 class RecursiveItemIterator extends \IteratorIterator implements \RecursiveIterator
 {
+    /**
+     * @param \Traversable<string, \Knp\Menu\ItemInterface> $iterator
+     */
+    final public function __construct(\Traversable $iterator)
+    {
+        parent::__construct($iterator);
+    }
+
     public function hasChildren(): bool
     {
         return 0 < \count($this->current());

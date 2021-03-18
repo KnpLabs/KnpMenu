@@ -70,7 +70,7 @@ class MenuManipulator
      * Note: when using a child as limit, it will not be included in the returned menu.
      * the slice is done before this menu.
      *
-     * @param mixed $offset name of child, child object, or numeric offset
+     * @param mixed                    $offset name of child, child object, or numeric offset
      * @param string|int|ItemInterface $length name of child, child object, or numeric length
      */
     public function slice(ItemInterface $item, $offset, $length = null): ItemInterface

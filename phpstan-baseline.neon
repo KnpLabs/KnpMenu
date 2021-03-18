@@ -10,13 +10,3 @@ parameters:
 			count: 1
 			path: src/Knp/Menu/Iterator/RecursiveItemIterator.php
 
-		-
-			message: "#^Call to function method_exists\\(\\) with \\$this\\(Knp\\\\Menu\\\\Tests\\\\MenuFactoryTest\\) and 'contains' will always evaluate to false\\.$#"
-			count: 1
-			path: tests/Knp/Menu/Tests/MenuFactoryTest.php
-
-		-
-			message: "#^Parameter \\#1 \\$object of function get_class expects object, string given\\.$#"
-			count: 1
-			path: tests/Knp/Menu/Tests/MenuItemTreeTest.php
-

@@ -9,6 +9,7 @@ namespace Knp\Menu;
  * most of the time by default.
  * Originally taken from ioMenuPlugin (http://github.com/weaverryan/ioMenuPlugin)
  *
+ * @extends \ArrayAccess<string, self|string>
  * @extends \IteratorAggregate<string, self>
  */
 interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
@@ -138,8 +139,8 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
     public function setLabelAttributes(array $labelAttributes): self;
 
     /**
-     * @param string     $name    The name of the attribute to return
-     * @param mixed|null $default The value to return if the attribute doesn't exist
+     * @param string $name    The name of the attribute to return
+     * @param mixed  $default The value to return if the attribute doesn't exist
      *
      * @return mixed
      */

@@ -103,7 +103,7 @@ class MenuManipulator
     /**
      * Split menu into two distinct menus.
      *
-     * @param string|int|object $length name of child, child object, or numeric length
+     * @param string|int|ItemInterface $length name of child, child object, or numeric length
      *
      * @return array<string, mixed> Array with two menus, with "primary" and "secondary" key
      */
@@ -200,6 +200,7 @@ class MenuManipulator
      * @param string|ItemInterface|array<int|string, mixed>|\Traversable<mixed> $subItem A string or array to append onto the end of the array
      *
      * @return array<int, array<string, mixed>>
+     * @phpstan-return list<array{label: string, uri: string|null, item: ItemInterface|null}>
      *
      * @throws \InvalidArgumentException if an element of the subItem is invalid
      */
@@ -267,6 +268,7 @@ class MenuManipulator
 
     /**
      * @return array<int, array<string, string|ItemInterface>>
+     * @phpstan-return list<array{label: string, uri: string|null, item: ItemInterface|null}>
      */
     private function buildBreadcrumbsArray(ItemInterface $item): array
     {
@@ -281,6 +283,7 @@ class MenuManipulator
 
     /**
      * @return array<string, string|ItemInterface>
+     * @phpstan-return array{label: string|null, uri: string|null, item: ItemInterface}
      */
     private function getBreadcrumbsItem(ItemInterface $item): array
     {

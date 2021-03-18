@@ -5,7 +5,7 @@ namespace Knp\Menu\Iterator;
 /**
  * Recursive iterator iterating on an item
  *
- * @extends \IteratorIterator<string, \Knp\Menu\ItemInterface, \Traversable<string|int, \Knp\Menu\ItemInterface|null>>
+ * @extends \IteratorIterator<string, \Knp\Menu\ItemInterface, \Traversable<string|int, \Knp\Menu\ItemInterface>>
  */
 class RecursiveItemIterator extends \IteratorIterator implements \RecursiveIterator
 {

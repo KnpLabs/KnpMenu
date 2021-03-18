@@ -1,12 +1,7 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Interface Knp\\\\Menu\\\\ItemInterface extends generic interface ArrayAccess but does not specify its types\\: TKey, TValue$#"
-			count: 1
-			path: src/Knp/Menu/ItemInterface.php
-
-		-
-			message: "#^Type Traversable\\<int\\|string, Knp\\\\Menu\\\\ItemInterface\\|null\\> in generic type IteratorIterator\\<string, Knp\\\\Menu\\\\ItemInterface, Traversable\\<int\\|string, Knp\\\\Menu\\\\ItemInterface\\|null\\>\\> in PHPDoc tag @extends is not subtype of template type TIterator of Traversable\\<string, Knp\\\\Menu\\\\ItemInterface\\> of class IteratorIterator\\.$#"
+			message: "#^Type Traversable\\<int\\|string, Knp\\\\Menu\\\\ItemInterface\\> in generic type IteratorIterator\\<string, Knp\\\\Menu\\\\ItemInterface, Traversable\\<int\\|string, Knp\\\\Menu\\\\ItemInterface\\>\\> in PHPDoc tag @extends is not subtype of template type TIterator of Traversable\\<string, Knp\\\\Menu\\\\ItemInterface\\> of class IteratorIterator\\.$#"
 			count: 1
 			path: src/Knp/Menu/Iterator/RecursiveItemIterator.php
 
@@ -24,34 +19,4 @@ parameters:
 			message: "#^Parameter \\#1 \\$object of function get_class expects object, string given\\.$#"
 			count: 1
 			path: tests/Knp/Menu/Tests/MenuItemTreeTest.php
-
-		-
-			message: "#^Call to an undefined method Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:has\\(\\)\\.$#"
-			count: 1
-			path: tests/Knp/Menu/Tests/Provider/ChainProviderTest.php
-
-		-
-			message: "#^Call to an undefined method Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:get\\(\\)\\.$#"
-			count: 1
-			path: tests/Knp/Menu/Tests/Provider/ChainProviderTest.php
-
-		-
-			message: "#^Call to an undefined method Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:has\\(\\)\\.$#"
-			count: 5
-			path: tests/Knp/Menu/Tests/Provider/PsrProviderTest.php
-
-		-
-			message: "#^Call to an undefined method Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:get\\(\\)\\.$#"
-			count: 1
-			path: tests/Knp/Menu/Tests/Provider/PsrProviderTest.php
-
-		-
-			message: "#^Call to an undefined method Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:has\\(\\)\\.$#"
-			count: 6
-			path: tests/Knp/Menu/Tests/Renderer/PsrProviderTest.php
-
-		-
-			message: "#^Call to an undefined method Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:get\\(\\)\\.$#"
-			count: 2
-			path: tests/Knp/Menu/Tests/Renderer/PsrProviderTest.php
 

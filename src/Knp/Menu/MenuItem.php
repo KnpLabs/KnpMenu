@@ -587,8 +587,8 @@ class MenuItem implements ItemInterface
     /**
      * Implements ArrayAccess
      *
-     * @param string|int  $offset
-     * @param string|null $value
+     * @param mixed $offset
+     * @param mixed $value
      */
     public function offsetSet($offset, $value): void
     {

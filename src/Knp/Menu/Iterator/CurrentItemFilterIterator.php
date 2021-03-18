@@ -15,7 +15,7 @@ class CurrentItemFilterIterator extends \FilterIterator
     private $matcher;
 
     /**
-     * @param \Iterator<string|int, mixed> $iterator
+     * @param \Iterator<string|int, \Knp\Menu\ItemInterface> $iterator
      */
     public function __construct(\Iterator $iterator, MatcherInterface $matcher)
     {

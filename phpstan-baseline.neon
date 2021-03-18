@@ -1,11 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Type Traversable\\<int\\|string, Knp\\\\Menu\\\\ItemInterface\\> in generic type IteratorIterator\\<string, Knp\\\\Menu\\\\ItemInterface, Traversable\\<int\\|string, Knp\\\\Menu\\\\ItemInterface\\>\\> in PHPDoc tag @extends is not subtype of template type TIterator of Traversable\\<string, Knp\\\\Menu\\\\ItemInterface\\> of class IteratorIterator\\.$#"
-			count: 1
-			path: src/Knp/Menu/Iterator/RecursiveItemIterator.php
-
-		-
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: src/Knp/Menu/Iterator/RecursiveItemIterator.php

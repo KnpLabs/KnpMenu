@@ -5,13 +5,14 @@ namespace Knp\Menu\Tests\Renderer;
 use Knp\Menu\Matcher\MatcherInterface;
 use Knp\Menu\MenuFactory;
 use Knp\Menu\MenuItem;
+use Knp\Menu\Renderer\RendererInterface;
 use Knp\Menu\Renderer\TwigRenderer;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 final class TwigRendererTest extends AbstractRendererTest
 {
-    public function createRenderer(MatcherInterface $matcher): TwigRenderer
+    public function createRenderer(MatcherInterface $matcher): RendererInterface
     {
         $loader = new FilesystemLoader(__DIR__.'/../../../../../src/Knp/Menu/Resources/views');
         $environment = new Environment($loader);

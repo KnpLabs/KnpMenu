@@ -80,7 +80,7 @@ class MenuItem implements ItemInterface
     /**
      * Child items
      *
-     * @var array<string, ItemInterface>
+     * @var array<string|int, ItemInterface>
      */
     protected $children = [];
 

@@ -48,7 +48,7 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Defaults to the name of no label was specified
      */
-    public function getLabel(): ?string;
+    public function getLabel(): string;
 
     /**
      * Provides a fluent interface

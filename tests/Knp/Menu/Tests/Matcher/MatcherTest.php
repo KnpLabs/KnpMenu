@@ -24,6 +24,9 @@ final class MatcherTest extends TestCase
         $this->assertSame($expected, $matcher->isCurrent($item));
     }
 
+    /**
+     * @return array<int, array<int, bool|null>>
+     */
     public function provideItemFlag(): array
     {
         return [
@@ -115,6 +118,9 @@ final class MatcherTest extends TestCase
         $this->assertSame($value, $matcher->isCurrent($item));
     }
 
+    /**
+     * @return array<int, array<int, bool>>
+     */
     public function provideBoolean(): array
     {
         return [

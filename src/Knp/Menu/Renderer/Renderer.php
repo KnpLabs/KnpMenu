@@ -33,7 +33,7 @@ abstract class Renderer
     /**
      * Renders HTML attributes
      *
-     * @param array $attributes
+     * @param array<string, mixed> $attributes
      */
     protected function renderHtmlAttributes(array $attributes): string
     {

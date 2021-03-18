@@ -9,16 +9,16 @@ interface ExtensionInterface
     /**
      * Builds the full option array used to configure the item.
      *
-     * @param array $options The options processed by the previous extensions
+     * @param array<string, mixed> $options The options processed by the previous extensions
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function buildOptions(array $options): array;
 
     /**
      * Configures the item with the passed options
      *
-     * @param array $options
+     * @param array<string, mixed> $options
      */
     public function buildItem(ItemInterface $item, array $options): void;
 }

@@ -103,9 +103,9 @@ class MenuManipulator
     /**
      * Split menu into two distinct menus.
      *
-     * @param mixed $length name of child, child object, or numeric length
+     * @param string|int|object $length name of child, child object, or numeric length
      *
-     * @return array Array with two menus, with "primary" and "secondary" key
+     * @return array<string, mixed> Array with two menus, with "primary" and "secondary" key
      */
     public function split(ItemInterface $item, $length): array
     {
@@ -121,7 +121,7 @@ class MenuManipulator
      * @example
      * $menu->callRecursively('setShowChildren', [false]);
      *
-     * @param array $arguments
+     * @param array<int|string, mixed> $arguments
      */
     public function callRecursively(ItemInterface $item, string $method, array $arguments = []): void
     {
@@ -152,7 +152,7 @@ class MenuManipulator
     /**
      * @param int|null $depth the depth until which children should be exported (null means unlimited)
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray(ItemInterface $item, ?int $depth = null): array
     {
@@ -197,9 +197,9 @@ class MenuManipulator
      *   * ['subItem1', 'subItem2']
      *   * [['label' => 'subItem1', 'url' => '@homepage'], ['label' => 'subItem2']]
      *
-     * @param mixed $subItem A string or array to append onto the end of the array
+     * @param string|ItemInterface|array<int|string, mixed>|\Traversable<mixed> $subItem A string or array to append onto the end of the array
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
      *
      * @throws \InvalidArgumentException if an element of the subItem is invalid
      */
@@ -265,6 +265,9 @@ class MenuManipulator
         return $breadcrumbs;
     }
 
+    /**
+     * @return array<int, array<string, string|ItemInterface>>
+     */
     private function buildBreadcrumbsArray(ItemInterface $item): array
     {
         $breadcrumb = [];
@@ -276,6 +279,9 @@ class MenuManipulator
         return \array_reverse($breadcrumb);
     }
 
+    /**
+     * @return array<string, string|ItemInterface>
+     */
     private function getBreadcrumbsItem(ItemInterface $item): array
     {
         return [

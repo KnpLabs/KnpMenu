@@ -84,7 +84,7 @@ final class ArrayLoaderTest extends TestCase
     }
 
     /**
-     * @param string|array $data
+     * @param mixed $data
      *
      * @dataProvider provideSupportingData
      */
@@ -95,6 +95,9 @@ final class ArrayLoaderTest extends TestCase
         $this->assertSame($expected, $loader->supports($data));
     }
 
+    /**
+     * @return array<int, array<int, mixed>>
+     */
     public function provideSupportingData(): array
     {
         return [

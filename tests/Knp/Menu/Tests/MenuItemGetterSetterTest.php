@@ -13,7 +13,7 @@ final class MenuItemGetterSetterTest extends TestCase
     public function testCreateMenuItemWithEmptyParameter(): void
     {
         $menu = $this->createMenu();
-        $this->assertTrue($menu instanceof MenuItem);
+        self::assertInstanceOf(MenuItem::class, $menu);
     }
 
     public function testCreateMenuWithNameAndUri(): void
@@ -214,13 +214,9 @@ final class MenuItemGetterSetterTest extends TestCase
     /**
      * Create a new MenuItem
      *
-     * @param string      $name
-     * @param string|null $uri
-     * @param array       $attributes
-     *
-     * @return MenuItem
+     * @param array<string, mixed> $attributes
      */
-    protected function createMenu(string $name = 'test_menu', ?string $uri = 'homepage', array $attributes = []): MenuItem
+    protected function createMenu(string $name = 'test_menu', ?string $uri = 'homepage', array $attributes = []): ItemInterface
     {
         $factory = new MenuFactory();
 

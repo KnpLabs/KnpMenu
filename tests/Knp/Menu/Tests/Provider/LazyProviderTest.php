@@ -62,6 +62,9 @@ final class LazyProviderTest extends TestCase
 
 final class FakeBuilder
 {
+    /**
+     * @var ItemInterface
+     */
     private $menu;
 
     public function __construct(ItemInterface $menu)
@@ -69,6 +72,9 @@ final class FakeBuilder
         $this->menu = $menu;
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function build(array $options): ItemInterface
     {
         return $this->menu;

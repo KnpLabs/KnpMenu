@@ -16,12 +16,12 @@ class ListRenderer extends Renderer implements RendererInterface
     protected $matcher;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     protected $defaultOptions;
 
     /**
-     * @param array $defaultOptions
+     * @param array<string, mixed> $defaultOptions
      */
     public function __construct(MatcherInterface $matcher, array $defaultOptions = [], ?string $charset = null)
     {
@@ -44,6 +44,9 @@ class ListRenderer extends Renderer implements RendererInterface
         parent::__construct($charset);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function render(ItemInterface $item, array $options = []): string
     {
         $options = \array_merge($this->defaultOptions, $options);
@@ -57,6 +60,10 @@ class ListRenderer extends Renderer implements RendererInterface
         return $html;
     }
 
+    /**
+     * @param array<string, mixed> $attributes
+     * @param array<string, mixed> $options
+     */
     protected function renderList(ItemInterface $item, array $attributes, array $options): string
     {
         /*
@@ -84,7 +91,7 @@ class ListRenderer extends Renderer implements RendererInterface
      * has children).
      * This method updates the depth for the children.
      *
-     * @param array $options the options to render the item
+     * @param array<string, mixed> $options the options to render the item
      */
     protected function renderChildren(ItemInterface $item, array $options): string
     {
@@ -111,7 +118,7 @@ class ListRenderer extends Renderer implements RendererInterface
      * This renders the li tag to fit into the parent ul as well as its
      * own nested ul tag if this menu item has children
      *
-     * @param array $options The options to render the item
+     * @param array<string, mixed> $options The options to render the item
      */
     protected function renderItem(ItemInterface $item, array $options): string
     {
@@ -180,8 +187,8 @@ class ListRenderer extends Renderer implements RendererInterface
      * the current item and if the text has to be rendered
      * as a link or not.
      *
-     * @param ItemInterface $item    The item to render the link or label for
-     * @param array         $options The options to render the item
+     * @param ItemInterface        $item    The item to render the link or label for
+     * @param array<string, mixed> $options The options to render the item
      */
     protected function renderLink(ItemInterface $item, array $options = []): string
     {
@@ -194,16 +201,25 @@ class ListRenderer extends Renderer implements RendererInterface
         return $this->format($text, 'link', $item->getLevel(), $options);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     protected function renderLinkElement(ItemInterface $item, array $options): string
     {
         return \sprintf('<a href="%s"%s>%s</a>', $this->escape($item->getUri()), $this->renderHtmlAttributes($item->getLinkAttributes()), $this->renderLabel($item, $options));
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     protected function renderSpanElement(ItemInterface $item, array $options): string
     {
         return \sprintf('<span%s>%s</span>', $this->renderHtmlAttributes($item->getLabelAttributes()), $this->renderLabel($item, $options));
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     protected function renderLabel(ItemInterface $item, array $options): string
     {
         if ($options['allow_safe_labels'] && $item->getExtra('safe_label', false)) {
@@ -218,9 +234,9 @@ class ListRenderer extends Renderer implements RendererInterface
      * spacing and line-breaking so that the particular thing being rendered
      * makes up its part in a fully-rendered and spaced menu.
      *
-     * @param string $html The html to render in an (un)formatted way
-     * @param string $type The type [ul,link,li] of thing being rendered
-     * @param array  $options
+     * @param string               $html    The html to render in an (un)formatted way
+     * @param string               $type    The type [ul,link,li] of thing being rendered
+     * @param array<string, mixed> $options
      */
     protected function format(string $html, string $type, int $level, array $options): string
     {

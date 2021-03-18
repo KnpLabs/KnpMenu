@@ -17,14 +17,14 @@ interface NodeInterface
     /**
      * Get the options for the factory to create the item for this node
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(): array;
 
     /**
      * Get the child nodes implementing NodeInterface
      *
-     * @return \Traversable
+     * @return \Traversable<int, self>
      */
     public function getChildren(): \Traversable;
 }

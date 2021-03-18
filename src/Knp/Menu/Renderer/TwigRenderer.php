@@ -19,12 +19,12 @@ class TwigRenderer implements RendererInterface
     private $matcher;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private $defaultOptions;
 
     /**
-     * @param array $defaultOptions
+     * @param array<string, mixed> $defaultOptions
      */
     public function __construct(
         Environment $environment,
@@ -51,6 +51,13 @@ class TwigRenderer implements RendererInterface
         ], $defaultOptions);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     *
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     */
     public function render(ItemInterface $item, array $options = []): string
     {
         $options = \array_merge($this->defaultOptions, $options);

@@ -7,28 +7,23 @@ use Knp\Menu\Matcher\MatcherInterface;
 use Knp\Menu\Matcher\Voter\UriVoter;
 use Knp\Menu\MenuFactory;
 use Knp\Menu\MenuItem;
+use Knp\Menu\Renderer\RendererInterface;
 use Knp\Menu\Tests\MenuTestCase;
 
 abstract class AbstractRendererTest extends MenuTestCase
 {
     /**
-     * @var \Knp\Menu\Renderer\RendererInterface
+     * @var RendererInterface|null
      */
     protected $renderer;
-
-    /**
-     * @var MatcherInterface
-     */
-    private $matcher;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->matcher = new Matcher();
-        $this->renderer = $this->createRenderer($this->matcher);
+        $this->renderer = $this->createRenderer(new Matcher());
     }
 
-    abstract protected function createRenderer(MatcherInterface $matcher);
+    abstract protected function createRenderer(MatcherInterface $matcher): RendererInterface;
 
     protected function tearDown(): void
     {

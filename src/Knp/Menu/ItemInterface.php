@@ -56,8 +56,14 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function setLabel(?string $label): self;
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getAttributes(): array;
 
+    /**
+     * @param array<string, mixed> $attributes
+     */
     public function setAttributes(array $attributes): self;
 
     /**
@@ -68,10 +74,19 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function getAttribute(string $name, $default = null);
 
+    /**
+     * @param mixed $value
+     */
     public function setAttribute(string $name, $value): self;
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getLinkAttributes(): array;
 
+    /**
+     * @param array<string, mixed> $linkAttributes
+     */
     public function setLinkAttributes(array $linkAttributes): self;
 
     /**
@@ -82,10 +97,19 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function getLinkAttribute(string $name, $default = null);
 
+    /**
+     * @param mixed $value
+     */
     public function setLinkAttribute(string $name, $value): self;
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getChildrenAttributes(): array;
 
+    /**
+     * @param array<string, mixed> $childrenAttributes
+     */
     public function setChildrenAttributes(array $childrenAttributes): self;
 
     /**
@@ -96,24 +120,44 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function getChildrenAttribute(string $name, $default = null);
 
+    /**
+     * @param mixed $value
+     *
+     * @return ItemInterface
+     */
     public function setChildrenAttribute(string $name, $value);
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getLabelAttributes(): array;
 
+    /**
+     * @param array<string, mixed> $labelAttributes
+     */
     public function setLabelAttributes(array $labelAttributes): self;
 
     /**
-     * @param string $name    The name of the attribute to return
-     * @param mixed  $default The value to return if the attribute doesn't exist
+     * @param string     $name    The name of the attribute to return
+     * @param mixed|null $default The value to return if the attribute doesn't exist
      *
      * @return mixed
      */
     public function getLabelAttribute(string $name, $default = null);
 
+    /**
+     * @param mixed $value
+     */
     public function setLabelAttribute(string $name, $value): self;
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getExtras(): array;
 
+    /**
+     * @param array<string, mixed> $extras
+     */
     public function setExtras(array $extras): self;
 
     /**
@@ -124,6 +168,9 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function getExtra(string $name, $default = null);
 
+    /**
+     * @param mixed $value
+     */
     public function setExtra(string $name, $value): self;
 
     public function getDisplayChildren(): bool;
@@ -155,7 +202,7 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * Returns the child item
      *
      * @param ItemInterface|string $child   An ItemInterface instance or the name of a new item to create
-     * @param array                $options If creating a new item, the options passed to the factory for the item
+     * @param array<string, mixed> $options If creating a new item, the options passed to the factory for the item
      *
      * @throws \InvalidArgumentException if the item is already in a tree
      */
@@ -173,7 +220,7 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Provides a fluent interface
      *
-     * @param array $order new order of children
+     * @param array<int|string, string|self> $order new order of children
      */
     public function reorderChildren(array $order): self;
 
@@ -218,7 +265,7 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Provides a fluent interface
      *
-     * @param array $children An array of ItemInterface objects
+     * @param array<string|int, self> $children An array of ItemInterface objects
      */
     public function setChildren(array $children): self;
 

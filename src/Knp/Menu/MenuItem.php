@@ -24,21 +24,21 @@ class MenuItem implements ItemInterface
     /**
      * Attributes for the item link
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $linkAttributes = [];
 
     /**
      * Attributes for the children list
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $childrenAttributes = [];
 
     /**
      * Attributes for the item text
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $labelAttributes = [];
 
@@ -52,14 +52,14 @@ class MenuItem implements ItemInterface
     /**
      * Attributes for the item
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $attributes = [];
 
     /**
      * Extra stuff associated to the item
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $extras = [];
 
@@ -80,7 +80,7 @@ class MenuItem implements ItemInterface
     /**
      * Child items
      *
-     * @var ItemInterface[]
+     * @var array<string, ItemInterface>
      */
     protected $children = [];
 
@@ -192,11 +192,7 @@ class MenuItem implements ItemInterface
 
     public function getAttribute(string $name, $default = null)
     {
-        if (isset($this->attributes[$name])) {
-            return $this->attributes[$name];
-        }
-
-        return $default;
+        return $this->attributes[$name] ?? $default;
     }
 
     public function setAttribute(string $name, $value): ItemInterface
@@ -568,6 +564,8 @@ class MenuItem implements ItemInterface
 
     /**
      * Implements ArrayAccess
+     *
+     * @param string|int $offset
      */
     public function offsetExists($offset): bool
     {
@@ -576,6 +574,10 @@ class MenuItem implements ItemInterface
 
     /**
      * Implements ArrayAccess
+     *
+     * @param string|int $offset
+     *
+     * @return ItemInterface|null
      */
     public function offsetGet($offset)
     {
@@ -584,6 +586,9 @@ class MenuItem implements ItemInterface
 
     /**
      * Implements ArrayAccess
+     *
+     * @param string|int  $offset
+     * @param string|null $value
      */
     public function offsetSet($offset, $value): void
     {
@@ -592,6 +597,8 @@ class MenuItem implements ItemInterface
 
     /**
      * Implements ArrayAccess
+     *
+     * @param string|int $offset
      */
     public function offsetUnset($offset): void
     {

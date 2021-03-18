@@ -14,10 +14,6 @@ interface VoterInterface
      *
      * If the voter is not able to determine a result,
      * it should return null to let other voters do the job.
-     *
-     * @param ItemInterface $item
-     *
-     * @return bool|null
      */
     public function matchItem(ItemInterface $item): ?bool;
 }

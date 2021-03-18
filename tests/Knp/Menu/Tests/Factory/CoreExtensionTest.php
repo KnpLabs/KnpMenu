@@ -12,7 +12,6 @@ final class CoreExtensionTest extends TestCase
     public function testBuildOptions(): void
     {
         $extension = $this->getExtension();
-        $item = $this->createItem('test');
 
         $options = $extension->buildOptions([]);
 
@@ -79,7 +78,7 @@ final class CoreExtensionTest extends TestCase
         return new CoreExtension();
     }
 
-    private function createItem($name): MenuItem
+    private function createItem(string $name): MenuItem
     {
         $factory = new MenuFactory();
 

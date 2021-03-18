@@ -53,6 +53,9 @@ class RouteVoter implements VoterInterface
         return null;
     }
 
+    /**
+     * @param array<string, mixed> $testedRoute
+     */
     private function isMatchingRoute(Request $request, array $testedRoute): bool
     {
         $route = $request->attributes->get('_route');

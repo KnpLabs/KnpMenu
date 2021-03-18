@@ -16,7 +16,6 @@ return PhpCsFixer\Config::create()
         'ordered_imports' => true,
         'declare_strict_types' => false,
         'native_function_invocation' => false,
-        'no_superfluous_phpdoc_tags' => false,
         'phpdoc_summary' => false,
     ])
     ->setFinder($finder)

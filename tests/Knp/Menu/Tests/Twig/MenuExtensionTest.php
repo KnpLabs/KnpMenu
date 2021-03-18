@@ -160,6 +160,11 @@ final class MenuExtensionTest extends TestCase
         $this->assertEquals('current', $this->getTemplate('{{ knp_menu_get_current_item("default") is knp_menu_current ? "current" : "not current" }}', $helper, $matcher)->render([]));
     }
 
+    /**
+     * @param array<string> $methods
+     *
+     * @return Helper|\PHPUnit\Framework\MockObject\MockObject
+     */
     private function getHelperMock(array $methods)
     {
         return $this->getMockBuilder(Helper::class)
@@ -169,6 +174,11 @@ final class MenuExtensionTest extends TestCase
         ;
     }
 
+    /**
+     * @param array<string> $methods
+     *
+     * @return MenuManipulator|\PHPUnit\Framework\MockObject\MockObject
+     */
     private function getManipulatorMock(array $methods)
     {
         return $this->getMockBuilder(MenuManipulator::class)
@@ -178,6 +188,9 @@ final class MenuExtensionTest extends TestCase
         ;
     }
 
+    /**
+     * @return MatcherInterface|\PHPUnit\Framework\MockObject\MockObject
+     */
     private function getMatcherMock()
     {
         return $this->getMockBuilder(MatcherInterface::class)->getMock();

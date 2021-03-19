@@ -123,10 +123,8 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * @param mixed $value
-     *
-     * @return ItemInterface
      */
-    public function setChildrenAttribute(string $name, $value);
+    public function setChildrenAttribute(string $name, $value): self;
 
     /**
      * @return array<string, mixed>
@@ -192,10 +190,8 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * Set whether or not this menu should be displayed
      *
      * Provides a fluent interface
-     *
-     * @return ItemInterface
      */
-    public function setDisplay(bool $bool);
+    public function setDisplay(bool $bool): self;
 
     /**
      * Add a child menu item to this menu
@@ -259,14 +255,14 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Return the children as an array of ItemInterface objects
      *
-     * @return ItemInterface[]
+     * @return array<string, self>
      */
     public function getChildren(): array;
 
     /**
      * Provides a fluent interface
      *
-     * @param array<string|int, self> $children An array of ItemInterface objects
+     * @param array<string, self> $children An array of ItemInterface objects
      */
     public function setChildren(array $children): self;
 

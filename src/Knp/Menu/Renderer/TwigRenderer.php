@@ -53,10 +53,6 @@ class TwigRenderer implements RendererInterface
 
     /**
      * @param array<string, mixed> $options
-     *
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
      */
     public function render(ItemInterface $item, array $options = []): string
     {

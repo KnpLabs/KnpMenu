@@ -52,7 +52,7 @@ class MenuItem implements ItemInterface
     /**
      * Attributes for the item
      *
-     * @var array<string, mixed>
+     * @var array<string, string|bool|null>
      */
     protected $attributes = [];
 
@@ -80,7 +80,7 @@ class MenuItem implements ItemInterface
     /**
      * Child items
      *
-     * @var array<string|int, ItemInterface>
+     * @var array<string, ItemInterface>
      */
     protected $children = [];
 
@@ -148,7 +148,11 @@ class MenuItem implements ItemInterface
             $offset = \array_search($oldName, $names);
             $names[$offset] = $name;
 
-            $parent->setChildren(\array_combine($names, $items));
+            if (false === $children = \array_combine($names, $items)) {
+                throw new \InvalidArgumentException('Number of elements is not matching.');
+            }
+
+            $parent->setChildren($children);
         }
 
         return $this;
@@ -350,6 +354,7 @@ class MenuItem implements ItemInterface
 
         $newChildren = [];
 
+        /** @var string $name */
         foreach ($order as $name) {
             if (!isset($this->children[$name])) {
                 throw new \InvalidArgumentException('Cannot find children named '.$name);
@@ -565,7 +570,7 @@ class MenuItem implements ItemInterface
     /**
      * Implements ArrayAccess
      *
-     * @param string|int $offset
+     * @param string $offset
      */
     public function offsetExists($offset): bool
     {
@@ -575,7 +580,7 @@ class MenuItem implements ItemInterface
     /**
      * Implements ArrayAccess
      *
-     * @param string|int $offset
+     * @param string $offset
      *
      * @return ItemInterface|null
      */
@@ -587,8 +592,8 @@ class MenuItem implements ItemInterface
     /**
      * Implements ArrayAccess
      *
-     * @param mixed $offset
-     * @param mixed $value
+     * @param string $offset
+     * @param mixed  $value
      */
     public function offsetSet($offset, $value): void
     {
@@ -598,7 +603,7 @@ class MenuItem implements ItemInterface
     /**
      * Implements ArrayAccess
      *
-     * @param string|int $offset
+     * @param string $offset
      */
     public function offsetUnset($offset): void
     {

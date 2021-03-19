@@ -1,21 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Parameter \\#1 \\$children of method Knp\\\\Menu\\\\ItemInterface\\:\\:setChildren\\(\\) expects array\\<int\\|string, Knp\\\\Menu\\\\ItemInterface\\>, array\\<Knp\\\\Menu\\\\ItemInterface\\>\\|false given\\.$#"
-			count: 1
-			path: src/Knp/Menu/MenuItem.php
-
-		-
-			message: "#^Possibly invalid array key type Knp\\\\Menu\\\\ItemInterface\\|string\\.$#"
-			count: 3
-			path: src/Knp/Menu/MenuItem.php
-
-		-
-			message: "#^Binary operation \"\\.\" between 'Cannot find…' and Knp\\\\Menu\\\\ItemInterface\\|string results in an error\\.$#"
-			count: 1
-			path: src/Knp/Menu/MenuItem.php
-
-		-
 			message: "#^Method Knp\\\\Menu\\\\MenuItem\\:\\:getFirstChild\\(\\) should return Knp\\\\Menu\\\\ItemInterface but returns Knp\\\\Menu\\\\ItemInterface\\|false\\.$#"
 			count: 1
 			path: src/Knp/Menu/MenuItem.php
@@ -38,21 +23,6 @@ parameters:
 		-
 			message: "#^Cannot call method getChildren\\(\\) on Knp\\\\Menu\\\\ItemInterface\\|null\\.$#"
 			count: 2
-			path: src/Knp/Menu/MenuItem.php
-
-		-
-			message: "#^Method Knp\\\\Menu\\\\MenuItem\\:\\:getIterator\\(\\) should return Traversable\\<string, Knp\\\\Menu\\\\ItemInterface\\> but returns ArrayIterator\\<int\\|string, Knp\\\\Menu\\\\ItemInterface\\>\\.$#"
-			count: 1
-			path: src/Knp/Menu/MenuItem.php
-
-		-
-			message: "#^Parameter \\#1 \\$name of method Knp\\\\Menu\\\\MenuItem\\:\\:getChild\\(\\) expects string, int\\|string given\\.$#"
-			count: 1
-			path: src/Knp/Menu/MenuItem.php
-
-		-
-			message: "#^Parameter \\#1 \\$name of method Knp\\\\Menu\\\\MenuItem\\:\\:removeChild\\(\\) expects Knp\\\\Menu\\\\ItemInterface\\|string, int\\|string given\\.$#"
-			count: 1
 			path: src/Knp/Menu/MenuItem.php
 
 		-

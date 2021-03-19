@@ -98,7 +98,7 @@ class MenuManipulator
         }
 
         $slicedItem = $item->copy();
-        $children = \array_slice($slicedItem->getChildren(), $offset, $length);
+        $children = \array_slice($slicedItem->getChildren(), (int) $offset, $length);
         $slicedItem->setChildren($children);
 
         return $slicedItem;

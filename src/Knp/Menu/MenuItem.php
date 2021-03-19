@@ -444,11 +444,19 @@ class MenuItem implements ItemInterface
 
     public function getFirstChild(): ItemInterface
     {
+        if (empty($this->children)) {
+            throw new \LogicException('Cannot get first child: there are no children.');
+        }
+
         return \reset($this->children);
     }
 
     public function getLastChild(): ItemInterface
     {
+        if (empty($this->children)) {
+            throw new \LogicException('Cannot get last child: there are no children.');
+        }
+
         return \end($this->children);
     }
 
@@ -477,22 +485,22 @@ class MenuItem implements ItemInterface
 
     public function isLast(): bool
     {
-        // if this is root, then return false
-        if ($this->isRoot()) {
+        // if this is root or there is no parent, then return false
+        if ($this->isRoot() || null === $parent = $this->getParent()) {
             return false;
         }
 
-        return $this->getParent()->getLastChild() === $this;
+        return $parent->getLastChild() === $this;
     }
 
     public function isFirst(): bool
     {
-        // if this is root, then return false
-        if ($this->isRoot()) {
+        // if this is root or there is no parent, then return false
+        if ($this->isRoot() || null === $parent = $this->getParent()) {
             return false;
         }
 
-        return $this->getParent()->getFirstChild() === $this;
+        return $parent->getFirstChild() === $this;
     }
 
     public function actsLikeFirst(): bool
@@ -512,11 +520,13 @@ class MenuItem implements ItemInterface
             return true;
         }
 
-        $children = $this->getParent()->getChildren();
-        foreach ($children as $child) {
-            // loop until we find a visible menu. If its this menu, we're first
-            if ($child->isDisplayed()) {
-                return $child->getName() === $this->getName();
+        if (null !== $parent = $this->getParent()) {
+            $children = $parent->getChildren();
+            foreach ($children as $child) {
+                // loop until we find a visible menu. If its this menu, we're first
+                if ($child->isDisplayed()) {
+                    return $child->getName() === $this->getName();
+                }
             }
         }
 
@@ -540,11 +550,13 @@ class MenuItem implements ItemInterface
             return true;
         }
 
-        $children = \array_reverse($this->getParent()->getChildren());
-        foreach ($children as $child) {
-            // loop until we find a visible menu. If its this menu, we're first
-            if ($child->isDisplayed()) {
-                return $child->getName() === $this->getName();
+        if (null !== $parent = $this->getParent()) {
+            $children = \array_reverse($parent->getChildren());
+            foreach ($children as $child) {
+                // loop until we find a visible menu. If its this menu, we're first
+                if ($child->isDisplayed()) {
+                    return $child->getName() === $this->getName();
+                }
             }
         }
 

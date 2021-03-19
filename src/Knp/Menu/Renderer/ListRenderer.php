@@ -244,7 +244,7 @@ class ListRenderer extends Renderer implements RendererInterface
             return $html;
         }
 
-        $spacing = '';
+        $spacing = 0;
 
         switch ($type) {
             case 'ul':

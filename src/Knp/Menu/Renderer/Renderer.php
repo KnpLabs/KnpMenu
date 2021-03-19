@@ -26,6 +26,9 @@ abstract class Renderer
         if (true === $value) {
             return \sprintf('%s="%s"', $name, $this->escape($name));
         }
+        if (false === $value) {
+            throw new \InvalidArgumentException('Value cannot be false.');
+        }
 
         return \sprintf('%s="%s"', $name, $this->escape($value));
     }
@@ -62,8 +65,12 @@ abstract class Renderer
     /**
      * Escapes an HTML value
      */
-    protected function escape(string $value): string
+    protected function escape(?string $value): string
     {
+        if (null === $value) {
+            return '';
+        }
+
         return $this->fixDoubleEscape(\htmlspecialchars($value, \ENT_QUOTES | \ENT_SUBSTITUTE, $this->charset));
     }
 

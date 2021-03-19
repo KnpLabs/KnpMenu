@@ -1,53 +1,12 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Method Knp\\\\Menu\\\\MenuItem\\:\\:getFirstChild\\(\\) should return Knp\\\\Menu\\\\ItemInterface but returns Knp\\\\Menu\\\\ItemInterface\\|false\\.$#"
-			count: 1
-			path: src/Knp/Menu/MenuItem.php
-
-		-
-			message: "#^Method Knp\\\\Menu\\\\MenuItem\\:\\:getLastChild\\(\\) should return Knp\\\\Menu\\\\ItemInterface but returns Knp\\\\Menu\\\\ItemInterface\\|false\\.$#"
-			count: 1
-			path: src/Knp/Menu/MenuItem.php
-
-		-
-			message: "#^Cannot call method getLastChild\\(\\) on Knp\\\\Menu\\\\ItemInterface\\|null\\.$#"
-			count: 1
-			path: src/Knp/Menu/MenuItem.php
-
-		-
-			message: "#^Cannot call method getFirstChild\\(\\) on Knp\\\\Menu\\\\ItemInterface\\|null\\.$#"
-			count: 1
-			path: src/Knp/Menu/MenuItem.php
-
-		-
-			message: "#^Cannot call method getChildren\\(\\) on Knp\\\\Menu\\\\ItemInterface\\|null\\.$#"
-			count: 2
-			path: src/Knp/Menu/MenuItem.php
-
-		-
-			message: "#^Parameter \\#1 \\$value of method Knp\\\\Menu\\\\Renderer\\\\Renderer\\:\\:escape\\(\\) expects string, string\\|null given\\.$#"
-			count: 1
-			path: src/Knp/Menu/Renderer/ListRenderer.php
-
-		-
-			message: "#^Parameter \\#2 \\$multiplier of function str_repeat expects int, int\\|string given\\.$#"
-			count: 1
-			path: src/Knp/Menu/Renderer/ListRenderer.php
-
-		-
-			message: "#^Parameter \\#1 \\$value of method Knp\\\\Menu\\\\Renderer\\\\Renderer\\:\\:escape\\(\\) expects string, string\\|false given\\.$#"
-			count: 1
-			path: src/Knp/Menu/Renderer/Renderer.php
-
-		-
-			message: "#^Parameter \\#2 \\$offset of function array_slice expects int, float\\|int\\|string\\|false given\\.$#"
-			count: 1
-			path: src/Knp/Menu/Util/MenuManipulator.php
-
-		-
 			message: "#^Parameter \\#3 \\$length of function array_slice expects int\\|null, float\\|int\\|string\\|null given\\.$#"
 			count: 1
 			path: src/Knp/Menu/Util/MenuManipulator.php
 
+		-
+			message: "#^Method Knp\\\\Menu\\\\Util\\\\MenuManipulator\\:\\:getBreadcrumbsArray\\(\\) should return array\\<int, array\\('label' \\=\\> string, 'uri' \\=\\> string\\|null, 'item' \\=\\> Knp\\\\Menu\\\\ItemInterface\\|null\\)\\> but returns array\\<int, array\\>\\.$#"
+			count: 1
+			path: src/Knp/Menu/Util/MenuManipulator.php
 

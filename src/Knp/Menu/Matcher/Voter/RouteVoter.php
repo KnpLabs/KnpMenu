@@ -54,7 +54,7 @@ class RouteVoter implements VoterInterface
     }
 
     /**
-     * @param array<string, mixed> $testedRoute
+     * @phpstan-param array{route?: string|null, pattern?: string|null, parameters?: array<string, mixed>} $testedRoute
      */
     private function isMatchingRoute(Request $request, array $testedRoute): bool
     {

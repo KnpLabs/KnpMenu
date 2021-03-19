@@ -9,7 +9,7 @@ interface MenuProviderInterface
     /**
      * Retrieves a menu by its name
      *
-     * @param array<string, mixed> $options
+     * @phpstan-param array<string, callable|array{\Closure, string}> $options
      *
      * @throws \InvalidArgumentException if the menu does not exists
      */
@@ -18,7 +18,7 @@ interface MenuProviderInterface
     /**
      * Checks whether a menu exists in this provider
      *
-     * @param array<string, mixed> $options
+     * @phpstan-param array<string, callable|array{\Closure, string}> $options
      */
     public function has(string $name, array $options = []): bool;
 }

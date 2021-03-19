@@ -112,7 +112,9 @@ class MenuManipulator
      *
      * @param string|int|ItemInterface $length name of child, child object, or numeric length
      *
-     * @return array<string, mixed> Array with two menus, with "primary" and "secondary" key
+     * @phpstan-return array{primary: ItemInterface, secondary: ItemInterface}
+     *
+     * @return array Array with two menus, with "primary" and "secondary" key
      */
     public function split(ItemInterface $item, $length): array
     {

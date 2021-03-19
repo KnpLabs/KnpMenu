@@ -14,7 +14,7 @@ use Knp\Menu\ItemInterface;
 class ArrayAccessProvider implements MenuProviderInterface
 {
     /**
-     * @var \ArrayAccess<string, ItemInterface>
+     * @var \ArrayAccess<string, ItemInterface|callable>
      */
     private $registry;
 
@@ -24,8 +24,8 @@ class ArrayAccessProvider implements MenuProviderInterface
     private $menuIds;
 
     /**
-     * @param \ArrayAccess<string, ItemInterface> $registry
-     * @param array<string, string>               $menuIds  The map between menu identifiers and registry keys
+     * @param \ArrayAccess<string, ItemInterface|callable> $registry
+     * @param array<string, string>                        $menuIds  The map between menu identifiers and registry keys
      */
     public function __construct(\ArrayAccess $registry, array $menuIds = [])
     {
@@ -33,9 +33,6 @@ class ArrayAccessProvider implements MenuProviderInterface
         $this->menuIds = $menuIds;
     }
 
-    /**
-     * @param array<string, mixed> $options
-     */
     public function get(string $name, array $options = []): ItemInterface
     {
         if (!isset($this->menuIds[$name])) {
@@ -51,9 +48,6 @@ class ArrayAccessProvider implements MenuProviderInterface
         return $menu;
     }
 
-    /**
-     * @param array<string, mixed> $options
-     */
     public function has(string $name, array $options = []): bool
     {
         return isset($this->menuIds[$name]);

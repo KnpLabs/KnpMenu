@@ -206,7 +206,9 @@ class ListRenderer extends Renderer implements RendererInterface
      */
     protected function renderLinkElement(ItemInterface $item, array $options): string
     {
-        return \sprintf('<a href="%s"%s>%s</a>', $this->escape($item->getUri()), $this->renderHtmlAttributes($item->getLinkAttributes()), $this->renderLabel($item, $options));
+        $uri = null !== $item->getUri() ? $this->escape($item->getUri()) : '';
+
+        return \sprintf('<a href="%s"%s>%s</a>', $uri, $this->renderHtmlAttributes($item->getLinkAttributes()), $this->renderLabel($item, $options));
     }
 
     /**

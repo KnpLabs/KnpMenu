@@ -485,28 +485,28 @@ class MenuItem implements ItemInterface
 
     public function isLast(): bool
     {
-        // if this is root or there is no parent, then return false
-        if ($this->isRoot() || null === $parent = $this->getParent()) {
+        // if this is root, then return false
+        if (null === $this->parent) {
             return false;
         }
 
-        return $parent->getLastChild() === $this;
+        return $this->parent->getLastChild() === $this;
     }
 
     public function isFirst(): bool
     {
-        // if this is root or there is no parent, then return false
-        if ($this->isRoot() || null === $parent = $this->getParent()) {
+        // if this is root , then return false
+        if (null === $this->parent) {
             return false;
         }
 
-        return $parent->getFirstChild() === $this;
+        return $this->parent->getFirstChild() === $this;
     }
 
     public function actsLikeFirst(): bool
     {
         // root items are never "marked" as first
-        if ($this->isRoot()) {
+        if (null === $this->parent) {
             return false;
         }
 
@@ -520,13 +520,11 @@ class MenuItem implements ItemInterface
             return true;
         }
 
-        if (null !== $parent = $this->getParent()) {
-            $children = $parent->getChildren();
-            foreach ($children as $child) {
-                // loop until we find a visible menu. If its this menu, we're first
-                if ($child->isDisplayed()) {
-                    return $child->getName() === $this->getName();
-                }
+        $children = $this->parent->getChildren();
+        foreach ($children as $child) {
+            // loop until we find a visible menu. If its this menu, we're first
+            if ($child->isDisplayed()) {
+                return $child->getName() === $this->getName();
             }
         }
 
@@ -536,7 +534,7 @@ class MenuItem implements ItemInterface
     public function actsLikeLast(): bool
     {
         // root items are never "marked" as last
-        if ($this->isRoot()) {
+        if (null === $this->parent) {
             return false;
         }
 
@@ -550,13 +548,11 @@ class MenuItem implements ItemInterface
             return true;
         }
 
-        if (null !== $parent = $this->getParent()) {
-            $children = \array_reverse($parent->getChildren());
-            foreach ($children as $child) {
-                // loop until we find a visible menu. If its this menu, we're first
-                if ($child->isDisplayed()) {
-                    return $child->getName() === $this->getName();
-                }
+        $children = \array_reverse($this->parent->getChildren());
+        foreach ($children as $child) {
+            // loop until we find a visible menu. If its this menu, we're first
+            if ($child->isDisplayed()) {
+                return $child->getName() === $this->getName();
             }
         }
 

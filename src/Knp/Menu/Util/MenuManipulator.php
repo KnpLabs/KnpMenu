@@ -83,22 +83,25 @@ class MenuManipulator
         if ($offset instanceof ItemInterface) {
             $offset = $offset->getName();
         }
-        if (!\is_numeric($offset)) {
-            $offset = \array_search($offset, $names);
+        if (!\is_int($offset)) {
+            $offset = \array_search($offset, $names, true);
+            if (false === $offset) {
+                throw new \InvalidArgumentException('Not found.');
+            }
         }
 
         if (null !== $length) {
             if ($length instanceof ItemInterface) {
                 $length = $length->getName();
             }
-            if (!\is_numeric($length)) {
-                $index = \array_search($length, $names);
+            if (!\is_int($length)) {
+                $index = \array_search($length, $names, true);
                 $length = ($index < $offset) ? 0 : $index - $offset;
             }
         }
 
         $slicedItem = $item->copy();
-        $children = \array_slice($slicedItem->getChildren(), (int) $offset, $length);
+        $children = \array_slice($slicedItem->getChildren(), $offset, $length);
         $slicedItem->setChildren($children);
 
         return $slicedItem;

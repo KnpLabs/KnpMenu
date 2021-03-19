@@ -65,12 +65,8 @@ abstract class Renderer
     /**
      * Escapes an HTML value
      */
-    protected function escape(?string $value): string
+    protected function escape(string $value): string
     {
-        if (null === $value) {
-            return '';
-        }
-
         return $this->fixDoubleEscape(\htmlspecialchars($value, \ENT_QUOTES | \ENT_SUBSTITUTE, $this->charset));
     }
 

@@ -41,31 +41,6 @@ parameters:
 			path: src/Knp/Menu/Renderer/Renderer.php
 
 		-
-			message: "#^Method Knp\\\\Menu\\\\Renderer\\\\Renderer\\:\\:fixDoubleEscape\\(\\) should return string but returns string\\|null\\.$#"
-			count: 1
-			path: src/Knp/Menu/Renderer/Renderer.php
-
-		-
-			message: "#^Cannot call method isCurrent\\(\\) on Knp\\\\Menu\\\\Matcher\\\\MatcherInterface\\|null\\.$#"
-			count: 1
-			path: src/Knp/Menu/Twig/Helper.php
-
-		-
-			message: "#^Cannot call method isAncestor\\(\\) on Knp\\\\Menu\\\\Matcher\\\\MatcherInterface\\|null\\.$#"
-			count: 1
-			path: src/Knp/Menu/Twig/Helper.php
-
-		-
-			message: "#^Parameter \\#1 \\$item of method Knp\\\\Menu\\\\Util\\\\MenuManipulator\\:\\:moveChildToPosition\\(\\) expects Knp\\\\Menu\\\\ItemInterface, Knp\\\\Menu\\\\ItemInterface\\|null given\\.$#"
-			count: 1
-			path: src/Knp/Menu/Util/MenuManipulator.php
-
-		-
-			message: "#^Cannot call method count\\(\\) on Knp\\\\Menu\\\\ItemInterface\\|null\\.$#"
-			count: 1
-			path: src/Knp/Menu/Util/MenuManipulator.php
-
-		-
 			message: "#^Parameter \\#2 \\$offset of function array_slice expects int, float\\|int\\|string\\|false given\\.$#"
 			count: 1
 			path: src/Knp/Menu/Util/MenuManipulator.php
@@ -75,18 +50,4 @@ parameters:
 			count: 1
 			path: src/Knp/Menu/Util/MenuManipulator.php
 
-		-
-			message: "#^Method Knp\\\\Menu\\\\Util\\\\MenuManipulator\\:\\:getBreadcrumbsArray\\(\\) should return array\\<int, array\\('label' \\=\\> string, 'uri' \\=\\> string\\|null, 'item' \\=\\> Knp\\\\Menu\\\\ItemInterface\\|null\\)\\> but returns array\\<int, array\\('label' \\=\\> string\\|null, 'uri' \\=\\> string\\|null, 'item' \\=\\> Knp\\\\Menu\\\\ItemInterface\\|null\\)\\>&nonEmpty\\.$#"
-			count: 1
-			path: src/Knp/Menu/Util/MenuManipulator.php
-
-		-
-			message: "#^Method Knp\\\\Menu\\\\Util\\\\MenuManipulator\\:\\:getBreadcrumbsArray\\(\\) should return array\\<int, array\\('label' \\=\\> string, 'uri' \\=\\> string\\|null, 'item' \\=\\> Knp\\\\Menu\\\\ItemInterface\\|null\\)\\> but returns array\\<int, array\\>\\.$#"
-			count: 1
-			path: src/Knp/Menu/Util/MenuManipulator.php
-
-		-
-			message: "#^Method Knp\\\\Menu\\\\Util\\\\MenuManipulator\\:\\:buildBreadcrumbsArray\\(\\) should return array\\<int, array\\('label' \\=\\> string, 'uri' \\=\\> string\\|null, 'item' \\=\\> Knp\\\\Menu\\\\ItemInterface\\|null\\)\\> but returns array\\<int, array\\('label' \\=\\> string\\|null, 'uri' \\=\\> string\\|null, 'item' \\=\\> Knp\\\\Menu\\\\ItemInterface\\)\\>&nonEmpty\\.$#"
-			count: 1
-			path: src/Knp/Menu/Util/MenuManipulator.php
 

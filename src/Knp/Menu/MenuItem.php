@@ -38,7 +38,7 @@ class MenuItem implements ItemInterface
     /**
      * Attributes for the item text
      *
-     * @var array<string, mixed>
+     * @var array<string, string|bool|null>
      */
     protected $labelAttributes = [];
 

@@ -13,7 +13,9 @@ class MenuManipulator
      */
     public function moveToPosition(ItemInterface $item, int $position): void
     {
-        $this->moveChildToPosition($item->getParent(), $item, $position);
+        if (null !== $parent = $item->getParent()) {
+            $this->moveChildToPosition($parent, $item, $position);
+        }
     }
 
     /**
@@ -49,7 +51,9 @@ class MenuManipulator
      */
     public function moveToLastPosition(ItemInterface $item): void
     {
-        $this->moveToPosition($item, $item->getParent()->count());
+        if (null !== $parent = $item->getParent()) {
+            $this->moveToPosition($item, $parent->count());
+        }
     }
 
     /**
@@ -267,7 +271,7 @@ class MenuManipulator
     }
 
     /**
-     * @return array<int, array<string, string|ItemInterface>>
+     * @return array<int, array<string, string|ItemInterface|null>>
      * @phpstan-return list<array{label: string, uri: string|null, item: ItemInterface|null}>
      */
     private function buildBreadcrumbsArray(ItemInterface $item): array
@@ -282,8 +286,8 @@ class MenuManipulator
     }
 
     /**
-     * @return array<string, string|ItemInterface>
-     * @phpstan-return array{label: string|null, uri: string|null, item: ItemInterface}
+     * @return array<string, string|ItemInterface|null>
+     * @phpstan-return array{label: string, uri: string|null, item: ItemInterface}
      */
     private function getBreadcrumbsItem(ItemInterface $item): array
     {

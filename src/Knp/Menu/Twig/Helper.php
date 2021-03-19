@@ -139,10 +139,6 @@ class Helper
      */
     public function getCurrentItem($menu): ?ItemInterface
     {
-        if (null === $this->matcher) {
-            throw new \BadMethodCallException('The matcher must be set to get the current item of a menu');
-        }
-
         $menu = $this->castMenu($menu);
 
         return $this->retrieveCurrentItem($menu);
@@ -171,6 +167,10 @@ class Helper
 
     private function retrieveCurrentItem(ItemInterface $item): ?ItemInterface
     {
+        if (null === $this->matcher) {
+            throw new \BadMethodCallException('The matcher must be set to get the current item of a menu');
+        }
+
         if ($this->matcher->isCurrent($item)) {
             return $item;
         }

@@ -127,12 +127,12 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
     public function setChildrenAttribute(string $name, $value): self;
 
     /**
-     * @return array<string, mixed>
+     * @return array<string, string|bool|null>
      */
     public function getLabelAttributes(): array;
 
     /**
-     * @param array<string, mixed> $labelAttributes
+     * @param array<string, string|bool|null> $labelAttributes
      */
     public function setLabelAttributes(array $labelAttributes): self;
 
@@ -140,12 +140,12 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * @param string $name    The name of the attribute to return
      * @param mixed  $default The value to return if the attribute doesn't exist
      *
-     * @return mixed
+     * @return string|bool|null
      */
     public function getLabelAttribute(string $name, $default = null);
 
     /**
-     * @param mixed $value
+     * @param string|bool|null $value
      */
     public function setLabelAttribute(string $name, $value): self;
 

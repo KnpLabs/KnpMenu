@@ -48,9 +48,9 @@ class Helper
     /**
      * Retrieves item in the menu, eventually using the menu provider.
      *
-     * @param ItemInterface|string     $menu
-     * @param array<int|string, mixed> $path
-     * @param array<string, mixed>     $options
+     * @param ItemInterface|string $menu
+     * @param array<int, string>   $path
+     * @param array<string, mixed> $options
      *
      * @throws \BadMethodCallException   when there is no menu provider and the menu is given by name
      * @throws \LogicException

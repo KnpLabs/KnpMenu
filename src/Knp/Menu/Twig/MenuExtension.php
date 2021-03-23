@@ -72,7 +72,7 @@ class MenuExtension extends AbstractExtension
      * Retrieves an item following a path in the tree.
      *
      * @param ItemInterface|string $menu
-     * @param array<string, mixed> $path
+     * @param array<int, string>   $path
      * @param array<string, mixed> $options
      */
     public function get($menu, array $path = [], array $options = []): ItemInterface

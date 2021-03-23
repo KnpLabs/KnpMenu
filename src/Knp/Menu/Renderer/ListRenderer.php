@@ -44,9 +44,6 @@ class ListRenderer extends Renderer implements RendererInterface
         parent::__construct($charset);
     }
 
-    /**
-     * @param array<string, string|bool|null> $options
-     */
     public function render(ItemInterface $item, array $options = []): string
     {
         $options = \array_merge($this->defaultOptions, $options);

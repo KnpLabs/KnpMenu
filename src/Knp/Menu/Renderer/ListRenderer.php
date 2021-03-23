@@ -189,7 +189,7 @@ class ListRenderer extends Renderer implements RendererInterface
      */
     protected function renderLink(ItemInterface $item, array $options = []): string
     {
-        if ($item->getUri() && (!$this->matcher->isCurrent($item) || $options['currentAsLink'])) {
+        if (null !== $item->getUri() && (!$this->matcher->isCurrent($item) || $options['currentAsLink'])) {
             $text = $this->renderLinkElement($item, $options);
         } else {
             $text = $this->renderSpanElement($item, $options);
@@ -203,9 +203,9 @@ class ListRenderer extends Renderer implements RendererInterface
      */
     protected function renderLinkElement(ItemInterface $item, array $options): string
     {
-        $uri = null !== $item->getUri() ? $this->escape($item->getUri()) : '';
+        assert(null !== $item->getUri());
 
-        return \sprintf('<a href="%s"%s>%s</a>', $uri, $this->renderHtmlAttributes($item->getLinkAttributes()), $this->renderLabel($item, $options));
+        return \sprintf('<a href="%s"%s>%s</a>', $this->escape($item->getUri()), $this->renderHtmlAttributes($item->getLinkAttributes()), $this->renderLabel($item, $options));
     }
 
     /**

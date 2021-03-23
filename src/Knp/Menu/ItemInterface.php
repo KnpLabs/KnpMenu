@@ -217,7 +217,7 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Provides a fluent interface
      *
-     * @param array<int|string, string|self> $order new order of children
+     * @param array<int|string, string> $order new order of children
      */
     public function reorderChildren(array $order): self;
 

@@ -354,7 +354,6 @@ class MenuItem implements ItemInterface
 
         $newChildren = [];
 
-        /** @var string[] $order */
         foreach ($order as $name) {
             if (!isset($this->children[$name])) {
                 throw new \InvalidArgumentException('Cannot find children named '.$name);

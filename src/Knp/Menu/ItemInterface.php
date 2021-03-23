@@ -81,25 +81,25 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
     public function setAttribute(string $name, $value): self;
 
     /**
-     * @return array<string, mixed>
+     * @return array<string, string|bool|null>
      */
     public function getLinkAttributes(): array;
 
     /**
-     * @param array<string, mixed> $linkAttributes
+     * @param array<string, string|bool|null> $linkAttributes
      */
     public function setLinkAttributes(array $linkAttributes): self;
 
     /**
-     * @param string $name    The name of the attribute to return
-     * @param mixed  $default The value to return if the attribute doesn't exist
+     * @param string           $name    The name of the attribute to return
+     * @param string|bool|null $default The value to return if the attribute doesn't exist
      *
      * @return mixed
      */
     public function getLinkAttribute(string $name, $default = null);
 
     /**
-     * @param mixed $value
+     * @param string|bool|null $value
      */
     public function setLinkAttribute(string $name, $value): self;
 

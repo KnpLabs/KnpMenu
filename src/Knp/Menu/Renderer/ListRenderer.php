@@ -45,7 +45,7 @@ class ListRenderer extends Renderer implements RendererInterface
     }
 
     /**
-     * @param array<string, mixed> $options
+     * @param array<string, string|bool|null> $options
      */
     public function render(ItemInterface $item, array $options = []): string
     {

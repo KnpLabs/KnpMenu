@@ -24,7 +24,7 @@ class MenuItem implements ItemInterface
     /**
      * Attributes for the item link
      *
-     * @var array<string, mixed>
+     * @var array<string, string|bool|null>
      */
     protected $linkAttributes = [];
 
@@ -354,7 +354,7 @@ class MenuItem implements ItemInterface
 
         $newChildren = [];
 
-        /** @var string $name */
+        /** @var string[] $order */
         foreach ($order as $name) {
             if (!isset($this->children[$name])) {
                 throw new \InvalidArgumentException('Cannot find children named '.$name);
@@ -495,7 +495,7 @@ class MenuItem implements ItemInterface
 
     public function isFirst(): bool
     {
-        // if this is root , then return false
+        // if this is root, then return false
         if (null === $this->parent) {
             return false;
         }
@@ -600,8 +600,8 @@ class MenuItem implements ItemInterface
     /**
      * Implements ArrayAccess
      *
-     * @param string $offset
-     * @param mixed  $value
+     * @param string      $offset
+     * @param string|null $value
      */
     public function offsetSet($offset, $value): void
     {

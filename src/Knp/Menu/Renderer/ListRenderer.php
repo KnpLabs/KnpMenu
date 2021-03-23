@@ -61,8 +61,8 @@ class ListRenderer extends Renderer implements RendererInterface
     }
 
     /**
-     * @param array<string, mixed> $attributes
-     * @param array<string, mixed> $options
+     * @param array<string, string|bool|null> $attributes
+     * @param array<string, mixed>            $options
      */
     protected function renderList(ItemInterface $item, array $attributes, array $options): string
     {

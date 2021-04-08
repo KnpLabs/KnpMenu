@@ -207,6 +207,7 @@ class MenuManipulator
      *   * [['label' => 'subItem1', 'url' => '@homepage'], ['label' => 'subItem2']]
      *
      * @param string|ItemInterface|array<int|string, mixed>|\Traversable<mixed> $subItem A string or array to append onto the end of the array
+     * @phpstan-param string|ItemInterface|array<int|string, string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface>|\Traversable<string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface> $subItem
      *
      * @return array<int, array<string, mixed>>
      * @phpstan-return list<array{label: string, uri: string|null, item: ItemInterface|null}>
@@ -276,7 +277,6 @@ class MenuManipulator
     }
 
     /**
-     * @return array<int, array<string, string|ItemInterface|null>>
      * @phpstan-return list<array{label: string, uri: string|null, item: ItemInterface|null}>
      */
     private function buildBreadcrumbsArray(ItemInterface $item): array
@@ -291,7 +291,6 @@ class MenuManipulator
     }
 
     /**
-     * @return array<string, string|ItemInterface|null>
      * @phpstan-return array{label: string, uri: string|null, item: ItemInterface}
      */
     private function getBreadcrumbsItem(ItemInterface $item): array

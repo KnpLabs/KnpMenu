@@ -2,6 +2,7 @@
 
 namespace Knp\Menu\Tests;
 
+use Knp\Menu\ItemInterface;
 use Knp\Menu\MenuFactory;
 use Knp\Menu\MenuItem;
 use PHPUnit\Framework\TestCase;
@@ -9,42 +10,42 @@ use PHPUnit\Framework\TestCase;
 abstract class MenuTestCase extends TestCase
 {
     /**
-     * @var \Knp\Menu\MenuItem
+     * @var ItemInterface|null
      */
     protected $menu;
 
     /**
-     * @var \Knp\Menu\MenuItem
+     * @var ItemInterface|null
      */
     protected $pt1;
 
     /**
-     * @var \Knp\Menu\MenuItem
+     * @var ItemInterface|null
      */
     protected $ch1;
 
     /**
-     * @var \Knp\Menu\MenuItem
+     * @var ItemInterface|null
      */
     protected $ch2;
 
     /**
-     * @var \Knp\Menu\MenuItem
+     * @var ItemInterface|null
      */
     protected $ch3;
 
     /**
-     * @var \Knp\Menu\MenuItem
+     * @var ItemInterface|null
      */
     protected $pt2;
 
     /**
-     * @var \Knp\Menu\MenuItem
+     * @var ItemInterface|null
      */
     protected $ch4;
 
     /**
-     * @var \Knp\Menu\MenuItem
+     * @var ItemInterface|null
      */
     protected $gc1;
 

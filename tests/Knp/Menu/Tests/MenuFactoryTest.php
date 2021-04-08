@@ -66,5 +66,7 @@ final class MenuFactoryTest extends TestCase
         if (method_exists($this, 'containsEqual')) {
             return $this->containsEqual($value);
         }
+
+        return null;
     }
 }

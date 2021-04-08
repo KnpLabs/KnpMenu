@@ -13,9 +13,24 @@ use Knp\Menu\Util\MenuManipulator;
  */
 class Helper
 {
+    /**
+     * @var RendererProviderInterface
+     */
     private $rendererProvider;
+
+    /**
+     * @var MenuProviderInterface|null
+     */
     private $menuProvider;
+
+    /**
+     * @var MenuManipulator|null
+     */
     private $menuManipulator;
+
+    /**
+     * @var MatcherInterface|null
+     */
     private $matcher;
 
     public function __construct(
@@ -34,8 +49,8 @@ class Helper
      * Retrieves item in the menu, eventually using the menu provider.
      *
      * @param ItemInterface|string $menu
-     * @param array                $path
-     * @param array                $options
+     * @param array<int, string>   $path
+     * @param array<string, mixed> $options
      *
      * @throws \BadMethodCallException   when there is no menu provider and the menu is given by name
      * @throws \LogicException
@@ -74,8 +89,8 @@ class Helper
      * If the menu is a string instead of an ItemInterface, the provider
      * will be used.
      *
-     * @param ItemInterface|string|array $menu
-     * @param array                      $options
+     * @param ItemInterface|string|array<ItemInterface|string> $menu
+     * @param array<string, mixed>                             $options
      *
      * @throws \InvalidArgumentException
      */
@@ -103,8 +118,10 @@ class Helper
      *
      * @param mixed $menu
      * @param mixed $subItem A string or array to append onto the end of the array
+     * @phpstan-param string|ItemInterface|array<int|string, string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface>|\Traversable<string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface> $subItem
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
+     * @phpstan-return list<array{label: string, uri: string|null, item: ItemInterface|null}>
      */
     public function getBreadcrumbsArray($menu, $subItem = null): array
     {
@@ -120,21 +137,17 @@ class Helper
     /**
      * Returns the current item of a menu.
      *
-     * @param ItemInterface|array|string $menu
+     * @param ItemInterface|string|array<ItemInterface|string> $menu
      */
     public function getCurrentItem($menu): ?ItemInterface
     {
-        if (null === $this->matcher) {
-            throw new \BadMethodCallException('The matcher must be set to get the current item of a menu');
-        }
-
         $menu = $this->castMenu($menu);
 
         return $this->retrieveCurrentItem($menu);
     }
 
     /**
-     * @param ItemInterface|array|string $menu
+     * @param ItemInterface|string|array<ItemInterface|string> $menu
      */
     private function castMenu($menu): ItemInterface
     {
@@ -156,6 +169,10 @@ class Helper
 
     private function retrieveCurrentItem(ItemInterface $item): ?ItemInterface
     {
+        if (null === $this->matcher) {
+            throw new \BadMethodCallException('The matcher must be set to get the current item of a menu');
+        }
+
         if ($this->matcher->isCurrent($item)) {
             return $item;
         }

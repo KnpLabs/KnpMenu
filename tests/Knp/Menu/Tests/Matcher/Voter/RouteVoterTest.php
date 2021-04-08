@@ -44,7 +44,8 @@ final class RouteVoterTest extends TestCase
     }
 
     /**
-     * @param string|array $itemRoutes
+     * @param string|array<string, mixed> $itemRoutes
+     * @param array<string, mixed>        $parameters
      *
      * @dataProvider provideData
      */
@@ -69,6 +70,9 @@ final class RouteVoterTest extends TestCase
         $this->assertSame($expected, $voter->matchItem($item));
     }
 
+    /**
+     * @return array<string, array<int, mixed>>
+     */
     public function provideData(): array
     {
         return [
@@ -196,7 +200,8 @@ final class RouteVoterTest extends TestCase
                 true,
             ],
             'matching pattern with different parameters' => [
-                'foo', ['1' => 'bar'],
+                'foo',
+                ['1' => 'bar'],
                 [['pattern' => '/fo/', 'parameters' => ['1' => 'baz']]],
                 null,
             ],

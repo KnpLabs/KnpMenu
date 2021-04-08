@@ -13,7 +13,9 @@ class MenuManipulator
      */
     public function moveToPosition(ItemInterface $item, int $position): void
     {
-        $this->moveChildToPosition($item->getParent(), $item, $position);
+        if (null !== $parent = $item->getParent()) {
+            $this->moveChildToPosition($parent, $item, $position);
+        }
     }
 
     /**
@@ -49,7 +51,9 @@ class MenuManipulator
      */
     public function moveToLastPosition(ItemInterface $item): void
     {
-        $this->moveToPosition($item, $item->getParent()->count());
+        if (null !== $parent = $item->getParent()) {
+            $this->moveToPosition($item, $parent->count());
+        }
     }
 
     /**
@@ -70,8 +74,8 @@ class MenuManipulator
      * Note: when using a child as limit, it will not be included in the returned menu.
      * the slice is done before this menu.
      *
-     * @param mixed $offset name of child, child object, or numeric offset
-     * @param mixed $length name of child, child object, or numeric length
+     * @param mixed                    $offset name of child, child object, or numeric offset
+     * @param string|int|ItemInterface $length name of child, child object, or numeric length
      */
     public function slice(ItemInterface $item, $offset, $length = null): ItemInterface
     {
@@ -79,16 +83,19 @@ class MenuManipulator
         if ($offset instanceof ItemInterface) {
             $offset = $offset->getName();
         }
-        if (!\is_numeric($offset)) {
-            $offset = \array_search($offset, $names);
+        if (!\is_int($offset)) {
+            $offset = \array_search($offset, $names, true);
+            if (false === $offset) {
+                throw new \InvalidArgumentException('Not found.');
+            }
         }
 
         if (null !== $length) {
             if ($length instanceof ItemInterface) {
                 $length = $length->getName();
             }
-            if (!\is_numeric($length)) {
-                $index = \array_search($length, $names);
+            if (!\is_int($length)) {
+                $index = \array_search($length, $names, true);
                 $length = ($index < $offset) ? 0 : $index - $offset;
             }
         }
@@ -103,7 +110,9 @@ class MenuManipulator
     /**
      * Split menu into two distinct menus.
      *
-     * @param mixed $length name of child, child object, or numeric length
+     * @param string|int|ItemInterface $length name of child, child object, or numeric length
+     *
+     * @phpstan-return array{primary: ItemInterface, secondary: ItemInterface}
      *
      * @return array Array with two menus, with "primary" and "secondary" key
      */
@@ -121,7 +130,7 @@ class MenuManipulator
      * @example
      * $menu->callRecursively('setShowChildren', [false]);
      *
-     * @param array $arguments
+     * @param array<int|string, mixed> $arguments
      */
     public function callRecursively(ItemInterface $item, string $method, array $arguments = []): void
     {
@@ -152,7 +161,7 @@ class MenuManipulator
     /**
      * @param int|null $depth the depth until which children should be exported (null means unlimited)
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray(ItemInterface $item, ?int $depth = null): array
     {
@@ -197,9 +206,11 @@ class MenuManipulator
      *   * ['subItem1', 'subItem2']
      *   * [['label' => 'subItem1', 'url' => '@homepage'], ['label' => 'subItem2']]
      *
-     * @param mixed $subItem A string or array to append onto the end of the array
+     * @param string|ItemInterface|array<int|string, mixed>|\Traversable<mixed> $subItem A string or array to append onto the end of the array
+     * @phpstan-param string|ItemInterface|array<int|string, string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface>|\Traversable<string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface> $subItem
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
+     * @phpstan-return list<array{label: string, uri: string|null, item: ItemInterface|null}>
      *
      * @throws \InvalidArgumentException if an element of the subItem is invalid
      */
@@ -265,6 +276,9 @@ class MenuManipulator
         return $breadcrumbs;
     }
 
+    /**
+     * @phpstan-return list<array{label: string, uri: string|null, item: ItemInterface|null}>
+     */
     private function buildBreadcrumbsArray(ItemInterface $item): array
     {
         $breadcrumb = [];
@@ -276,6 +290,9 @@ class MenuManipulator
         return \array_reverse($breadcrumb);
     }
 
+    /**
+     * @phpstan-return array{label: string, uri: string|null, item: ItemInterface}
+     */
     private function getBreadcrumbsItem(ItemInterface $item): array
     {
         return [

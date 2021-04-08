@@ -9,13 +9,6 @@ use Knp\Menu\ItemInterface;
  */
 class CoreExtension implements ExtensionInterface
 {
-    /**
-     * Builds the full option array used to configure the item.
-     *
-     * @param array $options
-     *
-     * @return array
-     */
     public function buildOptions(array $options): array
     {
         return \array_merge(
@@ -35,11 +28,6 @@ class CoreExtension implements ExtensionInterface
         );
     }
 
-    /**
-     * Configures the newly created item with the passed options
-     *
-     * @param array $options
-     */
     public function buildItem(ItemInterface $item, array $options): void
     {
         $item
@@ -61,7 +49,7 @@ class CoreExtension implements ExtensionInterface
      * Configures the newly created item's extras
      * Extras are processed one by one in order not to reset values set by other extensions
      *
-     * @param array $options
+     * @param array<string, array<string, mixed>> $options
      */
     private function buildExtras(ItemInterface $item, array $options): void
     {

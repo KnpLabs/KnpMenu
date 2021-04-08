@@ -14,10 +14,13 @@ use Knp\Menu\ItemInterface;
 class LazyProvider implements MenuProviderInterface
 {
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private $builders;
 
+    /**
+     * @phpstan-param array<string, callable|array{\Closure, string}> $builders
+     */
     public function __construct(array $builders)
     {
         $this->builders = $builders;

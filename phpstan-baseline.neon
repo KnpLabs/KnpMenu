@@ -1,0 +1,12 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#2 \\$path of method Knp\\\\Menu\\\\Twig\\\\Helper\\:\\:get\\(\\) expects array\\<int, string\\>, array\\<Knp\\\\Menu\\\\ItemInterface\\|string\\> given\\.$#"
+			count: 1
+			path: src/Knp/Menu/Twig/Helper.php
+
+		-
+			message: "#^Method Knp\\\\Menu\\\\Util\\\\MenuManipulator\\:\\:getBreadcrumbsArray\\(\\) should return array\\<int, array\\('label' \\=\\> string, 'uri' \\=\\> string\\|null, 'item' \\=\\> Knp\\\\Menu\\\\ItemInterface\\|null\\)\\> but returns array\\<int, array\\('label' \\=\\> string, 'uri' \\=\\> string\\|null, 'item' \\=\\> Knp\\\\Menu\\\\ItemInterface\\|null\\)\\|array\\('label' \\=\\> string, 'url' \\=\\> string\\|null, 'item' \\=\\> Knp\\\\Menu\\\\ItemInterface\\|null\\)\\>\\.$#"
+			count: 1
+			path: src/Knp/Menu/Util/MenuManipulator.php
+

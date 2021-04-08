@@ -15,9 +15,6 @@ class RegexVoter implements VoterInterface
      */
     private $regexp;
 
-    /**
-     * @param string|null $regexp
-     */
     public function __construct(?string $regexp)
     {
         $this->regexp = $regexp;

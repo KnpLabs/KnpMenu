@@ -11,7 +11,7 @@ use Knp\Menu\Matcher\Voter\VoterInterface;
 class Matcher implements MatcherInterface
 {
     /**
-     * @var \SplObjectStorage
+     * @var \SplObjectStorage<ItemInterface, bool>
      */
     private $cache;
 

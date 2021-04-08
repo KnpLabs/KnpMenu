@@ -26,6 +26,9 @@ abstract class Renderer
         if (true === $value) {
             return \sprintf('%s="%s"', $name, $this->escape($name));
         }
+        if (false === $value) {
+            throw new \InvalidArgumentException('Value cannot be false.');
+        }
 
         return \sprintf('%s="%s"', $name, $this->escape($value));
     }
@@ -33,7 +36,7 @@ abstract class Renderer
     /**
      * Renders HTML attributes
      *
-     * @param array $attributes
+     * @param array<string, string|bool|null> $attributes
      */
     protected function renderHtmlAttributes(array $attributes): string
     {
@@ -76,7 +79,7 @@ abstract class Renderer
      */
     protected function fixDoubleEscape(string $escaped): string
     {
-        return \preg_replace('/&amp;([a-z]+|(#\d+)|(#x[\da-f]+));/i', '&$1;', $escaped);
+        return (string) \preg_replace('/&amp;([a-z]+|(#\d+)|(#x[\da-f]+));/i', '&$1;', $escaped);
     }
 
     /**

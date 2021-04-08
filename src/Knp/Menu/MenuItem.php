@@ -24,21 +24,21 @@ class MenuItem implements ItemInterface
     /**
      * Attributes for the item link
      *
-     * @var array
+     * @var array<string, string|bool|null>
      */
     protected $linkAttributes = [];
 
     /**
      * Attributes for the children list
      *
-     * @var array
+     * @var array<string, string|bool|null>
      */
     protected $childrenAttributes = [];
 
     /**
      * Attributes for the item text
      *
-     * @var array
+     * @var array<string, string|bool|null>
      */
     protected $labelAttributes = [];
 
@@ -52,14 +52,14 @@ class MenuItem implements ItemInterface
     /**
      * Attributes for the item
      *
-     * @var array
+     * @var array<string, string|bool|null>
      */
     protected $attributes = [];
 
     /**
      * Extra stuff associated to the item
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $extras = [];
 
@@ -80,7 +80,7 @@ class MenuItem implements ItemInterface
     /**
      * Child items
      *
-     * @var ItemInterface[]
+     * @var array<string, ItemInterface>
      */
     protected $children = [];
 
@@ -148,7 +148,11 @@ class MenuItem implements ItemInterface
             $offset = \array_search($oldName, $names);
             $names[$offset] = $name;
 
-            $parent->setChildren(\array_combine($names, $items));
+            if (false === $children = \array_combine($names, $items)) {
+                throw new \InvalidArgumentException('Number of elements is not matching.');
+            }
+
+            $parent->setChildren($children);
         }
 
         return $this;
@@ -192,11 +196,7 @@ class MenuItem implements ItemInterface
 
     public function getAttribute(string $name, $default = null)
     {
-        if (isset($this->attributes[$name])) {
-            return $this->attributes[$name];
-        }
-
-        return $default;
+        return $this->attributes[$name] ?? $default;
     }
 
     public function setAttribute(string $name, $value): ItemInterface
@@ -443,11 +443,19 @@ class MenuItem implements ItemInterface
 
     public function getFirstChild(): ItemInterface
     {
+        if (empty($this->children)) {
+            throw new \LogicException('Cannot get first child: there are no children.');
+        }
+
         return \reset($this->children);
     }
 
     public function getLastChild(): ItemInterface
     {
+        if (empty($this->children)) {
+            throw new \LogicException('Cannot get last child: there are no children.');
+        }
+
         return \end($this->children);
     }
 
@@ -477,27 +485,27 @@ class MenuItem implements ItemInterface
     public function isLast(): bool
     {
         // if this is root, then return false
-        if ($this->isRoot()) {
+        if (null === $this->parent) {
             return false;
         }
 
-        return $this->getParent()->getLastChild() === $this;
+        return $this->parent->getLastChild() === $this;
     }
 
     public function isFirst(): bool
     {
         // if this is root, then return false
-        if ($this->isRoot()) {
+        if (null === $this->parent) {
             return false;
         }
 
-        return $this->getParent()->getFirstChild() === $this;
+        return $this->parent->getFirstChild() === $this;
     }
 
     public function actsLikeFirst(): bool
     {
         // root items are never "marked" as first
-        if ($this->isRoot()) {
+        if (null === $this->parent) {
             return false;
         }
 
@@ -511,7 +519,7 @@ class MenuItem implements ItemInterface
             return true;
         }
 
-        $children = $this->getParent()->getChildren();
+        $children = $this->parent->getChildren();
         foreach ($children as $child) {
             // loop until we find a visible menu. If its this menu, we're first
             if ($child->isDisplayed()) {
@@ -525,7 +533,7 @@ class MenuItem implements ItemInterface
     public function actsLikeLast(): bool
     {
         // root items are never "marked" as last
-        if ($this->isRoot()) {
+        if (null === $this->parent) {
             return false;
         }
 
@@ -539,7 +547,7 @@ class MenuItem implements ItemInterface
             return true;
         }
 
-        $children = \array_reverse($this->getParent()->getChildren());
+        $children = \array_reverse($this->parent->getChildren());
         foreach ($children as $child) {
             // loop until we find a visible menu. If its this menu, we're first
             if ($child->isDisplayed()) {
@@ -568,6 +576,8 @@ class MenuItem implements ItemInterface
 
     /**
      * Implements ArrayAccess
+     *
+     * @param string $offset
      */
     public function offsetExists($offset): bool
     {
@@ -576,6 +586,10 @@ class MenuItem implements ItemInterface
 
     /**
      * Implements ArrayAccess
+     *
+     * @param string $offset
+     *
+     * @return ItemInterface|null
      */
     public function offsetGet($offset)
     {
@@ -584,6 +598,9 @@ class MenuItem implements ItemInterface
 
     /**
      * Implements ArrayAccess
+     *
+     * @param string      $offset
+     * @param string|null $value
      */
     public function offsetSet($offset, $value): void
     {
@@ -592,6 +609,8 @@ class MenuItem implements ItemInterface
 
     /**
      * Implements ArrayAccess
+     *
+     * @param string $offset
      */
     public function offsetUnset($offset): void
     {

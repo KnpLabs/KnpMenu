@@ -12,8 +12,19 @@ use Twig\TwigTest;
 
 class MenuExtension extends AbstractExtension
 {
+    /**
+     * @var Helper
+     */
     private $helper;
+
+    /**
+     * @var MatcherInterface|null
+     */
     private $matcher;
+
+    /**
+     * @var MenuManipulator|null
+     */
     private $menuManipulator;
 
     public function __construct(Helper $helper, ?MatcherInterface $matcher = null, ?MenuManipulator $menuManipulator = null)
@@ -23,6 +34,9 @@ class MenuExtension extends AbstractExtension
         $this->menuManipulator = $menuManipulator;
     }
 
+    /**
+     * @return array<int, TwigFunction>
+     */
     public function getFunctions(): array
     {
         return [
@@ -33,6 +47,9 @@ class MenuExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * @return array<int, TwigFilter>
+     */
     public function getFilters(): array
     {
         return [
@@ -40,6 +57,9 @@ class MenuExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * @return array<int, TwigTest>
+     */
     public function getTests(): array
     {
         return [
@@ -52,6 +72,8 @@ class MenuExtension extends AbstractExtension
      * Retrieves an item following a path in the tree.
      *
      * @param ItemInterface|string $menu
+     * @param array<int, string>   $path
+     * @param array<string, mixed> $options
      */
     public function get($menu, array $path = [], array $options = []): ItemInterface
     {
@@ -61,8 +83,8 @@ class MenuExtension extends AbstractExtension
     /**
      * Renders a menu with the specified renderer.
      *
-     * @param ItemInterface|string|array $menu
-     * @param array                      $options
+     * @param ItemInterface|string|array<ItemInterface|string> $menu
+     * @param array<string, mixed>                             $options
      */
     public function render($menu, array $options = [], ?string $renderer = null): string
     {
@@ -72,10 +94,12 @@ class MenuExtension extends AbstractExtension
     /**
      * Returns an array ready to be used for breadcrumbs.
      *
-     * @param ItemInterface|array|string $menu
-     * @param string|array|null          $subItem
+     * @param ItemInterface|string|array<ItemInterface|string> $menu
+     * @param string|array<string|null>|null                   $subItem
+     * @phpstan-param string|ItemInterface|array<int|string, string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface>|\Traversable<string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface> $subItem
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
+     * @phpstan-return list<array{label: string, uri: string|null, item: ItemInterface|null}>
      */
     public function getBreadcrumbsArray($menu, $subItem = null): array
     {

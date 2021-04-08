@@ -37,8 +37,8 @@ class ArrayLoader implements LoaderInterface
     }
 
     /**
-     * @param array       $data
-     * @param string|null $name (the name of the item, used only if there is no name in the data themselves)
+     * @param array<string, mixed> $data
+     * @param string|null          $name (the name of the item, used only if there is no name in the data themselves)
      */
     private function fromArray(array $data, ?string $name = null): ItemInterface
     {

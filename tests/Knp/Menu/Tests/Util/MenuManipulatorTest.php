@@ -50,8 +50,9 @@ final class MenuManipulatorTest extends MenuTestCase
     }
 
     /**
-     * @param int|string      $offset
-     * @param int|string|null $length
+     * @param int|string           $offset
+     * @param int|string|null      $length
+     * @param array<string, mixed> $keys
      *
      * @dataProvider getSliceData
      */
@@ -63,6 +64,9 @@ final class MenuManipulatorTest extends MenuTestCase
         $this->assertEquals($keys, \array_keys($sliced->getChildren()));
     }
 
+    /**
+     * @return array<string, array<int, mixed>>
+     */
     public function getSliceData(): array
     {
         $this->setUp();
@@ -78,7 +82,8 @@ final class MenuManipulatorTest extends MenuTestCase
     }
 
     /**
-     * @param int|string $length
+     * @param int|string           $length
+     * @param array<string, mixed> $keys
      *
      * @dataProvider getSplitData
      */
@@ -93,6 +98,9 @@ final class MenuManipulatorTest extends MenuTestCase
         $this->assertEquals($keys, \array_keys($split['primary']->getChildren()));
     }
 
+    /**
+     * @return array<string, array<int, mixed>>
+     */
     public function getSplitData(): array
     {
         $this->setUp();
@@ -371,6 +379,8 @@ final class MenuManipulatorTest extends MenuTestCase
 
     /**
      * Create a new MenuItem.
+     *
+     * @param array<string, mixed> $attributes
      */
     private function createMenu(string $name = 'test_menu', string $uri = 'homepage', array $attributes = []): ItemInterface
     {

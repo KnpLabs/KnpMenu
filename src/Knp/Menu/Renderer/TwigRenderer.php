@@ -19,12 +19,12 @@ class TwigRenderer implements RendererInterface
     private $matcher;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      */
     private $defaultOptions;
 
     /**
-     * @param array $defaultOptions
+     * @param array<string, mixed> $defaultOptions
      */
     public function __construct(
         Environment $environment,

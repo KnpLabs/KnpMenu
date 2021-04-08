@@ -14,18 +14,18 @@ use Knp\Menu\ItemInterface;
 class ArrayAccessProvider implements MenuProviderInterface
 {
     /**
-     * @var \ArrayAccess
+     * @var \ArrayAccess<string, ItemInterface|callable>
      */
     private $registry;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     private $menuIds;
 
     /**
-     * @param \ArrayAccess $registry
-     * @param array        $menuIds  The map between menu identifiers and registry keys
+     * @param \ArrayAccess<string, ItemInterface|callable> $registry
+     * @param array<string, string>                        $menuIds  The map between menu identifiers and registry keys
      */
     public function __construct(\ArrayAccess $registry, array $menuIds = [])
     {

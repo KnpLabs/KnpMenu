@@ -23,6 +23,9 @@ final class UriVoterTest extends TestCase
         $this->assertSame($expected, $voter->matchItem($item));
     }
 
+    /**
+     * @return array<string, array<int, string|bool|null>>
+     */
     public function provideData(): array
     {
         return [

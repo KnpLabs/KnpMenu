@@ -9,6 +9,7 @@ namespace Knp\Menu;
  * most of the time by default.
  * Originally taken from ioMenuPlugin (http://github.com/weaverryan/ioMenuPlugin)
  *
+ * @extends \ArrayAccess<string, self|string>
  * @extends \IteratorAggregate<string, self>
  */
 interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
@@ -47,7 +48,7 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Defaults to the name of no label was specified
      */
-    public function getLabel(): ?string;
+    public function getLabel(): string;
 
     /**
      * Provides a fluent interface
@@ -56,64 +57,106 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function setLabel(?string $label): self;
 
+    /**
+     * @return array<string, string|bool|null>
+     */
     public function getAttributes(): array;
 
+    /**
+     * @param array<string, string|bool|null> $attributes
+     */
     public function setAttributes(array $attributes): self;
 
     /**
-     * @param string $name    The name of the attribute to return
-     * @param mixed  $default The value to return if the attribute doesn't exist
+     * @param string           $name    The name of the attribute to return
+     * @param string|bool|null $default The value to return if the attribute doesn't exist
      *
-     * @return mixed
+     * @return string|bool|null
      */
     public function getAttribute(string $name, $default = null);
 
+    /**
+     * @param string|bool|null $value
+     */
     public function setAttribute(string $name, $value): self;
 
+    /**
+     * @return array<string, string|bool|null>
+     */
     public function getLinkAttributes(): array;
 
+    /**
+     * @param array<string, string|bool|null> $linkAttributes
+     */
     public function setLinkAttributes(array $linkAttributes): self;
 
     /**
-     * @param string $name    The name of the attribute to return
-     * @param mixed  $default The value to return if the attribute doesn't exist
+     * @param string           $name    The name of the attribute to return
+     * @param string|bool|null $default The value to return if the attribute doesn't exist
      *
-     * @return mixed
+     * @return string|bool|null
      */
     public function getLinkAttribute(string $name, $default = null);
 
+    /**
+     * @param string|bool|null $value
+     */
     public function setLinkAttribute(string $name, $value): self;
 
+    /**
+     * @return array<string, string|bool|null>
+     */
     public function getChildrenAttributes(): array;
 
+    /**
+     * @param array<string, string|bool|null> $childrenAttributes
+     */
     public function setChildrenAttributes(array $childrenAttributes): self;
 
     /**
-     * @param string $name    The name of the attribute to return
-     * @param mixed  $default The value to return if the attribute doesn't exist
+     * @param string           $name    The name of the attribute to return
+     * @param string|bool|null $default The value to return if the attribute doesn't exist
      *
-     * @return mixed
+     * @return string|bool|null
      */
     public function getChildrenAttribute(string $name, $default = null);
 
-    public function setChildrenAttribute(string $name, $value);
+    /**
+     * @param string|bool|null $value
+     */
+    public function setChildrenAttribute(string $name, $value): self;
 
+    /**
+     * @return array<string, string|bool|null>
+     */
     public function getLabelAttributes(): array;
 
+    /**
+     * @param array<string, string|bool|null> $labelAttributes
+     */
     public function setLabelAttributes(array $labelAttributes): self;
 
     /**
-     * @param string $name    The name of the attribute to return
-     * @param mixed  $default The value to return if the attribute doesn't exist
+     * @param string           $name    The name of the attribute to return
+     * @param string|bool|null $default The value to return if the attribute doesn't exist
      *
-     * @return mixed
+     * @return string|bool|null
      */
     public function getLabelAttribute(string $name, $default = null);
 
+    /**
+     * @param string|bool|null $value
+     */
     public function setLabelAttribute(string $name, $value): self;
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getExtras(): array;
 
+    /**
+     * @param array<string, mixed> $extras
+     */
     public function setExtras(array $extras): self;
 
     /**
@@ -124,6 +167,9 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function getExtra(string $name, $default = null);
 
+    /**
+     * @param mixed $value
+     */
     public function setExtra(string $name, $value): self;
 
     public function getDisplayChildren(): bool;
@@ -144,10 +190,8 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * Set whether or not this menu should be displayed
      *
      * Provides a fluent interface
-     *
-     * @return ItemInterface
      */
-    public function setDisplay(bool $bool);
+    public function setDisplay(bool $bool): self;
 
     /**
      * Add a child menu item to this menu
@@ -155,7 +199,7 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      * Returns the child item
      *
      * @param ItemInterface|string $child   An ItemInterface instance or the name of a new item to create
-     * @param array                $options If creating a new item, the options passed to the factory for the item
+     * @param array<string, mixed> $options If creating a new item, the options passed to the factory for the item
      *
      * @throws \InvalidArgumentException if the item is already in a tree
      */
@@ -173,7 +217,7 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Provides a fluent interface
      *
-     * @param array $order new order of children
+     * @param array<int|string, string> $order new order of children
      */
     public function reorderChildren(array $order): self;
 
@@ -211,14 +255,14 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Return the children as an array of ItemInterface objects
      *
-     * @return ItemInterface[]
+     * @return array<string, self>
      */
     public function getChildren(): array;
 
     /**
      * Provides a fluent interface
      *
-     * @param array $children An array of ItemInterface objects
+     * @param array<string, self> $children An array of ItemInterface objects
      */
     public function setChildren(array $children): self;
 

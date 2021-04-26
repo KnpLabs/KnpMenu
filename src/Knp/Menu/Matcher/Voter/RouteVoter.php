@@ -23,7 +23,11 @@ class RouteVoter implements VoterInterface
 
     public function matchItem(ItemInterface $item): ?bool
     {
-        $request = $this->requestStack->getMasterRequest();
+        if (\is_callable([$this->requestStack, 'getMainRequest'])) {
+            $request = $this->requestStack->getMainRequest();   // symfony 5.3+
+        } else {
+            $request = $this->requestStack->getMasterRequest();
+        }
 
         if (null === $request) {
             return null;

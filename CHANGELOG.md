@@ -1,3 +1,8 @@
+## 3.2 (2021-05-28)
+
+* Remove Symfony 6 deprecations
+* Enforce phpstan rules (max level)
+
 ## 3.1 (2019-12-01)
 
 * Allowed Symfony 5 components

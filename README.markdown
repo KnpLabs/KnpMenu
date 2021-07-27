@@ -5,7 +5,7 @@ The KnpMenu library provides object oriented menus for PHP.
 It is used by the [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) for Symfony
 but can now be used stand-alone.
 
-[![Build Status](https://secure.travis-ci.org/KnpLabs/KnpMenu.svg)](http://travis-ci.org/KnpLabs/KnpMenu)
+[![Build Status](https://github.com/KnpLabs/KnpMenu/workflows/build/badge.svg)](https://github.com/KnpLabs/KnpMenu/actions)
 [![Latest Stable Version](https://poser.pugx.org/knplabs/knp-menu/v/stable.svg)](https://packagist.org/packages/knplabs/knp-menu)
 [![Latest Unstable Version](https://poser.pugx.org/knplabs/knp-menu/v/unstable.svg)](https://packagist.org/packages/knplabs/knp-menu)
 [![Gitter chat](https://badges.gitter.im/KnpLabs/KnpMenu.svg)](https://gitter.im/KnpLabs/KnpMenu)

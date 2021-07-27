@@ -41,10 +41,10 @@ jobs:
                           SYMFONY_DEPRECATIONS_HELPER: max[self]=0
                     - description: 'Symfony 4.4'
                       php: '7.4'
-                      symfony: 3.4.*
+                      symfony: 4.4.*
                     - description: 'Symfony 5.3'
                       php: '7.4'
-                      symfony: 4.4.*
+                      symfony: 5.3.*
                     - description: 'Dev deps'
                       php: '8.0'
                       dev: true

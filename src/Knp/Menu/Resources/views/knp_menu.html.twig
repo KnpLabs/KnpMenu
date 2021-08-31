@@ -55,8 +55,11 @@
     {%- if matcher.isCurrent(item) %}
         {%- set classes = classes|merge([options.currentClass]) %}
     {%- elseif matcher.isAncestor(item, options.matchingDepth) %}
-        {# ancestorClass will be deprecated in future, use ancestor_class #}
-        {%- set classes = classes|merge([options.ancestor_class])|merge([options.ancestorClass]) %}
+        {%- set classes = classes|merge([options.ancestor_class]) %}
+        {%- if options.ancestorClass is not empty %}
+           {% deprecated 'knplabs/knp-menu 3.3: Using "ancestorClass" option is deprecated, use "ancestor_class" instead.' %}
+           {%- set classes = classes|merge([options.ancestorClass]) %}
+        {%- endif %}
     {%- endif %}
     {%- if item.actsLikeFirst %}
         {%- set classes = classes|merge([options.firstClass]) %}

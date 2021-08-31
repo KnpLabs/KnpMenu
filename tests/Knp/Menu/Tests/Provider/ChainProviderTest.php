@@ -6,9 +6,12 @@ use Knp\Menu\ItemInterface;
 use Knp\Menu\Provider\ChainProvider;
 use Knp\Menu\Provider\MenuProviderInterface;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 final class ChainProviderTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testHas(): void
     {
         $innerProvider = $this->getMockBuilder(MenuProviderInterface::class)->getMock();

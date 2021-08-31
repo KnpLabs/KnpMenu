@@ -5,10 +5,13 @@ namespace Knp\Menu\Tests\Provider;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\Provider\PsrProvider;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 
 final class PsrProviderTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testHas(): void
     {
         $container = $this->prophesize(ContainerInterface::class);

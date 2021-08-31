@@ -27,11 +27,11 @@
         "twig/twig": "<1.40 || >=2,<2.9"
     },
     "require-dev": {
-        "phpspec/prophecy": "^1.8",
+        "phpspec/prophecy": "^1.13",
         "psr/container": "^1.0",
-        "symfony/http-foundation": "^3.4 || ^4.2|| ^5.0",
-        "symfony/phpunit-bridge": "^3.3 || ^4.2|| ^5.0",
-        "symfony/routing": "^3.4 || ^4.2|| ^5.0",
+        "symfony/http-foundation": "^4.4 || ^5.0",
+        "symfony/phpunit-bridge": "^5.3",
+        "symfony/routing": "^4.4 || ^5.0",
         "twig/twig": "^1.40 || ^2.9 || ^3.0"
     },
     "suggest": {
@@ -47,7 +47,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.2-dev"
+            "dev-master": "3.3-dev"
         }
     }
 }

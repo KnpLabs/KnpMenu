@@ -62,7 +62,7 @@ jobs:
               with:
                   php-version: ${{ matrix.php }}
             - run: |
-                   sed -ri '/symfony\/deprecation-contracts/!s/"symfony\/(.+)\symfony\/deprecation-contracts/;": "(.+)"/"symfony\/\1": "'${{ matrix.symfony }}'"/' composer.json;
+                   sed -ri '/symfony\/deprecation-contracts/! s/"symfony\/(.+)\symfony\/deprecation-contracts/;": "(.+)"/"symfony\/\1": "'${{ matrix.symfony }}'"/' composer.json;
               if: matrix.symfony
             - run: composer config minimum-stability dev && composer config prefer-stable true
               if: matrix.dev

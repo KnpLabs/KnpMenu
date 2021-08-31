@@ -80,9 +80,9 @@ Find all available documentation at [`doc/`][2].
 
 This library is maintained by the following people (alphabetically sorted) :
 
-- @derrabus
-- @garak
-- @stof
+- [@derrabus][3]
+- [@garak][4]
+- [@stof][5]
 
 ## Credits
 
@@ -93,3 +93,6 @@ the [Symfony community](https://github.com/KnpLabs/KnpMenu/graphs/contributors).
 [0]: doc/01-Basic-Menus.md
 [1]: doc/02-Twig-Integration.md
 [2]: doc/
+[3]: https://github.com/derrabus
+[4]: https://github.com/garak
+[5]: https://github.com/stof

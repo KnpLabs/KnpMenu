@@ -59,11 +59,11 @@ final class MenuFactoryTest extends TestCase
 
     private function containsCustom(string $value): ?object
     {
-        if (method_exists($this, 'contains')) {
+        if (\method_exists($this, 'contains')) {
             return $this->contains($value);
         }
 
-        if (method_exists($this, 'containsEqual')) {
+        if (\method_exists($this, 'containsEqual')) {
             return $this->containsEqual($value);
         }
 

@@ -5,17 +5,16 @@ $finder = PhpCsFixer\Finder::create()
     ->in([__DIR__.'/src', __DIR__.'/tests'])
 ;
 
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
     ->setRules([
         '@Symfony' => true,
         '@Symfony:risky' => true,
         '@PHP71Migration:risky' => true,
         '@PHPUnit75Migration:risky' => true,
-        'array_syntax' => ['syntax' => 'short'],
         'ordered_imports' => true,
         'declare_strict_types' => false,
-        'native_function_invocation' => false,
+        'native_function_invocation' => ['include' => ['@internal']],
         'phpdoc_summary' => false,
     ])
     ->setFinder($finder)

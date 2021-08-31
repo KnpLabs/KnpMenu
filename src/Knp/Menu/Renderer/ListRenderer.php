@@ -132,7 +132,7 @@ class ListRenderer extends Renderer implements RendererInterface
             $class[] = $options['currentClass'];
         } elseif ($this->matcher->isAncestor($item, $options['matchingDepth'])) {
             if (isset($options['ancestorClass']) { // Deprecated: it will be removed in future (@see: ancestor_class)
-                trigger_deprecation('knplabs/knp-menu', '3.2', 'Using "%s" option is deprecated, use "%s" instead.', 'ancestorClass', 'ancestor_class');
+                trigger_deprecation('knplabs/knp-menu', '3.3', 'Using "%s" option is deprecated, use "%s" instead.', 'ancestorClass', 'ancestor_class');
                 $options['ancestor_class'] = $options['ancestorClass'];
             }
             $class[] = $options['ancestor_class'];

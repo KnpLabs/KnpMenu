@@ -74,7 +74,37 @@ the first and last items, submenus, ...
 Follow the tutorial in [`doc/01-Basic-Menus.md`][0] and [`doc/02-Twig-Integration.md`][1]
 to discover how KnpMenu will rock your world!
 
-Find all available documentation at [`doc/`][2].
+Find all available documentation at [`doc/`][2] or the next table of contents:
+
+Documentation
+=================
+
+<!--ts-->
+   * [Creating Menus: The Basics](doc/01-Basic-Menus.md#creating-menus-the-basics)
+      * [Creating a menu](doc/01-Basic-Menus.md#creating-a-menu)
+      * [Working with your menu tree](doc/01-Basic-Menus.md#working-with-your-menu-tree)
+      * [Customizing each menu item](doc/01-Basic-Menus.md#customizing-each-menu-item)
+      * [The Current Menu Item](doc/01-Basic-Menus.md#the-current-menu-item)
+      * [Creating a Menu from a Tree structure](doc/01-Basic-Menus.md#creating-a-menu-from-a-tree-structure)
+   * [Advanced Menu](doc/01a-Advanced-Menu.md#advanced-menu)
+   * [Twig Integration](doc/02-Twig-Integration.md#twig-integration#twig-integration)
+      * [Using the MenuExtension](doc/02-Twig-Integration.md#using-the-menuextension)
+      * [Loading your renderers from a provider](doc/02-Twig-Integration.md#loading-your-renderers-from-a-provider)
+      * [Loading the menu from a provider](doc/02-Twig-Integration.md#loading-the-menu-from-a-provider)
+      * [Using the TwigRenderer](doc/02-Twig-Integration.md#using-the-twigrenderer)
+      * [Twig integration reference](doc/02-Twig-Integration.md#twig-integration-reference)
+   * [Silex Integration (deprecated since 2.3)(abandoned)](doc/03-Silex-Integration.md#silex-1-integration)
+   * [Iterating over Menus](doc/04-Iterators.md#iterating-over-menus)
+      * [Iterating recursively](doc/04-Iterators.md#iterating-recursively)
+      * [Filtering only current items](doc/04-Iterators.md#filtering-only-current-items)
+      * [Filtering only displayed items](doc/04-Iterators.md#filtering-only-displayed-items)
+   * [Matcher to determine the current page](doc/05-Matcher.md#docker)
+      * [Basics](doc/05-Matcher.md#basics)
+      * [Available voters](doc/05-Matcher.md#basics)
+      * [Create your own voters](doc/05-Matcher.md#available-voters#create-your-own-voters)
+   * [FAQ](doc/06-FAQ.md#faq)
+     * [How to apply the active class to a item and all ancestors](doc/examples/01_apply_active_class_to_whole_tree.md#how-to-apply-the-active-class-to-a-item-and-all-ancestors)
+<!--te-->
 
 ## Maintainers
 

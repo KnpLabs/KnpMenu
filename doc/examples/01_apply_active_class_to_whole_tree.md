@@ -10,9 +10,23 @@ render method of your used renderer:
 $renderer->render($item, ['currentClass' => 'active', 'ancestor_class' => 'active']);
 ```
 
+Old deprecated way:
+
+```php
+<?php
+$renderer->render($item, ['currentClass' => 'active', 'ancestorClass' => 'active']);
+```
+
 or pass it as argument to the constructor of the used renderer:
 
 ```php
 <?php
 $renderer = new Renderer($matcher, ['currentClass' => 'active', 'ancestor_class' => 'active']);
+```
+
+Old deprecated way:
+
+```php
+<?php
+$renderer = new Renderer($matcher, ['currentClass' => 'active', 'ancestorClass' => 'active'])
 ```

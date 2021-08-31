@@ -40,6 +40,7 @@ class TwigRenderer implements RendererInterface
             'currentAsLink' => true,
             'currentClass' => 'current',
             'ancestor_class' => 'current_ancestor',
+            'ancestorClass' => 'current_ancestor',
             'firstClass' => 'first',
             'lastClass' => 'last',
             'template' => $template,

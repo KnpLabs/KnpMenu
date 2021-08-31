@@ -40,7 +40,6 @@ class TwigRenderer implements RendererInterface
             'currentAsLink' => true,
             'currentClass' => 'current',
             'ancestor_class' => 'current_ancestor',
-            'ancestorClass' => 'current_ancestor',
             'firstClass' => 'first',
             'lastClass' => 'last',
             'template' => $template,
@@ -55,6 +54,13 @@ class TwigRenderer implements RendererInterface
     public function render(ItemInterface $item, array $options = []): string
     {
         $options = \array_merge($this->defaultOptions, $options);
+
+        // Avoid duplication of current_ancestor class. Overwrite value in old config to new one
+        if (isset($options['ancestorClass'])) {
+           $options['ancestor_class'] = $options['ancestorClass']; 
+           unset($options['ancestorClass']);
+           trigger_deprecation('knplabs/knp-menu', '3.3', 'Using "%s" option is deprecated, use "%s" instead.', 'ancestorClass', 'ancestor_class');
+        }
 
         $html = $this->environment->render($options['template'], ['item' => $item, 'options' => $options, 'matcher' => $this->matcher]);
 

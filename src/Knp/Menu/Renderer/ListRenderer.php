@@ -32,7 +32,6 @@ class ListRenderer extends Renderer implements RendererInterface
             'currentAsLink' => true,
             'currentClass' => 'current',
             'ancestor_class' => 'current_ancestor',
-            'ancestorClass' => 'current_ancestor', // Deprecated in future
             'firstClass' => 'first',
             'lastClass' => 'last',
             'compressed' => false,
@@ -48,6 +47,13 @@ class ListRenderer extends Renderer implements RendererInterface
     public function render(ItemInterface $item, array $options = []): string
     {
         $options = \array_merge($this->defaultOptions, $options);
+
+        // Avoid duplication of current_ancestor class. Overwrite value in old config to new one
+        if (isset($options['ancestorClass'])) {
+           $options['ancestor_class'] = $options['ancestorClass']; 
+           unset($options['ancestorClass']);
+           trigger_deprecation('knplabs/knp-menu', '3.3', 'Using "%s" option is deprecated, use "%s" instead.', 'ancestorClass', 'ancestor_class');
+        }
 
         $html = $this->renderList($item, $item->getChildrenAttributes(), $options);
 
@@ -131,7 +137,7 @@ class ListRenderer extends Renderer implements RendererInterface
         if ($this->matcher->isCurrent($item)) {
             $class[] = $options['currentClass'];
         } elseif ($this->matcher->isAncestor($item, $options['matchingDepth'])) {
-            if (isset($options['ancestorClass']) { // Deprecated: it will be removed in future (@see: ancestor_class)
+            if (isset($options['ancestorClass'])) { // Deprecated: it will be removed in future (@see: ancestor_class)
                 trigger_deprecation('knplabs/knp-menu', '3.3', 'Using "%s" option is deprecated, use "%s" instead.', 'ancestorClass', 'ancestor_class');
                 $options['ancestor_class'] = $options['ancestorClass'];
             }

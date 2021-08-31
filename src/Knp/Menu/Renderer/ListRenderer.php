@@ -31,7 +31,7 @@ class ListRenderer extends Renderer implements RendererInterface
             'matchingDepth' => null,
             'currentAsLink' => true,
             'currentClass' => 'current',
-            'ancestorClass' => 'current_ancestor',
+            'ancestor_class' => 'current_ancestor',
             'firstClass' => 'first',
             'lastClass' => 'last',
             'compressed' => false,
@@ -130,7 +130,7 @@ class ListRenderer extends Renderer implements RendererInterface
         if ($this->matcher->isCurrent($item)) {
             $class[] = $options['currentClass'];
         } elseif ($this->matcher->isAncestor($item, $options['matchingDepth'])) {
-            $class[] = $options['ancestorClass'];
+            $class[] = $options['ancestor_class'];
         }
 
         if ($item->actsLikeFirst()) {

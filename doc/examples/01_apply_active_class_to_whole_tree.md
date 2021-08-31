@@ -7,12 +7,12 @@ render method of your used renderer:
 
 ```php
 <?php
-$renderer->render($item, ['currentClass' => 'active', 'ancestorClass' => 'active']);
+$renderer->render($item, ['currentClass' => 'active', 'ancestor_class' => 'active']);
 ```
 
 or pass it as argument to the constructor of the used renderer:
 
 ```php
 <?php
-$renderer = new Renderer($matcher, ['currentClass' => 'active', 'ancestorClass' => 'active']);
+$renderer = new Renderer($matcher, ['currentClass' => 'active', 'ancestor_class' => 'active']);
 ```

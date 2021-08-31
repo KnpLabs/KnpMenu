@@ -16,7 +16,7 @@ interface RendererInterface
      *          1: only direct children
      *      - currentAsLink: whether the current item should be a link
      *      - currentClass: class added to the current item
-     *      - ancestorClass: class added to the ancestors of the current item
+     *      - ancestor_class: class added to the ancestors of the current item
      *      - firstClass: class added to the first child
      *      - lastClass: class added to the last child
      *

@@ -39,7 +39,7 @@ class TwigRenderer implements RendererInterface
             'matchingDepth' => null,
             'currentAsLink' => true,
             'currentClass' => 'current',
-            'ancestorClass' => 'current_ancestor',
+            'ancestor_class' => 'current_ancestor',
             'firstClass' => 'first',
             'lastClass' => 'last',
             'template' => $template,

@@ -55,7 +55,7 @@
     {%- if matcher.isCurrent(item) %}
         {%- set classes = classes|merge([options.currentClass]) %}
     {%- elseif matcher.isAncestor(item, options.matchingDepth) %}
-        {%- set classes = classes|merge([options.ancestorClass]) %}
+        {%- set classes = classes|merge([options.ancestor_class]) %}
     {%- endif %}
     {%- if item.actsLikeFirst %}
         {%- set classes = classes|merge([options.firstClass]) %}

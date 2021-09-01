@@ -27,12 +27,12 @@
     },
     "require-dev": {
         "phpspec/prophecy": "^1.13",
+        "phpspec/prophecy-phpunit": "^2.0",
         "psr/container": "^1.0",
         "symfony/http-foundation": "^4.4 || ^5.0",
         "symfony/phpunit-bridge": "^5.3",
         "symfony/routing": "^4.4 || ^5.0",
-        "twig/twig": "^1.40 || ^2.9 || ^3.0",
-        "phpspec/prophecy-phpunit": "^2.0"
+        "twig/twig": "^1.40 || ^2.9 || ^3.0"
     },
     "suggest": {
         "twig/twig": "for the TwigRenderer and the integration with your templates"
@@ -49,5 +49,8 @@
         "branch-alias": {
             "dev-master": "3.3-dev"
         }
+    },
+    "config": {
+        "sort-packages": true
     }
 }

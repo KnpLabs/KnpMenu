@@ -15,19 +15,10 @@ final class ChainProviderTest extends TestCase
     public function testHas(): void
     {
         $innerProvider = $this->getMockBuilder(MenuProviderInterface::class)->getMock();
-        $innerProvider->expects($this->any())
+        $innerProvider->expects($this->exactly(3))
             ->method('has')
-            ->with('first');
-
-        $innerProvider
-            ->method('has')
-            ->with('second');
-
-        $innerProvider
-            ->method('has')
-            ->with('third', ['foo' => 'bar'])
-            ->willReturnOnConsecutiveCalls(true, false, false);
-
+            ->willReturnOnConsecutiveCalls(true, false, false)
+        ;
         $provider = new ChainProvider([$innerProvider]);
         $this->assertTrue($provider->has('first'));
         $this->assertFalse($provider->has('second'));

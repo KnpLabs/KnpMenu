@@ -34,6 +34,8 @@ jobs:
                       php: '7.4'
                     - description: 'No Symfony specified'
                       php: '8.0'
+                    - description: 'No Symfony specified'
+                      php: '8.1'
                     - description: 'Lowest deps'
                       php: '7.3'
                       composer_option: '--prefer-lowest'

@@ -22,6 +22,7 @@ class RecursiveItemIterator extends \IteratorIterator implements \RecursiveItera
         return 0 < \count($this->current());
     }
 
+    #[\ReturnTypeWillChange]
     public function getChildren()
     {
         return new static($this->current());

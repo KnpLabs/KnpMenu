@@ -24,6 +24,7 @@ class CurrentItemFilterIterator extends \FilterIterator
         parent::__construct($iterator);
     }
 
+    #[\ReturnTypeWillChange]
     public function accept()
     {
         return $this->matcher->isCurrent($this->current());

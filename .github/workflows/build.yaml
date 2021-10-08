@@ -54,9 +54,9 @@ jobs:
               uses: actions/checkout@v2
             - name: Cache
               uses: actions/cache@v2
-              with: 
+              with:
                   path: ~/.composer/cache/files
-                  key: composer-${{ matrix.php }}-${{ matrix.symfony }}-${{ matrix.composer_option }} 
+                  key: composer-${{ matrix.php }}-${{ matrix.symfony }}-${{ matrix.composer_option }}
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
@@ -67,5 +67,5 @@ jobs:
             - run: composer config minimum-stability dev && composer config prefer-stable true
               if: matrix.dev
             - run: composer update --no-interaction --no-progress --ansi ${{ matrix.composer_option }}
-            - run: vendor/bin/simple-phpunit
+            - run: vendor/bin/phpunit
 

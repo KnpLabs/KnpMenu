@@ -12,21 +12,19 @@ final class ChainProviderTest extends TestCase
     public function testHas(): void
     {
         $innerProvider = $this->getMockBuilder(MenuProviderInterface::class)->getMock();
-        $innerProvider->expects($this->at(0))
+        $innerProvider
             ->method('has')
-            ->with('first')
-            ->willReturn(true)
-        ;
-        $innerProvider->expects($this->at(1))
-            ->method('has')
-            ->with('second')
-            ->willReturn(false)
-        ;
-        $innerProvider->expects($this->at(2))
-            ->method('has')
-            ->with('third', ['foo' => 'bar'])
-            ->willReturn(false)
-        ;
+            ->withConsecutive(
+                ['first'],
+                ['second'],
+                ['third', ['foo' => 'bar']],
+            )
+            ->willReturnOnConsecutiveCalls(
+                true,
+                false,
+                false,
+            );
+
         $provider = new ChainProvider([$innerProvider]);
         $this->assertTrue($provider->has('first'));
         $this->assertFalse($provider->has('second'));
@@ -81,14 +79,21 @@ final class ChainProviderTest extends TestCase
 
     public function testIterator(): void
     {
-        $menu = $this->prophesize(ItemInterface::class);
+        $menu = $this->createStub(ItemInterface::class);
 
-        $innerProvider = $this->prophesize(MenuProviderInterface::class);
-        $innerProvider->has('foo', [])->willReturn(true);
-        $innerProvider->get('foo', [])->willReturn($menu);
+        $innerProvider = $this->createMock(MenuProviderInterface::class);
+        $innerProvider
+            ->method('has')
+            ->with('foo', [])
+            ->willReturn(true);
 
-        $provider = new ChainProvider(new \ArrayIterator([$innerProvider->reveal()]));
+        $innerProvider
+            ->method('get')
+            ->with('foo', [])
+            ->willReturn($menu);
+
+        $provider = new ChainProvider(new \ArrayIterator([$innerProvider]));
         $this->assertTrue($provider->has('foo'));
-        $this->assertSame($menu->reveal(), $provider->get('foo'));
+        $this->assertSame($menu, $provider->get('foo'));
     }
 }

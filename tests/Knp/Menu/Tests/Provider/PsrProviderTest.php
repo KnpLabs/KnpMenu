@@ -11,12 +11,16 @@ final class PsrProviderTest extends TestCase
 {
     public function testHas(): void
     {
-        $container = $this->prophesize(ContainerInterface::class);
-        $container->has('first')->willReturn(true);
-        $container->has('second')->willReturn(true);
-        $container->has('third')->willReturn(false);
+        $container = $this->createStub(ContainerInterface::class);
+        $container
+            ->method('has')
+            ->willReturnMap([
+                ['first', true],
+                ['second', true],
+                ['third', false],
+            ]);
 
-        $provider = new PsrProvider($container->reveal());
+        $provider = new PsrProvider($container);
         $this->assertTrue($provider->has('first'));
         $this->assertTrue($provider->has('second'));
         $this->assertFalse($provider->has('third'));
@@ -24,24 +28,34 @@ final class PsrProviderTest extends TestCase
 
     public function testGetExistentMenu(): void
     {
-        $menu = $this->prophesize(ItemInterface::class);
+        $menu = $this->createStub(ItemInterface::class);
 
-        $container = $this->prophesize(ContainerInterface::class);
-        $container->has('menu')->willReturn(true);
-        $container->get('menu')->willReturn($menu);
+        $container = $this->createMock(ContainerInterface::class);
+        $container
+            ->method('has')
+            ->with('menu')
+            ->willReturn(true);
+        $container
+            ->method('get')
+            ->with('menu')
+            ->willReturn($menu);
 
-        $provider = new PsrProvider($container->reveal());
-        $this->assertSame($menu->reveal(), $provider->get('menu'));
+        $provider = new PsrProvider($container);
+        $this->assertSame($menu, $provider->get('menu'));
     }
 
     public function testGetNonExistentMenu(): void
     {
+        $container = $this->createMock(ContainerInterface::class);
+        $container
+            ->method('has')
+            ->with('non-existent')
+            ->willReturn(false);
+
+        $provider = new PsrProvider($container);
+
         $this->expectException(\InvalidArgumentException::class);
 
-        $container = $this->prophesize(ContainerInterface::class);
-        $container->has('non-existent')->willReturn(false);
-
-        $provider = new PsrProvider($container->reveal());
         $provider->get('non-existent');
     }
 }

@@ -7,12 +7,18 @@ namespace Knp\Menu\Iterator;
  */
 class DisplayedItemFilterIterator extends \RecursiveFilterIterator
 {
+    /**
+     * @return bool
+     */
     #[\ReturnTypeWillChange]
     public function accept()
     {
         return $this->current()->isDisplayed();
     }
 
+    /**
+     * @return bool
+     */
     #[\ReturnTypeWillChange]
     public function hasChildren()
     {

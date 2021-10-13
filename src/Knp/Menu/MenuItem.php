@@ -591,6 +591,7 @@ class MenuItem implements ItemInterface
      *
      * @return ItemInterface|null
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->getChild($offset);

@@ -34,6 +34,8 @@ jobs:
                       php: '7.4'
                     - description: 'No Symfony specified'
                       php: '8.0'
+                    - description: 'No Symfony specified'
+                      php: '8.1'
                     - description: 'Lowest deps'
                       php: '7.3'
                       composer_option: '--prefer-lowest'
@@ -45,6 +47,9 @@ jobs:
                     - description: 'Symfony 5.3'
                       php: '7.4'
                       symfony: 5.3.*
+                    - description: 'Symfony 5.4'
+                      php: '7.4'
+                      symfony: 5.4.x-dev
                     - description: 'Dev deps'
                       php: '8.0'
                       dev: true

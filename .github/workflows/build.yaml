@@ -50,6 +50,9 @@ jobs:
                     - description: 'Symfony 5.4'
                       php: '7.4'
                       symfony: 5.4.x-dev
+                    - description: 'Symfony 6.0'
+                      php: '8.0'
+                      symfony: 6.0.x-dev
                     - description: 'Dev deps'
                       php: '8.0'
                       dev: true

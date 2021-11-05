@@ -330,7 +330,7 @@ class MenuItem implements ItemInterface
     {
         if (!$child instanceof ItemInterface) {
             $child = $this->factory->createItem($child, $options);
-        } elseif (null !== $child->getParent()) {
+        } elseif (null !== $child->getParent() && $this !== $child->getParent()) {
             throw new \InvalidArgumentException('Cannot add menu item as child, it already belongs to another menu (e.g. has a parent).');
         }
 
@@ -423,7 +423,8 @@ class MenuItem implements ItemInterface
 
     public function setChildren(array $children): ItemInterface
     {
-        $this->children = $children;
+        $this->children = [];
+        array_map([$this, 'addChild'], $children);
 
         return $this;
     }

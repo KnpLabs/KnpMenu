@@ -234,7 +234,7 @@ $itemMatcher = new \Knp\Menu\Matcher\Matcher();
 $menuRenderer = new \Knp\Menu\Renderer\TwigRenderer($twig, 'knp_menu.html.twig', $itemMatcher);
 ```
 
-This works just like any other renderer, and will output an un-ordered list
+This works just like any other renderer, and will output an unordered list
 of menu items (e.g. `ul` and `li` elements):
 
 ```php

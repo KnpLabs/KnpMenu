@@ -91,7 +91,7 @@ templates. Or you can provide your own implementation of the `RendererInterface`
 Working with your menu tree
 ---------------------------
 
-Your menu tree works and acts like a multi-dimensional array. Specifically,
+Your menu tree works and acts like a multidimensional array. Specifically,
 it implements ArrayAccess, Countable and Iterator:
 
 ```php
@@ -261,7 +261,7 @@ the `li` around that item, as well as a `current_ancestor` around any of
 its parent `li` elements. This state can either be forced on the item by
 setting it explicitly or matched using several voters.
 
-By default, the current item is rendered as link too. You can make the current
+By default, the current item is rendered as a link too. You can make the current
 item not a link by setting the `currentAsLink` option to false. The ListRenderer
 then renders the item with a `<span>` tag instead of an `<a>`.
 

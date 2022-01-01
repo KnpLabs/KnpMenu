@@ -54,7 +54,7 @@ class MenuFactory implements FactoryInterface
      *
      * @return ExtensionInterface[]
      */
-    private function getExtensions(): array
+    protected function getExtensions(): array
     {
         if (null === $this->sorted) {
             \krsort($this->extensions);

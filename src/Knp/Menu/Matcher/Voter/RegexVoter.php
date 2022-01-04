@@ -10,10 +10,7 @@ use Knp\Menu\ItemInterface;
  */
 class RegexVoter implements VoterInterface
 {
-    /**
-     * @var string|null
-     */
-    private $regexp;
+    private ?string $regexp;
 
     public function __construct(?string $regexp)
     {

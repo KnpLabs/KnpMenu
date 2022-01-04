@@ -16,12 +16,12 @@ class ArrayAccessProvider implements MenuProviderInterface
     /**
      * @var \ArrayAccess<string, ItemInterface|callable>
      */
-    private $registry;
+    private \ArrayAccess $registry;
 
     /**
      * @var array<string, string>
      */
-    private $menuIds;
+    private array $menuIds;
 
     /**
      * @param \ArrayAccess<string, ItemInterface|callable> $registry

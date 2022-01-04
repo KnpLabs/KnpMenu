@@ -12,20 +12,11 @@ use Twig\TwigTest;
 
 class MenuExtension extends AbstractExtension
 {
-    /**
-     * @var Helper
-     */
-    private $helper;
+    private Helper $helper;
 
-    /**
-     * @var MatcherInterface|null
-     */
-    private $matcher;
+    private ?MatcherInterface $matcher;
 
-    /**
-     * @var MenuManipulator|null
-     */
-    private $menuManipulator;
+    private ?MenuManipulator $menuManipulator;
 
     public function __construct(Helper $helper, ?MatcherInterface $matcher = null, ?MenuManipulator $menuManipulator = null)
     {

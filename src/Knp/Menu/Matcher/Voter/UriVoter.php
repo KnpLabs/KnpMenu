@@ -9,10 +9,7 @@ use Knp\Menu\ItemInterface;
  */
 class UriVoter implements VoterInterface
 {
-    /**
-     * @var string|null
-     */
-    private $uri;
+    private ?string $uri;
 
     public function __construct(?string $uri = null)
     {

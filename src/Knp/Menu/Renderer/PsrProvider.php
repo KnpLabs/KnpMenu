@@ -12,15 +12,9 @@ use Psr\Container\ContainerInterface;
  */
 class PsrProvider implements RendererProviderInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
+    private ContainerInterface $container;
 
-    /**
-     * @var string
-     */
-    private $defaultRenderer;
+    private string $defaultRenderer;
 
     /**
      * @param string $defaultRenderer id of the default renderer (it should exist in the container to avoid weird failures)

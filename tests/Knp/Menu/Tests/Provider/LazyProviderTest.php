@@ -19,18 +19,14 @@ final class LazyProviderTest extends TestCase
     public function testGetExistentMenu(): void
     {
         $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
-        $provider = new LazyProvider(['default' => function () use ($menu) {
-            return $menu;
-        }]);
+        $provider = new LazyProvider(['default' => fn () => $menu]);
         $this->assertSame($menu, $provider->get('default'));
     }
 
     public function testGetMenuAsClosure(): void
     {
         $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
-        $provider = new LazyProvider(['default' => [function () use ($menu) {
-            return new FakeBuilder($menu);
-        }, 'build']]);
+        $provider = new LazyProvider(['default' => [fn () => new FakeBuilder($menu), 'build']]);
 
         $this->assertSame($menu, $provider->get('default', ['foo' => 'bar']));
     }
@@ -55,17 +51,14 @@ final class LazyProviderTest extends TestCase
     {
         $this->expectException(\LogicException::class);
 
-        $provider = new LazyProvider(['broken' => [function () {return new \stdClass(); }, 'nonExistentMethod']]);
+        $provider = new LazyProvider(['broken' => [fn () => new \stdClass(), 'nonExistentMethod']]);
         $provider->get('broken');
     }
 }
 
 final class FakeBuilder
 {
-    /**
-     * @var ItemInterface
-     */
-    private $menu;
+    private ItemInterface $menu;
 
     public function __construct(ItemInterface $menu)
     {

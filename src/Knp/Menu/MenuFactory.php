@@ -13,12 +13,12 @@ class MenuFactory implements FactoryInterface
     /**
      * @var array[]
      */
-    private $extensions = [];
+    private array $extensions = [];
 
     /**
      * @var ExtensionInterface[]|null
      */
-    private $sorted;
+    private ?array $sorted = null;
 
     public function __construct()
     {

@@ -13,8 +13,7 @@ Here is an example how to use the matcher:
 ```php
 use Knp\Menu\Matcher\Matcher;
 
-$itemMatcher = new Matcher();
-$itemMatcher->addVoter(new UriVoter(str_replace('/index.php', '', $_SERVER['REQUEST_URI'])));
+$itemMatcher = new Matcher([new UriVoter(str_replace('/index.php', '', $_SERVER['REQUEST_URI']))]);
 ```
 
 To use the `Matcher` you have to pass it to your renderer. For the `ListRenderer`,

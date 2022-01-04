@@ -73,4 +73,11 @@ class Matcher implements MatcherInterface
     {
         $this->cache = new \SplObjectStorage();
     }
+    
+    public function addVoter(VoterInterface $voter): self
+    {
+        $this->voters[] = $voter;
+        
+        return $this;
+    }
 }

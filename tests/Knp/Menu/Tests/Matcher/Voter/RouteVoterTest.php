@@ -46,10 +46,11 @@ final class RouteVoterTest extends TestCase
     /**
      * @param string|array<string, mixed> $itemRoutes
      * @param array<string, mixed>        $parameters
+     * @param array<string, mixed>        $queryParameters
      *
      * @dataProvider provideData
      */
-    public function testMatching(?string $route, array $parameters, $itemRoutes, ?bool $expected): void
+    public function testMatching(?string $route, array $parameters, array $queryParameters, $itemRoutes, ?bool $expected): void
     {
         $item = $this->getMockBuilder(ItemInterface::class)->getMock();
         $item->expects($this->any())
@@ -61,6 +62,7 @@ final class RouteVoterTest extends TestCase
         $request = new Request();
         $request->attributes->set('_route', $route);
         $request->attributes->set('_route_params', $parameters);
+        $request->query->add($queryParameters);
 
         $requestStack = new RequestStack();
         $requestStack->push($request);
@@ -79,17 +81,20 @@ final class RouteVoterTest extends TestCase
             'no request route' => [
                 null,
                 [],
+                [],
                 'foo',
                 null,
             ],
             'integer parameters' => [
                 'foo',
                 ['bar' => 128],
+                [],
                 [['route' => 'foo', 'parameters' => ['bar' => 128]]],
                 true,
             ],
             'no item route' => [
                 'foo',
+                [],
                 [],
                 null,
                 null,
@@ -97,11 +102,13 @@ final class RouteVoterTest extends TestCase
             'same single route' => [
                 'foo',
                 [],
+                [],
                 'foo',
                 true,
             ],
             'different single route' => [
                 'foo',
+                [],
                 [],
                 'bar',
                 null,
@@ -109,11 +116,13 @@ final class RouteVoterTest extends TestCase
             'matching multiple routes' => [
                 'foo',
                 [],
+                [],
                 ['foo', 'baz'],
                 true,
             ],
             'matching multiple routes 2' => [
                 'baz',
+                [],
                 [],
                 ['foo', 'baz'],
                 true,
@@ -121,42 +130,49 @@ final class RouteVoterTest extends TestCase
             'different multiple routes' => [
                 'foo',
                 [],
+                [],
                 ['bar', 'baz'],
                 null,
             ],
             'same single route with different parameters' => [
                 'foo',
                 ['1' => 'bar'],
+                [],
                 [['route' => 'foo', 'parameters' => ['1' => 'baz']]],
                 null,
             ],
             'same single route with same parameters' => [
                 'foo',
                 ['1' => 'bar'],
+                [],
                 [['route' => 'foo', 'parameters' => ['1' => 'bar']]],
                 true,
             ],
             'same single route with additional parameters' => [
                 'foo',
                 ['1' => 'bar'],
+                [],
                 [['route' => 'foo', 'parameters' => ['1' => 'bar', '2' => 'baz']]],
                 null,
             ],
             'same single route with less parameters' => [
                 'foo',
                 ['1' => 'bar', '2' => 'baz'],
+                [],
                 [['route' => 'foo', 'parameters' => ['1' => 'bar']]],
                 true,
             ],
             'same single route with different type parameters' => [
                 'foo',
                 ['1' => '2'],
+                [],
                 [['route' => 'foo', 'parameters' => ['1' => 2]]],
                 true,
             ],
             'same route with multiple route params' => [
                 'foo',
                 ['1' => 'bar'],
+                [],
                 [
                     ['route' => 'foo', 'parameters' => ['1' => 'baz']],
                     ['route' => 'foo', 'parameters' => ['1' => 'bar']],
@@ -166,6 +182,7 @@ final class RouteVoterTest extends TestCase
             'same route with and without route params' => [
                 'foo',
                 ['1' => 'bar'],
+                [],
                 [
                     ['route' => 'foo', 'parameters' => ['1' => 'baz']],
                     ['route' => 'foo'],
@@ -175,33 +192,108 @@ final class RouteVoterTest extends TestCase
             'same route with multiple different route params' => [
                 'foo',
                 ['1' => 'bar'],
+                [],
                 [
                     ['route' => 'foo', 'parameters' => ['1' => 'baz']],
                     ['route' => 'foo', 'parameters' => ['1' => 'foo']],
                 ],
                 null,
             ],
+            'same single route with different query parameters' => [
+                'foo',
+                [],
+                ['1' => 'bar'],
+                [['route' => 'foo', 'query_parameters' => ['1' => 'baz']]],
+                null,
+            ],
+            'same single route with same query parameters' => [
+                'foo',
+                [],
+                ['1' => 'bar'],
+                [['route' => 'foo', 'query_parameters' => ['1' => 'bar']]],
+                true,
+            ],
+            'same single route with additional query parameters' => [
+                'foo',
+                [],
+                ['1' => 'bar'],
+                [['route' => 'foo', 'query_parameters' => ['1' => 'bar', '2' => 'baz']]],
+                null,
+            ],
+            'same single route with less query parameters' => [
+                'foo',
+                [],
+                ['1' => 'bar', '2' => 'baz'],
+                [['route' => 'foo', 'query_parameters' => ['1' => 'bar']]],
+                true,
+            ],
+            'same single route with different parameters and different query parameters' => [
+                'foo',
+                ['1' => 'bar'],
+                ['2' => 'baz'],
+                [['route' => 'foo', 'parameters' => ['1' => 'baz'], 'query_parameters' => ['2' => 'bar']]],
+                null,
+            ],
+            'same single route with same parameters and different query parameters' => [
+                'foo',
+                ['1' => 'bar'],
+                ['2' => 'baz'],
+                [['route' => 'foo', 'parameters' => ['1' => 'bar'], 'query_parameters' => ['2' => 'bar']]],
+                null,
+            ],
+            'same single route with different parameters and same query parameters' => [
+                'foo',
+                ['1' => 'bar'],
+                ['2' => 'baz'],
+                [['route' => 'foo', 'parameters' => ['1' => 'baz'], 'query_parameters' => ['2' => 'baz']]],
+                null,
+            ],
+            'same single route with same parameters and same query parameters' => [
+                'foo',
+                ['1' => 'bar'],
+                ['2' => 'baz'],
+                [['route' => 'foo', 'parameters' => ['1' => 'bar'], 'query_parameters' => ['2' => 'baz']]],
+                true,
+            ],
+            'same single route with array first query parameter' => [
+                'foo',
+                [],
+                ['1' => ['bar', 'baz']],
+                [['route' => 'foo', 'query_parameters' => ['1' => 'bar']]],
+                null,
+            ],
+            'same single route with array second query parameter' => [
+                'foo',
+                [],
+                ['1' => ['bar', 'baz']],
+                [['route' => 'foo', 'query_parameters' => ['1' => 'baz']]],
+                null,
+            ],
             'matching pattern without parameters' => [
                 'foo',
                 ['1' => 'bar'],
+                [],
                 [['pattern' => '/fo/']],
                 true,
             ],
             'non matching pattern without parameters' => [
                 'foo',
                 ['1' => 'bar'],
+                [],
                 [['pattern' => '/bar/']],
                 null,
             ],
             'matching pattern with parameters' => [
                 'foo',
                 ['1' => 'bar'],
+                [],
                 [['pattern' => '/fo/', 'parameters' => ['1' => 'bar']]],
                 true,
             ],
             'matching pattern with different parameters' => [
                 'foo',
                 ['1' => 'bar'],
+                [],
                 [['pattern' => '/fo/', 'parameters' => ['1' => 'baz']]],
                 null,
             ],

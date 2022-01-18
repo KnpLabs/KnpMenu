@@ -76,4 +76,15 @@ jobs:
               if: matrix.dev
             - run: composer update --no-interaction --no-progress --ansi ${{ matrix.composer_option }}
             - run: vendor/bin/phpunit
-
+    phpstan:
+        runs-on: ubuntu-latest
+        name: PHPStan
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.0'
+            - run: composer update --no-interaction --no-progress --ansi
+            - run: vendor/bin/phpstan analyze

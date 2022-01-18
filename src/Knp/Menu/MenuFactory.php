@@ -11,7 +11,7 @@ use Knp\Menu\Factory\ExtensionInterface;
 class MenuFactory implements FactoryInterface
 {
     /**
-     * @var array[]
+     * @var array<int, list<ExtensionInterface>>
      */
     private $extensions = [];
 

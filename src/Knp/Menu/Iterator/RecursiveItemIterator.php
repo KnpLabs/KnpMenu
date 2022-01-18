@@ -6,6 +6,7 @@ namespace Knp\Menu\Iterator;
  * Recursive iterator iterating on an item
  *
  * @extends \IteratorIterator<string, \Knp\Menu\ItemInterface, \Traversable<string, \Knp\Menu\ItemInterface>>
+ * @implements \RecursiveIterator<string, \Knp\Menu\ItemInterface>>
  */
 class RecursiveItemIterator extends \IteratorIterator implements \RecursiveIterator
 {
@@ -23,7 +24,7 @@ class RecursiveItemIterator extends \IteratorIterator implements \RecursiveItera
     }
 
     /**
-     * @return \RecursiveIterator
+     * @return RecursiveItemIterator
      */
     #[\ReturnTypeWillChange]
     public function getChildren()

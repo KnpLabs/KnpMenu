@@ -244,7 +244,7 @@ class MenuManipulator
 
                 case \is_int($key) && \is_string($value):
                     $value = [
-                        'label' => (string) $value,
+                        'label' => $value,
                         'uri' => null,
                         'item' => null,
                     ];

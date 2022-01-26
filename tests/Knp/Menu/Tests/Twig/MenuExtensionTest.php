@@ -57,7 +57,7 @@ final class MenuExtensionTest extends TestCase
 
         $this->getTemplate('{{ knp_menu_render(menu, {"ancestorClass": "test"}) }}', $helper)->render(['menu' => $menu, 'ancestorClass' => 'test']);
             
-        $this->expectDeprecation();
+        $this->expectDeprecation('');
     }
 
     public function testRenderMenuWithRenderer(): void

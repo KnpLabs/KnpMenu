@@ -11,9 +11,12 @@ use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 use Twig\TemplateWrapper;
+use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 
 final class MenuExtensionTest extends TestCase
 {
+    use ExpectDeprecationTrait;
+    
     public function testRenderMenu(): void
     {
         $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
@@ -51,7 +54,7 @@ final class MenuExtensionTest extends TestCase
 
         $this->getTemplate('{{ knp_menu_render(menu, {"ancestorClass": "test"}) }}', $helper)->render(['menu' => $menu, 'ancestorClass' => 'test']);
             
-        $this->expectDeprecationMessage('Since knplabs/knp-menu 3.3: Using "ancestorClass" option is deprecated, use "ancestor_class" instead.');
+        $this->expectDeprecation('Since knplabs/knp-menu 3.3: Using "ancestorClass" option is deprecated, use "ancestor_class" instead.');
     }
 
     public function testRenderMenuWithRenderer(): void

@@ -43,7 +43,7 @@ final class MenuExtensionTest extends TestCase
         $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(menu, {"firstClass": "test"}) }}', $helper)->render(['menu' => $menu]));
     }
     
-    public function testRenderMenuWithDeprecatedAncestorClass(): void
+    public function testRenderMenuWithDeprecatedAncestorClassLegacy(): void
     {
         $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
         $helper = $this->getHelperMock(['render']);

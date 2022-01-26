@@ -39,6 +39,20 @@ final class MenuExtensionTest extends TestCase
 
         $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(menu, {"firstClass": "test"}) }}', $helper)->render(['menu' => $menu]));
     }
+    
+    public function testRenderMenuWithDeprecatedAncestorClass(): void
+    {
+        $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
+        $helper = $this->getHelperMock(['render']);
+        $helper->expects($this->once())
+            ->method('render')
+            ->with($menu, ['ancestor_class' => 'test'], null)
+        ;
+
+        $this->getTemplate('{{ knp_menu_render(menu, {"ancestorClass": "test"}) }}', $helper)->render(['menu' => $menu, 'ancestorClass' => 'test']);
+            
+        $this->expectDeprecationMessage('Since knplabs/knp-menu 3.3: Using "ancestorClass" option is deprecated, use "ancestor_class" instead.');
+    }
 
     public function testRenderMenuWithRenderer(): void
     {

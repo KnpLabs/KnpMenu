@@ -77,6 +77,13 @@ class MenuExtension extends AbstractExtension
      */
     public function get($menu, array $path = [], array $options = []): ItemInterface
     {
+        // Avoid duplication of current_ancestor class. Overwrite value in old config to new one
+        if (isset($options['ancestorClass'])) {
+           $options['ancestor_class'] = $options['ancestorClass'];
+           unset($options['ancestorClass']);
+           trigger_deprecation('knplabs/knp-menu', '3.3', 'Using "%s" option is deprecated, use "%s" instead.', 'ancestorClass', 'ancestor_class');
+        }
+        
         return $this->helper->get($menu, $path, $options);
     }
 
@@ -88,6 +95,13 @@ class MenuExtension extends AbstractExtension
      */
     public function render($menu, array $options = [], ?string $renderer = null): string
     {
+        // Avoid duplication of current_ancestor class. Overwrite value in old config to new one
+        if (isset($options['ancestorClass'])) {
+           $options['ancestor_class'] = $options['ancestorClass'];
+           unset($options['ancestorClass']);
+           trigger_deprecation('knplabs/knp-menu', '3.3', 'Using "%s" option is deprecated, use "%s" instead.', 'ancestorClass', 'ancestor_class');
+        }
+        
         return $this->helper->render($menu, $options, $renderer);
     }
 

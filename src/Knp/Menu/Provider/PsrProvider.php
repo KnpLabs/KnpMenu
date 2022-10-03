@@ -13,10 +13,7 @@ use Psr\Container\ContainerInterface;
  */
 class PsrProvider implements MenuProviderInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
+    private ContainerInterface $container;
 
     public function __construct(ContainerInterface $container)
     {

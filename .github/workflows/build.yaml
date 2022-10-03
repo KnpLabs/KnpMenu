@@ -29,15 +29,13 @@ jobs:
             matrix:
                 include:
                     - description: 'No Symfony specified'
-                      php: '7.3'
-                    - description: 'No Symfony specified'
                       php: '7.4'
                     - description: 'No Symfony specified'
                       php: '8.0'
                     - description: 'No Symfony specified'
                       php: '8.1'
                     - description: 'Lowest deps'
-                      php: '7.3'
+                      php: '7.4'
                       composer_option: '--prefer-lowest'
                       env:
                           SYMFONY_DEPRECATIONS_HELPER: max[self]=0
@@ -49,12 +47,12 @@ jobs:
                       symfony: 5.3.*
                     - description: 'Symfony 5.4'
                       php: '7.4'
-                      symfony: 5.4.x-dev
+                      symfony: 5.4.*
                     - description: 'Symfony 6.0'
                       php: '8.0'
-                      symfony: 6.0.x-dev
+                      symfony: 6.0.*
                     - description: 'Dev deps'
-                      php: '8.0'
+                      php: '8.1'
                       dev: true
         name: PHP ${{ matrix.php }} tests (${{ matrix.description }})
         steps:

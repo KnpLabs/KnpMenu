@@ -12,10 +12,7 @@ use Knp\Menu\ItemInterface;
  */
 class ArrayLoader implements LoaderInterface
 {
-    /**
-     * @var FactoryInterface
-     */
-    private $factory;
+    private FactoryInterface $factory;
 
     public function __construct(FactoryInterface $factory)
     {

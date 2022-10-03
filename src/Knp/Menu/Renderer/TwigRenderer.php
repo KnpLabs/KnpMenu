@@ -8,20 +8,14 @@ use Twig\Environment;
 
 class TwigRenderer implements RendererInterface
 {
-    /**
-     * @var Environment
-     */
-    private $environment;
+    private Environment $environment;
 
-    /**
-     * @var MatcherInterface
-     */
-    private $matcher;
+    private MatcherInterface $matcher;
 
     /**
      * @var array<string, mixed>
      */
-    private $defaultOptions;
+    private array $defaultOptions;
 
     /**
      * @param array<string, mixed> $defaultOptions

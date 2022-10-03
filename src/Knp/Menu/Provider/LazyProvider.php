@@ -16,7 +16,7 @@ class LazyProvider implements MenuProviderInterface
     /**
      * @var array<string, mixed>
      */
-    private $builders;
+    private array $builders;
 
     /**
      * @phpstan-param array<string, callable|array{\Closure, string}> $builders

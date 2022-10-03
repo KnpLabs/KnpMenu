@@ -11,10 +11,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class RouteVoter implements VoterInterface
 {
-    /**
-     * @var RequestStack
-     */
-    private $requestStack;
+    private RequestStack $requestStack;
 
     public function __construct(RequestStack $requestStack)
     {

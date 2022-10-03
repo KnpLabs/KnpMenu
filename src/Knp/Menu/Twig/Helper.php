@@ -13,25 +13,13 @@ use Knp\Menu\Util\MenuManipulator;
  */
 class Helper
 {
-    /**
-     * @var RendererProviderInterface
-     */
-    private $rendererProvider;
+    private RendererProviderInterface $rendererProvider;
 
-    /**
-     * @var MenuProviderInterface|null
-     */
-    private $menuProvider;
+    private ?MenuProviderInterface $menuProvider;
 
-    /**
-     * @var MenuManipulator|null
-     */
-    private $menuManipulator;
+    private ?MenuManipulator $menuManipulator;
 
-    /**
-     * @var MatcherInterface|null
-     */
-    private $matcher;
+    private ?MatcherInterface $matcher;
 
     public function __construct(
         RendererProviderInterface $rendererProvider,

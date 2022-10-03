@@ -10,17 +10,14 @@ class ArrayAccessProvider implements RendererProviderInterface
     /**
      * @var \ArrayAccess<string, RendererInterface>
      */
-    private $registry;
+    private \ArrayAccess $registry;
 
     /**
      * @var array<string, string>
      */
-    private $rendererIds;
+    private array $rendererIds;
 
-    /**
-     * @var string
-     */
-    private $defaultRenderer;
+    private string $defaultRenderer;
 
     /**
      * @param \ArrayAccess<string, RendererInterface> $registry

@@ -9,10 +9,7 @@ use Knp\Menu\Matcher\MatcherInterface;
  */
 class CurrentItemFilterIterator extends \FilterIterator
 {
-    /**
-     * @var MatcherInterface
-     */
-    private $matcher;
+    private MatcherInterface $matcher;
 
     /**
      * @param \Iterator<string|int, \Knp\Menu\ItemInterface> $iterator

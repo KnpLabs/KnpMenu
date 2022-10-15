@@ -42,9 +42,6 @@ jobs:
                     - description: 'Symfony 4.4'
                       php: '7.4'
                       symfony: 4.4.*
-                    - description: 'Symfony 5.3'
-                      php: '7.4'
-                      symfony: 5.3.*
                     - description: 'Symfony 5.4'
                       php: '7.4'
                       symfony: 5.4.*

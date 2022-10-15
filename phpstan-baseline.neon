@@ -6,7 +6,7 @@ parameters:
 			path: src/Knp/Menu/Matcher/Voter/RouteVoter.php
 
 		-
-			message: "#^Strict comparison using \\=\\=\\= between false and array\\<Knp\\\\Menu\\\\ItemInterface\\> will always evaluate to false\\.$#"
+			message: "#^Strict comparison using \\=\\=\\= between false and array\\<string, Knp\\\\Menu\\\\ItemInterface\\> will always evaluate to false\\.$#"
 			count: 1
 			path: src/Knp/Menu/MenuItem.php
 

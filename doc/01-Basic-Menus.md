@@ -85,7 +85,7 @@ echo $renderer->render($menu, ['compressed' => true]);
 ```
 
 Note: You can customize the rendering by extending the `ListRenderer` and
-overwrite some of its methods. If you use the [TwigRenderer](02-Twig-Integration.markdown), you can overwrite
+overwrite some of its methods. If you use the [TwigRenderer](02-Twig-Integration.md), you can overwrite
 templates. Or you can provide your own implementation of the `RendererInterface`.
 
 Working with your menu tree

@@ -147,7 +147,7 @@ class ListRenderer extends Renderer implements RendererInterface
         $html = $this->format('<li'.$this->renderHtmlAttributes($attributes).'>', 'li', $item->getLevel(), $options);
 
         // render the text/link inside the li tag
-        //$html .= $this->format($item->getUri() ? $item->renderLink() : $item->renderLabel(), 'link', $item->getLevel());
+        // $html .= $this->format($item->getUri() ? $item->renderLink() : $item->renderLabel(), 'link', $item->getLevel());
         $html .= $this->renderLink($item, $options);
 
         // renders the embedded ul

@@ -107,7 +107,7 @@ class RouteVoter implements VoterInterface
 
         foreach ($testedRoute['query_parameters'] as $name => $value) {
             // cast both to string so that we handle integer and other non-string parameters, but don't stumble on 0 == 'abc'.
-            if (!isset($routeQueryParameters[$name]) || is_array($routeQueryParameters[$name]) || (string) $routeQueryParameters[$name] !== (string) $value) {
+            if (!isset($routeQueryParameters[$name]) || \is_array($routeQueryParameters[$name]) || (string) $routeQueryParameters[$name] !== (string) $value) {
                 return false;
             }
         }

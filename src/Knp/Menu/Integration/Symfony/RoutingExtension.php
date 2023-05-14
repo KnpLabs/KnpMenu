@@ -11,11 +11,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class RoutingExtension implements ExtensionInterface
 {
-    private UrlGeneratorInterface $generator;
-
-    public function __construct(UrlGeneratorInterface $generator)
+    public function __construct(private UrlGeneratorInterface $generator)
     {
-        $this->generator = $generator;
     }
 
     public function buildOptions(array $options = []): array

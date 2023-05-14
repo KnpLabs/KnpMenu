@@ -13,24 +13,12 @@ use Knp\Menu\Util\MenuManipulator;
  */
 class Helper
 {
-    private RendererProviderInterface $rendererProvider;
-
-    private ?MenuProviderInterface $menuProvider;
-
-    private ?MenuManipulator $menuManipulator;
-
-    private ?MatcherInterface $matcher;
-
     public function __construct(
-        RendererProviderInterface $rendererProvider,
-        ?MenuProviderInterface $menuProvider = null,
-        ?MenuManipulator $menuManipulator = null,
-        ?MatcherInterface $matcher = null
+        private RendererProviderInterface $rendererProvider,
+        private ?MenuProviderInterface    $menuProvider = null,
+        private ?MenuManipulator          $menuManipulator = null,
+        private ?MatcherInterface $matcher = null
     ) {
-        $this->rendererProvider = $rendererProvider;
-        $this->menuProvider = $menuProvider;
-        $this->menuManipulator = $menuManipulator;
-        $this->matcher = $matcher;
     }
 
     /**

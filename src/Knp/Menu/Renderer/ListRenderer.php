@@ -11,21 +11,10 @@ use Knp\Menu\Matcher\MatcherInterface;
 class ListRenderer extends Renderer implements RendererInterface
 {
     /**
-     * @var MatcherInterface
-     */
-    protected $matcher;
-
-    /**
-     * @var array<string, mixed>
-     */
-    protected $defaultOptions;
-
-    /**
      * @param array<string, mixed> $defaultOptions
      */
-    public function __construct(MatcherInterface $matcher, array $defaultOptions = [], ?string $charset = null)
+    public function __construct(protected MatcherInterface $matcher, protected array $defaultOptions = [], ?string $charset = null)
     {
-        $this->matcher = $matcher;
         $this->defaultOptions = \array_merge([
             'depth' => null,
             'matchingDepth' => null,

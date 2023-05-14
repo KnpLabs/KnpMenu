@@ -10,11 +10,8 @@ use Knp\Menu\ItemInterface;
  */
 class RegexVoter implements VoterInterface
 {
-    private ?string $regexp;
-
-    public function __construct(?string $regexp)
+    public function __construct(private ?string $regexp)
     {
-        $this->regexp = $regexp;
     }
 
     public function matchItem(ItemInterface $item): ?bool

@@ -12,17 +12,11 @@ use Psr\Container\ContainerInterface;
  */
 class PsrProvider implements RendererProviderInterface
 {
-    private ContainerInterface $container;
-
-    private string $defaultRenderer;
-
     /**
      * @param string $defaultRenderer id of the default renderer (it should exist in the container to avoid weird failures)
      */
-    public function __construct(ContainerInterface $container, string $defaultRenderer)
+    public function __construct(private ContainerInterface $container, private string $defaultRenderer)
     {
-        $this->container = $container;
-        $this->defaultRenderer = $defaultRenderer;
     }
 
     public function get(?string $name = null): RendererInterface

@@ -84,11 +84,9 @@ final class ArrayLoaderTest extends TestCase
     }
 
     /**
-     * @param mixed $data
-     *
      * @dataProvider provideSupportingData
      */
-    public function testSupports($data, bool $expected): void
+    public function testSupports(mixed $data, bool $expected): void
     {
         $loader = new ArrayLoader(new MenuFactory());
 

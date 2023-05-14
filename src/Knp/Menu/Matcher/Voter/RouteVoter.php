@@ -11,11 +11,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
  */
 class RouteVoter implements VoterInterface
 {
-    private RequestStack $requestStack;
-
-    public function __construct(RequestStack $requestStack)
+    public function __construct(private RequestStack $requestStack)
     {
-        $this->requestStack = $requestStack;
     }
 
     public function matchItem(ItemInterface $item): ?bool

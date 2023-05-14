@@ -12,10 +12,7 @@ use Knp\Menu\Tests\MenuTestCase;
 
 abstract class AbstractRendererTest extends MenuTestCase
 {
-    /**
-     * @var RendererInterface|null
-     */
-    protected $renderer;
+    protected RendererInterface|null $renderer;
 
     protected function setUp(): void
     {

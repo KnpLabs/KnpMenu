@@ -8,26 +8,15 @@ use Twig\Environment;
 
 class TwigRenderer implements RendererInterface
 {
-    private Environment $environment;
-
-    private MatcherInterface $matcher;
-
-    /**
-     * @var array<string, mixed>
-     */
-    private array $defaultOptions;
-
     /**
      * @param array<string, mixed> $defaultOptions
      */
     public function __construct(
-        Environment $environment,
-        string $template,
-        MatcherInterface $matcher,
-        array $defaultOptions = []
+        private Environment      $environment,
+        string                   $template,
+        private MatcherInterface $matcher,
+        private array            $defaultOptions = []
     ) {
-        $this->environment = $environment;
-        $this->matcher = $matcher;
         $this->defaultOptions = \array_merge([
             'depth' => null,
             'matchingDepth' => null,

@@ -12,17 +12,8 @@ use Twig\TwigTest;
 
 class MenuExtension extends AbstractExtension
 {
-    private Helper $helper;
-
-    private ?MatcherInterface $matcher;
-
-    private ?MenuManipulator $menuManipulator;
-
-    public function __construct(Helper $helper, ?MatcherInterface $matcher = null, ?MenuManipulator $menuManipulator = null)
+    public function __construct(private Helper $helper, private ?MatcherInterface $matcher = null, private ?MenuManipulator $menuManipulator = null)
     {
-        $this->helper = $helper;
-        $this->matcher = $matcher;
-        $this->menuManipulator = $menuManipulator;
     }
 
     /**

@@ -18,7 +18,7 @@ class NodeLoader implements LoaderInterface
     public function load($data): ItemInterface
     {
         if (!$data instanceof NodeInterface) {
-            throw new \InvalidArgumentException(\sprintf('Unsupported data. Expected Knp\Menu\NodeInterface but got %s', \is_object($data) ? \get_class($data) : \gettype($data)));
+            throw new \InvalidArgumentException(\sprintf('Unsupported data. Expected Knp\Menu\NodeInterface but got %s', \is_object($data) ? $data::class : \gettype($data)));
         }
 
         $item = $this->factory->createItem($data->getName(), $data->getOptions());

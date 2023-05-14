@@ -27,7 +27,7 @@ final class MatcherTest extends TestCase
     /**
      * @return array<int, array<int, bool|null>>
      */
-    public function provideItemFlag(): array
+    public static function provideItemFlag(): array
     {
         return [
             [true, true],
@@ -121,7 +121,7 @@ final class MatcherTest extends TestCase
     /**
      * @return array<int, array<int, bool>>
      */
-    public function provideBoolean(): array
+    public static function provideBoolean(): array
     {
         return [
             [true],

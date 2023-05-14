@@ -22,7 +22,7 @@ class ArrayLoader implements LoaderInterface
     public function load($data): ItemInterface
     {
         if (!$this->supports($data)) {
-            throw new \InvalidArgumentException(\sprintf('Unsupported data. Expected an array but got %s', \is_object($data) ? \get_class($data) : \gettype($data)));
+            throw new \InvalidArgumentException(\sprintf('Unsupported data. Expected an array but got %s', \is_object($data) ? $data::class : \gettype($data)));
         }
 
         return $this->fromArray($data);

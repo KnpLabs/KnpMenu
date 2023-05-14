@@ -207,9 +207,11 @@ class MenuManipulator
      *   * [['label' => 'subItem1', 'url' => '@homepage'], ['label' => 'subItem2']]
      *
      * @param string|ItemInterface|array<int|string, mixed>|\Traversable<mixed> $subItem A string or array to append onto the end of the array
+     *
      * @phpstan-param string|ItemInterface|array<int|string, string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface>|\Traversable<string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface> $subItem
      *
      * @return array<int, array<string, mixed>>
+     *
      * @phpstan-return list<array{label: string, uri: string|null, item: ItemInterface|null}>
      *
      * @throws \InvalidArgumentException if an element of the subItem is invalid

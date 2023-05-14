@@ -20,19 +20,19 @@
         }
     ],
     "require": {
-        "php": "^7.4 || ^8.0"
+        "php": "^8.0"
     },
     "conflict": {
         "twig/twig": "<1.42.3 || >=2,<2.9"
     },
     "require-dev": {
-        "phpstan/phpstan": "^1.8",
-        "phpunit/phpunit": "^9.5",
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^9.6",
         "psr/container": "^1.0",
-        "symfony/http-foundation": "^4.4 || ^5.0 || ^6.0",
-        "symfony/phpunit-bridge": "^6.1",
-        "symfony/routing": "^4.4 || ^5.0 || ^6.0",
-        "twig/twig": "^1.42.3 || ^2.9 || ^3.0"
+        "symfony/http-foundation": "^5.4 || ^6.0",
+        "symfony/phpunit-bridge": "^6.2",
+        "symfony/routing": "^5.4 || ^6.0",
+        "twig/twig": "^2.9 || ^3.0"
     },
     "suggest": {
         "twig/twig": "for the TwigRenderer and the integration with your templates"

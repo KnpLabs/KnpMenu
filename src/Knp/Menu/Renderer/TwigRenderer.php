@@ -12,10 +12,10 @@ class TwigRenderer implements RendererInterface
      * @param array<string, mixed> $defaultOptions
      */
     public function __construct(
-        private Environment      $environment,
-        string                   $template,
+        private Environment $environment,
+        string $template,
         private MatcherInterface $matcher,
-        private array            $defaultOptions = []
+        private array $defaultOptions = []
     ) {
         $this->defaultOptions = \array_merge([
             'depth' => null,

@@ -15,8 +15,8 @@ class Helper
 {
     public function __construct(
         private RendererProviderInterface $rendererProvider,
-        private ?MenuProviderInterface    $menuProvider = null,
-        private ?MenuManipulator          $menuManipulator = null,
+        private ?MenuProviderInterface $menuProvider = null,
+        private ?MenuManipulator $menuManipulator = null,
         private ?MatcherInterface $matcher = null
     ) {
     }

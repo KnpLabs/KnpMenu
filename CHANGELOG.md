@@ -1,6 +1,6 @@
 ## 3.4 (2023-xx-xx)
 
-* Removed support for unsupported Php version 7.4
+* Removed support for unsupported PHP version 7.4
 
 ## 3.2 (2021-05-28)
 

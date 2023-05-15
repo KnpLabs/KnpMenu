@@ -98,7 +98,7 @@ final class ArrayLoaderTest extends TestCase
     /**
      * @return array<int, array<int, mixed>>
      */
-    public function provideSupportingData(): array
+    public static function provideSupportingData(): array
     {
         return [
             [[], true],

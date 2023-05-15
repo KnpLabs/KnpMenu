@@ -42,12 +42,6 @@ jobs:
                     - description: 'Symfony 5.4'
                       php: '8.0'
                       symfony: 5.4.*
-                    - description: 'Symfony 5.4'
-                      php: '8.1'
-                      symfony: 5.4.*
-                    - description: 'Symfony 5.4'
-                      php: '8.2'
-                      symfony: 5.4.*
                     - description: 'Dev deps'
                       php: '8.2'
                       dev: true

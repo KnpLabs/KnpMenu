@@ -12,17 +12,14 @@ use Knp\Menu\ItemInterface;
  */
 class ArrayLoader implements LoaderInterface
 {
-    private FactoryInterface $factory;
-
-    public function __construct(FactoryInterface $factory)
+    public function __construct(private FactoryInterface $factory)
     {
-        $this->factory = $factory;
     }
 
     public function load($data): ItemInterface
     {
         if (!$this->supports($data)) {
-            throw new \InvalidArgumentException(\sprintf('Unsupported data. Expected an array but got %s', \is_object($data) ? \get_class($data) : \gettype($data)));
+            throw new \InvalidArgumentException(\sprintf('Unsupported data. Expected an array but got %s', \get_debug_type($data)));
         }
 
         return $this->fromArray($data);

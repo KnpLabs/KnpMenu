@@ -13,24 +13,12 @@ use Knp\Menu\Util\MenuManipulator;
  */
 class Helper
 {
-    private RendererProviderInterface $rendererProvider;
-
-    private ?MenuProviderInterface $menuProvider;
-
-    private ?MenuManipulator $menuManipulator;
-
-    private ?MatcherInterface $matcher;
-
     public function __construct(
-        RendererProviderInterface $rendererProvider,
-        ?MenuProviderInterface $menuProvider = null,
-        ?MenuManipulator $menuManipulator = null,
-        ?MatcherInterface $matcher = null
+        private RendererProviderInterface $rendererProvider,
+        private ?MenuProviderInterface $menuProvider = null,
+        private ?MenuManipulator $menuManipulator = null,
+        private ?MatcherInterface $matcher = null
     ) {
-        $this->rendererProvider = $rendererProvider;
-        $this->menuProvider = $menuProvider;
-        $this->menuManipulator = $menuManipulator;
-        $this->matcher = $matcher;
     }
 
     /**
@@ -106,9 +94,11 @@ class Helper
      *
      * @param mixed $menu
      * @param mixed $subItem A string or array to append onto the end of the array
+     *
      * @phpstan-param string|ItemInterface|array<int|string, string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface>|\Traversable<string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface> $subItem
      *
      * @return array<int, array<string, mixed>>
+     *
      * @phpstan-return list<array{label: string, uri: string|null, item: ItemInterface|null}>
      */
     public function getBreadcrumbsArray($menu, $subItem = null): array

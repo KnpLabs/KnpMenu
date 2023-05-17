@@ -12,17 +12,8 @@ use Twig\TwigTest;
 
 class MenuExtension extends AbstractExtension
 {
-    private Helper $helper;
-
-    private ?MatcherInterface $matcher;
-
-    private ?MenuManipulator $menuManipulator;
-
-    public function __construct(Helper $helper, ?MatcherInterface $matcher = null, ?MenuManipulator $menuManipulator = null)
+    public function __construct(private Helper $helper, private ?MatcherInterface $matcher = null, private ?MenuManipulator $menuManipulator = null)
     {
-        $this->helper = $helper;
-        $this->matcher = $matcher;
-        $this->menuManipulator = $menuManipulator;
     }
 
     /**
@@ -87,6 +78,7 @@ class MenuExtension extends AbstractExtension
      *
      * @param ItemInterface|string|array<ItemInterface|string> $menu
      * @param string|array<string|null>|null                   $subItem
+     *
      * @phpstan-param string|ItemInterface|array<int|string, string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface>|\Traversable<string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface> $subItem
      *
      * @return array<int, array<string, mixed>>

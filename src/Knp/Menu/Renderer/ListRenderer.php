@@ -11,21 +11,10 @@ use Knp\Menu\Matcher\MatcherInterface;
 class ListRenderer extends Renderer implements RendererInterface
 {
     /**
-     * @var MatcherInterface
-     */
-    protected $matcher;
-
-    /**
-     * @var array<string, mixed>
-     */
-    protected $defaultOptions;
-
-    /**
      * @param array<string, mixed> $defaultOptions
      */
-    public function __construct(MatcherInterface $matcher, array $defaultOptions = [], ?string $charset = null)
+    public function __construct(protected MatcherInterface $matcher, protected array $defaultOptions = [], ?string $charset = null)
     {
-        $this->matcher = $matcher;
         $this->defaultOptions = \array_merge([
             'depth' => null,
             'matchingDepth' => null,
@@ -158,7 +147,7 @@ class ListRenderer extends Renderer implements RendererInterface
         $html = $this->format('<li'.$this->renderHtmlAttributes($attributes).'>', 'li', $item->getLevel(), $options);
 
         // render the text/link inside the li tag
-        //$html .= $this->format($item->getUri() ? $item->renderLink() : $item->renderLabel(), 'link', $item->getLevel());
+        // $html .= $this->format($item->getUri() ? $item->renderLink() : $item->renderLabel(), 'link', $item->getLevel());
         $html .= $this->renderLink($item, $options);
 
         // renders the embedded ul

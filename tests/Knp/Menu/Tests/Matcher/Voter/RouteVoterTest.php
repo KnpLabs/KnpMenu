@@ -75,7 +75,7 @@ final class RouteVoterTest extends TestCase
     /**
      * @return array<string, array<int, mixed>>
      */
-    public function provideData(): array
+    public static function provideData(): array
     {
         return [
             'no request route' => [

@@ -26,7 +26,7 @@ final class UriVoterTest extends TestCase
     /**
      * @return array<string, array<int, string|bool|null>>
      */
-    public function provideData(): array
+    public static function provideData(): array
     {
         return [
             'no uri' => [null, 'foo', null],

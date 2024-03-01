@@ -32,7 +32,7 @@
         "symfony/http-foundation": "^5.4 || ^6.0 || ^7.0",
         "symfony/phpunit-bridge": "^6.4 || ^7.0",
         "symfony/routing": "^5.4 || ^6.0 || ^7.0",
-        "twig/twig": "^2.9 || ^3.0"
+        "twig/twig": "^2.16 || ^3.0"
     },
     "suggest": {
         "twig/twig": "for the TwigRenderer and the integration with your templates"

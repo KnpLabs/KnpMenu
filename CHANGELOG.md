@@ -1,6 +1,7 @@
 ## 3.5 (unreleased)
 
 * Added CallbackVoter
+* Removed support for unsupported PHP version 8.0
 
 ## 3.4 (2023-05-17)
 

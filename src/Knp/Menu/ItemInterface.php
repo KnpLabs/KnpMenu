@@ -43,6 +43,10 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function setUri(?string $uri): self;
 
+    public function getSortOrder(): ?int;
+
+    public function setSortOrder(int $sortOrder): self;
+
     /**
      * Returns the label that will be used to render this menu item
      *
@@ -162,14 +166,9 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * @param string $name    The name of the extra to return
      * @param mixed  $default The value to return if the extra doesn't exist
-     *
-     * @return mixed
      */
     public function getExtra(string $name, $default = null);
 
-    /**
-     * @param mixed $value
-     */
     public function setExtra(string $name, $value): self;
 
     public function getDisplayChildren(): bool;
@@ -250,7 +249,7 @@ interface ItemInterface extends \ArrayAccess, \Countable, \IteratorAggregate
      *
      * Provides a fluent interface
      */
-    public function setParent(?self $parent = null): self;
+    public function setParent(self $parent = null): self;
 
     /**
      * Return the children as an array of ItemInterface objects

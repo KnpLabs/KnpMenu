@@ -23,6 +23,7 @@ class CoreExtension implements ExtensionInterface
                 'current' => null,
                 'display' => true,
                 'displayChildren' => true,
+                'sortOrder' => null,
             ],
             $options
         );
@@ -40,6 +41,7 @@ class CoreExtension implements ExtensionInterface
             ->setCurrent($options['current'])
             ->setDisplay($options['display'])
             ->setDisplayChildren($options['displayChildren'])
+            ->setSortOrder($options['sortOrder'])
         ;
 
         $this->buildExtras($item, $options);

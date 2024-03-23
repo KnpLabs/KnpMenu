@@ -1,4 +1,4 @@
-## 3.5 (unreleased)
+## 3.5 (2024-03-23)
 
 * Added CallbackVoter
 * Removed support for unsupported PHP version 8.0

@@ -59,6 +59,33 @@ final class HelperTest extends TestCase
         $this->assertEquals('<p>foobar</p>', $helper->render($menu, ['firstClass' => 'test']));
     }
 
+    public function testRenderMenuByNameWithOptions(): void
+    {
+        $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
+        $renderer = $this->getMockBuilder(RendererInterface::class)->getMock();
+        $renderer->expects($this->once())
+            ->method('render')
+            ->with($menu, ['firstClass' => 'test'])
+            ->willReturn('<p>foobar</p>')
+        ;
+
+        $menuProvider = $this->createMock(MenuProviderInterface::class);
+        $menuProvider->expects($this->once())
+            ->method('get')
+            ->with('menu', ['firstClass' => 'test'])
+            ->willReturn($menu);
+        $rendererProvider = $this->getMockBuilder(RendererProviderInterface::class)->getMock();
+        $rendererProvider->expects($this->once())
+            ->method('get')
+            ->with(null)
+            ->willReturn($renderer)
+        ;
+
+        $helper = new Helper($rendererProvider, $menuProvider);
+
+        $this->assertEquals('<p>foobar</p>', $helper->render('menu', ['firstClass' => 'test']));
+    }
+
     public function testRenderMenuWithRenderer(): void
     {
         $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
@@ -254,6 +281,27 @@ final class HelperTest extends TestCase
         $this->assertEquals(['A', 'B'], $helper->getBreadcrumbsArray($menu));
     }
 
+    public function testBreadcrumbsArrayWithOptions(): void
+    {
+        $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
+
+        $manipulator = $this->getMockBuilder(MenuManipulator::class)->getMock();
+        $manipulator->expects($this->once())
+            ->method('getBreadcrumbsArray')
+            ->with($menu)
+            ->willReturn(['A', 'B']);
+
+        $menuProvider = $this->createMock(MenuProviderInterface::class);
+        $menuProvider->expects($this->once())
+            ->method('get')
+            ->with('menu', ['option' => 'value'])
+            ->willReturn($menu);
+
+        $helper = new Helper($this->getMockBuilder(RendererProviderInterface::class)->getMock(), $menuProvider, $manipulator);
+
+        $this->assertEquals(['A', 'B'], $helper->getBreadcrumbsArray('menu', null, ['option'=>'value']));
+    }
+
     public function testCurrentItemWithoutMatcher(): void
     {
         $this->expectException(\BadMethodCallException::class);
@@ -279,5 +327,30 @@ final class HelperTest extends TestCase
         $helper = new Helper($this->getMockBuilder(RendererProviderInterface::class)->getMock(), null, null, $matcher);
 
         $this->assertSame('c2_2_2', $helper->getCurrentItem($menu)->getName());
+    }
+
+    public function testCurrentItemWithOptions(): void
+    {
+        $matcher = new Matcher();
+
+        $menu = new MenuItem('root', new MenuFactory());
+        $menu->addChild('c1');
+        $menu['c1']->addChild('c1_1');
+        $menu->addChild('c2');
+        $menu['c2']->addChild('c2_1');
+        $menu['c2']->addChild('c2_2');
+        $menu['c2']['c2_2']->addChild('c2_2_1');
+        $menu['c2']['c2_2']->addChild('c2_2_2')->setCurrent(true);
+        $menu['c2']['c2_2']->addChild('c2_2_3');
+
+        $menuProvider = $this->createMock(MenuProviderInterface::class);
+        $menuProvider->expects($this->once())
+            ->method('get')
+            ->with('$menu', ['option' => 'value'])
+            ->willReturn($menu);
+
+        $helper = new Helper($this->getMockBuilder(RendererProviderInterface::class)->getMock(), $menuProvider, null, $matcher);
+
+        $this->assertSame('c2_2_2', $helper->getCurrentItem('$menu', ['option'=>'value'])->getName());
     }
 }

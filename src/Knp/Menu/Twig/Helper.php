@@ -72,7 +72,7 @@ class Helper
      */
     public function render($menu, array $options = [], ?string $renderer = null): string
     {
-        $menu = $this->castMenu($menu);
+        $menu = $this->castMenu($menu, $options);
 
         return $this->rendererProvider->get($renderer)->render($menu, $options);
     }
@@ -94,6 +94,7 @@ class Helper
      *
      * @param mixed $menu
      * @param mixed $subItem A string or array to append onto the end of the array
+     * @param array<string, mixed> $options
      *
      * @phpstan-param string|ItemInterface|array<int|string, string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface>|\Traversable<string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface> $subItem
      *
@@ -101,13 +102,13 @@ class Helper
      *
      * @phpstan-return list<array{label: string, uri: string|null, item: ItemInterface|null}>
      */
-    public function getBreadcrumbsArray($menu, $subItem = null): array
+    public function getBreadcrumbsArray($menu, $subItem = null, array $options = []): array
     {
         if (null === $this->menuManipulator) {
             throw new \BadMethodCallException('The menu manipulator must be set to get the breadcrumbs array');
         }
 
-        $menu = $this->castMenu($menu);
+        $menu = $this->castMenu($menu, $options);
 
         return $this->menuManipulator->getBreadcrumbsArray($menu, $subItem);
     }
@@ -116,18 +117,20 @@ class Helper
      * Returns the current item of a menu.
      *
      * @param ItemInterface|string|array<ItemInterface|string> $menu
+     * @param array<string, mixed>                             $options
      */
-    public function getCurrentItem($menu): ?ItemInterface
+    public function getCurrentItem($menu, array $options = []): ?ItemInterface
     {
-        $menu = $this->castMenu($menu);
+        $menu = $this->castMenu($menu, $options);
 
         return $this->retrieveCurrentItem($menu);
     }
 
     /**
      * @param ItemInterface|string|array<ItemInterface|string> $menu
+     * @param array<string, mixed>                             $options
      */
-    private function castMenu($menu): ItemInterface
+    private function castMenu($menu, array $options = []): ItemInterface
     {
         if (!$menu instanceof ItemInterface) {
             $path = [];
@@ -139,7 +142,7 @@ class Helper
                 $menu = \array_shift($path);
             }
 
-            return $this->get($menu, $path);
+            return $this->get($menu, $path, $options);
         }
 
         return $menu;

@@ -78,25 +78,27 @@ class MenuExtension extends AbstractExtension
      *
      * @param ItemInterface|string|array<ItemInterface|string> $menu
      * @param string|array<string|null>|null                   $subItem
+     * @param array<string, mixed>                             $options
      *
      * @phpstan-param string|ItemInterface|array<int|string, string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface>|\Traversable<string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface> $subItem
      *
      * @return array<int, array<string, mixed>>
      * @phpstan-return list<array{label: string, uri: string|null, item: ItemInterface|null}>
      */
-    public function getBreadcrumbsArray($menu, $subItem = null): array
+    public function getBreadcrumbsArray($menu, $subItem = null, array $options = []): array
     {
-        return $this->helper->getBreadcrumbsArray($menu, $subItem);
+        return $this->helper->getBreadcrumbsArray($menu, $subItem, $options);
     }
 
     /**
      * Returns the current item of a menu.
      *
      * @param ItemInterface|string $menu
+     * @param array<string, mixed> $options
      */
-    public function getCurrentItem($menu): ItemInterface
+    public function getCurrentItem($menu, array $options = []): ItemInterface
     {
-        $rootItem = $this->get($menu);
+        $rootItem = $this->get($menu, [], $options);
 
         $currentItem = $this->helper->getCurrentItem($rootItem);
 

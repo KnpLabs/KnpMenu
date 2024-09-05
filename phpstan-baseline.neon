@@ -20,3 +20,23 @@ parameters:
 			count: 1
 			path: src/Knp/Menu/Util/MenuManipulator.php
 
+		-
+			message: "#^Method Knp\\\\Menu\\\\Twig\\\\MenuExtension\\:\\:getBreadcrumbsArray\\(\\) has parameter \\$subItem with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Knp/Menu/Twig/MenuExtension.php
+
+		-
+			message: "#^PHPDoc tag @param for parameter \\$subItem with type array\\<int\\|string, array\\<string, Knp\\\\Menu\\\\ItemInterface\\|string\\|null\\>\\|float\\|int\\|Knp\\\\Menu\\\\ItemInterface\\|string\\|null\\>\\|string\\|Traversable\\<mixed, array\\<string, Knp\\\\Menu\\\\ItemInterface\\|string\\|null\\>\\|float\\|int\\|Knp\\\\Menu\\\\ItemInterface\\|string\\|null\\> is not subtype of native type array\\|string\\|null\\.$#"
+			count: 1
+			path: src/Knp/Menu/Twig/MenuExtension.php
+
+		-
+			message: "#^Method Knp\\\\Menu\\\\Twig\\\\MenuRuntimeExtension\\:\\:getBreadcrumbsArray\\(\\) has parameter \\$subItem with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Knp/Menu/Twig/MenuRuntimeExtension.php
+
+		-
+			message: "#^PHPDoc tag @param for parameter \\$subItem with type array\\<int\\|string, array\\<string, Knp\\\\Menu\\\\ItemInterface\\|string\\|null\\>\\|float\\|int\\|Knp\\\\Menu\\\\ItemInterface\\|string\\|null\\>\\|string\\|Traversable\\<mixed, array\\<string, Knp\\\\Menu\\\\ItemInterface\\|string\\|null\\>\\|float\\|int\\|Knp\\\\Menu\\\\ItemInterface\\|string\\|null\\> is not subtype of native type array\\|string\\|null\\.$#"
+			count: 1
+			path: src/Knp/Menu/Twig/MenuRuntimeExtension.php
+

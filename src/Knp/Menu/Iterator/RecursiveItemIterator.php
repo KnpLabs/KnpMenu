@@ -12,7 +12,7 @@ namespace Knp\Menu\Iterator;
 class RecursiveItemIterator extends \IteratorIterator implements \RecursiveIterator
 {
     /**
-     * @param \Traversable<string, \Knp\Menu\ItemInterface> $iterator
+     * @param \Traversable<string|int, \Knp\Menu\ItemInterface> $iterator
      */
     final public function __construct(\Traversable $iterator)
     {

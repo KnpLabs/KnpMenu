@@ -12,71 +12,74 @@ use Twig\TwigTest;
 
 class MenuExtension extends AbstractExtension
 {
-    public function __construct(private Helper $helper, private ?MatcherInterface $matcher = null, private ?MenuManipulator $menuManipulator = null)
-    {
+    private ?MenuRuntimeExtension $runtimeExtension = null;
+
+    public function __construct(
+        ?Helper $helper = null,
+        ?MatcherInterface $matcher = null,
+        ?MenuManipulator $menuManipulator = null,
+    ) {
+        if (null !== $helper) {
+            @trigger_error('Injecting dependencies is deprecated since v3.6 and will be removed in v4.', E_USER_DEPRECATED);
+            $this->runtimeExtension = new MenuRuntimeExtension($helper, $matcher, $menuManipulator);
+        }
     }
 
-    /**
-     * @return array<int, TwigFunction>
-     */
     public function getFunctions(): array
     {
+        $legacy = null !== $this->runtimeExtension;
+
         return [
-             new TwigFunction('knp_menu_get', [$this, 'get']),
-             new TwigFunction('knp_menu_render', [$this, 'render'], ['is_safe' => ['html']]),
-             new TwigFunction('knp_menu_get_breadcrumbs_array', [$this, 'getBreadcrumbsArray']),
-             new TwigFunction('knp_menu_get_current_item', [$this, 'getCurrentItem']),
+             new TwigFunction('knp_menu_get', $legacy ? [$this, 'get'] : [MenuRuntimeExtension::class, 'get']),
+             new TwigFunction('knp_menu_render', $legacy ? [$this, 'render'] : [MenuRuntimeExtension::class, 'render'], ['is_safe' => ['html']]),
+             new TwigFunction('knp_menu_get_breadcrumbs_array', $legacy ? [$this, 'getBreadcrumbsArray'] : [MenuRuntimeExtension::class, 'getBreadcrumbsArray']),
+             new TwigFunction('knp_menu_get_current_item', $legacy ? [$this, 'getCurrentItem'] : [MenuRuntimeExtension::class, 'getCurrentItem']),
         ];
     }
 
-    /**
-     * @return array<int, TwigFilter>
-     */
     public function getFilters(): array
     {
+        $legacy = null !== $this->runtimeExtension;
+
         return [
-            new TwigFilter('knp_menu_as_string', [$this, 'pathAsString']),
+            new TwigFilter('knp_menu_as_string', $legacy ? [$this, 'pathAsString'] : [MenuRuntimeExtension::class, 'pathAsString']),
         ];
     }
 
-    /**
-     * @return array<int, TwigTest>
-     */
     public function getTests(): array
     {
+        $legacy = null !== $this->runtimeExtension;
+
         return [
-            new TwigTest('knp_menu_current', [$this, 'isCurrent']),
-            new TwigTest('knp_menu_ancestor', [$this, 'isAncestor']),
+            new TwigTest('knp_menu_current', $legacy ? [$this, 'isCurrent'] : [MenuRuntimeExtension::class, 'isCurrent']),
+            new TwigTest('knp_menu_ancestor', $legacy ? [$this, 'isAncestor'] : [MenuRuntimeExtension::class, 'isAncestor']),
         ];
     }
 
     /**
-     * Retrieves an item following a path in the tree.
-     *
-     * @param ItemInterface|string $menu
      * @param array<int, string>   $path
      * @param array<string, mixed> $options
      */
-    public function get($menu, array $path = [], array $options = []): ItemInterface
+    public function get(ItemInterface|string $menu, array $path = [], array $options = []): ItemInterface
     {
-        return $this->helper->get($menu, $path, $options);
+        assert(null !== $this->runtimeExtension);
+
+        return $this->runtimeExtension->get($menu, $path, $options);
     }
 
     /**
-     * Renders a menu with the specified renderer.
-     *
-     * @param ItemInterface|string|array<ItemInterface|string> $menu
+     * @param string|ItemInterface|array<ItemInterface|string> $menu
      * @param array<string, mixed>                             $options
      */
-    public function render($menu, array $options = [], ?string $renderer = null): string
+    public function render(array|ItemInterface|string $menu, array $options = [], ?string $renderer = null): string
     {
-        return $this->helper->render($menu, $options, $renderer);
+        assert(null !== $this->runtimeExtension);
+
+        return $this->runtimeExtension->render($menu, $options, $renderer);
     }
 
     /**
-     * Returns an array ready to be used for breadcrumbs.
-     *
-     * @param ItemInterface|string|array<ItemInterface|string> $menu
+     * @param string|ItemInterface|array<ItemInterface|string> $menu
      * @param string|array<string|null>|null                   $subItem
      *
      * @phpstan-param string|ItemInterface|array<int|string, string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface>|\Traversable<string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface> $subItem
@@ -84,66 +87,38 @@ class MenuExtension extends AbstractExtension
      * @return array<int, array<string, mixed>>
      * @phpstan-return list<array{label: string, uri: string|null, item: ItemInterface|null}>
      */
-    public function getBreadcrumbsArray($menu, $subItem = null): array
+    public function getBreadcrumbsArray(array|ItemInterface|string $menu, array|string|null $subItem = null): array
     {
-        return $this->helper->getBreadcrumbsArray($menu, $subItem);
+        assert(null !== $this->runtimeExtension);
+
+        return $this->runtimeExtension->getBreadcrumbsArray($menu, $subItem);
     }
 
-    /**
-     * Returns the current item of a menu.
-     *
-     * @param ItemInterface|string $menu
-     */
-    public function getCurrentItem($menu): ItemInterface
+    public function getCurrentItem(ItemInterface|string $menu): ItemInterface
     {
-        $rootItem = $this->get($menu);
+        assert(null !== $this->runtimeExtension);
 
-        $currentItem = $this->helper->getCurrentItem($rootItem);
-
-        if (null === $currentItem) {
-            $currentItem = $rootItem;
-        }
-
-        return $currentItem;
+        return $this->runtimeExtension->getCurrentItem($menu);
     }
 
-    /**
-     * A string representation of this menu item
-     *
-     * e.g. Top Level > Second Level > This menu
-     */
     public function pathAsString(ItemInterface $menu, string $separator = ' > '): string
     {
-        if (null === $this->menuManipulator) {
-            throw new \BadMethodCallException('The menu manipulator must be set to get the breadcrumbs array');
-        }
+        assert(null !== $this->runtimeExtension);
 
-        return $this->menuManipulator->getPathAsString($menu, $separator);
+        return $this->runtimeExtension->pathAsString($menu, $separator);
     }
 
-    /**
-     * Checks whether an item is current.
-     */
     public function isCurrent(ItemInterface $item): bool
     {
-        if (null === $this->matcher) {
-            throw new \BadMethodCallException('The matcher must be set to get the breadcrumbs array');
-        }
+        assert(null !== $this->runtimeExtension);
 
-        return $this->matcher->isCurrent($item);
+        return $this->runtimeExtension->isCurrent($item);
     }
 
-    /**
-     * Checks whether an item is the ancestor of a current item.
-     *
-     * @param int|null $depth The max depth to look for the item
-     */
     public function isAncestor(ItemInterface $item, ?int $depth = null): bool
     {
-        if (null === $this->matcher) {
-            throw new \BadMethodCallException('The matcher must be set to get the breadcrumbs array');
-        }
+        assert(null !== $this->runtimeExtension);
 
-        return $this->matcher->isAncestor($item, $depth);
+        return $this->runtimeExtension->isAncestor($item, $depth);
     }
 }

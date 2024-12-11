@@ -42,10 +42,16 @@ jobs:
                 include:
                     - description: 'No Symfony specified'
                       php: '8.1'
+                      env:
+                          SYMFONY_DEPRECATIONS_HELPER: max[self]=1
                     - description: 'No Symfony specified'
                       php: '8.2'
+                      env:
+                          SYMFONY_DEPRECATIONS_HELPER: max[self]=1
                     - description: 'No Symfony specified'
                       php: '8.3'
+                      env:
+                          SYMFONY_DEPRECATIONS_HELPER: max[self]=1
                     - description: 'Lowest deps'
                       php: '8.1'
                       composer_option: '--prefer-lowest'
@@ -54,10 +60,14 @@ jobs:
                     - description: 'Symfony 5.4'
                       php: '8.1'
                       symfony: 5.4.*
+                      env:
+                          SYMFONY_DEPRECATIONS_HELPER: max[self]=1
                     - description: 'Dev deps'
-                      php: '8.2'
+                      php: '8.3'
                       dev: true
-                      symfony: 7.0.*
+                      symfony: 7.2.*
+                      env:
+                          SYMFONY_DEPRECATIONS_HELPER: max[self]=1
         name: PHP ${{ matrix.php }} tests (${{ matrix.description }})
         steps:
             - name: Checkout

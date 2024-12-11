@@ -55,11 +55,12 @@ jobs:
                     - description: 'Lowest deps'
                       php: '8.1'
                       composer_option: '--prefer-lowest'
-                      env:
-                          SYMFONY_DEPRECATIONS_HELPER: max[self]=0
                     - description: 'Symfony 5.4'
                       php: '8.1'
                       symfony: 5.4.*
+                    - description: 'Symfony 6.4'
+                      php: '8.2'
+                      symfony: 6.4.*
                       env:
                           SYMFONY_DEPRECATIONS_HELPER: max[self]=1
                     - description: 'Dev deps'

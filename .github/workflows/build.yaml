@@ -52,6 +52,10 @@ jobs:
                       php: '8.3'
                       env:
                           SYMFONY_DEPRECATIONS_HELPER: max[self]=1
+                    - description: 'No Symfony specified'
+                      php: '8.4'
+                      env:
+                        SYMFONY_DEPRECATIONS_HELPER: max[self]=1
                     - description: 'Lowest deps'
                       php: '8.1'
                       composer_option: '--prefer-lowest'

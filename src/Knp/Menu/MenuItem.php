@@ -103,6 +103,8 @@ class MenuItem implements ItemInterface
      */
     protected $factory;
 
+    protected ?int $sortOrder = null;
+
     /**
      * Class constructor
      *
@@ -326,6 +328,18 @@ class MenuItem implements ItemInterface
         return $this;
     }
 
+    public function getSortOrder(): ?int
+    {
+        return $this->sortOrder;
+    }
+
+    public function setSortOrder(int $sortOrder = null): ItemInterface
+    {
+        $this->sortOrder = $sortOrder;
+
+        return $this;
+    }
+
     public function addChild($child, array $options = []): ItemInterface
     {
         if (!$child instanceof ItemInterface) {
@@ -336,7 +350,49 @@ class MenuItem implements ItemInterface
 
         $child->setParent($this);
 
-        $this->children[$child->getName()] = $child;
+        $sortOrder = $child->getSortOrder();
+
+        $length = $this->count();
+        if (null === $sortOrder || 0 === $length) {
+            $this->children[$child->getName()] = $child;
+
+            return $child;
+        }
+
+        return $this->addChildAtPosition($child);
+    }
+
+    private function addChildAtPosition(ItemInterface $child): ItemInterface
+    {
+        $firstChildSortOrder = $this->children[\array_key_first($this->children)]->getSortOrder();
+        if (null !== $firstChildSortOrder && $child->getSortOrder() < $firstChildSortOrder) {
+            $this->children = \array_merge([$child->getName() => $child], $this->children);
+
+            return $child;
+        }
+
+        $lastChildSortOrder = $this->children[\array_key_last($this->children)]->getSortOrder();
+        if (null !== $lastChildSortOrder && $child->getSortOrder() > $lastChildSortOrder) {
+            $this->children[$child->getName()] = $child;
+
+            return $child;
+        }
+
+        $i = -1;
+        foreach ($this->children as $key => $loopedChild) {
+            ++$i;
+            if (null !== $loopedChild->getSortOrder() && $child->getSortOrder() >= $loopedChild->getSortOrder()) {
+                continue;
+            }
+
+            $firstHalf = \array_slice($this->children, 0, $i);
+            $secondHalf = \array_slice($this->children, $i);
+
+            $firstHalf[$child->getName()] = $child;
+
+            $this->children = \array_merge($firstHalf, $secondHalf);
+            break;
+        }
 
         return $child;
     }
@@ -405,7 +461,7 @@ class MenuItem implements ItemInterface
         return $this->parent;
     }
 
-    public function setParent(?ItemInterface $parent = null): ItemInterface
+    public function setParent(ItemInterface $parent = null): ItemInterface
     {
         if ($parent === $this) {
             throw new \InvalidArgumentException('Item cannot be a child of itself');

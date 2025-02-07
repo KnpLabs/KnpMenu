@@ -7,7 +7,6 @@ use Knp\Menu\MenuFactory;
 use Knp\Menu\MenuItem;
 use Knp\Menu\Renderer\RendererInterface;
 use Knp\Menu\Renderer\TwigRenderer;
-use Knp\Menu\Twig\Helper;
 use Knp\Menu\Twig\MenuExtension;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -18,7 +17,7 @@ final class TwigRendererTest extends AbstractRendererTest
     {
         $loader = new FilesystemLoader(__DIR__.'/../../../../../src/Knp/Menu/Resources/views');
         $environment = new Environment($loader);
-        $environment->addExtension(new MenuExtension($this->createMock(Helper::class)));
+        $environment->addExtension(new MenuExtension());
 
         return new TwigRenderer($environment, 'knp_menu.html.twig', $matcher, ['compressed' => true]);
     }

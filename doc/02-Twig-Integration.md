@@ -1,5 +1,4 @@
-Twig Integration
-================
+# Twig Integration
 
 KnpMenu provides 2 different (and complementary) integrations with Twig:
 
@@ -9,8 +8,7 @@ KnpMenu provides 2 different (and complementary) integrations with Twig:
 
 <a name="menu-extension"></a>
 
-Using the MenuExtension
------------------------
+## Using the MenuExtension
 
 The easiest (but not best) way to render a menu inside a Twig template is
 to pass both the renderer and menu into a template:
@@ -214,8 +212,7 @@ $pimple['menu_main'] = $pimple->protect(function(array $options, $c) use ($facto
 
 <a name="twig-renderer"></a>
 
-Using the TwigRenderer
-----------------------
+## Using the TwigRenderer
 
 ### Registering the renderer
 
@@ -277,8 +274,7 @@ want.
 >The built-in templates contains some additional blocks to make it easier
 >to customize it when using the inheritance.
 
-Twig integration reference
---------------------------
+## Twig integration reference
 
 ### Functions
 

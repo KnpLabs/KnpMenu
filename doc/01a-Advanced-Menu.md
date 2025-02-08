@@ -1,5 +1,4 @@
-Advanced Menu
--------------
+# Advanced Menu
 
 You can create a menu easily from a Tree structure (a nested set for example) by
 making it implement `Knp\Menu\NodeInterface`. You will then be able

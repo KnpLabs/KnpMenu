@@ -1,7 +1,6 @@
-KnpMenu
-=======
+# KnpMenu
 
-The KnpMenu library provides object oriented menus for PHP.
+The KnpMenu library provides object-oriented menus for PHP.
 It is used by the [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) for Symfony
 but can now be used stand-alone.
 
@@ -12,9 +11,9 @@ but can now be used stand-alone.
 
 ## Installation
 
-KnpMenu uses Composer, please checkout the [composer website](https://getcomposer.org/) for more information.
+KnpMenu uses Composer, please check out the [composer website](https://getcomposer.org/) for more information.
 
-The simple following command will install `knp-menu` into your project. It also add a new
+The simple following command will install `knp-menu` into your project. It also adds a new
 entry in your `composer.json` and update the `composer.lock` as well.
 
 ```bash
@@ -96,3 +95,4 @@ the [Symfony community](https://github.com/KnpLabs/KnpMenu/graphs/contributors).
 [3]: https://github.com/derrabus
 [4]: https://github.com/garak
 [5]: https://github.com/stof
+

@@ -1,5 +1,4 @@
-Creating Menus: The Basics
-==========================
+# Creating Menus: The Basics
 
 Let's face it, creating menus sucks. Menus - a common aspect of any
 site - can range from being simple and mundane to giant monsters that
@@ -9,8 +8,7 @@ This bundle solves the issue by giving you a small, yet powerful and flexible
 framework for handling your menus. While most of the examples shown here
 are simple, the menus can grow arbitrarily large and deep.
 
-Creating a menu
----------------
+## Creating a menu
 
 The menu framework centers around one main interface: `Knp\Menu\ItemInterface`.
 Items are created by a factory implementing `Knp\Menu\FactoryInterface`.
@@ -29,7 +27,7 @@ $factory = new MenuFactory();
 $menu = $factory->createItem('My menu');
 $menu->addChild('Home', ['uri' => '/']);
 $menu->addChild('Comments', ['uri' => '#comments']);
-$menu->addChild('Symfony', ['uri' => 'http://symfony.com/']);
+$menu->addChild('Symfony', ['uri' => 'https://symfony.com/']);
 
 $renderer = new ListRenderer(new Matcher());
 echo $renderer->render($menu);
@@ -46,7 +44,7 @@ The above would render the following html code:
     <a href="#comments">Comments</a>
   </li>
   <li class="last">
-    <a href="http://symfony.com/">Symfony</a>
+    <a href="https://symfony.com/">Symfony</a>
   </li>
 </ul>
 ```
@@ -54,13 +52,13 @@ The above would render the following html code:
 >**NOTE**
 >The menu framework automatically adds `first` and `last` classes to each
 >`<li>` tag at each level for easy styling. Notice also that a `current`
->class is added to the "current" menu item by uri and `current_ancestor`
+>class is added to the "current" menu item by URI and `current_ancestor`
 >to its ancestors (the classes are configurable) The above example assumes
 >the menu is being rendered on the `/comments` page, making the Comments
 >menu the "current" item.
 
 When the menu is rendered, it's actually spaced correctly so that it appears
-as shown in the source html. This is to allow for easier debugging and can
+as shown in the source HTML. This is to allow for easier debugging and can
 be turned off by passing the `true` as the second argument to the renderer.
 
 ```php
@@ -88,8 +86,7 @@ Note: You can customize the rendering by extending the `ListRenderer` and
 overwrite some of its methods. If you use the [TwigRenderer](02-Twig-Integration.md), you can overwrite
 templates. Or you can provide your own implementation of the `RendererInterface`.
 
-Working with your menu tree
----------------------------
+## Working with your menu tree
 
 Your menu tree works and acts like a multidimensional array. Specifically,
 it implements ArrayAccess, Countable and Iterator:
@@ -122,8 +119,7 @@ when creating it is the name you'll use when accessing it. By default,
 the name is also used when displaying the menu, but that can be overridden
 by setting the menu item's label (see below).
 
-Customizing each menu item
---------------------------
+## Customizing each menu item
 
 There are many ways to customize the output of each menu item. Each property
 can be customized in two ways: either by passing it as an option when creating
@@ -143,18 +139,18 @@ $menu->addChild('Home', ['uri' => '/', 'label' => 'Back to homepage']);
 $menu['Home']->setLabel('Back to homepage');
 ```
 
-### The uri
+### The URI
 
-If an item isn't given a url, then text will be output instead of a link:
+If an item isn't given a URL, then text will be output instead of a link:
 
 ```php
 <?php
 $menu->addChild('Not a link');
 $menu->addChild('Home', '/');
-$menu->addChild('Symfony', 'http://www.symfony-reloaded.org');
+$menu->addChild('Symfony', 'https://www.symfony-reloaded.org');
 ```
 
-You can also specify the uri after creation via the `setUri()` method:
+You can also specify the URI after creation via the `setUri()` method:
 
 ```php
 <?php
@@ -162,7 +158,7 @@ $menu['Home']->setUri('/');
 ```
 
 >**NOTE**
->If you want to remove the uri of an item, set it to `null`.
+>If you want to remove the URI of an item, set it to `null`.
 
 ### Menu attributes
 
@@ -188,7 +184,7 @@ children attributes (rendered on the `<ul>` containing the list of children):
 
 ```php
 <?php
-$menu->addChild('KnpLabs.com', ['uri' => 'http://knplabs.com']);
+$menu->addChild('KnpLabs.com', ['uri' => 'https://knplabs.com']);
 $menu['KnpLabs.com']->setLinkAttribute('class', 'external-link');
 
 $menu->addChild('Not a link');
@@ -253,8 +249,7 @@ the second argument to the `render()` method:
 >extra in the item. Use it with caution as it can create some XSS holes in
 >your application if the label is coming from the user.
 
-The Current Menu Item
----------------------
+## The Current Menu Item
 
 If the menu item is matched as current, a `current` class will be added to
 the `li` around that item, as well as a `current_ancestor` around any of
@@ -307,14 +302,13 @@ $routeVoter = new \Knp\Menu\Silex\Voter\RouteVoter();
 $routeVoter->setRequest($symfonyRequest);
 ```
 
-Creating a Menu from a Tree structure
--------------------------------------
+## Creating a Menu from a Tree Structure
 
 See [Advanced Menu documentation page](01a-Advanced-Menu.md)
 
-Change the charset
-------------------
+## Change the charset
 
 ```php
 $renderer = new ListRenderer(new Matcher(), [], 'ISO-8859-1');
 ```
+

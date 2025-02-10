@@ -43,6 +43,7 @@ class MenuExtension extends AbstractExtension
 
         return [
             new TwigFilter('knp_menu_as_string', $legacy ? [$this, 'pathAsString'] : [MenuRuntimeExtension::class, 'pathAsString']),
+            new TwigFilter('knp_menu_spaceless', [$this, 'spaceless'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -120,5 +121,10 @@ class MenuExtension extends AbstractExtension
         assert(null !== $this->runtimeExtension);
 
         return $this->runtimeExtension->isAncestor($item, $depth);
+    }
+
+    public function spaceless(string $content): string
+    {
+        return trim((string) preg_replace('/>\s+</', '><', $content));
     }
 }

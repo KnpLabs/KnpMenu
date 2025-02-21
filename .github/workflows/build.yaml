@@ -42,16 +42,16 @@ jobs:
                 include:
                     - description: 'No Symfony specified'
                       php: '8.1'
-                      max_deprecations: 1
+                      max_deprecations: 0
                     - description: 'No Symfony specified'
                       php: '8.2'
-                      max_deprecations: 1
+                      max_deprecations: 0
                     - description: 'No Symfony specified'
                       php: '8.3'
-                      max_deprecations: 1
+                      max_deprecations: 0
                     - description: 'No Symfony specified'
                       php: '8.4'
-                      max_deprecations: 1
+                      max_deprecations: 0
                     - description: 'Lowest deps'
                       php: '8.1'
                       composer_option: '--prefer-lowest'
@@ -59,12 +59,12 @@ jobs:
                     - description: 'Symfony 6'
                       php: '8.1'
                       symfony: 6.4.*
-                      max_deprecations: 1
+                      max_deprecations: 0
                     - description: 'Symfony 7'
                       php: '8.4'
                       dev: true
                       symfony: 7.2.*
-                      max_deprecations: 1
+                      max_deprecations: 0
         name: PHP ${{ matrix.php }} tests (${{ matrix.description }})
         steps:
             - name: Checkout

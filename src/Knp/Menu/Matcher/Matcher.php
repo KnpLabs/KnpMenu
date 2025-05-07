@@ -36,7 +36,7 @@ class Matcher implements MatcherInterface
             return $current;
         }
 
-        if ($this->cache->contains($item)) {
+        if ($this->cache->offsetExists($item)) {
             return $this->cache[$item];
         }
 

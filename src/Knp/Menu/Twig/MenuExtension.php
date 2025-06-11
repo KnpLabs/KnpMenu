@@ -12,7 +12,7 @@ use Twig\TwigTest;
 
 class MenuExtension extends AbstractExtension
 {
-    private ?MenuRuntimeExtension $runtimeExtension = null;
+    private ?MenuRuntime $runtimeExtension = null;
 
     public function __construct(
         ?Helper $helper = null,
@@ -21,7 +21,7 @@ class MenuExtension extends AbstractExtension
     ) {
         if (null !== $helper) {
             @trigger_error('Injecting dependencies is deprecated since v3.6 and will be removed in v4.', E_USER_DEPRECATED);
-            $this->runtimeExtension = new MenuRuntimeExtension($helper, $matcher, $menuManipulator);
+            $this->runtimeExtension = new MenuRuntime($helper, $matcher, $menuManipulator);
         }
     }
 
@@ -30,10 +30,10 @@ class MenuExtension extends AbstractExtension
         $legacy = null !== $this->runtimeExtension;
 
         return [
-             new TwigFunction('knp_menu_get', $legacy ? [$this, 'get'] : [MenuRuntimeExtension::class, 'get']),
-             new TwigFunction('knp_menu_render', $legacy ? [$this, 'render'] : [MenuRuntimeExtension::class, 'render'], ['is_safe' => ['html']]),
-             new TwigFunction('knp_menu_get_breadcrumbs_array', $legacy ? [$this, 'getBreadcrumbsArray'] : [MenuRuntimeExtension::class, 'getBreadcrumbsArray']),
-             new TwigFunction('knp_menu_get_current_item', $legacy ? [$this, 'getCurrentItem'] : [MenuRuntimeExtension::class, 'getCurrentItem']),
+             new TwigFunction('knp_menu_get', $legacy ? [$this, 'get'] : [MenuRuntime::class, 'get']),
+             new TwigFunction('knp_menu_render', $legacy ? [$this, 'render'] : [MenuRuntime::class, 'render'], ['is_safe' => ['html']]),
+             new TwigFunction('knp_menu_get_breadcrumbs_array', $legacy ? [$this, 'getBreadcrumbsArray'] : [MenuRuntime::class, 'getBreadcrumbsArray']),
+             new TwigFunction('knp_menu_get_current_item', $legacy ? [$this, 'getCurrentItem'] : [MenuRuntime::class, 'getCurrentItem']),
         ];
     }
 
@@ -42,7 +42,7 @@ class MenuExtension extends AbstractExtension
         $legacy = null !== $this->runtimeExtension;
 
         return [
-            new TwigFilter('knp_menu_as_string', $legacy ? [$this, 'pathAsString'] : [MenuRuntimeExtension::class, 'pathAsString']),
+            new TwigFilter('knp_menu_as_string', $legacy ? [$this, 'pathAsString'] : [MenuRuntime::class, 'pathAsString']),
             new TwigFilter('knp_menu_spaceless', [self::class, 'spaceless'], ['is_safe' => ['html']]),
         ];
     }
@@ -52,8 +52,8 @@ class MenuExtension extends AbstractExtension
         $legacy = null !== $this->runtimeExtension;
 
         return [
-            new TwigTest('knp_menu_current', $legacy ? [$this, 'isCurrent'] : [MenuRuntimeExtension::class, 'isCurrent']),
-            new TwigTest('knp_menu_ancestor', $legacy ? [$this, 'isAncestor'] : [MenuRuntimeExtension::class, 'isAncestor']),
+            new TwigTest('knp_menu_current', $legacy ? [$this, 'isCurrent'] : [MenuRuntime::class, 'isCurrent']),
+            new TwigTest('knp_menu_ancestor', $legacy ? [$this, 'isAncestor'] : [MenuRuntime::class, 'isAncestor']),
         ];
     }
 

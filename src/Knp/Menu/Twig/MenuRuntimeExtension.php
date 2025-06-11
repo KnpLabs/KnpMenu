@@ -7,7 +7,7 @@ use Knp\Menu\Matcher\MatcherInterface;
 use Knp\Menu\Util\MenuManipulator;
 use Twig\Extension\RuntimeExtensionInterface;
 
-class MenuRuntime implements RuntimeExtensionInterface
+class MenuRuntimeExtension implements RuntimeExtensionInterface
 {
     public function __construct(
         private readonly Helper $helper,

@@ -61,7 +61,7 @@ class MenuExtension extends AbstractExtension
     {
         return max(
             (int) filemtime(__FILE__),
-            (int) filemtime((string) (new \ReflectionClass(MenuRuntimeExtension::class))->getFileName()),
+            (int) filemtime(__DIR__.'/MenuRuntimeExtension.php'),
         );
     }
 

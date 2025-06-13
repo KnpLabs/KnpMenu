@@ -41,10 +41,6 @@ class Helper
 
             $menuName = $menu;
             $menu = $this->menuProvider->get($menuName, $options);
-
-            if (!$menu instanceof ItemInterface) {
-                throw new \LogicException(\sprintf('The menu "%s" exists, but is not a valid menu item object. Check where you created the menu to be sure it returns an ItemInterface object.', $menuName));
-            }
         }
 
         foreach ($path as $child) {
@@ -82,7 +78,7 @@ class Helper
      *
      * Each element in the array will be an array with 3 keys:
      * - `label` containing the label of the item
-     * - `url` containing the url of the item (may be `null`)
+     * - `uri` containing the url of the item (may be `null`)
      * - `item` containing the original item (may be `null` for the extra items)
      *
      * The subItem can be one of the following forms
@@ -90,12 +86,12 @@ class Helper
      *   * ItemInterface object
      *   * ['subItem' => '@homepage']
      *   * ['subItem1', 'subItem2']
-     *   * [['label' => 'subItem1', 'url' => '@homepage'], ['label' => 'subItem2']]
+     *   * [['label' => 'subItem1', 'uri' => '@homepage'], ['label' => 'subItem2']]
      *
      * @param mixed $menu
      * @param mixed $subItem A string or array to append onto the end of the array
      *
-     * @phpstan-param string|ItemInterface|array<int|string, string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface>|\Traversable<string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface> $subItem
+     * @phpstan-param string|ItemInterface|array<int|string, string|int|float|null|array{label: string, uri: string|null, item: ItemInterface|null}|ItemInterface>|\Traversable<string|int|float|null|array{label: string, uri: string|null, item: ItemInterface|null}|ItemInterface> $subItem
      *
      * @return array<int, array<string, mixed>>
      *

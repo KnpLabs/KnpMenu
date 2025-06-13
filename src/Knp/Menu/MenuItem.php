@@ -148,9 +148,7 @@ class MenuItem implements ItemInterface
             $offset = \array_search($oldName, $names);
             $names[$offset] = $name;
 
-            if (false === $children = \array_combine($names, $items)) {
-                throw new \InvalidArgumentException('Number of elements is not matching.');
-            }
+            $children = \array_combine($names, $items);
 
             $parent->setChildren($children);
         }

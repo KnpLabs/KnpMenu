@@ -1,42 +1,8 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Call to an undefined method Symfony\\\\Component\\\\HttpFoundation\\\\RequestStack\\:\\:getMasterRequest\\(\\)\\.$#"
-			count: 1
-			path: src/Knp/Menu/Matcher/Voter/RouteVoter.php
-
-		-
-			message: "#^Strict comparison using \\=\\=\\= between false and array\\<string, Knp\\\\Menu\\\\ItemInterface\\> will always evaluate to false\\.$#"
-			count: 1
-			path: src/Knp/Menu/MenuItem.php
-
-		-
-			message: "#^Parameter \\#2 \\$path of method Knp\\\\Menu\\\\Twig\\\\Helper\\:\\:get\\(\\) expects array\\<int, string\\>, array\\<Knp\\\\Menu\\\\ItemInterface\\|string\\> given\\.$#"
+			message: '#^Parameter \#2 \$path of method Knp\\Menu\\Twig\\Helper\:\:get\(\) expects array\<int, string\>, array\<Knp\\Menu\\ItemInterface\|string\> given\.$#'
+			identifier: argument.type
 			count: 1
 			path: src/Knp/Menu/Twig/Helper.php
-
-		-
-			message: "#^Method Knp\\\\Menu\\\\Util\\\\MenuManipulator\\:\\:getBreadcrumbsArray\\(\\) should return array\\<int, array\\{label\\: string, uri\\: string\\|null, item\\: Knp\\\\Menu\\\\ItemInterface\\|null\\}\\> but returns array\\<int, array\\{label\\: string, uri\\: string\\|null, item\\: Knp\\\\Menu\\\\ItemInterface\\|null\\}\\|array\\{label\\: string, url\\: string\\|null, item\\: Knp\\\\Menu\\\\ItemInterface\\|null\\}\\>\\.$#"
-			count: 1
-			path: src/Knp/Menu/Util/MenuManipulator.php
-
-		-
-			message: "#^Method Knp\\\\Menu\\\\Twig\\\\MenuExtension\\:\\:getBreadcrumbsArray\\(\\) has parameter \\$subItem with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Knp/Menu/Twig/MenuExtension.php
-
-		-
-			message: "#^PHPDoc tag @param for parameter \\$subItem with type array\\<int\\|string, array\\<string, Knp\\\\Menu\\\\ItemInterface\\|string\\|null\\>\\|float\\|int\\|Knp\\\\Menu\\\\ItemInterface\\|string\\|null\\>\\|string\\|Traversable\\<mixed, array\\<string, Knp\\\\Menu\\\\ItemInterface\\|string\\|null\\>\\|float\\|int\\|Knp\\\\Menu\\\\ItemInterface\\|string\\|null\\> is not subtype of native type array\\|string\\|null\\.$#"
-			count: 1
-			path: src/Knp/Menu/Twig/MenuExtension.php
-
-		-
-			message: "#^Method Knp\\\\Menu\\\\Twig\\\\MenuRuntimeExtension\\:\\:getBreadcrumbsArray\\(\\) has parameter \\$subItem with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Knp/Menu/Twig/MenuRuntimeExtension.php
-
-		-
-			message: "#^PHPDoc tag @param for parameter \\$subItem with type array\\<int\\|string, array\\<string, Knp\\\\Menu\\\\ItemInterface\\|string\\|null\\>\\|float\\|int\\|Knp\\\\Menu\\\\ItemInterface\\|string\\|null\\>\\|string\\|Traversable\\<mixed, array\\<string, Knp\\\\Menu\\\\ItemInterface\\|string\\|null\\>\\|float\\|int\\|Knp\\\\Menu\\\\ItemInterface\\|string\\|null\\> is not subtype of native type array\\|string\\|null\\.$#"
-			count: 1
-			path: src/Knp/Menu/Twig/MenuRuntimeExtension.php
 

@@ -163,6 +163,14 @@ final class MenuExtensionTest extends TestCase
         $this->assertEquals('current', $this->getTemplate('{{ knp_menu_get_current_item("default") is knp_menu_current ? "current" : "not current" }}', $helper, $matcher)->render([]));
     }
 
+    public function testLastModified(): void
+    {
+        $this->assertSame(max(
+            filemtime((new \ReflectionClass(MenuExtension::class))->getFileName()),
+            filemtime((new \ReflectionClass(MenuRuntimeExtension::class))->getFileName()),
+        ), (new MenuExtension())->getLastModified());
+    }
+
     /**
      * @param array<string> $methods
      */

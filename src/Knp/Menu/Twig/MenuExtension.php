@@ -57,6 +57,14 @@ class MenuExtension extends AbstractExtension
         ];
     }
 
+    public function getLastModified(): int
+    {
+        return max(
+            (int) filemtime(__FILE__),
+            (int) filemtime(__DIR__.'/MenuRuntimeExtension.php'),
+        );
+    }
+
     /**
      * @param array<int, string>   $path
      * @param array<string, mixed> $options

@@ -4,6 +4,9 @@ namespace Knp\Menu\Provider;
 
 use Knp\Menu\ItemInterface;
 
+/**
+ * @final since 3.8.0
+ */
 class ChainProvider implements MenuProviderInterface
 {
     /**

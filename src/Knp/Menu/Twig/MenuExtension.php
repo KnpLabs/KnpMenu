@@ -10,6 +10,9 @@ use Twig\TwigFilter;
 use Twig\TwigFunction;
 use Twig\TwigTest;
 
+/**
+ * @final since 3.8.0
+ */
 class MenuExtension extends AbstractExtension
 {
     private ?MenuRuntimeExtension $runtimeExtension = null;
@@ -68,6 +71,8 @@ class MenuExtension extends AbstractExtension
     /**
      * @param array<int, string>   $path
      * @param array<string, mixed> $options
+     *
+     * @internal since 3.8.0
      */
     public function get(ItemInterface|string $menu, array $path = [], array $options = []): ItemInterface
     {
@@ -79,6 +84,8 @@ class MenuExtension extends AbstractExtension
     /**
      * @param string|ItemInterface|array<ItemInterface|string> $menu
      * @param array<string, mixed>                             $options
+     *
+     * @internal since 3.8.0
      */
     public function render(array|ItemInterface|string $menu, array $options = [], ?string $renderer = null): string
     {
@@ -94,6 +101,8 @@ class MenuExtension extends AbstractExtension
      *
      * @return array<int, array<string, mixed>>
      * @phpstan-return list<array{label: string, uri: string|null, item: ItemInterface|null}>
+     *
+     * @internal since 3.8.0
      */
     public function getBreadcrumbsArray(array|ItemInterface|string $menu, array|string|null $subItem = null): array
     {
@@ -102,6 +111,9 @@ class MenuExtension extends AbstractExtension
         return $this->runtimeExtension->getBreadcrumbsArray($menu, $subItem);
     }
 
+    /**
+     * @internal since 3.8.0
+     */
     public function getCurrentItem(ItemInterface|string $menu): ItemInterface
     {
         assert(null !== $this->runtimeExtension);
@@ -109,6 +121,9 @@ class MenuExtension extends AbstractExtension
         return $this->runtimeExtension->getCurrentItem($menu);
     }
 
+    /**
+     * @internal since 3.8.0
+     */
     public function pathAsString(ItemInterface $menu, string $separator = ' > '): string
     {
         assert(null !== $this->runtimeExtension);
@@ -116,6 +131,9 @@ class MenuExtension extends AbstractExtension
         return $this->runtimeExtension->pathAsString($menu, $separator);
     }
 
+    /**
+     * @internal since 3.8.0
+     */
     public function isCurrent(ItemInterface $item): bool
     {
         assert(null !== $this->runtimeExtension);
@@ -123,6 +141,9 @@ class MenuExtension extends AbstractExtension
         return $this->runtimeExtension->isCurrent($item);
     }
 
+    /**
+     * @internal since 3.8.0
+     */
     public function isAncestor(ItemInterface $item, ?int $depth = null): bool
     {
         assert(null !== $this->runtimeExtension);

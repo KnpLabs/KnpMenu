@@ -12,6 +12,8 @@ use Knp\Menu\ItemInterface;
  * @extends \IteratorIterator<TKey, ItemInterface, \Traversable<TKey, ItemInterface>>
  *
  * @implements \RecursiveIterator<TKey, ItemInterface>
+ *
+ * @final since 3.8.0
  */
 class RecursiveItemIterator extends \IteratorIterator implements \RecursiveIterator
 {

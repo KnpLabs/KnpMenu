@@ -10,6 +10,8 @@ use Knp\Menu\Matcher\MatcherInterface;
  *
  * @template TKey
  * @template-extends \FilterIterator<TKey, ItemInterface, \Iterator<TKey, ItemInterface>>
+ *
+ * @final since 3.8.0
  */
 class CurrentItemFilterIterator extends \FilterIterator
 {

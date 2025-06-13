@@ -6,6 +6,9 @@ use Knp\Menu\ItemInterface;
 
 /**
  * core factory extension with the main logic
+ *
+ * @final since 3.8.0
+ * @internal since 3.8.0
  */
 class CoreExtension implements ExtensionInterface
 {

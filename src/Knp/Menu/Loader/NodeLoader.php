@@ -6,6 +6,9 @@ use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use Knp\Menu\NodeInterface;
 
+/**
+ * @final since 3.8.0
+ */
 class NodeLoader implements LoaderInterface
 {
     public function __construct(private FactoryInterface $factory)

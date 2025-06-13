@@ -6,6 +6,8 @@ use Knp\Menu\ItemInterface;
 
 /**
  * Voter based on the uri
+ *
+ * @final since 3.8.0
  */
 class UriVoter implements VoterInterface
 {

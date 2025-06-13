@@ -10,6 +10,8 @@ use Knp\Menu\ItemInterface;
  * In case the value stored in the registry is a callable rather than an ItemInterface,
  * it will be called with the options as first argument and the registry as second argument
  * and is expected to return a menu item.
+ *
+ * @final since 3.8.0
  */
 class ArrayAccessProvider implements MenuProviderInterface
 {

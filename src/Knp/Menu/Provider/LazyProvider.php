@@ -10,6 +10,8 @@ use Knp\Menu\ItemInterface;
  * Builders can either be callables or a factory for an object callable
  * represented as [Closure, method], where the Closure gets called
  * to instantiate the object.
+ *
+ * @final since 3.8.0
  */
 class LazyProvider implements MenuProviderInterface
 {

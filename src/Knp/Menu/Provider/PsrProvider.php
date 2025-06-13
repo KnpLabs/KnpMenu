@@ -10,6 +10,8 @@ use Psr\Container\ContainerInterface;
  *
  * This menu provider does not support using options, as it cannot pass them to the container
  * to alter the menu building. Use a different provider in case you need support for options.
+ *
+ * @final since 3.8.0
  */
 class PsrProvider implements MenuProviderInterface
 {

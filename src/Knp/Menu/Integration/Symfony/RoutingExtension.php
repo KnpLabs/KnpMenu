@@ -8,6 +8,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Factory able to use the Symfony Routing component to build the url
+ *
+ * @final since 3.8.0
  */
 class RoutingExtension implements ExtensionInterface
 {

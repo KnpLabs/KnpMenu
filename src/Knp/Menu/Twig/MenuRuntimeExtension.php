@@ -7,6 +7,9 @@ use Knp\Menu\Matcher\MatcherInterface;
 use Knp\Menu\Util\MenuManipulator;
 use Twig\Extension\RuntimeExtensionInterface;
 
+/**
+ * @final since 3.8.0
+ */
 class MenuRuntimeExtension implements RuntimeExtensionInterface
 {
     public function __construct(
@@ -21,6 +24,8 @@ class MenuRuntimeExtension implements RuntimeExtensionInterface
      *
      * @param array<int, string>   $path
      * @param array<string, mixed> $options
+     *
+     * @internal since 3.8.0
      */
     public function get(ItemInterface|string $menu, array $path = [], array $options = []): ItemInterface
     {
@@ -32,6 +37,8 @@ class MenuRuntimeExtension implements RuntimeExtensionInterface
      *
      * @param string|ItemInterface|array<ItemInterface|string> $menu
      * @param array<string, mixed>                             $options
+     *
+     * @internal since 3.8.0
      */
     public function render(array|ItemInterface|string $menu, array $options = [], ?string $renderer = null): string
     {
@@ -47,6 +54,8 @@ class MenuRuntimeExtension implements RuntimeExtensionInterface
      *
      * @return array<int, array<string, mixed>>
      * @phpstan-return list<array{label: string, uri: string|null, item: ItemInterface|null}>
+     *
+     * @internal since 3.8.0
      */
     public function getBreadcrumbsArray(array|ItemInterface|string $menu, array|string|null $subItem = null): array
     {
@@ -55,6 +64,8 @@ class MenuRuntimeExtension implements RuntimeExtensionInterface
 
     /**
      * Returns the current item of a menu.
+     *
+     * @internal since 3.8.0
      */
     public function getCurrentItem(ItemInterface|string $menu): ItemInterface
     {
@@ -73,6 +84,8 @@ class MenuRuntimeExtension implements RuntimeExtensionInterface
      * A string representation of this menu item
      *
      * e.g. Top Level > Second Level > This menu
+     *
+     * @internal since 3.8.0
      */
     public function pathAsString(ItemInterface $menu, string $separator = ' > '): string
     {
@@ -85,6 +98,8 @@ class MenuRuntimeExtension implements RuntimeExtensionInterface
 
     /**
      * Checks whether an item is current.
+     *
+     * @internal since 3.8.0
      */
     public function isCurrent(ItemInterface $item): bool
     {
@@ -99,6 +114,8 @@ class MenuRuntimeExtension implements RuntimeExtensionInterface
      * Checks whether an item is the ancestor of a current item.
      *
      * @param int|null $depth The max depth to look for the item
+     *
+     * @internal since 3.8.0
      */
     public function isAncestor(ItemInterface $item, ?int $depth = null): bool
     {

@@ -4,6 +4,8 @@ namespace Knp\Menu\Renderer;
 
 /**
  * A renderer provider getting the renderers from a class implementing ArrayAccess.
+ *
+ * @final since 3.8.0
  */
 class ArrayAccessProvider implements RendererProviderInterface
 {

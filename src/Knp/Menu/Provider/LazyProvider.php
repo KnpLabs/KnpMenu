@@ -16,7 +16,7 @@ use Knp\Menu\ItemInterface;
 class LazyProvider implements MenuProviderInterface
 {
     /**
-     * @phpstan-param array<string, callable|array{\Closure, string}> $builders
+     * @phpstan-param array<string, (callable(): ItemInterface)|array{\Closure(): object, string}> $builders
      */
     public function __construct(private array $builders)
     {

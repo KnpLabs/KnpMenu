@@ -11,7 +11,7 @@ interface MenuProviderInterface
      *
      * @param array<string, mixed> $options
      *
-     * @throws \InvalidArgumentException if the menu does not exists
+     * @throws \InvalidArgumentException if the menu does not exist
      */
     public function get(string $name, array $options = []): ItemInterface;
 

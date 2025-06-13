@@ -14,7 +14,7 @@ abstract class Renderer
     }
 
     /**
-     * Renders a HTML attribute
+     * Renders an HTML attribute
      *
      * @param string|bool $value
      */

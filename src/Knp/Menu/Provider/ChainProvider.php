@@ -7,14 +7,14 @@ use Knp\Menu\ItemInterface;
 class ChainProvider implements MenuProviderInterface
 {
     /**
-     * @var iterable|MenuProviderInterface[]
+     * @var iterable<MenuProviderInterface>
      */
     private iterable $providers;
 
     /**
-     * @param MenuProviderInterface[]|iterable $providers
+     * @param iterable<MenuProviderInterface> $providers
      */
-    public function __construct($providers)
+    public function __construct(iterable $providers)
     {
         $this->providers = $providers;
     }

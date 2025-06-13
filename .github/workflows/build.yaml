@@ -60,10 +60,9 @@ jobs:
                       php: '8.1'
                       symfony: 6.4.*
                       max_deprecations: 0
-                    - description: 'Symfony 7'
+                    - description: 'Dev deps'
                       php: '8.4'
                       dev: true
-                      symfony: 7.2.*
                       max_deprecations: 0
         name: PHP ${{ matrix.php }} tests (${{ matrix.description }})
         steps:
@@ -78,10 +77,11 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
-            - run: |
-                  sed -ri 's/"symfony\/(.+)": "(.+)"/"symfony\/\1": "'${{ matrix.symfony }}'"/' composer.json;
+            - run: composer config --global --no-plugins allow-plugins.symfony/flex true && composer global require symfony/flex
               if: matrix.symfony
-            - run: composer config minimum-stability dev && composer config prefer-stable true
+            - run: echo 'SYMFONY_REQUIRE=${{ matrix.symfony }}' >> "$GITHUB_ENV"
+              if: matrix.symfony
+            - run: composer config minimum-stability dev
               if: matrix.dev
             - run: composer update --no-interaction --no-progress --ansi ${{ matrix.composer_option }}
             - run: vendor/bin/phpunit

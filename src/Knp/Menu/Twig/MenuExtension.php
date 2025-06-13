@@ -89,9 +89,8 @@ class MenuExtension extends AbstractExtension
 
     /**
      * @param string|ItemInterface|array<ItemInterface|string> $menu
-     * @param string|array<string|null>|null                   $subItem
      *
-     * @phpstan-param string|ItemInterface|array<int|string, string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface>|\Traversable<string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface> $subItem
+     * @phpstan-param string|array<int|string, string|int|float|null|array{label: string, uri: string|null, item: ItemInterface|null}|ItemInterface> $subItem
      *
      * @return array<int, array<string, mixed>>
      * @phpstan-return list<array{label: string, uri: string|null, item: ItemInterface|null}>

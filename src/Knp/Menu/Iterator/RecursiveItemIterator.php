@@ -2,17 +2,21 @@
 
 namespace Knp\Menu\Iterator;
 
+use Knp\Menu\ItemInterface;
+
 /**
  * Recursive iterator iterating on an item
  *
- * @extends \IteratorIterator<string, \Knp\Menu\ItemInterface, \Traversable<string, \Knp\Menu\ItemInterface>>
+ * @template TKey
  *
- * @implements \RecursiveIterator<string, \Knp\Menu\ItemInterface>>
+ * @extends \IteratorIterator<TKey, ItemInterface, \Traversable<TKey, ItemInterface>>
+ *
+ * @implements \RecursiveIterator<TKey, ItemInterface>
  */
 class RecursiveItemIterator extends \IteratorIterator implements \RecursiveIterator
 {
     /**
-     * @param \Traversable<string, \Knp\Menu\ItemInterface> $iterator
+     * @param \Traversable<TKey, ItemInterface> $iterator
      */
     final public function __construct(\Traversable $iterator)
     {
@@ -25,7 +29,7 @@ class RecursiveItemIterator extends \IteratorIterator implements \RecursiveItera
     }
 
     /**
-     * @return RecursiveItemIterator
+     * @return RecursiveItemIterator<TKey>
      */
     #[\ReturnTypeWillChange]
     public function getChildren()

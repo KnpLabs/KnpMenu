@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Voter based on the route
+ *
+ * @final since 3.8.0
  */
 class RouteVoter implements VoterInterface
 {

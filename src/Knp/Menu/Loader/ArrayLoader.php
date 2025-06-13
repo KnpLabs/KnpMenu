@@ -9,6 +9,8 @@ use Knp\Menu\ItemInterface;
  * Loader importing a menu tree from an array.
  *
  * The array should match the output of MenuManipulator::toArray
+ *
+ * @final since 3.8.0
  */
 class ArrayLoader implements LoaderInterface
 {

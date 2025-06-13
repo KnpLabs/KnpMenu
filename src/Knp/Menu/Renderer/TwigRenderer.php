@@ -6,6 +6,9 @@ use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\MatcherInterface;
 use Twig\Environment;
 
+/**
+ * @final since 3.8.0
+ */
 class TwigRenderer implements RendererInterface
 {
     /**

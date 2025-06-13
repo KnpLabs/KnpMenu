@@ -7,6 +7,8 @@ use Knp\Menu\Matcher\Voter\VoterInterface;
 
 /**
  * A MatcherInterface implementation using a voter system
+ *
+ * @final since 3.8.0
  */
 class Matcher implements MatcherInterface
 {

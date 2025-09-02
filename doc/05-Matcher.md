@@ -46,7 +46,7 @@ class MyAwesomeVoter implements VoterInterface
 }
 ```
 
-Note: You can also write your own *matcher* that implements the `MatcherInterface`
-if you need something different than the voter approach.
+Note: You can also write your own *matcher* that implements the `MatcherInterface`,
+if you need something different from the voter approach.
 
 If you use the [KnpMenuBundle](https://symfony.com/bundles/KnpMenuBundle/current/index.html), the RouteVoter is automatically loaded.

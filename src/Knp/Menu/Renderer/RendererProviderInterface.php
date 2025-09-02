@@ -9,7 +9,7 @@ interface RendererProviderInterface
      *
      * If null is given, a renderer marked as default is returned.
      *
-     * @throws \InvalidArgumentException if the renderer does not exists
+     * @throws \InvalidArgumentException if the renderer does not exist
      */
     public function get(?string $name = null): RendererInterface;
 

@@ -139,7 +139,7 @@ foreach ($iterator as $item) {
 ## Filtering only displayed items
 
 The `Knp\Menu\Iterator\DisplayedItemFilterIterator` allows you to filter
-items to keep only displayed ones. As hiding an item also hides its children,
+items to keep only the displayed ones. As hiding an item also hides its children,
 this filter is a recursive filter iterator and is applied on the recursive
 iterator, not on the flattened iterator.
 

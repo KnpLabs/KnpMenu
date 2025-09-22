@@ -2,7 +2,7 @@
 
 Let's face it, creating menus sucks. Menus - a common aspect of any
 site - can range from being simple and mundane to giant monsters that
-become a headache to code and maintain.
+becomes a headache to code and maintain.
 
 This bundle solves the issue by giving you a small, yet powerful and flexible
 framework for handling your menus. While most of the examples shown here
@@ -13,7 +13,7 @@ are simple, the menus can grow arbitrarily large and deep.
 The menu framework centers around one main interface: `Knp\Menu\ItemInterface`.
 Items are created by a factory implementing `Knp\Menu\FactoryInterface`.
 It's best to think of each `ItemInterface` object as an `<li>` tag that can
-hold children objects (`<li>` tags that are wrapped in a `<ul>` tag).
+hold child objects (`<li>` tags that are wrapped in a `<ul>` tag).
 For example:
 
 ```php
@@ -53,13 +53,13 @@ The above would render the following html code:
 >The menu framework automatically adds `first` and `last` classes to each
 >`<li>` tag at each level for easy styling. Notice also that a `current`
 >class is added to the "current" menu item by URI and `current_ancestor`
->to its ancestors (the classes are configurable) The above example assumes
+>to its ancestors (the classes are configurable). The above example assumes
 >the menu is being rendered on the `/comments` page, making the Comments
 >menu the "current" item.
 
 When the menu is rendered, it's actually spaced correctly so that it appears
 as shown in the source HTML. This is to allow for easier debugging and can
-be turned off by passing the `true` as the second argument to the renderer.
+be turned off by passing `true` as the second argument to the renderer.
 
 ```php
 <?php

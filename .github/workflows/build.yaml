@@ -9,7 +9,7 @@ jobs:
         runs-on: ubuntu-24.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
             - name: Validate composer.json
@@ -19,7 +19,7 @@ jobs:
         name: PHP-CS-Fixer
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
             - name: Fix CS
               uses: docker://oskarstark/php-cs-fixer-ga
     twig-cs-fixer:
@@ -27,7 +27,7 @@ jobs:
         name: Twig-CS-Fixer
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
             - name: Require the vendor
               run: composer require --dev --no-update vincentlanglet/twig-cs-fixer ^3.5
             - name: Update
@@ -52,6 +52,9 @@ jobs:
                     - description: 'No Symfony specified'
                       php: '8.4'
                       max_deprecations: 0
+                    - description: 'No Symfony specified'
+                      php: '8.5'
+                      max_deprecations: 0
                     - description: 'Lowest deps'
                       php: '8.1'
                       composer_option: '--prefer-lowest'
@@ -61,13 +64,13 @@ jobs:
                       symfony: 6.4.*
                       max_deprecations: 0
                     - description: 'Dev deps'
-                      php: '8.4'
+                      php: '8.5'
                       dev: true
                       max_deprecations: 0
         name: PHP ${{ matrix.php }} tests (${{ matrix.description }})
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
             - name: Cache
               uses: actions/cache@v4
               with:
@@ -92,7 +95,7 @@ jobs:
         name: PHPStan
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:

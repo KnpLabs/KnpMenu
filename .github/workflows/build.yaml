@@ -64,7 +64,7 @@ jobs:
                       symfony: 6.4.*
                       max_deprecations: 0
                     - description: 'Dev deps'
-                      php: '8.5'
+                      php: '8.4'
                       dev: true
                       max_deprecations: 0
         name: PHP ${{ matrix.php }} tests (${{ matrix.description }})

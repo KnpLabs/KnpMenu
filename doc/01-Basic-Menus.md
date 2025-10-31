@@ -2,7 +2,7 @@
 
 Let's face it, creating menus sucks. Menus - a common aspect of any
 site - can range from being simple and mundane to giant monsters that
-becomes a headache to code and maintain.
+become a headache to code and maintain.
 
 This bundle solves the issue by giving you a small, yet powerful and flexible
 framework for handling your menus. While most of the examples shown here

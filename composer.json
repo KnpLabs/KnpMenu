@@ -30,9 +30,9 @@
         "phpstan/phpstan": "^2.1",
         "phpunit/phpunit": "^9.6",
         "psr/container": "^1.0 || ^2.0",
-        "symfony/http-foundation": "^5.4 || ^6.0 || ^7.0",
-        "symfony/phpunit-bridge": "^7.0",
-        "symfony/routing": "^5.4 || ^6.0 || ^7.0",
+        "symfony/http-foundation": "^5.4 || ^6.0 || ^7.0 || ^8.0",
+        "symfony/phpunit-bridge": "^7.0 || ^8.0",
+        "symfony/routing": "^5.4 || ^6.0 || ^7.0 || ^8.0",
         "twig/twig": "^2.16 || ^3.0"
     },
     "suggest": {

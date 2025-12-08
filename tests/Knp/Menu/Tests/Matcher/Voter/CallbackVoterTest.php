@@ -53,7 +53,7 @@ final class CallbackVoterTest extends TestCase
     }
 
     /**
-     * @return iterable<string, array{callable(): ?bool, ?bool}>
+     * @return iterable<string, array{callable(): bool|null, bool|null}>
      */
     public static function provideData(): iterable
     {

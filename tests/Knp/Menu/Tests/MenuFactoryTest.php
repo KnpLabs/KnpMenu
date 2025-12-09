@@ -15,6 +15,10 @@ final class MenuFactoryTest extends TestCase
 
         $extension1 = $this->getMockBuilder(ExtensionInterface::class)->getMock();
         $extension1->expects($this->once())
+            ->method('buildOptions')
+            ->with(['uri' => 'foobar'])
+            ->willReturnArgument(0);
+        $extension1->expects($this->once())
             ->method('buildItem')
             ->with($this->isInstanceOf(ItemInterface::class), $this->containsEqual('foobar'));
 
@@ -24,8 +28,8 @@ final class MenuFactoryTest extends TestCase
         $extension2->expects($this->once())
             ->method('buildOptions')
             ->with(['foo' => 'baz'])
-            ->willReturn(['foo' => 'bar']);
-        $extension1->expects($this->once())
+            ->willReturn(['uri' => 'foobar']);
+        $extension2->expects($this->once())
             ->method('buildItem')
             ->with($this->isInstanceOf(ItemInterface::class), $this->containsEqual('foobar'));
 

@@ -18,6 +18,7 @@ final class ArrayAccessProviderTest extends TestCase
 
     public function testGetExistentRenderer(): void
     {
+        /** @var \ArrayObject<string, mixed> $registry */
         $registry = new \ArrayObject();
         $renderer = $this->getMockBuilder(RendererInterface::class)->getMock();
         $registry['renderer'] = $renderer;
@@ -27,6 +28,7 @@ final class ArrayAccessProviderTest extends TestCase
 
     public function testGetDefaultRenderer(): void
     {
+        /** @var \ArrayObject<string, mixed> $registry */
         $registry = new \ArrayObject();
         $renderer = $this->getMockBuilder(RendererInterface::class)->getMock();
         $registry['renderer'] = $renderer;

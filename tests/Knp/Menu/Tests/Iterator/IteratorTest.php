@@ -10,8 +10,10 @@ final class IteratorTest extends MenuTestCase
 {
     public function testIterator(): void
     {
+        $pt1 = $this->pt1;
+        $this->assertNotNull($pt1);
         $count = 0;
-        foreach ($this->pt1->getChildren() as $key => $value) {
+        foreach ($pt1->getChildren() as $key => $value) {
             ++$count;
             $this->assertEquals('Child '.$count, $key);
             $this->assertEquals('Child '.$count, $value->getLabel());
@@ -28,10 +30,12 @@ final class IteratorTest extends MenuTestCase
         $child->expects($this->any())
             ->method('getIterator')
             ->willReturn(new \EmptyIterator());
-        $this->menu->addChild($child);
+        $menu = $this->menu;
+        $this->assertNotNull($menu);
+        $menu->addChild($child);
 
         $names = [];
-        foreach (new \RecursiveIteratorIterator(new RecursiveItemIterator($this->menu), \RecursiveIteratorIterator::SELF_FIRST) as $value) {
+        foreach (new \RecursiveIteratorIterator(new RecursiveItemIterator($menu), \RecursiveIteratorIterator::SELF_FIRST) as $value) {
             $names[] = $value->getName();
         }
 
@@ -40,8 +44,10 @@ final class IteratorTest extends MenuTestCase
 
     public function testRecursiveIteratorLeavesOnly(): void
     {
+        $menu = $this->menu;
+        $this->assertNotNull($menu);
         $names = [];
-        foreach (new \RecursiveIteratorIterator(new RecursiveItemIterator($this->menu), \RecursiveIteratorIterator::LEAVES_ONLY) as $value) {
+        foreach (new \RecursiveIteratorIterator(new RecursiveItemIterator($menu), \RecursiveIteratorIterator::LEAVES_ONLY) as $value) {
             $names[] = $value->getName();
         }
 
@@ -50,8 +56,10 @@ final class IteratorTest extends MenuTestCase
 
     public function testFullTreeIterator(): void
     {
+        $menu = $this->menu;
+        $this->assertNotNull($menu);
         $fullTreeIterator = new \RecursiveIteratorIterator(
-            new RecursiveItemIterator(new \ArrayIterator([$this->menu])), // recursive iterator containing the root item
+            new RecursiveItemIterator(new \ArrayIterator([$menu])), // recursive iterator containing the root item
             \RecursiveIteratorIterator::SELF_FIRST
         );
 

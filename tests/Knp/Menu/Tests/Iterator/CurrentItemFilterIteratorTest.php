@@ -11,13 +11,21 @@ final class CurrentItemFilterIteratorTest extends MenuTestCase
 {
     public function testSimpleFiltering(): void
     {
-        $this->pt1->setCurrent(true);
-        $this->ch2->setCurrent(true);
-        $this->gc1->setCurrent(true);
+        $pt1 = $this->pt1;
+        $this->assertNotNull($pt1);
+        $ch2 = $this->ch2;
+        $this->assertNotNull($ch2);
+        $gc1 = $this->gc1;
+        $this->assertNotNull($gc1);
+        $menu = $this->menu;
+        $this->assertNotNull($menu);
+        $pt1->setCurrent(true);
+        $ch2->setCurrent(true);
+        $gc1->setCurrent(true);
 
         $names = [];
         // FilterIterator expects an Iterator implementation explicitly, not an IteratorAggregate.
-        $iterator = new CurrentItemFilterIterator(new \ArrayIterator($this->menu->getChildren()), new Matcher());
+        $iterator = new CurrentItemFilterIterator(new \ArrayIterator($menu->getChildren()), new Matcher());
 
         foreach ($iterator as $value) {
             $names[] = $value->getName();
@@ -28,13 +36,21 @@ final class CurrentItemFilterIteratorTest extends MenuTestCase
 
     public function testFiltering(): void
     {
-        $this->pt1->setCurrent(true);
-        $this->ch2->setCurrent(true);
-        $this->gc1->setCurrent(true);
+        $pt1 = $this->pt1;
+        $this->assertNotNull($pt1);
+        $ch2 = $this->ch2;
+        $this->assertNotNull($ch2);
+        $gc1 = $this->gc1;
+        $this->assertNotNull($gc1);
+        $menu = $this->menu;
+        $this->assertNotNull($menu);
+        $pt1->setCurrent(true);
+        $ch2->setCurrent(true);
+        $gc1->setCurrent(true);
 
         $names = [];
         $iterator = new CurrentItemFilterIterator(
-            new \RecursiveIteratorIterator(new RecursiveItemIterator($this->menu), \RecursiveIteratorIterator::SELF_FIRST),
+            new \RecursiveIteratorIterator(new RecursiveItemIterator($menu), \RecursiveIteratorIterator::SELF_FIRST),
             new Matcher()
         );
 

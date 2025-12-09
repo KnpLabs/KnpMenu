@@ -9,7 +9,7 @@ jobs:
         runs-on: ubuntu-24.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v5
+              uses: actions/checkout@v6
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
             - name: Validate composer.json
@@ -19,7 +19,7 @@ jobs:
         name: PHP-CS-Fixer
         steps:
             - name: Checkout
-              uses: actions/checkout@v5
+              uses: actions/checkout@v6
             - name: Fix CS
               uses: docker://oskarstark/php-cs-fixer-ga
     twig-cs-fixer:
@@ -27,7 +27,7 @@ jobs:
         name: Twig-CS-Fixer
         steps:
             - name: Checkout
-              uses: actions/checkout@v5
+              uses: actions/checkout@v6
             - name: Require the vendor
               run: composer require --dev --no-update vincentlanglet/twig-cs-fixer ^3.5
             - name: Update
@@ -70,7 +70,7 @@ jobs:
         name: PHP ${{ matrix.php }} tests (${{ matrix.description }})
         steps:
             - name: Checkout
-              uses: actions/checkout@v5
+              uses: actions/checkout@v6
             - name: Cache
               uses: actions/cache@v4
               with:
@@ -95,7 +95,7 @@ jobs:
         name: PHPStan
         steps:
             - name: Checkout
-              uses: actions/checkout@v5
+              uses: actions/checkout@v6
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:

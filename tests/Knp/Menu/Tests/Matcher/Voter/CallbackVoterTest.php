@@ -57,8 +57,8 @@ final class CallbackVoterTest extends TestCase
      */
     public static function provideData(): iterable
     {
-        yield 'matching' => [static fn() => true, true];
-        yield 'not matching' => [static fn() => false, false];
-        yield 'skipping' => [static fn() => null, null];
+        yield 'matching' => [static fn (): bool => true, true];
+        yield 'not matching' => [static fn (): bool => false, false];
+        yield 'skipping' => [static fn (): ?bool => null, null];
     }
 }

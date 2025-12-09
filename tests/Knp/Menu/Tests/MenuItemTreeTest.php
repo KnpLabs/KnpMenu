@@ -3,6 +3,7 @@
 namespace Knp\Menu\Tests;
 
 use Knp\Menu\FactoryInterface;
+use Knp\Menu\ItemInterface;
 use Knp\Menu\MenuItem;
 
 final class TestMenuItem extends MenuItem
@@ -165,13 +166,17 @@ final class MenuItemTreeTest extends MenuTestCase
     {
         $menu = $this->menu;
         $menu->addChild('Child Menu');
-        $this->assertEquals('Child Menu', $menu->getChildren()['Child Menu']->getName());
+        $childMenu = $menu['Child Menu'];
+        /** @var ItemInterface $childMenu */
+        $this->assertEquals('Child Menu', $childMenu->getName());
         $this->assertNull($menu->getChild('Fake'));
 
         $menu->addChild('New Child', ['label' => 'New Label']);
-        $this->assertEquals(MenuItem::class, \get_class($menu->getChildren()['New Child']));
-        $this->assertEquals('New Child', $menu->getChildren()['New Child']->getName());
-        $this->assertEquals('New Label', $menu->getChildren()['New Child']->getLabel());
+        $newChild = $menu['New Child'];
+        /** @var ItemInterface $newChild */
+        $this->assertEquals(MenuItem::class, \get_class($newChild));
+        $this->assertEquals('New Child', $newChild->getName());
+        $this->assertEquals('New Label', $newChild->getLabel());
 
         unset($menu['New Child']);
         $this->assertNull($menu['New Child']);

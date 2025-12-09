@@ -85,7 +85,7 @@ jobs:
               if: matrix.symfony
             - run: |
                   sed -i 's/"symfony\/deprecation-contracts": "^2.4"/"symfony\/deprecation-contracts": "^3.1"/' composer.json
-              if: startsWith(matrix.symfony, '6')
+              if: matrix.symfony == '6.4.*'
             - run: composer config --global --no-plugins allow-plugins.symfony/flex true && composer global require symfony/flex
               if: matrix.symfony
             - run: echo 'SYMFONY_REQUIRE=${{ matrix.symfony }}' >> "$GITHUB_ENV"

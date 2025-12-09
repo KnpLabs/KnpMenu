@@ -182,9 +182,8 @@ final class MenuItemTreeTest extends MenuTestCase
 
     public function testGetChildren(): void
     {
-        $children = $this->ch4->getChildren();
-        $this->assertCount(1, $children);
-        $this->assertEquals($this->gc1->getName(), $children['Grandchild 1']->getName());
+        $this->assertCount(1, $this->ch4->getChildren());
+        $this->assertSame($this->gc1, $this->ch4['Grandchild 1']);
     }
 
     public function testGetFirstChild(): void
@@ -233,8 +232,8 @@ final class MenuItemTreeTest extends MenuTestCase
 
     public function testGetChild(): void
     {
-        $this->assertSame($this->gc1, $this->ch4->getChild('Grandchild 1'));
-        $this->assertNull($this->ch4->getChild('nonexistentchild'));
+        $this->assertSame($this->gc1, $this->ch4['Grandchild 1']);
+        $this->assertNull($this->ch4['nonexistentchild']);
     }
 
     public function testRemoveChild(): void
@@ -274,9 +273,9 @@ final class MenuItemTreeTest extends MenuTestCase
         $pt1 = $this->pt1;
         $menu = $this->menu;
         $pt1->setName('Temp name');
-        $this->assertSame($pt1, $menu->getChild('Temp name'));
+        $this->assertSame($pt1, $menu['Temp name']);
         $this->assertEquals(['Temp name', 'Parent 2'], \array_keys($menu->getChildren()));
-        $this->assertNull($menu->getChild('Parent 1'));
+        $this->assertNull($menu['Parent 1']);
     }
 
     public function testRenameToExistingSiblingNameThrowAnException(): void
@@ -290,7 +289,9 @@ final class MenuItemTreeTest extends MenuTestCase
     {
         $this->addChildWithExternalUrl();
         $this->assertNull($this->pt1->getUri());
-        $this->assertEquals('http://www.symfony-reloaded.org', $this->menu->getChildren()['child']->getUri());
+        $child = $this->menu['child'];
+        /** @var ItemInterface $child */
+        $this->assertEquals('http://www.symfony-reloaded.org', $child->getUri());
     }
 
     protected function addChildWithExternalUrl(): void

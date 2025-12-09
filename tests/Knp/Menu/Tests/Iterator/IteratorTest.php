@@ -10,9 +10,8 @@ final class IteratorTest extends MenuTestCase
 {
     public function testIterator(): void
     {
-        $pt1 = $this->pt1;
         $count = 0;
-        foreach ($pt1->getChildren() as $key => $value) {
+        foreach ($this->pt1 as $key => $value) {
             ++$count;
             $this->assertEquals('Child '.$count, $key);
             $this->assertEquals('Child '.$count, $value->getLabel());
@@ -42,9 +41,8 @@ final class IteratorTest extends MenuTestCase
 
     public function testRecursiveIteratorLeavesOnly(): void
     {
-        $menu = $this->menu;
         $names = [];
-        foreach (new \RecursiveIteratorIterator(new RecursiveItemIterator($menu), \RecursiveIteratorIterator::LEAVES_ONLY) as $value) {
+        foreach (new \RecursiveIteratorIterator(new RecursiveItemIterator($this->menu), \RecursiveIteratorIterator::LEAVES_ONLY) as $value) {
             $names[] = $value->getName();
         }
 

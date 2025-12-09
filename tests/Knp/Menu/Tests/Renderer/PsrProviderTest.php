@@ -11,12 +11,16 @@ final class PsrProviderTest extends TestCase
 {
     public function testHas(): void
     {
-        $container = $this->prophesize(ContainerInterface::class);
-        $container->has('first')->willReturn(true);
-        $container->has('second')->willReturn(true);
-        $container->has('third')->willReturn(false);
+        $container = $this->createStub(ContainerInterface::class);
+        $container
+            ->method('has')
+            ->willReturnMap([
+                ['first', true],
+                ['second', true],
+                ['third', false],
+            ]);
 
-        $provider = new PsrProvider($container->reveal(), 'first');
+        $provider = new PsrProvider($container, 'first');
         $this->assertTrue($provider->has('first'));
         $this->assertTrue($provider->has('second'));
         $this->assertFalse($provider->has('third'));
@@ -24,36 +28,52 @@ final class PsrProviderTest extends TestCase
 
     public function testGetExistentRenderer(): void
     {
-        $renderer = $this->prophesize(RendererInterface::class);
+        $renderer = $this->createStub(RendererInterface::class);
 
-        $container = $this->prophesize(ContainerInterface::class);
-        $container->has('renderer')->willReturn(true);
-        $container->get('renderer')->willReturn($renderer);
+        $container = $this->createMock(ContainerInterface::class);
+        $container
+            ->method('has')
+            ->with('renderer')
+            ->willReturn(true);
+        $container
+            ->method('get')
+            ->with('renderer')
+            ->willReturn($renderer);
 
-        $provider = new PsrProvider($container->reveal(), 'default');
-        $this->assertSame($renderer->reveal(), $provider->get('renderer'));
+        $provider = new PsrProvider($container, 'default');
+        $this->assertSame($renderer, $provider->get('renderer'));
     }
 
     public function testGetDefaultRenderer(): void
     {
-        $renderer = $this->prophesize(RendererInterface::class);
+        $renderer = $this->createStub(RendererInterface::class);
 
-        $container = $this->prophesize(ContainerInterface::class);
-        $container->has('default')->willReturn(true);
-        $container->get('default')->willReturn($renderer);
+        $container = $this->createMock(ContainerInterface::class);
+        $container
+            ->method('has')
+            ->with('default')
+            ->willReturn(true);
+        $container
+            ->method('get')
+            ->with('default')
+            ->willReturn($renderer);
 
-        $provider = new PsrProvider($container->reveal(), 'default');
-        $this->assertSame($renderer->reveal(), $provider->get());
+        $provider = new PsrProvider($container, 'default');
+        $this->assertSame($renderer, $provider->get());
     }
 
     public function testGetNonExistentRenderer(): void
     {
+        $container = $this->createMock(ContainerInterface::class);
+        $container
+            ->method('has')
+            ->with('non-existent')
+            ->willReturn(false);
+
+        $provider = new PsrProvider($container, 'default');
+
         $this->expectException(\InvalidArgumentException::class);
 
-        $container = $this->prophesize(ContainerInterface::class);
-        $container->has('non-existent')->willReturn(false);
-
-        $provider = new PsrProvider($container->reveal(), 'default');
         $provider->get('non-existent');
     }
 }

@@ -6,17 +6,13 @@ use Knp\Menu\ItemInterface;
 
 /**
  * Voter based on the uri
+ *
+ * @final since 3.8.0
  */
 class UriVoter implements VoterInterface
 {
-    /**
-     * @var string|null
-     */
-    private $uri;
-
-    public function __construct(?string $uri = null)
+    public function __construct(private ?string $uri = null)
     {
-        $this->uri = $uri;
     }
 
     public function matchItem(ItemInterface $item): ?bool

@@ -9,45 +9,21 @@ use PHPUnit\Framework\TestCase;
 
 abstract class MenuTestCase extends TestCase
 {
-    /**
-     * @var ItemInterface|null
-     */
-    protected $menu;
+    protected ItemInterface|null $menu;
 
-    /**
-     * @var ItemInterface|null
-     */
-    protected $pt1;
+    protected ItemInterface|null $pt1;
 
-    /**
-     * @var ItemInterface|null
-     */
-    protected $ch1;
+    protected ItemInterface|null $ch1;
 
-    /**
-     * @var ItemInterface|null
-     */
-    protected $ch2;
+    protected ItemInterface|null $ch2;
 
-    /**
-     * @var ItemInterface|null
-     */
-    protected $ch3;
+    protected ItemInterface|null $ch3;
 
-    /**
-     * @var ItemInterface|null
-     */
-    protected $pt2;
+    protected ItemInterface|null $pt2;
 
-    /**
-     * @var ItemInterface|null
-     */
-    protected $ch4;
+    protected ItemInterface|null $ch4;
 
-    /**
-     * @var ItemInterface|null
-     */
-    protected $gc1;
+    protected ItemInterface|null $gc1;
 
     protected function setUp(): void
     {

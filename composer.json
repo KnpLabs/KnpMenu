@@ -20,19 +20,21 @@
         }
     ],
     "require": {
-        "php": "^7.3 || ^8.0",
+        "php": "^8.1",
         "symfony/deprecation-contracts": "^2.4"
     },
     "conflict": {
-        "twig/twig": "<1.40 || >=2,<2.9"
+        "symfony/http-foundation": "<5.4",
+        "twig/twig": "<2.16"
     },
     "require-dev": {
-        "phpspec/prophecy": "^1.13",
-        "psr/container": "^1.0",
-        "symfony/http-foundation": "^4.4 || ^5.0",
-        "symfony/phpunit-bridge": "^5.3",
-        "symfony/routing": "^4.4 || ^5.0",
-        "twig/twig": "^1.40 || ^2.9 || ^3.0"
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^9.6",
+        "psr/container": "^1.0 || ^2.0",
+        "symfony/http-foundation": "^5.4 || ^6.0 || ^7.0 || ^8.0",
+        "symfony/phpunit-bridge": "^7.0 || ^8.0",
+        "symfony/routing": "^5.4 || ^6.0 || ^7.0 || ^8.0",
+        "twig/twig": "^2.16 || ^3.0"
     },
     "suggest": {
         "twig/twig": "for the TwigRenderer and the integration with your templates"
@@ -45,9 +47,12 @@
             "Knp\\Menu\\Tests\\": "tests/Knp/Menu/Tests"
         }
     },
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.3-dev"
+            "dev-master": "3.x-dev"
         }
     }
 }

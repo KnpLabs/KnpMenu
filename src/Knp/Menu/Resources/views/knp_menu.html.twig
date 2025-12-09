@@ -9,7 +9,7 @@
 {% endmacro %}
 
 {% block compressed_root %}
-{% apply spaceless %}
+{% apply knp_menu_spaceless %}
 {{ block('root') }}
 {% endapply %}
 {% endblock %}
@@ -34,11 +34,11 @@
 {% set currentItem = item %}
 {# update the depth for children #}
 {% if options.depth is not none %}
-{% set options = options|merge({'depth': currentOptions.depth - 1}) %}
+{% set options = options|merge({depth: currentOptions.depth - 1}) %}
 {% endif %}
 {# update the matchingDepth for children #}
 {% if options.matchingDepth is not none and options.matchingDepth > 0 %}
-{% set options = options|merge({'matchingDepth': currentOptions.matchingDepth - 1}) %}
+{% set options = options|merge({matchingDepth: currentOptions.matchingDepth - 1}) %}
 {% endif %}
 {% for item in currentItem.children %}
     {{ block('item') }}
@@ -79,7 +79,7 @@
 
     {%- set attributes = item.attributes %}
     {%- if classes is not empty %}
-        {%- set attributes = attributes|merge({'class': classes|join(' ')}) %}
+        {%- set attributes = attributes|merge({class: classes|join(' ')}) %}
     {%- endif %}
 {# displaying the item #}
     {% import _self as knp_menu %}
@@ -89,10 +89,10 @@
         {%- else %}
         {{ block('spanElement') }}
         {%- endif %}
-{# render the list of children#}
+{# render the list of children #}
         {%- set childrenClasses = item.childrenAttribute('class') is not empty ? [item.childrenAttribute('class')] : [] %}
         {%- set childrenClasses = childrenClasses|merge(['menu_level_' ~ item.level]) %}
-        {%- set listAttributes = item.childrenAttributes|merge({'class': childrenClasses|join(' ') }) %}
+        {%- set listAttributes = item.childrenAttributes|merge({class: childrenClasses|join(' ')}) %}
         {{ block('list') }}
     </li>
 {% endif %}

@@ -84,11 +84,9 @@ final class ArrayLoaderTest extends TestCase
     }
 
     /**
-     * @param mixed $data
-     *
      * @dataProvider provideSupportingData
      */
-    public function testSupports($data, bool $expected): void
+    public function testSupports(mixed $data, bool $expected): void
     {
         $loader = new ArrayLoader(new MenuFactory());
 
@@ -98,7 +96,7 @@ final class ArrayLoaderTest extends TestCase
     /**
      * @return array<int, array<int, mixed>>
      */
-    public function provideSupportingData(): array
+    public static function provideSupportingData(): array
     {
         return [
             [[], true],

@@ -8,17 +8,13 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Factory able to use the Symfony Routing component to build the url
+ *
+ * @final since 3.8.0
  */
 class RoutingExtension implements ExtensionInterface
 {
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $generator;
-
-    public function __construct(UrlGeneratorInterface $generator)
+    public function __construct(private UrlGeneratorInterface $generator)
     {
-        $this->generator = $generator;
     }
 
     public function buildOptions(array $options = []): array

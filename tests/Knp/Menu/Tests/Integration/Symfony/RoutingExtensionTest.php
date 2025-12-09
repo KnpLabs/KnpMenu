@@ -1,6 +1,6 @@
 <?php
 
-namespace Knp\Menu\Tests\Silex;
+namespace Knp\Menu\Tests\Integration\Symfony;
 
 use Knp\Menu\Integration\Symfony\RoutingExtension;
 use PHPUnit\Framework\TestCase;

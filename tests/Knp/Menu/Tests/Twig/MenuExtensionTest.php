@@ -6,10 +6,13 @@ use Knp\Menu\ItemInterface;
 use Knp\Menu\Matcher\MatcherInterface;
 use Knp\Menu\Twig\Helper;
 use Knp\Menu\Twig\MenuExtension;
+use Knp\Menu\Twig\MenuRuntimeExtension;
 use Knp\Menu\Util\MenuManipulator;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
+use Twig\RuntimeLoader\FactoryRuntimeLoader;
 use Twig\TemplateWrapper;
 use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 
@@ -180,12 +183,18 @@ final class MenuExtensionTest extends TestCase
         $this->assertEquals('current', $this->getTemplate('{{ knp_menu_get_current_item("default") is knp_menu_current ? "current" : "not current" }}', $helper, $matcher)->render([]));
     }
 
+    public function testLastModified(): void
+    {
+        $this->assertSame(max(
+            filemtime((new \ReflectionClass(MenuExtension::class))->getFileName()),
+            filemtime((new \ReflectionClass(MenuRuntimeExtension::class))->getFileName()),
+        ), (new MenuExtension())->getLastModified());
+    }
+
     /**
      * @param array<string> $methods
-     *
-     * @return Helper|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getHelperMock(array $methods)
+    private function getHelperMock(array $methods): MockObject|Helper
     {
         return $this->getMockBuilder(Helper::class)
             ->disableOriginalConstructor()
@@ -196,10 +205,8 @@ final class MenuExtensionTest extends TestCase
 
     /**
      * @param array<string> $methods
-     *
-     * @return MenuManipulator|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getManipulatorMock(array $methods)
+    private function getManipulatorMock(array $methods): MenuManipulator|MockObject
     {
         return $this->getMockBuilder(MenuManipulator::class)
             ->disableOriginalConstructor()
@@ -208,10 +215,7 @@ final class MenuExtensionTest extends TestCase
         ;
     }
 
-    /**
-     * @return MatcherInterface|\PHPUnit\Framework\MockObject\MockObject
-     */
-    private function getMatcherMock()
+    private function getMatcherMock(): MockObject|MatcherInterface
     {
         return $this->getMockBuilder(MatcherInterface::class)->getMock();
     }
@@ -220,11 +224,18 @@ final class MenuExtensionTest extends TestCase
         string $template,
         Helper $helper,
         ?MatcherInterface $matcher = null,
-        ?MenuManipulator $menuManipulator = null
+        ?MenuManipulator $menuManipulator = null,
     ): TemplateWrapper {
         $loader = new ArrayLoader(['index' => $template]);
         $twig = new Environment($loader, ['debug' => true, 'cache' => false]);
-        $twig->addExtension(new MenuExtension($helper, $matcher, $menuManipulator));
+        $twig->addExtension(new MenuExtension());
+        $twig->addRuntimeLoader(new FactoryRuntimeLoader([
+            MenuRuntimeExtension::class => fn () => new MenuRuntimeExtension(
+                $helper,
+                $matcher,
+                $menuManipulator,
+            ),
+        ]));
 
         return $twig->load('index');
     }

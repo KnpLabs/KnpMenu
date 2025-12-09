@@ -4,34 +4,18 @@ namespace Knp\Menu\Renderer;
 
 /**
  * A renderer provider getting the renderers from a class implementing ArrayAccess.
+ *
+ * @final since 3.8.0
  */
 class ArrayAccessProvider implements RendererProviderInterface
 {
-    /**
-     * @var \ArrayAccess<string, RendererInterface>
-     */
-    private $registry;
-
-    /**
-     * @var array<string, string>
-     */
-    private $rendererIds;
-
-    /**
-     * @var string
-     */
-    private $defaultRenderer;
-
     /**
      * @param \ArrayAccess<string, RendererInterface> $registry
      * @param string                                  $defaultRenderer The name of the renderer used by default
      * @param array<string, string>                   $rendererIds     The map between renderer names and registry keys
      */
-    public function __construct(\ArrayAccess $registry, string $defaultRenderer, array $rendererIds)
+    public function __construct(private \ArrayAccess $registry, private string $defaultRenderer, private array $rendererIds)
     {
-        $this->registry = $registry;
-        $this->rendererIds = $rendererIds;
-        $this->defaultRenderer = $defaultRenderer;
     }
 
     public function get(?string $name = null): RendererInterface

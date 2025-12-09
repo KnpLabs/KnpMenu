@@ -74,8 +74,8 @@ class MenuManipulator
      * Note: when using a child as limit, it will not be included in the returned menu.
      * the slice is done before this menu.
      *
-     * @param mixed                    $offset name of child, child object, or numeric offset
-     * @param string|int|ItemInterface $length name of child, child object, or numeric length
+     * @param mixed                         $offset name of child, child object, or numeric offset
+     * @param string|int|ItemInterface|null $length name of child, child object, or numeric length
      */
     public function slice(ItemInterface $item, $offset, $length = null): ItemInterface
     {
@@ -196,7 +196,7 @@ class MenuManipulator
      *
      * Each element in the array will be an array with 3 keys:
      * - `label` containing the label of the item
-     * - `url` containing the url of the item (may be `null`)
+     * - `uri` containing the url of the item (may be `null`)
      * - `item` containing the original item (may be `null` for the extra items)
      *
      * The subItem can be one of the following forms
@@ -206,8 +206,9 @@ class MenuManipulator
      *   * ['subItem1', 'subItem2']
      *   * [['label' => 'subItem1', 'url' => '@homepage'], ['label' => 'subItem2']]
      *
-     * @param string|ItemInterface|array<int|string, mixed>|\Traversable<mixed> $subItem A string or array to append onto the end of the array
-     * @phpstan-param string|ItemInterface|array<int|string, string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface>|\Traversable<string|int|float|null|array{label: string, url: string|null, item: ItemInterface|null}|ItemInterface> $subItem
+     * @param string|ItemInterface|array<int|string, mixed>|\Traversable<mixed>|null $subItem A string or array to append onto the end of the array
+     *
+     * @phpstan-param string|ItemInterface|array<int|string, string|int|float|null|array{label: string, uri: string|null, item: ItemInterface|null}|ItemInterface>|\Traversable<string|int|float|null|array{label: string, uri: string|null, item: ItemInterface|null}|ItemInterface>|null $subItem
      *
      * @return array<int, array<string, mixed>>
      * @phpstan-return list<array{label: string, uri: string|null, item: ItemInterface|null}>
@@ -244,7 +245,7 @@ class MenuManipulator
 
                 case \is_int($key) && \is_string($value):
                     $value = [
-                        'label' => (string) $value,
+                        'label' => $value,
                         'uri' => null,
                         'item' => null,
                     ];

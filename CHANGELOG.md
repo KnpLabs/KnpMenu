@@ -1,3 +1,16 @@
+## 3.5 (2024-03-23)
+
+* Added CallbackVoter
+* Removed support for unsupported PHP version 8.0
+
+## 3.4 (2023-05-17)
+
+* Removed support for unsupported PHP version 7.4
+
+## 3.3 (2021-10-28)
+
+* Added support for Symfony 6
+
 ## 3.2 (2021-05-28)
 
 * Remove Symfony 6 deprecations
@@ -42,7 +55,7 @@
 * Added 2 new tests to twig: `knp_menu_current`, `knp_menu_ancestor`
 * Made the templates compatible with Twig 2
 * Add menu and renderer providers supporting any ArrayAccess implementations. The
-  Pimple-based providers (supporting only Pimple 1) are dperecated in favor of these
+  Pimple-based providers (supporting only Pimple 1) are deprecated in favor of these
   new providers.
 
 ## 2.0.1 (2014-08-01)
@@ -61,7 +74,7 @@
 ## 2.0.0 alpha 2 (2014-05-01)
 
 * [BC break] Changed the TwigRenderer to accept a menu template only as a string
-* [BC break] Refactored the way of rendering twig templates. Every template should extends
+* [BC break] Refactored the way of rendering twig templates. Every template should extend
   the `knp_menu.html.twig` template.
 * Introduced extension points in the MenuFactory through `Knp\Menu\Factory\ExtensionInterface`
 * [BC break compared to 2.0 alpha 1] The inheritance extension points introduced in alpha1 are
@@ -99,7 +112,7 @@
     )
     ```
 
-    The old syntax is kept until the final release, but using it will trigger a E_USER_DEPRECATED error.
+    The old syntax is kept until the final release, but using it will trigger an E_USER_DEPRECATED error.
 
 ## 2.0.0 alpha 1 (2013-06-23)
 
@@ -151,7 +164,7 @@
 * Added a ChainProvider for the menus.
 * Added the Silex extension
 * Added a RouterAwareFactory
-* Added an helper to be able to reuse the logic more easily for other templating engines
+* Added a helper to be able to reuse the logic more easily for other templating engines
 * Added a way to retrieve an item using a path in a menu tree
 * Changed the toArray method to use a depth instead of simply using a boolean flag
 * Refactored the export to array and the creation from an array

@@ -1,5 +1,6 @@
 parameters:
-    level: max
+    level: 8
+    treatPhpDocTypesAsCertain: false
     paths:
         - src
 includes:

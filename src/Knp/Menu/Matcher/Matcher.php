@@ -7,26 +7,28 @@ use Knp\Menu\Matcher\Voter\VoterInterface;
 
 /**
  * A MatcherInterface implementation using a voter system
+ *
+ * @final since 3.8.0
  */
 class Matcher implements MatcherInterface
 {
     /**
-     * @var \SplObjectStorage<ItemInterface, bool>
+     * @var \WeakMap<ItemInterface, bool>
      */
-    private $cache;
+    private \WeakMap $cache;
 
     /**
-     * @var iterable|VoterInterface[]
+     * @var iterable<VoterInterface>
      */
-    private $voters;
+    private iterable $voters;
 
     /**
-     * @param VoterInterface[]|iterable $voters
+     * @param iterable<VoterInterface> $voters
      */
-    public function __construct($voters = [])
+    public function __construct(iterable $voters = [])
     {
         $this->voters = $voters;
-        $this->cache = new \SplObjectStorage();
+        $this->cache = new \WeakMap();
     }
 
     public function isCurrent(ItemInterface $item): bool
@@ -36,7 +38,7 @@ class Matcher implements MatcherInterface
             return $current;
         }
 
-        if ($this->cache->contains($item)) {
+        if ($this->cache->offsetExists($item)) {
             return $this->cache[$item];
         }
 
@@ -71,6 +73,6 @@ class Matcher implements MatcherInterface
 
     public function clear(): void
     {
-        $this->cache = new \SplObjectStorage();
+        $this->cache = new \WeakMap();
     }
 }

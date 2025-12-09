@@ -6,66 +6,101 @@ on:
 
 jobs:
     check:
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-24.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v6
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
             - name: Validate composer.json
               run: composer validate --strict --no-check-lock
     cs-fixer:
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-24.04
         name: PHP-CS-Fixer
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v6
             - name: Fix CS
               uses: docker://oskarstark/php-cs-fixer-ga
+    twig-cs-fixer:
+        runs-on: ubuntu-24.04
+        name: Twig-CS-Fixer
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v6
+            - name: Require the vendor
+              run: composer require --dev --no-update vincentlanglet/twig-cs-fixer ^3.5
+            - name: Update
+              run: composer update --no-interaction --no-progress
+            - name: Run
+              run: vendor/bin/twig-cs-fixer lint src/Knp/Menu/Resources/views
     tests:
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-24.04
         strategy:
             fail-fast: false
             matrix:
                 include:
                     - description: 'No Symfony specified'
-                      php: '7.3'
+                      php: '8.1'
+                      max_deprecations: 0
                     - description: 'No Symfony specified'
-                      php: '7.4'
+                      php: '8.2'
+                      max_deprecations: 0
                     - description: 'No Symfony specified'
-                      php: '8.0'
+                      php: '8.3'
+                      max_deprecations: 0
+                    - description: 'No Symfony specified'
+                      php: '8.4'
+                      max_deprecations: 0
+                    - description: 'No Symfony specified'
+                      php: '8.5'
+                      max_deprecations: 0
                     - description: 'Lowest deps'
-                      php: '7.3'
+                      php: '8.1'
                       composer_option: '--prefer-lowest'
-                      env:
-                          SYMFONY_DEPRECATIONS_HELPER: max[self]=0
-                    - description: 'Symfony 4.4'
-                      php: '7.4'
-                      symfony: 4.4.*
-                    - description: 'Symfony 5.3'
-                      php: '7.4'
-                      symfony: 5.3.*
+                      max_deprecations: 0
+                    - description: 'Symfony 6'
+                      php: '8.1'
+                      symfony: 6.4.*
+                      max_deprecations: 0
                     - description: 'Dev deps'
-                      php: '8.0'
+                      php: '8.4'
                       dev: true
+                      max_deprecations: 0
         name: PHP ${{ matrix.php }} tests (${{ matrix.description }})
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v6
             - name: Cache
-              uses: actions/cache@v2
-              with: 
+              uses: actions/cache@v4
+              with:
                   path: ~/.composer/cache/files
-                  key: composer-${{ matrix.php }}-${{ matrix.symfony }}-${{ matrix.composer_option }} 
+                  key: composer-${{ matrix.php }}-${{ matrix.symfony }}-${{ matrix.composer_option }}
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
             - run: |
                    sed -ri '/symfony\/deprecation-contracts/! s/"symfony\/(.+)": "(.+)"/"symfony\/\1": "'${{ matrix.symfony }}'"/' composer.json;
+            - run: composer config --global --no-plugins allow-plugins.symfony/flex true && composer global require symfony/flex
               if: matrix.symfony
-            - run: composer config minimum-stability dev && composer config prefer-stable true
+            - run: echo 'SYMFONY_REQUIRE=${{ matrix.symfony }}' >> "$GITHUB_ENV"
+              if: matrix.symfony
+            - run: composer config minimum-stability dev
               if: matrix.dev
             - run: composer update --no-interaction --no-progress --ansi ${{ matrix.composer_option }}
-            - run: vendor/bin/simple-phpunit
-
+            - run: vendor/bin/phpunit
+              env:
+                 SYMFONY_DEPRECATIONS_HELPER: max[self]=${{matrix.max_deprecations}}
+    phpstan:
+        runs-on: ubuntu-24.04
+        name: PHPStan
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v6
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.1'
+            - run: composer update --no-interaction --no-progress --ansi
+            - run: vendor/bin/phpstan analyze

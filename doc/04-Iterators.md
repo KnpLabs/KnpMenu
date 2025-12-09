@@ -1,5 +1,4 @@
-Iterating over Menus
-====================
+# Iterating over Menus
 
 The simplest way to iterate over your item object is to iterate over its
 direct children, thanks to the `IteratorAggregate` implementation. But the
@@ -18,8 +17,7 @@ D  E  F    G     H
 I          J
 ```
 
-Iterating recursively
----------------------
+## Iterating recursively
 
 The `Knp\Menu\Iterator\RecursiveItemIterator` allows you to iterate recursively
 over a tree of items. Using it is really easy: give it an item, and you will
@@ -48,7 +46,7 @@ B D I E F C G J H
 ```
 
 Changing the second argument to `\RecursiveIteratorIterator::CHILD_FIRST`
-allows you to visit children before their parent and will produce the following
+allows you to visit children before their parents and will produce the following
 order:
 
 ```
@@ -91,11 +89,10 @@ The output will now contain the root item:
 A B D I E F C G J H
 ```
 
-Filtering only current items
-----------------------------
+## Filtering only current items
 
 Getting the current items is easy with the `Knp\Menu\Iterator\CurrentItemFilterIterator`.
-It is a filter iterator applied on another iterator.
+It is a filter iterator applied to another iterator.
 
 ```php
 <?php
@@ -139,11 +136,10 @@ foreach ($iterator as $item) {
 }
 ```
 
-Filtering only displayed items
-------------------------------
+## Filtering only displayed items
 
 The `Knp\Menu\Iterator\DisplayedItemFilterIterator` allows you to filter
-items to keep only displayed ones. As hiding an item also hides its children,
+items to keep only the displayed ones. As hiding an item also hides its children,
 this filter is a recursive filter iterator and is applied on the recursive
 iterator, not on the flattened iterator.
 

@@ -4,10 +4,7 @@ namespace Knp\Menu\Renderer;
 
 abstract class Renderer
 {
-    /**
-     * @var string
-     */
-    protected $charset = 'UTF-8';
+    protected string $charset = 'UTF-8';
 
     public function __construct(?string $charset = null)
     {
@@ -17,7 +14,7 @@ abstract class Renderer
     }
 
     /**
-     * Renders a HTML attribute
+     * Renders an HTML attribute
      *
      * @param string|bool $value
      */

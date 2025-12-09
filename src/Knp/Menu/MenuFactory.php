@@ -7,18 +7,20 @@ use Knp\Menu\Factory\ExtensionInterface;
 
 /**
  * Factory to create a menu from a tree
+ *
+ * @final since 3.8.0
  */
 class MenuFactory implements FactoryInterface
 {
     /**
-     * @var array[]
+     * @var array<int, list<ExtensionInterface>>
      */
-    private $extensions = [];
+    private array $extensions = [];
 
     /**
      * @var ExtensionInterface[]|null
      */
-    private $sorted;
+    private ?array $sorted = null;
 
     public function __construct()
     {

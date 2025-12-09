@@ -154,7 +154,8 @@ final class MenuItemTreeTest extends MenuTestCase
     {
         $this->assertSame($this->pt1, $this->menu->getFirstChild());
         // test for bug in getFirstChild implementation (when internal array pointer is changed getFirstChild returns wrong child)
-        foreach ($this->menu->getChildren() as $c);
+        foreach ($this->menu->getChildren() as $c) {
+        }
         $this->assertSame($this->pt1, $this->menu->getFirstChild());
     }
 
@@ -162,7 +163,8 @@ final class MenuItemTreeTest extends MenuTestCase
     {
         $this->assertSame($this->pt2, $this->menu->getLastChild());
         // test for bug in getFirstChild implementation (when internal array pointer is changed getLastChild returns wrong child)
-        foreach ($this->menu->getChildren() as $c);
+        foreach ($this->menu->getChildren() as $c) {
+        }
         $this->assertSame($this->pt2, $this->menu->getLastChild());
     }
 

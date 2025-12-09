@@ -1,24 +1,23 @@
-KnpMenu
-=======
+# KnpMenu
 
-The KnpMenu library provides object oriented menus for PHP.
+The KnpMenu library provides object-oriented menus for PHP.
 It is used by the [KnpMenuBundle](https://github.com/KnpLabs/KnpMenuBundle) for Symfony
 but can now be used stand-alone.
 
-[![Build Status](https://github.com/KnpLabs/KnpMenu/workflows/build/badge.svg)](https://github.com/KnpLabs/KnpMenu/actions)
+[![Build Status](https://github.com/KnpLabs/KnpMenu/actions/workflows/build.yaml/badge.svg)](https://github.com/KnpLabs/KnpMenu/actions/workflows/build.yaml)
 [![Latest Stable Version](https://poser.pugx.org/knplabs/knp-menu/v/stable.svg)](https://packagist.org/packages/knplabs/knp-menu)
 [![Latest Unstable Version](https://poser.pugx.org/knplabs/knp-menu/v/unstable.svg)](https://packagist.org/packages/knplabs/knp-menu)
 [![Gitter chat](https://badges.gitter.im/KnpLabs/KnpMenu.svg)](https://gitter.im/KnpLabs/KnpMenu)
 
 ## Installation
 
-KnpMenu uses Composer, please checkout the [composer website](http://getcomposer.org) for more information.
+KnpMenu uses Composer, please check out the [composer website](https://getcomposer.org/) for more information.
 
-The simple following command will install `knp-menu` into your project. It also add a new
+The simple following command will install `knp-menu` into your project. It also adds a new
 entry in your `composer.json` and update the `composer.lock` as well.
 
 ```bash
-$ composer require knplabs/knp-menu
+composer require knplabs/knp-menu
 ```
 
 > KnpMenu follows the PSR-4 convention names for its classes, which means you can easily integrate `knp-menu` classes loading in your own autoloader.
@@ -96,3 +95,4 @@ the [Symfony community](https://github.com/KnpLabs/KnpMenu/graphs/contributors).
 [3]: https://github.com/derrabus
 [4]: https://github.com/garak
 [5]: https://github.com/stof
+

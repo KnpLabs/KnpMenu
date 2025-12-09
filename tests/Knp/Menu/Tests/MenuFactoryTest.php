@@ -16,11 +16,11 @@ final class MenuFactoryTest extends TestCase
         $extension1 = $this->getMockBuilder(ExtensionInterface::class)->getMock();
         $extension1->expects($this->once())
             ->method('buildOptions')
-            ->with(['foo' => 'bar'])
-            ->willReturn(['uri' => 'foobar']);
+            ->with(['uri' => 'foobar'])
+            ->willReturnArgument(0);
         $extension1->expects($this->once())
             ->method('buildItem')
-            ->with($this->isInstanceOf(ItemInterface::class), $this->containsCustom('foobar'));
+            ->with($this->isInstanceOf(ItemInterface::class), $this->containsEqual('foobar'));
 
         $factory->addExtension($extension1);
 
@@ -28,10 +28,10 @@ final class MenuFactoryTest extends TestCase
         $extension2->expects($this->once())
             ->method('buildOptions')
             ->with(['foo' => 'baz'])
-            ->willReturn(['foo' => 'bar']);
-        $extension1->expects($this->once())
+            ->willReturn(['uri' => 'foobar']);
+        $extension2->expects($this->once())
             ->method('buildItem')
-            ->with($this->isInstanceOf(ItemInterface::class), $this->containsCustom('foobar'));
+            ->with($this->isInstanceOf(ItemInterface::class), $this->containsEqual('foobar'));
 
         $factory->addExtension($extension2, 10);
 
@@ -57,16 +57,5 @@ final class MenuFactoryTest extends TestCase
         $this->assertEquals('foo', $item->getLinkAttribute('class'));
     }
 
-    private function containsCustom(string $value): ?object
-    {
-        if (\method_exists($this, 'contains')) {
-            return $this->contains($value);
-        }
 
-        if (\method_exists($this, 'containsEqual')) {
-            return $this->containsEqual($value);
-        }
-
-        return null;
-    }
 }

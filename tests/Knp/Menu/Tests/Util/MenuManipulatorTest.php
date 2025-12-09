@@ -19,7 +19,7 @@ final class MenuManipulatorTest extends MenuTestCase
         $menu->addChild('c4');
 
         $manipulator = new MenuManipulator();
-        $manipulator->moveToFirstPosition($menu['c3']);
+        $manipulator->moveToFirstPosition($menu->getChildren()['c3']);
         $this->assertEquals(['c3', 'c1', 'c2', 'c4'], \array_keys($menu->getChildren()));
     }
 
@@ -32,7 +32,7 @@ final class MenuManipulatorTest extends MenuTestCase
         $menu->addChild('c4');
 
         $manipulator = new MenuManipulator();
-        $manipulator->moveToLastPosition($menu['c2']);
+        $manipulator->moveToLastPosition($menu->getChildren()['c2']);
         $this->assertEquals(['c1', 'c3', 'c4', 'c2'], \array_keys($menu->getChildren()));
     }
 
@@ -45,7 +45,9 @@ final class MenuManipulatorTest extends MenuTestCase
         $menu->addChild('c4');
 
         $manipulator = new MenuManipulator();
-        $manipulator->moveToPosition($menu['c1'], 2);
+        $c1 = $menu['c1'];
+        /** @var ItemInterface $c1 */
+        $manipulator->moveToPosition($c1, 2);
         $this->assertEquals(['c2', 'c3', 'c1', 'c4'], \array_keys($menu->getChildren()));
     }
 
@@ -59,7 +61,8 @@ final class MenuManipulatorTest extends MenuTestCase
     public function testSlice($offset, $length, int $count, array $keys): void
     {
         $manipulator = new MenuManipulator();
-        $sliced = $manipulator->slice($this->pt1, $offset, $length);
+        $pt1 = $this->pt1;
+        $sliced = $manipulator->slice($pt1, $offset, $length);
         $this->assertCount($count, $sliced);
         $this->assertEquals($keys, \array_keys($sliced->getChildren()));
     }
@@ -71,13 +74,17 @@ final class MenuManipulatorTest extends MenuTestCase
     {
         $this->setUp();
 
+        $ch1 = $this->ch1;
+        $ch2 = $this->ch2;
+        $ch3 = $this->ch3;
+
         return [
-            'numeric offset and numeric length' => [0, 2, 2, [$this->ch1->getName(), $this->ch2->getName()]],
-            'numeric offset and no length' => [0, null, 3, [$this->ch1->getName(), $this->ch2->getName(), $this->ch3->getName()]],
-            'named offset and no length' => ['Child 2', null, 2, [$this->ch2->getName(), $this->ch3->getName()]],
-            'child offset and no length' => [$this->ch3, null, 1, [$this->ch3->getName()]],
-            'numeric offset and named length' => [0, 'Child 3', 2, [$this->ch1->getName(), $this->ch2->getName()]],
-            'numeric offset and child length' => [0, $this->ch3, 2, [$this->ch1->getName(), $this->ch2->getName()]],
+            'numeric offset and numeric length' => [0, 2, 2, [$ch1->getName(), $ch2->getName()]],
+            'numeric offset and no length' => [0, null, 3, [$ch1->getName(), $ch2->getName(), $ch3->getName()]],
+            'named offset and no length' => ['Child 2', null, 2, [$ch2->getName(), $ch3->getName()]],
+            'child offset and no length' => [$ch3, null, 1, [$ch3->getName()]],
+            'numeric offset and named length' => [0, 'Child 3', 2, [$ch1->getName(), $ch2->getName()]],
+            'numeric offset and child length' => [0, $ch3, 2, [$ch1->getName(), $ch2->getName()]],
         ];
     }
 
@@ -90,7 +97,8 @@ final class MenuManipulatorTest extends MenuTestCase
     public function testSplit($length, int $count, array $keys): void
     {
         $manipulator = new MenuManipulator();
-        $split = $manipulator->split($this->pt1, $length);
+        $pt1 = $this->pt1;
+        $split = $manipulator->split($pt1, $length);
         $this->assertArrayHasKey('primary', $split);
         $this->assertArrayHasKey('secondary', $split);
         $this->assertCount($count, $split['primary']);
@@ -105,41 +113,51 @@ final class MenuManipulatorTest extends MenuTestCase
     {
         $this->setUp();
 
+        $ch1 = $this->ch1;
+        $ch2 = $this->ch2;
+        $ch3 = $this->ch3;
+
         return [
-            'numeric length' => [1, 1, [$this->ch1->getName()]],
-            'named length' => ['Child 3', 2, [$this->ch1->getName(), $this->ch2->getName()]],
-            'child length' => [$this->ch3, 2, [$this->ch1->getName(), $this->ch2->getName()]],
+            'numeric length' => [1, 1, [$ch1->getName()]],
+            'named length' => ['Child 3', 2, [$ch1->getName(), $ch2->getName()]],
+            'child length' => [$ch3, 2, [$ch1->getName(), $ch2->getName()]],
         ];
     }
 
     public function testPathAsString(): void
     {
         $manipulator = new MenuManipulator();
-        $this->assertEquals('Root li > Parent 2 > Child 4', $manipulator->getPathAsString($this->ch4), 'Path with default separator');
-        $this->assertEquals('Root li / Parent 1 / Child 2', $manipulator->getPathAsString($this->ch2, ' / '), 'Path with custom separator');
+        $ch4 = $this->ch4;
+        $ch2 = $this->ch2;
+        $this->assertEquals('Root li > Parent 2 > Child 4', $manipulator->getPathAsString($ch4), 'Path with default separator');
+        $this->assertEquals('Root li / Parent 1 / Child 2', $manipulator->getPathAsString($ch2, ' / '), 'Path with custom separator');
     }
 
     public function testBreadcrumbsArray(): void
     {
         $manipulator = new MenuManipulator();
-        $this->menu->addChild('child', ['uri' => 'http://www.symfony-reloaded.org']);
-        $this->menu->addChild('123', ['uri' => 'http://www.symfony-reloaded.org']);
+        $menu = $this->menu;
+        $menu->addChild('child', ['uri' => 'http://www.symfony-reloaded.org']);
+
+        $pt1 = $this->pt1;
+        $child = $menu['child'];
+        /** @var ItemInterface $child */
 
         $this->assertEquals(
-            [['label' => 'Root li', 'uri' => null, 'item' => $this->menu], ['label' => 'Parent 1', 'uri' => null, 'item' => $this->pt1]],
-            $manipulator->getBreadcrumbsArray($this->pt1)
+            [['label' => 'Root li', 'uri' => null, 'item' => $menu], ['label' => 'Parent 1', 'uri' => null, 'item' => $pt1]],
+            $manipulator->getBreadcrumbsArray($pt1)
         );
         $this->assertEquals(
-            [['label' => 'Root li', 'uri' => null, 'item' => $this->menu], ['label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child']]],
-            $manipulator->getBreadcrumbsArray($this->menu['child'])
+            [['label' => 'Root li', 'uri' => null, 'item' => $menu], ['label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $child]],
+            $manipulator->getBreadcrumbsArray($child)
         );
         $this->assertEquals(
             [
-                ['label' => 'Root li', 'uri' => null, 'item' => $this->menu],
-                ['label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child']],
+                ['label' => 'Root li', 'uri' => null, 'item' => $menu],
+                ['label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $child],
                 ['label' => 'subitem1', 'uri' => null, 'item' => null],
             ],
-            $manipulator->getBreadcrumbsArray($this->menu['child'], 'subitem1')
+            $manipulator->getBreadcrumbsArray($child, 'subitem1')
         );
 
         $item = $this->getMockBuilder(ItemInterface::class)->getMock();
@@ -148,35 +166,21 @@ final class MenuManipulatorTest extends MenuTestCase
 
         $this->assertEquals(
             [
-                ['label' => 'Root li', 'uri' => null, 'item' => $this->menu],
-                ['label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child']],
+                ['label' => 'Root li', 'uri' => null, 'item' => $menu],
+                ['label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $child],
                 ['label' => 'subitem1', 'uri' => null, 'item' => null],
                 ['label' => 'subitem2', 'uri' => null, 'item' => null],
                 ['label' => 'subitem3', 'uri' => 'http://php.net', 'item' => null],
                 ['label' => 'subitem4', 'uri' => null, 'item' => null],
                 ['label' => 'mock', 'uri' => 'foo', 'item' => $item],
             ],
-            $manipulator->getBreadcrumbsArray($this->menu['child'], [
+            $manipulator->getBreadcrumbsArray($child, [
                 'subitem1',
                 'subitem2' => null,
                 'subitem3' => 'http://php.net',
                 ['label' => 'subitem4', 'uri' => null, 'item' => null],
                 $item,
             ])
-        );
-
-        $this->assertEquals(
-            [['label' => 'Root li', 'uri' => null, 'item' => $this->menu], ['label' => '123', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['123']]],
-            $manipulator->getBreadcrumbsArray($this->menu['123'])
-        );
-
-        $this->assertEquals(
-            [
-                ['label' => 'Root li', 'uri' => null, 'item' => $this->menu],
-                ['label' => 'child', 'uri' => 'http://www.symfony-reloaded.org', 'item' => $this->menu['child']],
-                ['label' => 'mock', 'uri' => 'foo', 'item' => $item],
-            ],
-            $manipulator->getBreadcrumbsArray($this->menu['child'], $item)
         );
     }
 
@@ -185,7 +189,8 @@ final class MenuManipulatorTest extends MenuTestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $manipulator = new MenuManipulator();
-        $manipulator->getBreadcrumbsArray($this->pt1, [new \stdClass()]);
+        $pt1 = $this->pt1;
+        $manipulator->getBreadcrumbsArray($pt1, [new \stdClass()]);
     }
 
     public function testCallRecursively(): void

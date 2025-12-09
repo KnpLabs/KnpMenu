@@ -28,11 +28,24 @@ abstract class AbstractRendererTest extends MenuTestCase
         $this->renderer = null;
     }
 
+    protected function getRenderer(): RendererInterface
+    {
+        if ($this->renderer === null) {
+            throw new \LogicException('Renderer not initialized');
+        }
+        return $this->renderer;
+    }
+
+    protected function getMenu(): \Knp\Menu\ItemInterface
+    {
+        return $this->menu;
+    }
+
     public function testRenderEmptyRoot(): void
     {
         $menu = new MenuItem('test', new MenuFactory());
         $rendered = '';
-        $this->assertEquals($rendered, $this->renderer->render($menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu));
     }
 
     public function testRenderRootWithAttributes(): void
@@ -41,7 +54,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         $menu->setChildrenAttributes(['class' => 'test_class']);
         $menu->addChild('c1');
         $rendered = '<ul class="test_class"><li class="first last"><span>c1</span></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu));
     }
 
     public function testRenderEncodedAttributes(): void
@@ -50,7 +63,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         $menu->setChildrenAttributes(['title' => 'encode " me >']);
         $menu->addChild('c1');
         $rendered = '<ul title="encode &quot; me &gt;"><li class="first last"><span>c1</span></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu));
     }
 
     public function testRenderLink(): void
@@ -59,7 +72,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         $menu->addChild('About', ['uri' => '/about']);
 
         $rendered = '<ul><li class="first last"><a href="/about">About</a></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu));
     }
 
     public function testRenderLinkWithAttributes(): void
@@ -68,7 +81,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         $menu->addChild('About', ['uri' => '/about', 'linkAttributes' => ['title' => 'About page']]);
 
         $rendered = '<ul><li class="first last"><a href="/about" title="About page">About</a></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu));
     }
 
     public function testRenderLinkWithEmptyAttributes(): void
@@ -80,7 +93,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         ]);
 
         $rendered = '<ul><li class="first last"><a href="/about" title="">About</a></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu));
     }
 
     public function testRenderLinkWithSpecialAttributes(): void
@@ -89,7 +102,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         $menu->addChild('About', ['uri' => '/about', 'linkAttributes' => ['title' => true]]);
 
         $rendered = '<ul><li class="first last"><a href="/about" title="title">About</a></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu));
     }
 
     public function testRenderChildrenWithAttributes(): void
@@ -100,7 +113,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         $about->setChildrenAttribute('title', 'About page');
 
         $rendered = '<ul><li class="first last"><span>About</span><ul title="About page" class="menu_level_1"><li class="first last"><span>Us</span></li></ul></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu));
     }
 
     public function testRenderChildrenWithEmptyAttributes(): void
@@ -113,7 +126,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         $about->setChildrenAttribute('target', false);
 
         $rendered = '<ul><li class="first last"><span>About</span><ul title="" class="menu_level_1"><li class="first last"><span>Us</span></li></ul></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu));
     }
 
     public function testRenderChildrenWithSpecialAttributes(): void
@@ -124,7 +137,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         $about->setChildrenAttribute('title', true);
 
         $rendered = '<ul><li class="first last"><span>About</span><ul title="title" class="menu_level_1"><li class="first last"><span>Us</span></li></ul></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu));
     }
 
     public function testRenderLabelWithAttributes(): void
@@ -133,7 +146,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         $menu->addChild('About', ['labelAttributes' => ['title' => 'About page']]);
 
         $rendered = '<ul><li class="first last"><span title="About page">About</span></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu));
     }
 
     public function testRenderLabelWithEmptyAttributes(): void
@@ -142,7 +155,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         $menu->addChild('About', ['labelAttributes' => ['title' => '', 'rel' => null, 'target' => false]]);
 
         $rendered = '<ul><li class="first last"><span title="">About</span></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu));
     }
 
     public function testRenderLabelWithSpecialAttributes(): void
@@ -151,7 +164,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         $menu->addChild('About', ['labelAttributes' => ['title' => true]]);
 
         $rendered = '<ul><li class="first last"><span title="title">About</span></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu));
     }
 
     public function testRenderWeirdLink(): void
@@ -160,7 +173,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         $menu->addChild('About', ['uri' => 'http://en.wikipedia.org/wiki/%22Weird_Al%22_Yankovic?v1=1&v2=2']);
 
         $rendered = '<ul><li class="first last"><a href="http://en.wikipedia.org/wiki/%22Weird_Al%22_Yankovic?v1=1&amp;v2=2">About</a></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu));
     }
 
     public function testRenderEscapedLabel(): void
@@ -171,7 +184,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         $menu->addChild('Escaped', ['label' => 'Encode " me too', 'extras' => ['safe_label' => false]]);
 
         $rendered = '<ul><li class="first"><span>Encode &quot; me</span></li><li><span>Encode &quot; me again</span></li><li class="last"><span>Encode &quot; me too</span></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu));
     }
 
     public function testRenderSafeLabel(): void
@@ -182,28 +195,30 @@ abstract class AbstractRendererTest extends MenuTestCase
         $menu->addChild('Escaped', ['label' => 'Encode " me too', 'extras' => ['safe_label' => false]]);
 
         $rendered = '<ul><li class="first"><span>Encode &quot; me</span></li><li><span>Encode " me again</span></li><li class="last"><span>Encode &quot; me too</span></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu, ['allow_safe_labels' => true]));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu, ['allow_safe_labels' => true]));
     }
 
     public function testRenderWholeMenu(): void
     {
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span><ul class="menu_level_1"><li class="first"><span>Child 1</span></li><li><span>Child 2</span></li><li class="last"><span>Child 3</span></li></ul></li><li class="last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu()));
     }
 
     public function testRenderWithClassAndTitle(): void
     {
-        $this->pt2->setAttribute('class', 'parent2_class');
-        $this->pt2->setAttribute('title', 'parent2 title');
+        $pt2 = $this->pt2;
+        $pt2->setAttribute('class', 'parent2_class');
+        $pt2->setAttribute('title', 'parent2 title');
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span><ul class="menu_level_1"><li class="first"><span>Child 1</span></li><li><span>Child 2</span></li><li class="last"><span>Child 3</span></li></ul></li><li class="parent2_class last" title="parent2 title"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu()));
     }
 
     public function testRenderWithCurrentItem(): void
     {
-        $this->ch2->setCurrent(true);
+        $ch2 = $this->ch2;
+        $ch2->setCurrent(true);
         $rendered = '<ul class="root"><li class="current_ancestor first"><span>Parent 1</span><ul class="menu_level_1"><li class="first"><span>Child 1</span></li><li class="current"><span>Child 2</span></li><li class="last"><span>Child 3</span></li></ul></li><li class="last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu()));
     }
 
     public function testRenderWithCurrentItemAsLink(): void
@@ -213,7 +228,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         $about->setCurrent(true);
 
         $rendered = '<ul><li class="current first last"><a href="/about">About</a></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu));
     }
 
     public function testRenderWithCurrentItemAsLinkUsingMatcherWithVoters(): void
@@ -225,7 +240,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         $menu->addChild('About', ['uri' => '/about']);
 
         $rendered = '<ul><li class="current first last"><a href="/about">About</a></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu));
     }
 
     public function testRenderWithCurrentItemNotAsLink(): void
@@ -235,7 +250,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         $about->setCurrent(true);
 
         $rendered = '<ul><li class="current first last"><span>About</span></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu, ['currentAsLink' => false]));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu, ['currentAsLink' => false]));
     }
 
     public function testRenderWithCurrentItemNotAsLinkUsingMatcherWithVoters(): void
@@ -247,93 +262,100 @@ abstract class AbstractRendererTest extends MenuTestCase
         $menu->addChild('About', ['uri' => '/about']);
 
         $rendered = '<ul><li class="current first last"><span>About</span></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($menu, ['currentAsLink' => false]));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu, ['currentAsLink' => false]));
     }
 
     public function testRenderSubMenuPortionWithClassAndTitle(): void
     {
-        $this->pt2->setChildrenAttribute('class', 'parent2_class')->setChildrenAttribute('title', 'parent2 title');
+        $pt2 = $this->pt2;
+        $pt2->setChildrenAttribute('class', 'parent2_class')->setChildrenAttribute('title', 'parent2 title');
         $rendered = '<ul class="parent2_class" title="parent2 title"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu['Parent 2']));
+        $this->assertEquals($rendered, $this->getRenderer()->render($pt2));
     }
 
     public function testDoNotShowChildrenRendersNothing(): void
     {
-        $this->menu->setDisplayChildren(false);
+        $this->getMenu()->setDisplayChildren(false);
         $rendered = '';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu()));
     }
 
     public function testDoNotShowChildChildrenRendersPartialMenu(): void
     {
-        $this->menu['Parent 1']->setDisplayChildren(false);
+        $pt1 = $this->pt1;
+        $pt1->setDisplayChildren(false);
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu()));
     }
 
     public function testDoNotShowChildRendersPartialMenu(): void
     {
-        $this->menu['Parent 1']->setDisplay(false);
+        $pt1 = $this->pt1;
+        $pt1->setDisplay(false);
         $rendered = '<ul class="root"><li class="first last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu));
+        $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu()));
     }
 
     public function testDepth0(): void
     {
         $rendered = '';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, ['depth' => 0]));
+        $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu(), ['depth' => 0]));
     }
 
     public function testDepth1(): void
     {
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, ['depth' => 1]));
+        $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu(), ['depth' => 1]));
     }
 
     public function testDepth2(): void
     {
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span><ul class="menu_level_1"><li class="first"><span>Child 1</span></li><li><span>Child 2</span></li><li class="last"><span>Child 3</span></li></ul></li><li class="last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span></li></ul></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, ['depth' => 2]));
+        $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu(), ['depth' => 2]));
     }
 
     public function testDepth2WithNotShowChildChildren(): void
     {
-        $this->menu['Parent 1']->setDisplayChildren(false);
+        $pt1 = $this->pt1;
+        $pt1->setDisplayChildren(false);
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span></li></ul></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, ['depth' => 2]));
+        $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu(), ['depth' => 2]));
     }
 
     public function testEmptyUncompressed(): void
     {
         $rendered = '';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, ['depth' => 0, 'compressed' => false]));
+        $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu(), ['depth' => 0, 'compressed' => false]));
     }
 
     public function testMatchingDepth0(): void
     {
-        $this->menu['Parent 1']['Child 1']->setCurrent(true);
+        $ch1 = $this->ch1;
+        $ch1->setCurrent(true);
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, ['depth' => 1, 'matchingDepth' => 1]));
+        $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu(), ['depth' => 1, 'matchingDepth' => 1]));
     }
 
     public function testMatchingDepth1(): void
     {
-        $this->menu['Parent 1']['Child 1']->setCurrent(true);
+        $ch1 = $this->ch1;
+        $ch1->setCurrent(true);
         $rendered = '<ul class="root"><li class="current_ancestor first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, ['depth' => 1, 'matchingDepth' => 2]));
+        $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu(), ['depth' => 1, 'matchingDepth' => 2]));
     }
 
     public function testMatchingDepth2(): void
     {
-        $this->menu['Parent 1']['Child 1']->setCurrent(true);
+        $ch1 = $this->ch1;
+        $ch1->setCurrent(true);
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span></li></ul>';
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, ['depth' => 1, 'matchingDepth' => 0]));
+        $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu(), ['depth' => 1, 'matchingDepth' => 0]));
     }
 
     public function testLeafAndBranchRendering(): void
     {
         $rendered = '<ul class="root"><li class="first branch"><span>Parent 1</span><ul class="menu_level_1"><li class="first leaf"><span>Child 1</span></li><li class="leaf"><span>Child 2</span></li><li class="last leaf"><span>Child 3</span></li></ul></li><li class="last branch"><span>Parent 2</span><ul class="menu_level_1"><li class="first last leaf"><span>Child 4</span></li></ul></li></ul>';
 
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, ['depth' => 2, 'leaf_class' => 'leaf', 'branch_class' => 'branch']));
+        $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu(), ['depth' => 2, 'leaf_class' => 'leaf', 'branch_class' => 'branch']));
     }
 }

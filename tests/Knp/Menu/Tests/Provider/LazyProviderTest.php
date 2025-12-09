@@ -10,7 +10,9 @@ final class LazyProviderTest extends TestCase
 {
     public function testHas(): void
     {
-        $provider = new LazyProvider(['first' => static function (): void {}, 'second' => static function (): void {}]);
+        /** @var array<string, mixed> $builders */
+        $builders = ['first' => static function (): void {}, 'second' => static function (): void {}];
+        $provider = new LazyProvider($builders);
         $this->assertTrue($provider->has('first'));
         $this->assertTrue($provider->has('second'));
         $this->assertFalse($provider->has('third'));
@@ -43,7 +45,9 @@ final class LazyProviderTest extends TestCase
     {
         $this->expectException(\LogicException::class);
 
-        $provider = new LazyProvider(['broken' => new \stdClass()]);
+        /** @var array<string, mixed> $builders */
+        $builders = ['broken' => new \stdClass()];
+        $provider = new LazyProvider($builders);
         $provider->get('broken');
     }
 

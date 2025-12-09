@@ -18,6 +18,7 @@ final class ArrayAccessProviderTest extends TestCase
 
     public function testGetExistentMenu(): void
     {
+        /** @var \ArrayObject<string, mixed> $registry */
         $registry = new \ArrayObject();
         $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
         $registry['menu'] = $menu;
@@ -27,9 +28,10 @@ final class ArrayAccessProviderTest extends TestCase
 
     public function testGetMenuAsClosure(): void
     {
+        /** @var \ArrayObject<string, mixed> $registry */
         $registry = new \ArrayObject();
         $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
-        $registry['menu'] = static function (array $options, object $c) use ($menu) {
+        $registry['menu'] = static function (array $options, \ArrayObject $c) use ($menu) {
             $c['options'] = $options;
 
             return $menu;

@@ -10,13 +10,17 @@ final class DisplayedItemFilterIteratorTest extends MenuTestCase
 {
     public function testFiltering(): void
     {
-        $this->ch1->setDisplay(false);
-        $this->ch2->setDisplay(false);
-        $this->ch4->setDisplayChildren(false);
+        $ch1 = $this->ch1;
+        $ch2 = $this->ch2;
+        $ch4 = $this->ch4;
+        $menu = $this->menu;
+        $ch1->setDisplay(false);
+        $ch2->setDisplay(false);
+        $ch4->setDisplayChildren(false);
 
         $names = [];
         $iterator = new \RecursiveIteratorIterator(
-            new DisplayedItemFilterIterator(new RecursiveItemIterator($this->menu)),
+            new DisplayedItemFilterIterator(new RecursiveItemIterator(new \ArrayIterator($menu->getChildren()))),
             \RecursiveIteratorIterator::SELF_FIRST
         );
         foreach ($iterator as $value) {

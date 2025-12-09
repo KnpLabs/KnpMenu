@@ -28,6 +28,6 @@ final class TwigRendererTest extends AbstractRendererTest
         $menu->addChild('About')->addChild('foobar');
 
         $rendered = '<ol><li class="first last"><span>About</span><ol class="menu_level_1"><li class="first last"><span>foobar</span></li></ol></li></ol>';
-        $this->assertEquals($rendered, $this->renderer->render($menu, ['template' => 'knp_menu_ordered.html.twig']));
+        $this->assertEquals($rendered, $this->getRenderer()->render($menu, ['template' => 'knp_menu_ordered.html.twig']));
     }
 }

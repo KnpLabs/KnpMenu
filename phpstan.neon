@@ -3,5 +3,6 @@ parameters:
     treatPhpDocTypesAsCertain: false
     paths:
         - src
+        - tests
 includes:
     - phpstan-baseline.neon

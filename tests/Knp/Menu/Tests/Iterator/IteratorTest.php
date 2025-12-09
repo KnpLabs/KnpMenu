@@ -28,10 +28,11 @@ final class IteratorTest extends MenuTestCase
         $child->expects($this->any())
             ->method('getIterator')
             ->willReturn(new \EmptyIterator());
-        $this->menu->addChild($child);
+        $menu = $this->menu;
+        $menu->addChild($child);
 
         $names = [];
-        foreach (new \RecursiveIteratorIterator(new RecursiveItemIterator($this->menu), \RecursiveIteratorIterator::SELF_FIRST) as $value) {
+        foreach (new \RecursiveIteratorIterator(new RecursiveItemIterator($menu), \RecursiveIteratorIterator::SELF_FIRST) as $value) {
             $names[] = $value->getName();
         }
 
@@ -50,8 +51,9 @@ final class IteratorTest extends MenuTestCase
 
     public function testFullTreeIterator(): void
     {
+        $menu = $this->menu;
         $fullTreeIterator = new \RecursiveIteratorIterator(
-            new RecursiveItemIterator(new \ArrayIterator([$this->menu])), // recursive iterator containing the root item
+            new RecursiveItemIterator(new \ArrayIterator([$menu])), // recursive iterator containing the root item
             \RecursiveIteratorIterator::SELF_FIRST
         );
 

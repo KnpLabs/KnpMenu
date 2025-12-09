@@ -267,17 +267,19 @@ final class HelperTest extends TestCase
         $matcher = new Matcher();
 
         $menu = new MenuItem('root', new MenuFactory());
-        $menu->addChild('c1');
-        $menu['c1']->addChild('c1_1');
-        $menu->addChild('c2');
-        $menu['c2']->addChild('c2_1');
-        $menu['c2']->addChild('c2_2');
-        $menu['c2']['c2_2']->addChild('c2_2_1');
-        $menu['c2']['c2_2']->addChild('c2_2_2')->setCurrent(true);
-        $menu['c2']['c2_2']->addChild('c2_2_3');
+        $c1 = $menu->addChild('c1');
+        $c1->addChild('c1_1');
+        $c2 = $menu->addChild('c2');
+        $c2->addChild('c2_1');
+        $c2_2 = $c2->addChild('c2_2');
+        $c2_2->addChild('c2_2_1');
+        $c2_2->addChild('c2_2_2')->setCurrent(true);
+        $c2_2->addChild('c2_2_3');
 
         $helper = new Helper($this->getMockBuilder(RendererProviderInterface::class)->getMock(), null, null, $matcher);
 
-        $this->assertSame('c2_2_2', $helper->getCurrentItem($menu)->getName());
+        $currentItem = $helper->getCurrentItem($menu);
+        /** @var ItemInterface $currentItem */
+        $this->assertSame('c2_2_2', $currentItem->getName());
     }
 }

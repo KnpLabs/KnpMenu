@@ -82,6 +82,7 @@ jobs:
                   php-version: ${{ matrix.php }}
             - run: |
                    sed -ri '/symfony\/deprecation-contracts/! s/"symfony\/(.+)": "(.+)"/"symfony\/\1": "'${{ matrix.symfony }}'"/' composer.json;
+              if: matrix.symfony
             - run: composer config --global --no-plugins allow-plugins.symfony/flex true && composer global require symfony/flex
               if: matrix.symfony
             - run: echo 'SYMFONY_REQUIRE=${{ matrix.symfony }}' >> "$GITHUB_ENV"

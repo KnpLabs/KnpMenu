@@ -234,7 +234,7 @@ the second argument to the `render()` method:
   is an ancestor of the current item.
 * `currentAsLink` (default: `true`): Whether to render the "current" menu item as link or as span.
 * `currentClass` (default: `current`)
-* `ancestorClass` (default: `current_ancestor`)
+* `ancestor_class` (default: `current_ancestor`) (alias: ancestorClass, currently deprecated)
 * `firstClass` (default: `first`)
 * `lastClass` (default:  `last`)
 * `compressed` (default: `false`)

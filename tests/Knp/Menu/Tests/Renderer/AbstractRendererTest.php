@@ -38,9 +38,6 @@ abstract class AbstractRendererTest extends MenuTestCase
 
     protected function getMenu(): \Knp\Menu\ItemInterface
     {
-        if ($this->menu === null) {
-            throw new \LogicException('Menu not initialized');
-        }
         return $this->menu;
     }
 
@@ -210,7 +207,6 @@ abstract class AbstractRendererTest extends MenuTestCase
     public function testRenderWithClassAndTitle(): void
     {
         $pt2 = $this->pt2;
-        $this->assertNotNull($pt2);
         $pt2->setAttribute('class', 'parent2_class');
         $pt2->setAttribute('title', 'parent2 title');
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span><ul class="menu_level_1"><li class="first"><span>Child 1</span></li><li><span>Child 2</span></li><li class="last"><span>Child 3</span></li></ul></li><li class="parent2_class last" title="parent2 title"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul></li></ul>';
@@ -220,7 +216,6 @@ abstract class AbstractRendererTest extends MenuTestCase
     public function testRenderWithCurrentItem(): void
     {
         $ch2 = $this->ch2;
-        $this->assertNotNull($ch2);
         $ch2->setCurrent(true);
         $rendered = '<ul class="root"><li class="current_ancestor first"><span>Parent 1</span><ul class="menu_level_1"><li class="first"><span>Child 1</span></li><li class="current"><span>Child 2</span></li><li class="last"><span>Child 3</span></li></ul></li><li class="last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul></li></ul>';
         $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu()));
@@ -273,7 +268,6 @@ abstract class AbstractRendererTest extends MenuTestCase
     public function testRenderSubMenuPortionWithClassAndTitle(): void
     {
         $pt2 = $this->pt2;
-        $this->assertNotNull($pt2);
         $pt2->setChildrenAttribute('class', 'parent2_class')->setChildrenAttribute('title', 'parent2 title');
         $rendered = '<ul class="parent2_class" title="parent2 title"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul>';
         $this->assertEquals($rendered, $this->getRenderer()->render($pt2));
@@ -289,7 +283,6 @@ abstract class AbstractRendererTest extends MenuTestCase
     public function testDoNotShowChildChildrenRendersPartialMenu(): void
     {
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $pt1->setDisplayChildren(false);
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul></li></ul>';
         $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu()));
@@ -298,7 +291,6 @@ abstract class AbstractRendererTest extends MenuTestCase
     public function testDoNotShowChildRendersPartialMenu(): void
     {
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $pt1->setDisplay(false);
         $rendered = '<ul class="root"><li class="first last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul></li></ul>';
         $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu()));
@@ -325,7 +317,6 @@ abstract class AbstractRendererTest extends MenuTestCase
     public function testDepth2WithNotShowChildChildren(): void
     {
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $pt1->setDisplayChildren(false);
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span></li></ul></li></ul>';
         $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu(), ['depth' => 2]));
@@ -340,7 +331,6 @@ abstract class AbstractRendererTest extends MenuTestCase
     public function testMatchingDepth0(): void
     {
         $ch1 = $this->ch1;
-        $this->assertNotNull($ch1);
         $ch1->setCurrent(true);
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span></li></ul>';
         $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu(), ['depth' => 1, 'matchingDepth' => 1]));
@@ -349,7 +339,6 @@ abstract class AbstractRendererTest extends MenuTestCase
     public function testMatchingDepth1(): void
     {
         $ch1 = $this->ch1;
-        $this->assertNotNull($ch1);
         $ch1->setCurrent(true);
         $rendered = '<ul class="root"><li class="current_ancestor first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span></li></ul>';
         $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu(), ['depth' => 1, 'matchingDepth' => 2]));
@@ -358,7 +347,6 @@ abstract class AbstractRendererTest extends MenuTestCase
     public function testMatchingDepth2(): void
     {
         $ch1 = $this->ch1;
-        $this->assertNotNull($ch1);
         $ch1->setCurrent(true);
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span></li></ul>';
         $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu(), ['depth' => 1, 'matchingDepth' => 0]));

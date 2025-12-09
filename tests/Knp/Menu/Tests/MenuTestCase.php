@@ -9,21 +9,21 @@ use PHPUnit\Framework\TestCase;
 
 abstract class MenuTestCase extends TestCase
 {
-    protected ?ItemInterface $menu;
+    protected ItemInterface $menu;
 
-    protected ?ItemInterface $pt1;
+    protected ItemInterface $pt1;
 
-    protected ?ItemInterface $ch1;
+    protected ItemInterface $ch1;
 
-    protected ?ItemInterface $ch2;
+    protected ItemInterface $ch2;
 
-    protected ?ItemInterface $ch3;
+    protected ItemInterface $ch3;
 
-    protected ?ItemInterface $pt2;
+    protected ItemInterface $pt2;
 
-    protected ?ItemInterface $ch4;
+    protected ItemInterface $ch4;
 
-    protected ?ItemInterface $gc1;
+    protected ItemInterface $gc1;
 
     protected function setUp(): void
     {
@@ -44,14 +44,6 @@ abstract class MenuTestCase extends TestCase
 
     protected function tearDown(): void
     {
-        $this->menu = null;
-        $this->pt1 = null;
-        $this->ch1 = null;
-        $this->ch2 = null;
-        $this->ch3 = null;
-        $this->pt2 = null;
-        $this->ch4 = null;
-        $this->gc1 = null;
     }
 
     // prints a visual representation of our basic testing tree

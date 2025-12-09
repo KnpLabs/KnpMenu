@@ -12,13 +12,9 @@ final class CurrentItemFilterIteratorTest extends MenuTestCase
     public function testSimpleFiltering(): void
     {
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $ch2 = $this->ch2;
-        $this->assertNotNull($ch2);
         $gc1 = $this->gc1;
-        $this->assertNotNull($gc1);
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $pt1->setCurrent(true);
         $ch2->setCurrent(true);
         $gc1->setCurrent(true);
@@ -37,13 +33,9 @@ final class CurrentItemFilterIteratorTest extends MenuTestCase
     public function testFiltering(): void
     {
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $ch2 = $this->ch2;
-        $this->assertNotNull($ch2);
         $gc1 = $this->gc1;
-        $this->assertNotNull($gc1);
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $pt1->setCurrent(true);
         $ch2->setCurrent(true);
         $gc1->setCurrent(true);

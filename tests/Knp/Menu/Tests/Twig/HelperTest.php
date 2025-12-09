@@ -267,17 +267,11 @@ final class HelperTest extends TestCase
         $matcher = new Matcher();
 
         $menu = new MenuItem('root', new MenuFactory());
-        $menu->addChild('c1');
-        $c1 = $menu['c1'];
-        $this->assertNotNull($c1);
+        $c1 = $menu->addChild('c1');
         $c1->addChild('c1_1');
-        $menu->addChild('c2');
-        $c2 = $menu['c2'];
-        $this->assertNotNull($c2);
+        $c2 = $menu->addChild('c2');
         $c2->addChild('c2_1');
-        $c2->addChild('c2_2');
-        $c2_2 = $c2['c2_2'];
-        $this->assertNotNull($c2_2);
+        $c2_2 = $c2->addChild('c2_2');
         $c2_2->addChild('c2_2_1');
         $c2_2->addChild('c2_2_2')->setCurrent(true);
         $c2_2->addChild('c2_2_3');
@@ -285,7 +279,7 @@ final class HelperTest extends TestCase
         $helper = new Helper($this->getMockBuilder(RendererProviderInterface::class)->getMock(), null, null, $matcher);
 
         $currentItem = $helper->getCurrentItem($menu);
-        $this->assertNotNull($currentItem);
+        /** @var ItemInterface $currentItem */
         $this->assertSame('c2_2_2', $currentItem->getName());
     }
 }

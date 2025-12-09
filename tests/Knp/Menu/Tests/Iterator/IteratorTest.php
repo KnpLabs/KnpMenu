@@ -11,7 +11,6 @@ final class IteratorTest extends MenuTestCase
     public function testIterator(): void
     {
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $count = 0;
         foreach ($pt1->getChildren() as $key => $value) {
             ++$count;
@@ -31,7 +30,6 @@ final class IteratorTest extends MenuTestCase
             ->method('getIterator')
             ->willReturn(new \EmptyIterator());
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $menu->addChild($child);
 
         $names = [];
@@ -45,7 +43,6 @@ final class IteratorTest extends MenuTestCase
     public function testRecursiveIteratorLeavesOnly(): void
     {
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $names = [];
         foreach (new \RecursiveIteratorIterator(new RecursiveItemIterator($menu), \RecursiveIteratorIterator::LEAVES_ONLY) as $value) {
             $names[] = $value->getName();
@@ -57,7 +54,6 @@ final class IteratorTest extends MenuTestCase
     public function testFullTreeIterator(): void
     {
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $fullTreeIterator = new \RecursiveIteratorIterator(
             new RecursiveItemIterator(new \ArrayIterator([$menu])), // recursive iterator containing the root item
             \RecursiveIteratorIterator::SELF_FIRST

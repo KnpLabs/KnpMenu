@@ -14,15 +14,10 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testSampleTreeIntegrity(): void
     {
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $pt2 = $this->pt2;
-        $this->assertNotNull($pt2);
         $ch4 = $this->ch4;
-        $this->assertNotNull($ch4);
         $gc1 = $this->gc1;
-        $this->assertNotNull($gc1);
         $this->assertCount(2, $menu->getChildren());
         $this->assertCount(3, $pt1->getChildren());
         $this->assertCount(1, $pt2->getChildren());
@@ -33,15 +28,10 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testGetLevel(): void
     {
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $pt2 = $this->pt2;
-        $this->assertNotNull($pt2);
         $ch4 = $this->ch4;
-        $this->assertNotNull($ch4);
         $gc1 = $this->gc1;
-        $this->assertNotNull($gc1);
         $this->assertEquals(0, $menu->getLevel());
         $this->assertEquals(1, $pt1->getLevel());
         $this->assertEquals(1, $pt2->getLevel());
@@ -52,11 +42,8 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testGetRoot(): void
     {
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $gc1 = $this->gc1;
-        $this->assertNotNull($gc1);
         $this->assertSame($menu, $menu->getRoot());
         $this->assertSame($menu, $pt1->getRoot());
         $this->assertSame($menu, $gc1->getRoot());
@@ -65,11 +52,8 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testIsRoot(): void
     {
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $ch3 = $this->ch3;
-        $this->assertNotNull($ch3);
         $this->assertTrue($menu->isRoot());
         $this->assertFalse($pt1->isRoot());
         $this->assertFalse($ch3->isRoot());
@@ -78,13 +62,9 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testGetParent(): void
     {
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $ch4 = $this->ch4;
-        $this->assertNotNull($ch4);
         $gc1 = $this->gc1;
-        $this->assertNotNull($gc1);
         $this->assertNull($menu->getParent());
         $this->assertSame($menu, $pt1->getParent());
         $this->assertSame($ch4, $gc1->getParent());
@@ -94,9 +74,7 @@ final class MenuItemTreeTest extends MenuTestCase
     {
         $newRoot = new TestMenuItem('newRoot', $this->getMockBuilder(FactoryInterface::class)->getMock());
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $newRoot->addChild($menu);
 
         $this->assertEquals(1, $menu->getLevel());
@@ -112,13 +90,9 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testIsFirst(): void
     {
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $pt2 = $this->pt2;
-        $this->assertNotNull($pt2);
         $ch4 = $this->ch4;
-        $this->assertNotNull($ch4);
         $this->assertFalse($menu->isFirst(), 'The root item is not considered as first');
         $this->assertTrue($pt1->isFirst());
         $this->assertFalse($pt2->isFirst());
@@ -128,15 +102,10 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testActsLikeFirst(): void
     {
         $ch1 = $this->ch1;
-        $this->assertNotNull($ch1);
         $ch2 = $this->ch2;
-        $this->assertNotNull($ch2);
         $ch3 = $this->ch3;
-        $this->assertNotNull($ch3);
         $ch4 = $this->ch4;
-        $this->assertNotNull($ch4);
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $ch1->setDisplay(false);
         $this->assertFalse($menu->actsLikeFirst(), 'The root item is not considered as first');
         $this->assertFalse($ch1->actsLikeFirst(), 'A hidden item does not acts like first');
@@ -148,9 +117,7 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testActsLikeFirstWithNoDisplayedItem(): void
     {
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $pt2 = $this->pt2;
-        $this->assertNotNull($pt2);
         $pt1->setDisplay(false);
         $pt2->setDisplay(false);
         $this->assertFalse($pt1->actsLikeFirst());
@@ -160,13 +127,9 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testIsLast(): void
     {
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $pt2 = $this->pt2;
-        $this->assertNotNull($pt2);
         $ch4 = $this->ch4;
-        $this->assertNotNull($ch4);
         $this->assertFalse($menu->isLast(), 'The root item is not considered as last');
         $this->assertFalse($pt1->isLast());
         $this->assertTrue($pt2->isLast());
@@ -176,15 +139,10 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testActsLikeLast(): void
     {
         $ch3 = $this->ch3;
-        $this->assertNotNull($ch3);
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $ch1 = $this->ch1;
-        $this->assertNotNull($ch1);
         $ch2 = $this->ch2;
-        $this->assertNotNull($ch2);
         $ch4 = $this->ch4;
-        $this->assertNotNull($ch4);
         $ch3->setDisplay(false);
         $this->assertFalse($menu->actsLikeLast(), 'The root item is not considered as last');
         $this->assertFalse($ch1->actsLikeLast());
@@ -196,9 +154,7 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testActsLikeLastWithNoDisplayedItem(): void
     {
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $pt2 = $this->pt2;
-        $this->assertNotNull($pt2);
         $pt1->setDisplay(false);
         $pt2->setDisplay(false);
         $this->assertFalse($pt1->actsLikeLast());
@@ -208,7 +164,6 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testArrayAccess(): void
     {
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $menu->addChild('Child Menu');
         $this->assertEquals('Child Menu', $menu->getChildren()['Child Menu']->getName());
         $this->assertNull($menu->getChild('Fake'));
@@ -225,7 +180,6 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testCountable(): void
     {
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $this->assertCount(2, $menu);
 
         $menu->addChild('New Child');
@@ -238,9 +192,7 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testGetChildren(): void
     {
         $ch4 = $this->ch4;
-        $this->assertNotNull($ch4);
         $gc1 = $this->gc1;
-        $this->assertNotNull($gc1);
         $children = $ch4->getChildren();
         $this->assertCount(1, $children);
         $this->assertEquals($gc1->getName(), $children['Grandchild 1']->getName());
@@ -249,9 +201,7 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testGetFirstChild(): void
     {
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $this->assertSame($pt1, $menu->getFirstChild());
         // test for bug in getFirstChild implementation (when internal array pointer is changed getFirstChild returns wrong child)
         foreach ($menu->getChildren() as $c) {
@@ -262,9 +212,7 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testGetLastChild(): void
     {
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $pt2 = $this->pt2;
-        $this->assertNotNull($pt2);
         $this->assertSame($pt2, $menu->getLastChild());
         // test for bug in getFirstChild implementation (when internal array pointer is changed getLastChild returns wrong child)
         foreach ($menu->getChildren() as $c) {
@@ -297,9 +245,7 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testGetChild(): void
     {
         $gc1 = $this->gc1;
-        $this->assertNotNull($gc1);
         $ch4 = $this->ch4;
-        $this->assertNotNull($ch4);
         $this->assertSame($gc1, $ch4->getChild('Grandchild 1'));
         $this->assertNull($ch4->getChild('nonexistentchild'));
     }
@@ -307,9 +253,7 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testRemoveChild(): void
     {
         $ch4 = $this->ch4;
-        $this->assertNotNull($ch4);
         $gc1 = $this->gc1;
-        $this->assertNotNull($gc1);
         $gc2 = $ch4->addChild('gc2');
         $gc3 = $ch4->addChild('gc3');
         $gc4 = $ch4->addChild('gc4');
@@ -323,7 +267,6 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testRemoveFakeChild(): void
     {
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $menu->removeChild('fake');
         $this->assertCount(2, $menu->getChildren());
     }
@@ -331,11 +274,8 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testReAddRemovedChild(): void
     {
         $ch4 = $this->ch4;
-        $this->assertNotNull($ch4);
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $pt2 = $this->pt2;
-        $this->assertNotNull($pt2);
         $gc2 = $ch4->addChild('gc2');
         $ch4->removeChild('gc2');
         $menu->addChild($gc2);
@@ -347,9 +287,7 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testUpdateChildAfterRename(): void
     {
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $pt1->setName('Temp name');
         $this->assertSame($pt1, $menu->getChild('Temp name'));
         $this->assertEquals(['Temp name', 'Parent 2'], \array_keys($menu->getChildren()));
@@ -361,7 +299,6 @@ final class MenuItemTreeTest extends MenuTestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $pt1->setName('Parent 2');
     }
 
@@ -369,9 +306,7 @@ final class MenuItemTreeTest extends MenuTestCase
     {
         $this->addChildWithExternalUrl();
         $pt1 = $this->pt1;
-        $this->assertNotNull($pt1);
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $this->assertNull($pt1->getUri());
         $this->assertEquals('http://www.symfony-reloaded.org', $menu->getChildren()['child']->getUri());
     }
@@ -379,7 +314,6 @@ final class MenuItemTreeTest extends MenuTestCase
     protected function addChildWithExternalUrl(): void
     {
         $menu = $this->menu;
-        $this->assertNotNull($menu);
         $menu->addChild('child', ['uri' => 'http://www.symfony-reloaded.org']);
     }
 }

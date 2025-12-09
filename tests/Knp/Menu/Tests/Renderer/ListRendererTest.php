@@ -26,7 +26,6 @@ final class ListRendererTest extends AbstractRendererTest
 </ul>
 
 HTML;
-
-        $this->assertEquals($rendered, $this->renderer->render($this->menu, ['compressed' => false, 'depth' => 1]));
+        $this->assertEquals($rendered, $this->getRenderer()->render($this->getMenu(), ['compressed' => false, 'depth' => 1]));
     }
 }

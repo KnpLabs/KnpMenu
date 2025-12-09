@@ -11,7 +11,7 @@ final class IteratorTest extends MenuTestCase
     public function testIterator(): void
     {
         $count = 0;
-        foreach ($this->pt1 as $key => $value) {
+        foreach ($this->pt1->getChildren() as $key => $value) {
             ++$count;
             $this->assertEquals('Child '.$count, $key);
             $this->assertEquals('Child '.$count, $value->getLabel());

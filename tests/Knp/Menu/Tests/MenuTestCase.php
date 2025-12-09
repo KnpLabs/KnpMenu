@@ -9,21 +9,21 @@ use PHPUnit\Framework\TestCase;
 
 abstract class MenuTestCase extends TestCase
 {
-    protected ItemInterface|null $menu;
+    protected ?ItemInterface $menu;
 
-    protected ItemInterface|null $pt1;
+    protected ?ItemInterface $pt1;
 
-    protected ItemInterface|null $ch1;
+    protected ?ItemInterface $ch1;
 
-    protected ItemInterface|null $ch2;
+    protected ?ItemInterface $ch2;
 
-    protected ItemInterface|null $ch3;
+    protected ?ItemInterface $ch3;
 
-    protected ItemInterface|null $pt2;
+    protected ?ItemInterface $pt2;
 
-    protected ItemInterface|null $ch4;
+    protected ?ItemInterface $ch4;
 
-    protected ItemInterface|null $gc1;
+    protected ?ItemInterface $gc1;
 
     protected function setUp(): void
     {

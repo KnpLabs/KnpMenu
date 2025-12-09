@@ -171,8 +171,8 @@ final class MenuItemGetterSetterTest extends TestCase
     {
         $menu = $this->createMenu();
         $child = $this->createMenu('child_menu');
-        $menu->setChildren([$child]);
-        $this->assertEquals([$child], $menu->getChildren());
+        $menu->setChildren(['child' => $child]);
+        $this->assertEquals(['child' => $child], $menu->getChildren());
     }
 
     public function testSetExistingNameThrowsAnException(): void
@@ -182,7 +182,7 @@ final class MenuItemGetterSetterTest extends TestCase
         $menu = $this->createMenu();
         $menu->addChild('jack');
         $menu->addChild('joe');
-        $menu->getChild('joe')->setName('jack');
+        $menu->getChildren()['joe']->setName('jack');
     }
 
     public function testSetSameName(): void

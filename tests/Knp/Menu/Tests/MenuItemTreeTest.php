@@ -13,11 +13,11 @@ final class MenuItemTreeTest extends MenuTestCase
 {
     public function testSampleTreeIntegrity(): void
     {
-        $this->assertCount(2, $this->menu);
-        $this->assertCount(3, $this->menu['Parent 1']);
-        $this->assertCount(1, $this->menu['Parent 2']);
-        $this->assertCount(1, $this->menu['Parent 2']['Child 4']);
-        $this->assertEquals('Grandchild 1', $this->menu['Parent 2']['Child 4']['Grandchild 1']->getName());
+        $this->assertCount(2, $this->menu->getChildren());
+        $this->assertCount(3, $this->pt1->getChildren());
+        $this->assertCount(1, $this->pt2->getChildren());
+        $this->assertCount(1, $this->ch4->getChildren());
+        $this->assertEquals('Grandchild 1', $this->gc1->getName());
     }
 
     public function testGetLevel(): void
@@ -120,13 +120,13 @@ final class MenuItemTreeTest extends MenuTestCase
     public function testArrayAccess(): void
     {
         $this->menu->addChild('Child Menu');
-        $this->assertEquals('Child Menu', $this->menu['Child Menu']->getName());
-        $this->assertNull($this->menu['Fake']);
+        $this->assertEquals('Child Menu', $this->menu->getChildren()['Child Menu']->getName());
+        $this->assertNull($this->menu->getChild('Fake'));
 
-        $this->menu['New Child'] = 'New Label';
-        $this->assertEquals(MenuItem::class, \get_class($this->menu['New Child']));
-        $this->assertEquals('New Child', $this->menu['New Child']->getName());
-        $this->assertEquals('New Label', $this->menu['New Child']->getLabel());
+        $this->menu->addChild('New Child', ['label' => 'New Label']);
+        $this->assertEquals(MenuItem::class, \get_class($this->menu->getChildren()['New Child']));
+        $this->assertEquals('New Child', $this->menu->getChildren()['New Child']->getName());
+        $this->assertEquals('New Label', $this->menu->getChildren()['New Child']->getLabel());
 
         unset($this->menu['New Child']);
         $this->assertNull($this->menu['New Child']);
@@ -204,14 +204,14 @@ final class MenuItemTreeTest extends MenuTestCase
         $this->assertCount(4, $this->ch4);
         $this->ch4->removeChild('gc4');
         $this->assertCount(3, $this->ch4);
-        $this->assertTrue($this->ch4->getChild('Grandchild 1')->isFirst());
-        $this->assertTrue($this->ch4->getChild('gc3')->isLast());
+        $this->assertTrue($this->gc1->isFirst());
+        $this->assertTrue($gc3->isLast());
     }
 
     public function testRemoveFakeChild(): void
     {
         $this->menu->removeChild('fake');
-        $this->assertCount(2, $this->menu);
+        $this->assertCount(2, $this->menu->getChildren());
     }
 
     public function testReAddRemovedChild(): void
@@ -243,7 +243,7 @@ final class MenuItemTreeTest extends MenuTestCase
     {
         $this->addChildWithExternalUrl();
         $this->assertNull($this->pt1->getUri());
-        $this->assertEquals('http://www.symfony-reloaded.org', $this->menu['child']->getUri());
+        $this->assertEquals('http://www.symfony-reloaded.org', $this->menu->getChildren()['child']->getUri());
     }
 
     protected function addChildWithExternalUrl(): void

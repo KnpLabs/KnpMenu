@@ -17,7 +17,7 @@ final class CurrentItemFilterIteratorTest extends MenuTestCase
 
         $names = [];
         // FilterIterator expects an Iterator implementation explicitly, not an IteratorAggregate.
-        $iterator = new CurrentItemFilterIterator($this->menu->getIterator(), new Matcher());
+        $iterator = new CurrentItemFilterIterator(new \ArrayIterator($this->menu->getChildren()), new Matcher());
 
         foreach ($iterator as $value) {
             $names[] = $value->getName();

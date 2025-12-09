@@ -16,7 +16,7 @@ final class DisplayedItemFilterIteratorTest extends MenuTestCase
 
         $names = [];
         $iterator = new \RecursiveIteratorIterator(
-            new DisplayedItemFilterIterator(new RecursiveItemIterator($this->menu)),
+            new DisplayedItemFilterIterator(new RecursiveItemIterator(new \ArrayIterator($this->menu->getChildren()))),
             \RecursiveIteratorIterator::SELF_FIRST
         );
         foreach ($iterator as $value) {

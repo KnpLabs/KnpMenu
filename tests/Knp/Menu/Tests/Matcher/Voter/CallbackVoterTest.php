@@ -57,8 +57,23 @@ final class CallbackVoterTest extends TestCase
      */
     public static function provideData(): iterable
     {
-        yield 'matching' => [fn (): ?bool => true, true];
-        yield 'not matching' => [fn (): ?bool => false, false];
-        yield 'skipping' => [fn (): ?bool => null, null];
+        yield 'matching' => [[self::class, 'matchingCallable'], true];
+        yield 'not matching' => [[self::class, 'notMatchingCallable'], false];
+        yield 'skipping' => [[self::class, 'skippingCallable'], null];
+    }
+
+    private static function matchingCallable(): bool
+    {
+        return true;
+    }
+
+    private static function notMatchingCallable(): bool
+    {
+        return false;
+    }
+
+    private static function skippingCallable(): null
+    {
+        return null;
     }
 }

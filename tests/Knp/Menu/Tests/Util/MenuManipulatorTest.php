@@ -196,7 +196,7 @@ final class MenuManipulatorTest extends MenuTestCase
 
         foreach (\range(1, 2) as $i) {
             $child = $this->getMockBuilder(ItemInterface::class)->getMock();
-            $child->expects($this->any())
+            $child
                 ->method('getName')
                 ->willReturn('Child '.$i)
             ;

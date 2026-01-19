@@ -89,7 +89,7 @@ final class MenuExtensionTest extends TestCase
     public function testGetBreadcrumbsArray(): void
     {
         $helper = $this->getHelperMock(['getBreadcrumbsArray']);
-        $helper->expects($this->any())
+        $helper
             ->method('getBreadcrumbsArray')
             ->with('default')
             ->willReturn(['A', 'B'])
@@ -103,11 +103,11 @@ final class MenuExtensionTest extends TestCase
         $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
         $helper = $this->getHelperMock(['get']);
         $manipulator = $this->getManipulatorMock(['getPathAsString']);
-        $helper->expects($this->any())
+        $helper
             ->method('get')
             ->with('default')
             ->willReturn($menu);
-        $manipulator->expects($this->any())
+        $manipulator
             ->method('getPathAsString')
             ->with($menu)
             ->willReturn('A > B')
@@ -121,7 +121,7 @@ final class MenuExtensionTest extends TestCase
         $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
         $helper = $this->getHelperMock([]);
         $matcher = $this->getMatcherMock();
-        $matcher->expects($this->any())
+        $matcher
             ->method('isCurrent')
             ->with($menu)
             ->willReturn(true)
@@ -135,7 +135,7 @@ final class MenuExtensionTest extends TestCase
         $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
         $helper = $this->getHelperMock([]);
         $matcher = $this->getMatcherMock();
-        $matcher->expects($this->any())
+        $matcher
             ->method('isAncestor')
             ->with($menu)
             ->willReturn(false)
@@ -154,7 +154,7 @@ final class MenuExtensionTest extends TestCase
             ->willReturn($menu)
         ;
         $matcher = $this->getMatcherMock();
-        $matcher->expects($this->any())
+        $matcher
             ->method('isCurrent')
             ->with($menu)
             ->willReturn(true)

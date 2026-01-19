@@ -22,10 +22,10 @@ final class IteratorTest extends MenuTestCase
     {
         // Adding an item which does not provide a RecursiveIterator to be sure it works properly.
         $child = $this->getMockBuilder(ItemInterface::class)->getMock();
-        $child->expects($this->any())
+        $child
             ->method('getName')
             ->willReturn('Foo');
-        $child->expects($this->any())
+        $child
             ->method('getIterator')
             ->willReturn(new \EmptyIterator());
         $this->menu->addChild($child);

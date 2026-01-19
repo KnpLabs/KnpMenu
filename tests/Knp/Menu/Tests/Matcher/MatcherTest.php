@@ -15,7 +15,7 @@ final class MatcherTest extends TestCase
     public function testItemFlag(?bool $flag, bool $expected): void
     {
         $item = $this->getMockBuilder(ItemInterface::class)->getMock();
-        $item->expects($this->any())
+        $item
             ->method('isCurrent')
             ->willReturn($flag);
 
@@ -55,7 +55,7 @@ final class MatcherTest extends TestCase
     public function testFlagWinsOverVoter(bool $value): void
     {
         $item = $this->getMockBuilder(ItemInterface::class)->getMock();
-        $item->expects($this->any())
+        $item
             ->method('isCurrent')
             ->willReturn($value);
 
@@ -74,7 +74,7 @@ final class MatcherTest extends TestCase
     public function testFirstVoterWins(bool $value): void
     {
         $item = $this->getMockBuilder(ItemInterface::class)->getMock();
-        $item->expects($this->any())
+        $item
             ->method('isCurrent')
             ->willReturn(null);
 
@@ -99,7 +99,7 @@ final class MatcherTest extends TestCase
     public function testVoterIterator(bool $value): void
     {
         $item = $this->getMockBuilder(ItemInterface::class)->getMock();
-        $item->expects($this->any())
+        $item
             ->method('isCurrent')
             ->willReturn(null);
 

@@ -14,7 +14,7 @@ final class UriVoterTest extends TestCase
     public function testMatching(?string $uri, ?string $itemUri, ?bool $expected): void
     {
         $item = $this->getMockBuilder(ItemInterface::class)->getMock();
-        $item->expects($this->any())
+        $item
             ->method('getUri')
             ->willReturn($itemUri);
 

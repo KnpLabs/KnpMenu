@@ -26,7 +26,7 @@ final class RouteVoterTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
 
         $item = $this->getMockBuilder(ItemInterface::class)->getMock();
-        $item->expects($this->any())
+        $item
             ->method('getExtra')
             ->with('routes')
             ->willReturn([['invalid' => 'array']]);
@@ -53,7 +53,7 @@ final class RouteVoterTest extends TestCase
     public function testMatching(?string $route, array $parameters, array $queryParameters, $itemRoutes, ?bool $expected): void
     {
         $item = $this->getMockBuilder(ItemInterface::class)->getMock();
-        $item->expects($this->any())
+        $item
             ->method('getExtra')
             ->with('routes')
             ->willReturn($itemRoutes)

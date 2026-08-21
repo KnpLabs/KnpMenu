@@ -35,7 +35,7 @@ final class ChainProviderTest extends TestCase
     {
         $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
         $innerProvider = $this->getMockBuilder(MenuProviderInterface::class)->getMock();
-        $innerProvider->expects($this->any())
+        $innerProvider
             ->method('has')
             ->with('default')
             ->willReturn(true)
@@ -54,7 +54,7 @@ final class ChainProviderTest extends TestCase
     {
         $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
         $innerProvider = $this->getMockBuilder(MenuProviderInterface::class)->getMock();
-        $innerProvider->expects($this->any())
+        $innerProvider
             ->method('has')
             ->with('default', ['foo' => 'bar'])
             ->willReturn(true)

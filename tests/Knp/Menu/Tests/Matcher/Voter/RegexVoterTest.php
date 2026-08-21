@@ -14,7 +14,7 @@ final class RegexVoterTest extends TestCase
     public function testMatching(?string $exp, ?string $itemUri, ?bool $expected): void
     {
         $item = $this->getMockBuilder(ItemInterface::class)->getMock();
-        $item->expects($this->any())
+        $item
             ->method('getUri')
             ->willReturn($itemUri);
 

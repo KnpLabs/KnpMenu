@@ -157,7 +157,7 @@ final class HelperTest extends TestCase
         $menuProvider = $this->getMockBuilder(MenuProviderInterface::class)->getMock();
         $child = $this->getMockBuilder(ItemInterface::class)->getMock();
         $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
-        $menu->expects($this->any())
+        $menu
             ->method('getChild')
             ->with('child')
             ->willReturn($child)
@@ -180,12 +180,12 @@ final class HelperTest extends TestCase
         $rendererProvider = $this->getMockBuilder(RendererProviderInterface::class)->getMock();
         $menuProvider = $this->getMockBuilder(MenuProviderInterface::class)->getMock();
         $child = $this->getMockBuilder(ItemInterface::class)->getMock();
-        $child->expects($this->any())
+        $child
             ->method('getChild')
             ->willReturn(null)
         ;
         $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
-        $menu->expects($this->any())
+        $menu
             ->method('getChild')
             ->with('child')
             ->willReturn($child)
@@ -205,7 +205,7 @@ final class HelperTest extends TestCase
     {
         $child = $this->getMockBuilder(ItemInterface::class)->getMock();
         $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
-        $menu->expects($this->any())
+        $menu
             ->method('getChild')
             ->with('child')
             ->willReturn($child)
@@ -244,7 +244,7 @@ final class HelperTest extends TestCase
         $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
 
         $manipulator = $this->getMockBuilder(MenuManipulator::class)->getMock();
-        $manipulator->expects($this->any())
+        $manipulator
             ->method('getBreadcrumbsArray')
             ->with($menu)
             ->willReturn(['A', 'B']);

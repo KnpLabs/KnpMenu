@@ -14,9 +14,12 @@ use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 use Twig\RuntimeLoader\FactoryRuntimeLoader;
 use Twig\TemplateWrapper;
+use Symfony\Bridge\PhpUnit\ExpectDeprecationTrait;
 
 final class MenuExtensionTest extends TestCase
 {
+    use ExpectDeprecationTrait;
+    
     public function testRenderMenu(): void
     {
         $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
@@ -41,6 +44,23 @@ final class MenuExtensionTest extends TestCase
         ;
 
         $this->assertEquals('<p>foobar</p>', $this->getTemplate('{{ knp_menu_render(menu, {"firstClass": "test"}) }}', $helper)->render(['menu' => $menu]));
+    }
+
+    /**
+     * @group legacy
+     */
+    public function testLegacyRenderMenuWithDeprecatedAncestorClass(): void
+    {
+        $menu = $this->getMockBuilder(ItemInterface::class)->getMock();
+        $helper = $this->getHelperMock(['render']);
+        $helper->expects($this->once())
+            ->method('render')
+            ->with($menu, ['ancestor_class' => 'test'], null)
+        ;
+
+        $this->getTemplate('{{ knp_menu_render(menu, {"ancestorClass": "test"}) }}', $helper)->render(['menu' => $menu, 'ancestorClass' => 'test']);
+            
+        $this->expectDeprecation('');
     }
 
     public function testRenderMenuWithRenderer(): void

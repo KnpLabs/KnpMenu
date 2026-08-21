@@ -80,6 +80,12 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
+            - run: |
+                   sed -ri '/symfony\/deprecation-contracts/! s/"symfony\/(.+)": "(.+)"/"symfony\/\1": "'${{ matrix.symfony }}'"/' composer.json;
+              if: matrix.symfony
+            - run: |
+                  sed -i 's/"symfony\/deprecation-contracts": "^2.4"/"symfony\/deprecation-contracts": "^3.1"/' composer.json
+              if: matrix.symfony == '6.4.*'
             - run: composer config --global --no-plugins allow-plugins.symfony/flex true && composer global require symfony/flex
               if: matrix.symfony
             - run: echo 'SYMFONY_REQUIRE=${{ matrix.symfony }}' >> "$GITHUB_ENV"

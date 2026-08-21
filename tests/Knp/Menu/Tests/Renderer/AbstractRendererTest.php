@@ -199,7 +199,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         $this->assertEquals($rendered, $this->renderer->render($this->menu));
     }
 
-    public function testRenderWithCurrentItem(): void
+    public function testLegacyRenderWithCurrentItem(): void
     {
         $this->ch2->setCurrent(true);
         $rendered = '<ul class="root"><li class="current_ancestor first"><span>Parent 1</span><ul class="menu_level_1"><li class="first"><span>Child 1</span></li><li class="current"><span>Child 2</span></li><li class="last"><span>Child 3</span></li></ul></li><li class="last"><span>Parent 2</span><ul class="menu_level_1"><li class="first last"><span>Child 4</span><ul class="menu_level_2"><li class="first last"><span>Grandchild 1</span></li></ul></li></ul></li></ul>';
@@ -323,7 +323,7 @@ abstract class AbstractRendererTest extends MenuTestCase
         $this->assertEquals($rendered, $this->renderer->render($this->menu, ['depth' => 1, 'matchingDepth' => 2]));
     }
 
-    public function testMatchingDepth2(): void
+    public function testLegacyMatchingDepth2(): void
     {
         $this->menu['Parent 1']['Child 1']->setCurrent(true);
         $rendered = '<ul class="root"><li class="first"><span>Parent 1</span></li><li class="last"><span>Parent 2</span></li></ul>';

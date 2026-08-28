@@ -39,7 +39,8 @@ abstract class MenuTestCase extends TestCase
 
         $this->pt2 = $this->menu->addChild('Parent 2');
         $this->ch4 = $this->pt2->addChild('Child 4');
-        $this->gc1 = $this->ch4->addChild('Grandchild 1');
+        $this->gc1 = new MenuItem('Grandchild 1', $factory);
+        $this->ch4->setChildren([$this->gc1]);
     }
 
     protected function tearDown(): void

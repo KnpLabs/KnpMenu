@@ -30,34 +30,42 @@ class MenuExtension extends AbstractExtension
 
     public function getFunctions(): array
     {
-        $legacy = null !== $this->runtimeExtension;
-
         return [
-             new TwigFunction('knp_menu_get', $legacy ? [$this, 'get'] : [MenuRuntimeExtension::class, 'get']),
-             new TwigFunction('knp_menu_render', $legacy ? [$this, 'render'] : [MenuRuntimeExtension::class, 'render'], ['is_safe' => ['html']]),
-             new TwigFunction('knp_menu_get_breadcrumbs_array', $legacy ? [$this, 'getBreadcrumbsArray'] : [MenuRuntimeExtension::class, 'getBreadcrumbsArray']),
-             new TwigFunction('knp_menu_get_current_item', $legacy ? [$this, 'getCurrentItem'] : [MenuRuntimeExtension::class, 'getCurrentItem']),
+             new TwigFunction('knp_menu_get', $this->getCallable('get')),
+             new TwigFunction('knp_menu_render', $this->getCallable('render'), ['is_safe' => ['html']]),
+             new TwigFunction('knp_menu_get_breadcrumbs_array', $this->getCallable('getBreadcrumbsArray')),
+             new TwigFunction('knp_menu_get_current_item', $this->getCallable('getCurrentItem')),
         ];
     }
 
     public function getFilters(): array
     {
-        $legacy = null !== $this->runtimeExtension;
-
         return [
-            new TwigFilter('knp_menu_as_string', $legacy ? [$this, 'pathAsString'] : [MenuRuntimeExtension::class, 'pathAsString']),
+            new TwigFilter('knp_menu_as_string', $this->getCallable('pathAsString')),
             new TwigFilter('knp_menu_spaceless', [self::class, 'spaceless'], ['is_safe' => ['html']]),
         ];
     }
 
     public function getTests(): array
     {
-        $legacy = null !== $this->runtimeExtension;
-
         return [
-            new TwigTest('knp_menu_current', $legacy ? [$this, 'isCurrent'] : [MenuRuntimeExtension::class, 'isCurrent']),
-            new TwigTest('knp_menu_ancestor', $legacy ? [$this, 'isAncestor'] : [MenuRuntimeExtension::class, 'isAncestor']),
+            new TwigTest('knp_menu_current', $this->getCallable('isCurrent')),
+            new TwigTest('knp_menu_ancestor', $this->getCallable('isAncestor')),
         ];
+    }
+
+    /**
+     * @param 'get'|'render'|'getBreadcrumbsArray'|'getCurrentItem'|'pathAsString'|'isCurrent'|'isAncestor' $method
+     *
+     * @return callable|array{class-string, string}
+     */
+    private function getCallable(string $method): callable|array
+    {
+        if (null !== $this->runtimeExtension) {
+            return [$this, $method];
+        }
+
+        return [MenuRuntimeExtension::class, $method];
     }
 
     public function getLastModified(): int

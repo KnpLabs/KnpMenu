@@ -55,6 +55,9 @@ jobs:
                     - description: 'No Symfony specified'
                       php: '8.5'
                       max_deprecations: 0
+                    - description: 'No Symfony specified'
+                      php: '8.6'
+                      max_deprecations: 0
                     - description: 'Lowest deps'
                       php: '8.1'
                       composer_option: '--prefer-lowest'

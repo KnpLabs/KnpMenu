@@ -53,19 +53,19 @@ your renderers. To do this, you'll need to create a "renderer provider", which
 is some object - implementing `Knp\Menu\Renderer\RendererProviderInterface` -
 which acts like a container for all of your renderers.
 
-The default implementation of the renderer provider is based on [Pimple](http://pimple-project.org/)
+`ArrayAccessProvider` works with any `ArrayAccess` container, like [Pimple](https://github.com/silexphp/Pimple),
 so that your renderers can be lazy-loaded.
 
 ```php
 <?php
 // setup pimple, and assign the renderer to "menu_renderer"
-$pimple = new \Pimple();
-$itemMatcher = \Knp\Menu\Matcher\Matcher();
-$pimple['list_renderer'] = function() {
+$pimple = new \Pimple\Container();
+$itemMatcher = new \Knp\Menu\Matcher\Matcher();
+$pimple['list_renderer'] = function() use ($itemMatcher) {
     return new \Knp\Menu\Renderer\ListRenderer($itemMatcher);
 };
 
-$rendererProvider = new \Knp\Menu\Renderer\PimpleProvider(
+$rendererProvider = new \Knp\Menu\Renderer\ArrayAccessProvider(
     $pimple,
     // common name of the renderer used by default
     'main',
